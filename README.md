@@ -3,7 +3,7 @@ SKPhotoBrowser
 
 [![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![Cocoapods Compatible](https://img.shields.io/cocoapods/v/SKPhotoBrowser.svg?style=flat)](http://cocoadocs.org/docsets/SKPhotoBrowser)
-[![Language](http://img.shields.io/badge/language-swift-brightgreen.svg?style=flat)](https://developer.apple.com/swift)
+[![Swift 2.0](https://img.shields.io/badge/Swift-2.0-orange.svg?style=flat)](https://developer.apple.com/swift/)
 
 Simple PhotoBrowser/Viewer inspired by facebook, twitter photo browsers written by swift2.0, based on [IDMPhotoBrowser](https://github.com/ideaismobile/IDMPhotoBrowser), [MWPhotoBrowser](https://github.com/mwaterfall/MWPhotoBrowser).
 
@@ -51,7 +51,7 @@ images.append(photo)
 
 // create PhotoBrowser Instance, and present. 
 let browser = SKPhotoBrowser(photos: images)
-browser.initializePageIndex(indexPath.row)
+browser.initializePageIndex(0)
 browser.delegate = self
 presentViewController(browser, animated: true, completion: {})
 ```
