@@ -32,6 +32,12 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate{
     public var displayBackAndForwardButton:Bool = true
     public var disableVerticalSwipe:Bool = false
     public var isForceStatusBarHidden:Bool = false
+    public var useWhiteBackgroundColor: Bool = false {
+        didSet {
+            guard oldValue != useWhiteBackgroundColor else { return }
+            browserBackgroundColor = useWhiteBackgroundColor ? UIColor.whiteColor() : UIColor.blackColor()
+        }
+    }
     
     // tool for controls
     var applicationWindow:UIWindow!
@@ -45,6 +51,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate{
     var doneButton:UIButton!
     var doneButtonShowFrame:CGRect = CGRectMake(5, 5, 44, 44)
     var doneButtonHideFrame:CGRect = CGRectMake(5, -20, 44, 44)
+    private var browserBackgroundColor: UIColor = UIColor.blackColor()
     
     // photo's paging
     var visiblePages:Set<SKZoomingScrollView> = Set()
@@ -126,7 +133,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate{
     public override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = UIColor.blackColor()
+        view.backgroundColor = browserBackgroundColor
         view.clipsToBounds = true
         
         // setup paging
@@ -136,7 +143,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate{
         pagingScrollView.delegate = self
         pagingScrollView.showsHorizontalScrollIndicator = true
         pagingScrollView.showsVerticalScrollIndicator = true
-        pagingScrollView.backgroundColor = UIColor.blackColor()
+        pagingScrollView.backgroundColor = browserBackgroundColor
         pagingScrollView.contentSize = contentSizeForPagingScrollView()
         view.addSubview(pagingScrollView)
         
@@ -158,7 +165,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate{
         let previousImage = UIImage(named: "SKPhotoBrowser.bundle/images/btn_common_back_wh", inBundle: bundle, compatibleWithTraitCollection: nil) ?? UIImage()
         previousBtn.frame = CGRectMake(0, 0, 44, 44)
         previousBtn.imageEdgeInsets = UIEdgeInsetsMake(13.25, 17.25, 13.25, 17.25)
-        previousBtn.setImage(previousImage, forState: .Normal)
+        previousBtn.setImage(previousImage.imageWithRenderingMode(.AlwaysTemplate), forState: .Normal)
         previousBtn.addTarget(self, action: "gotoPreviousPage", forControlEvents: .TouchUpInside)
         previousBtn.contentMode = .Center
         toolPreviousButton = UIBarButtonItem(customView: previousBtn)
@@ -168,7 +175,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate{
         let nextImage = UIImage(named: "SKPhotoBrowser.bundle/images/btn_common_forward_wh", inBundle: bundle, compatibleWithTraitCollection: nil) ?? UIImage()
         nextBtn.frame = CGRectMake(0, 0, 44, 44)
         nextBtn.imageEdgeInsets = UIEdgeInsetsMake(13.25, 17.25, 13.25, 17.25)
-        nextBtn.setImage(nextImage, forState: .Normal)
+        nextBtn.setImage(nextImage.imageWithRenderingMode(.AlwaysTemplate), forState: .Normal)
         nextBtn.addTarget(self, action: "gotoNextPage", forControlEvents: .TouchUpInside)
         nextBtn.contentMode = .Center
         toolNextButton = UIBarButtonItem(customView: nextBtn)
@@ -177,21 +184,34 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate{
         toolCounterLabel.textAlignment = .Center
         toolCounterLabel.backgroundColor = UIColor.clearColor()
         toolCounterLabel.font  = UIFont(name: "Helvetica", size: 16.0)
-        toolCounterLabel.textColor = UIColor.whiteColor()
-        toolCounterLabel.shadowColor = UIColor.darkTextColor()
-        toolCounterLabel.shadowOffset = CGSizeMake(0.0, 1.0)
+        
+        if useWhiteBackgroundColor {
+            toolCounterLabel.textColor =  UIColor.blackColor()
+            nextBtn.tintColor = UIColor.blackColor()
+            
+        } else {
+            
+            toolCounterLabel.shadowColor = UIColor.darkTextColor()
+            toolCounterLabel.shadowOffset = CGSizeMake(0.0, 1.0)
+            toolCounterLabel.textColor = UIColor.whiteColor()
+            nextBtn.tintColor = UIColor.whiteColor()
+        }
+        
+        previousBtn.tintColor = nextBtn.tintColor
+        
         
         toolCounterButton = UIBarButtonItem(customView: toolCounterLabel)
         
         // close
         let doneImage = UIImage(named: "SKPhotoBrowser.bundle/images/btn_common_close_wh", inBundle: bundle, compatibleWithTraitCollection: nil) ?? UIImage()
         doneButton = UIButton(type: UIButtonType.Custom)
-        doneButton.setImage(doneImage, forState: UIControlState.Normal)
+        doneButton.setImage(doneImage.imageWithRenderingMode(.AlwaysTemplate), forState: UIControlState.Normal)
         doneButton.frame = doneButtonHideFrame
         doneButton.imageEdgeInsets = UIEdgeInsetsMake(15.25, 15.25, 15.25, 15.25)
         doneButton.backgroundColor = UIColor.clearColor()
         doneButton.addTarget(self, action: "doneButtonPressed:", forControlEvents: UIControlEvents.TouchUpInside)
         doneButton.alpha = 0.0
+        doneButton.tintColor = useWhiteBackgroundColor ? UIColor.blackColor() : UIColor.whiteColor()
         view.addSubview(doneButton)
         
         // gesture
@@ -548,7 +568,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate{
         view.hidden = true
         
         let fadeView = UIView(frame: CGRectMake(0, 0, screenWidth, screenHeight))
-        fadeView.backgroundColor = UIColor.blackColor()
+        fadeView.backgroundColor = browserBackgroundColor
         fadeView.alpha = 1.0
         applicationWindow.addSubview(fadeView)
         
