@@ -14,7 +14,7 @@ public class SKCaptionView: UIView {
     var screenWidth :CGFloat { return screenBound.size.width }
     var screenHeight:CGFloat { return screenBound.size.height }
     
-    var photo:SKPhoto!
+    var photo:SKPhotoProtocol!
     var photoLabel:UILabel!
     var photoLabelPadding:CGFloat = 10
     
@@ -26,7 +26,7 @@ public class SKCaptionView: UIView {
         super.init(frame: frame)
     }
     
-    public convenience init(photo:SKPhoto) {
+    public convenience init(photo:SKPhotoProtocol) {
         let screenBound = UIScreen.mainScreen().bounds
         self.init(frame: CGRectMake(0, 0, screenBound.size.width, screenBound.size.height))
         self.photo = photo
