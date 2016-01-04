@@ -13,6 +13,7 @@ Simple PhotoBrowser/Viewer inspired by facebook, twitter photo browsers written 
 - Minimalistic Facebook-like interface, swipe up/down to dismiss
 - has simple ability to custom photobrowser. (hide/show statusbar, some toolbar for controls, swipe control)
 - Handling and caching photos from web
+- Landscape handling.
 
 ![sample](Screenshots/example01.gif)
 
