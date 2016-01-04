@@ -19,7 +19,9 @@ let SKPHOTO_LOADING_DID_END_NOTIFICATION = "photoLoadingDidEndNotification"
 // MARK: - SKPhotoBrowser
 public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate{
     
-    final let pageIndexTagOffset = 1000
+    final let pageIndexTagOffset:Int = 1000
+    // animation property
+    final let animationDuration:Double = 0.35
     
     // device property
     final let screenBound = UIScreen.mainScreen().bounds
@@ -34,22 +36,45 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate{
     public var isForceStatusBarHidden:Bool = false
     
     // tool for controls
-    var applicationWindow:UIWindow!
-    var toolBar:UIToolbar!
-    var toolCounterLabel:UILabel!
-    var toolCounterButton:UIBarButtonItem!
-    var toolPreviousButton:UIBarButtonItem!
-    var toolNextButton:UIBarButtonItem!
-    var pagingScrollView:UIScrollView!
-    var panGesture:UIPanGestureRecognizer!
-    var doneButton:UIButton!
-    var doneButtonShowFrame:CGRect = CGRectMake(5, 5, 44, 44)
-    var doneButtonHideFrame:CGRect = CGRectMake(5, -20, 44, 44)
+    private var applicationWindow:UIWindow!
+    private var toolBar:UIToolbar!
+    private var toolCounterLabel:UILabel!
+    private var toolCounterButton:UIBarButtonItem!
+    private var toolPreviousButton:UIBarButtonItem!
+    private var toolNextButton:UIBarButtonItem!
+    private var pagingScrollView:UIScrollView!
+    private var panGesture:UIPanGestureRecognizer!
+    private var doneButton:UIButton!
+    private var doneButtonShowFrame:CGRect = CGRectMake(5, 5, 44, 44)
+    private var doneButtonHideFrame:CGRect = CGRectMake(5, -20, 44, 44)
     
     // photo's paging
-    var visiblePages:Set<SKZoomingScrollView> = Set()
-    var initialPageIndex:Int = 0
-    var currentPageIndex:Int = 0
+    private var visiblePages:Set<SKZoomingScrollView> = Set()
+    private var initialPageIndex:Int = 0
+    private var currentPageIndex:Int = 0
+    
+    // senderView's property
+    private var senderViewForAnimation:UIView?
+    private var senderViewOriginalFrame:CGRect = CGRectZero
+    private var senderOriginImage:UIImage!
+    
+    private var resizableImageView:UIImageView = UIImageView()
+    
+    // for status check property
+    private var isDraggingPhoto:Bool = false
+    private var isViewActive:Bool = false
+    private var isPerformingLayout:Bool = false
+    private var isStatusBarOriginallyHidden:Bool = false
+    
+    // scroll property
+    private var firstX:CGFloat = 0.0
+    private var firstY:CGFloat = 0.0
+    
+    // timer
+    private var controlVisibilityTimer:NSTimer!
+    
+    // delegate
+    public weak var delegate: SKPhotoBrowserDelegate?
     
     // photos
     var photos:[SKPhoto] = [SKPhoto]()
@@ -57,31 +82,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate{
         return photos.count
     }
     
-    // senderView's property
-    var senderViewForAnimation:UIView?
-    var senderViewOriginalFrame:CGRect = CGRectZero
-    var senderOriginImage:UIImage!
-    
-    // animation property
-    let animationDuration:Double = 0.35
-    var resizableImageView:UIImageView = UIImageView()
-    
-    // for status check
-    var isDraggingPhoto:Bool = false
-    var isViewActive:Bool = false
-    var isPerformingLayout:Bool = false
-    var isStatusBarOriginallyHidden:Bool = false
-    
-    // scroll property
-    var firstX:CGFloat = 0.0
-    var firstY:CGFloat = 0.0
-    
-    // timer
-    var controlVisibilityTimer:NSTimer!
-    
-    // delegate
-    weak public var delegate: SKPhotoBrowserDelegate?
-    
+    // MARK - Initializer
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setup()
@@ -119,8 +120,6 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate{
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "handleSKPhotoLoadingDidEndNotification:", name: SKPHOTO_LOADING_DID_END_NOTIFICATION, object: nil)
     }
-    
-  
     
     // MARK: - override
     public override func viewDidLoad() {
