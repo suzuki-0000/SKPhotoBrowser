@@ -8,14 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		8909B5341BC791280060A053 /* SKPhotoBrowser.h in Headers */ = {isa = PBXBuildFile; fileRef = 8909B5331BC791280060A053 /* SKPhotoBrowser.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		8909B5431BC791510060A053 /* SKCaptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8909B53B1BC791510060A053 /* SKCaptionView.swift */; settings = {ASSET_TAGS = (); }; };
-		8909B5441BC791510060A053 /* SKDetectingImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8909B53C1BC791510060A053 /* SKDetectingImageView.swift */; settings = {ASSET_TAGS = (); }; };
-		8909B5451BC791510060A053 /* SKDetectingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8909B53D1BC791510060A053 /* SKDetectingView.swift */; settings = {ASSET_TAGS = (); }; };
-		8909B5461BC791510060A053 /* SKIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8909B53E1BC791510060A053 /* SKIndicatorView.swift */; settings = {ASSET_TAGS = (); }; };
-		8909B5471BC791510060A053 /* SKPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8909B53F1BC791510060A053 /* SKPhoto.swift */; settings = {ASSET_TAGS = (); }; };
-		8909B5491BC791510060A053 /* SKPhotoBrowser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8909B5411BC791510060A053 /* SKPhotoBrowser.swift */; settings = {ASSET_TAGS = (); }; };
-		8909B54A1BC791510060A053 /* SKZoomingScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8909B5421BC791510060A053 /* SKZoomingScrollView.swift */; settings = {ASSET_TAGS = (); }; };
-		8909B54D1BC7916E0060A053 /* SKPhotoBrowser.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8909B54C1BC7916E0060A053 /* SKPhotoBrowser.bundle */; settings = {ASSET_TAGS = (); }; };
+		8909B5431BC791510060A053 /* SKCaptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8909B53B1BC791510060A053 /* SKCaptionView.swift */; };
+		8909B5441BC791510060A053 /* SKDetectingImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8909B53C1BC791510060A053 /* SKDetectingImageView.swift */; };
+		8909B5451BC791510060A053 /* SKDetectingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8909B53D1BC791510060A053 /* SKDetectingView.swift */; };
+		8909B5461BC791510060A053 /* SKIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8909B53E1BC791510060A053 /* SKIndicatorView.swift */; };
+		8909B5471BC791510060A053 /* SKPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8909B53F1BC791510060A053 /* SKPhoto.swift */; };
+		8909B5491BC791510060A053 /* SKPhotoBrowser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8909B5411BC791510060A053 /* SKPhotoBrowser.swift */; };
+		8909B54A1BC791510060A053 /* SKZoomingScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8909B5421BC791510060A053 /* SKZoomingScrollView.swift */; };
+		8909B54D1BC7916E0060A053 /* SKPhotoBrowser.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8909B54C1BC7916E0060A053 /* SKPhotoBrowser.bundle */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -314,6 +314,7 @@
 				8909B53A1BC791280060A053 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

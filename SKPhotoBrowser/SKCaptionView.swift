@@ -14,9 +14,9 @@ public class SKCaptionView: UIView {
     var screenWidth :CGFloat { return screenBound.size.width }
     var screenHeight:CGFloat { return screenBound.size.height }
     
-    var photo:SKPhotoProtocol!
-    var photoLabel:UILabel!
-    var photoLabelPadding:CGFloat = 10
+    private var photo:SKPhotoProtocol!
+    private var photoLabel:UILabel!
+    private var photoLabelPadding:CGFloat = 10
     
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -35,6 +35,7 @@ public class SKCaptionView: UIView {
     
     func setup() {
         opaque = false
+        autoresizingMask = [.FlexibleWidth, .FlexibleTopMargin, .FlexibleRightMargin, .FlexibleLeftMargin]
         
         // setup background first
         let fadeView = UIView(frame: CGRectMake(0, -100, screenWidth, bounds.size.height))
@@ -49,10 +50,10 @@ public class SKCaptionView: UIView {
         photoLabel.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
         photoLabel.opaque = false
         photoLabel.backgroundColor = .clearColor()
+        photoLabel.textColor = .whiteColor()
         photoLabel.textAlignment = .Center
         photoLabel.lineBreakMode = .ByWordWrapping
         photoLabel.numberOfLines = 3
-        photoLabel.textColor = .whiteColor()
         photoLabel.shadowColor = UIColor(white: 0.0, alpha: 0.5)
         photoLabel.shadowOffset = CGSizeMake(0.0, 1.0)
         photoLabel.font = UIFont.systemFontOfSize(17.0)
