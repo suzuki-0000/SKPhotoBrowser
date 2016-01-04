@@ -15,6 +15,8 @@ import UIKit
 
 class SKDetectingImageView:UIImageView{
     
+    weak var delegate:SKDetectingImageViewDelegate?
+    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -23,8 +25,6 @@ class SKDetectingImageView:UIImageView{
         super.init(frame: frame)
         userInteractionEnabled = true
     }
-    
-    weak var delegate:SKDetectingImageViewDelegate?
     
     override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
         super.touchesEnded(touches, withEvent: event)

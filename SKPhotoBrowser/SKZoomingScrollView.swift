@@ -10,7 +10,7 @@ import UIKit
 
 public class SKZoomingScrollView:UIScrollView, UIScrollViewDelegate, SKDetectingViewDelegate, SKDetectingImageViewDelegate{
     
-    weak var photoBrowser:SKPhotoBrowser!
+    var captionView:SKCaptionView!
     var photo:SKPhoto!{
         didSet{
             photoImageView.image = nil
@@ -18,10 +18,10 @@ public class SKZoomingScrollView:UIScrollView, UIScrollViewDelegate, SKDetecting
         }
     }
     
-    var captionView:SKCaptionView!
-    var tapView:SKDetectingView!
-    var photoImageView:SKDetectingImageView!
-    var indicatorView: SKIndicatorView!
+    private weak var photoBrowser:SKPhotoBrowser!
+    private var tapView:SKDetectingView!
+    private var photoImageView:SKDetectingImageView!
+    private var indicatorView: SKIndicatorView!
     
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -51,7 +51,8 @@ public class SKZoomingScrollView:UIScrollView, UIScrollViewDelegate, SKDetecting
         // image
         photoImageView = SKDetectingImageView(frame: frame)
         photoImageView.delegate = self
-        photoImageView.backgroundColor = UIColor.clearColor()
+        photoImageView.contentMode = .Center
+        photoImageView.backgroundColor = .clearColor()
         addSubview(photoImageView)
         
         // indicator
@@ -59,19 +60,20 @@ public class SKZoomingScrollView:UIScrollView, UIScrollViewDelegate, SKDetecting
         addSubview(indicatorView)
         
         // self
-        backgroundColor = UIColor.clearColor()
+        backgroundColor = .clearColor()
         delegate = self
         showsHorizontalScrollIndicator = false
         showsVerticalScrollIndicator = false
         decelerationRate = UIScrollViewDecelerationRateFast
-        autoresizingMask = [.FlexibleHeight, .FlexibleWidth]
+        autoresizingMask = [.FlexibleWidth, .FlexibleTopMargin, .FlexibleBottomMargin, .FlexibleRightMargin, .FlexibleLeftMargin]
     }
     
     // MARK: - override
     public override func layoutSubviews() {
-        super.layoutSubviews()
         
         tapView.frame = bounds
+        
+        super.layoutSubviews()
         
         let boundsSize = bounds.size
         var frameToCenter = photoImageView.frame
@@ -101,7 +103,7 @@ public class SKZoomingScrollView:UIScrollView, UIScrollViewDelegate, SKDetecting
         minimumZoomScale = 1
         zoomScale = 1
         
-        if photoImageView == nil {
+        guard let photoImageView = photoImageView else {
             return
         }
         
@@ -110,8 +112,8 @@ public class SKZoomingScrollView:UIScrollView, UIScrollViewDelegate, SKDetecting
         
         let xScale = boundsSize.width / imageSize.width
         let yScale = boundsSize.height / imageSize.height
-        var maxScale:CGFloat = 4.0
         let minScale:CGFloat = min(xScale, yScale)
+        var maxScale:CGFloat = 4.0
         
         maximumZoomScale = maxScale
         minimumZoomScale = minScale
