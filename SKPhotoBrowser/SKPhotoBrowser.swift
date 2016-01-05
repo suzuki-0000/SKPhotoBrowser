@@ -14,7 +14,7 @@ import UIKit
     optional func didDismissAtPageIndex(index:Int)
 }
 
-let SKPHOTO_LOADING_DID_END_NOTIFICATION = "photoLoadingDidEndNotification"
+public let SKPHOTO_LOADING_DID_END_NOTIFICATION = "photoLoadingDidEndNotification"
 
 // MARK: - SKPhotoBrowser
 public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate{
@@ -77,7 +77,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate{
     public weak var delegate: SKPhotoBrowserDelegate?
     
     // photos
-    var photos:[SKPhoto] = [SKPhoto]()
+    var photos:[SKPhotoProtocol] = [SKPhotoProtocol]()
     var numberOfPhotos:Int{
         return photos.count
     }
@@ -93,21 +93,25 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate{
         setup()
     }
     
-    public convenience init(photos:[SKPhoto]) {
+    public convenience init(photos:[AnyObject]) {
         self.init(nibName: nil, bundle: nil)
-        for photo in photos{
-            photo.checkCache()
-            self.photos.append(photo)
+        for anyObject in photos{
+            if let photo = anyObject as? SKPhotoProtocol {
+                photo.checkCache()
+                self.photos.append(photo)
+            }
         }
     }
-    
-    public convenience init(originImage:UIImage, photos:[SKPhoto], animatedFromView:UIView) {
+
+    public convenience init(originImage:UIImage, photos:[AnyObject], animatedFromView:UIView) {
         self.init(nibName: nil, bundle: nil)
         self.senderOriginImage = originImage
         self.senderViewForAnimation = animatedFromView
-        for photo in photos{
-            photo.checkCache()
-            self.photos.append(photo)
+        for anyObject in photos{
+            if let photo = anyObject as? SKPhotoProtocol {
+                photo.checkCache()
+                self.photos.append(photo)
+            }
         }
     }
     
@@ -254,7 +258,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate{
     
     // MARK: - notification
     public func handleSKPhotoLoadingDidEndNotification(notification: NSNotification){
-        let photo = notification.object as! SKPhoto
+        let photo = notification.object as! SKPhotoProtocol
         let page = pageDisplayingAtPhoto(photo)
         if page.photo == nil {
             return
@@ -267,7 +271,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate{
         }
     }
     
-    public func loadAdjacentPhotosIfNecessary(photo: SKPhoto){
+    public func loadAdjacentPhotosIfNecessary(photo: SKPhotoProtocol){
         let page = pageDisplayingAtPhoto(photo)
         let pageIndex = (page.tag - pageIndexTagOffset)
         if currentPageIndex == pageIndex{
@@ -586,7 +590,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate{
         return result
     }
     
-    public func imageForPhoto(photo: SKPhoto)-> UIImage?{
+    public func imageForPhoto(photo: SKPhotoProtocol)-> UIImage?{
         if photo.underlyingImage != nil {
             return photo.underlyingImage
         } else {
@@ -622,7 +626,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate{
         hideControlsAfterDelay()
     }
     
-    public func photoAtIndex(index: Int) -> SKPhoto {
+    public func photoAtIndex(index: Int) -> SKPhotoProtocol {
         return photos[index]
     }
     
@@ -709,10 +713,10 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate{
         return thePage
     }
     
-    public func pageDisplayingAtPhoto(photo: SKPhoto) -> SKZoomingScrollView {
+    public func pageDisplayingAtPhoto(photo: SKPhotoProtocol) -> SKZoomingScrollView {
         var thePage:SKZoomingScrollView = SKZoomingScrollView()
         for page in visiblePages {
-            if page.photo == photo {
+            if page.photo === photo {
                 thePage = page
                 break
             }
