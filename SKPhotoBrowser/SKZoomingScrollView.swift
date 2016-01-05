@@ -11,7 +11,7 @@ import UIKit
 public class SKZoomingScrollView:UIScrollView, UIScrollViewDelegate, SKDetectingViewDelegate, SKDetectingImageViewDelegate{
     
     var captionView:SKCaptionView!
-    var photo:SKPhoto!{
+    var photo:SKPhotoProtocol!{
         didSet{
             photoImageView.image = nil
             displayImage()

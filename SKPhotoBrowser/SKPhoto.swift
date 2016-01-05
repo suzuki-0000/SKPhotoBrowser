@@ -8,8 +8,16 @@
 
 import UIKit
 
+public protocol SKPhotoProtocol: NSObjectProtocol {
+    var underlyingImage:UIImage! { get }
+    var caption:String! { get }
+    
+    func loadUnderlyingImageAndNotify()
+    func checkCache()
+}
+
 // MARK: - SKPhoto
-public class SKPhoto:NSObject {
+public class SKPhoto:NSObject,SKPhotoProtocol {
     
     public var underlyingImage:UIImage!
     public var photoURL:String!
