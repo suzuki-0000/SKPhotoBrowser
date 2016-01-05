@@ -188,23 +188,20 @@ public class SKZoomingScrollView:UIScrollView, UIScrollViewDelegate, SKDetecting
                 newZoom = maximumZoomScale
             }
             
-            zoomToRect(zoomRectForScrollView(newZoom, touchPoint:touchPoint), animated:true)
+            zoomToRect(zoomRectForScrollViewWith(newZoom, touchPoint:touchPoint), animated:true)
         }
         
         // delay control
         photoBrowser.hideControlsAfterDelay()
     }
    
-    public func zoomRectForScrollView(withScale:CGFloat, touchPoint:CGPoint) -> CGRect{
-        if let imageScale = photoImageView.image?.scale {
-            return CGRectMake(touchPoint.x - ((frame.size.width * imageScale) / 2.0),
-                touchPoint.y - ((frame.size.height * imageScale) / 2.0),
-                frame.size.width, frame.size.height)
-        } else {
-            return CGRectMake(touchPoint.x - (frame.size.width / 2.0),
-                touchPoint.y - (frame.size.height / 2.0),
-                frame.size.width, frame.size.height)
-        }
+    public func zoomRectForScrollViewWith(scale:CGFloat, touchPoint:CGPoint) -> CGRect{
+        let w = frame.size.width / scale
+        let h = frame.size.height / scale
+        let x = touchPoint.x - (w / 2.0)
+        let y = touchPoint.y - (h / 2.0)
+        
+        return CGRectMake(x, y, w, h)
     }
     
     // MARK: - UIScrollViewDelegate
