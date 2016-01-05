@@ -196,9 +196,15 @@ public class SKZoomingScrollView:UIScrollView, UIScrollViewDelegate, SKDetecting
     }
    
     public func zoomRectForScrollView(withScale:CGFloat, touchPoint:CGPoint) -> CGRect{
-        return CGRectMake(touchPoint.x - (frame.size.width / 2.0),
-                          touchPoint.y - (frame.size.height / 2.0),
-                          frame.size.width, frame.size.height)
+        if let imageScale = photoImageView.image?.scale {
+            return CGRectMake(touchPoint.x - ((frame.size.width * imageScale) / 2.0),
+                touchPoint.y - ((frame.size.height * imageScale) / 2.0),
+                frame.size.width, frame.size.height)
+        } else {
+            return CGRectMake(touchPoint.x - (frame.size.width / 2.0),
+                touchPoint.y - (frame.size.height / 2.0),
+                frame.size.width, frame.size.height)
+        }
     }
     
     // MARK: - UIScrollViewDelegate
