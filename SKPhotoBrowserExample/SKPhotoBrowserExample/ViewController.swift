@@ -68,6 +68,13 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         let browser = SKPhotoBrowser(originImage: originImage, photos: images, animatedFromView: cell)
         browser.initializePageIndex(indexPath.row)
         browser.delegate = self
+        
+        // Can hide the action button by setting to false
+        // browser.displayAction = false
+        
+        // Optional action button titles (if left off, it uses activity controller
+//        browser.actionButtonTitles = ["Do One Action", "Do Another Action"]
+        
         presentViewController(browser, animated: true, completion: {})
     }
     
@@ -84,6 +91,9 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         // do some handle if you need
     }
     
+    func didDismissActionSheetWithButtonIndex(buttonIndex: Int, photoIndex: Int) {
+        // handle dismissing custom actions
+    }
 }
 
 
