@@ -89,8 +89,9 @@ func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath i
 #### Toolbar
 You can customize the toolbar(back/forward, counter, some action) button. 
 - displayCounterLabel (default is true) 
-- displayBackAndForwardButton (default is true). 
-- displayAction (default is true). 
+- displayBackAndForwardButton (default is true)
+- displayAction (default is true)
+
 If you dont want the toolbar at all, you can set displayToolbar = false (default is true)
 
 ```swift
