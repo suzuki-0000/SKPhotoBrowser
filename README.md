@@ -14,6 +14,7 @@ Simple PhotoBrowser/Viewer inspired by facebook, twitter photo browsers written 
 - has simple ability to custom photobrowser. (hide/show statusbar, some toolbar for controls, swipe control)
 - Handling and caching photos from web
 - Landscape handling.
+- 
 
 ![sample](Screenshots/example01.gif)
 
@@ -86,9 +87,10 @@ func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath i
 ### Custom
 
 #### Toolbar
-You can customize the toolbar(back/forward, counter) button. 
+You can customize the toolbar(back/forward, counter, some action) button. 
 - displayCounterLabel (default is true) 
 - displayBackAndForwardButton (default is true). 
+- displayAction (default is true). 
 If you dont want the toolbar at all, you can set displayToolbar = false (default is true)
 
 ```swift
@@ -96,6 +98,7 @@ let browser = SKPhotoBrowser(originImage: originImage, photos: images, animatedF
 browser.displayToolbar = false                // all tool bar will be hidden
 browser.displayCounterLabel = false           // counter label will be hidden
 browser.displayBackAndForwardButton = false   // back / forward button will be hidden
+browser.displayAction = false   // action button will be hidden
 ```
 
 #### Photo Captions
