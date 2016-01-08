@@ -12,12 +12,13 @@ import UIKit
     func didShowPhotoAtIndex(index:Int)
     optional func willDismissAtPageIndex(index:Int)
     optional func didDismissAtPageIndex(index:Int)
+    optional func didDismissActionSheetWithButtonIndex(buttonIndex:Int, photoIndex:Int)
 }
 
 public let SKPHOTO_LOADING_DID_END_NOTIFICATION = "photoLoadingDidEndNotification"
 
 // MARK: - SKPhotoBrowser
-public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate{
+public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate, UIActionSheetDelegate {
     
     final let pageIndexTagOffset:Int = 1000
     // animation property
@@ -29,11 +30,17 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate{
     var screenHeight:CGFloat { return screenBound.size.height }
     
     // custom abilities
+    public var displayAction:Bool = true
+    public var actionButtonTitles:[String]?
     public var displayToolbar:Bool = true
     public var displayCounterLabel:Bool = true
     public var displayBackAndForwardButton:Bool = true
     public var disableVerticalSwipe:Bool = false
     public var isForceStatusBarHidden:Bool = false
+    
+    // actions
+    private var actionSheet:UIActionSheet!
+    private var activityViewController:UIActivityViewController!
     
     // tool for controls
     private var applicationWindow:UIWindow!
@@ -41,6 +48,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate{
     private var toolCounterLabel:UILabel!
     private var toolCounterButton:UIBarButtonItem!
     private var toolPreviousButton:UIBarButtonItem!
+    private var toolActionButton:UIBarButtonItem!
     private var toolNextButton:UIBarButtonItem!
     private var pagingScrollView:UIScrollView!
     private var panGesture:UIPanGestureRecognizer!
@@ -202,6 +210,10 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate{
         panGesture.minimumNumberOfTouches = 1
         panGesture.maximumNumberOfTouches = 1
         
+        // actions
+        toolActionButton = UIBarButtonItem(barButtonSystemItem: .Action, target: self, action: "actionButtonPressed")
+        toolActionButton.tintColor = UIColor.whiteColor()
+        
         // transition (this must be last call of view did load.)
         performPresentAnimation()
     }
@@ -319,6 +331,9 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate{
             items.append(toolNextButton)
         }
         items.append(flexSpace)
+        if displayAction {
+            items.append(toolActionButton)
+        }
         toolBar.setItems(items, animated: false)
         updateToolbar()
         
@@ -792,6 +807,55 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate{
         }
     }
 
+    // MARK: Action Button
+    public func actionButtonPressed() {
+        let photo = photoAtIndex(currentPageIndex)
+        if ((numberOfPhotos > 0) && (photo.underlyingImage != nil)) {
+            if let titles = actionButtonTitles {
+                actionSheet = UIActionSheet()
+                actionSheet.delegate = self
+                for actionTitle in titles {
+                    actionSheet.addButtonWithTitle(actionTitle)
+                }
+                actionSheet.cancelButtonIndex = actionSheet.addButtonWithTitle("Cancel")
+                actionSheet.actionSheetStyle = .BlackTranslucent
+                if UI_USER_INTERFACE_IDIOM() == .Phone {
+                    actionSheet.showInView(view)
+                } else {
+                    actionSheet.showFromBarButtonItem(toolActionButton, animated: true)
+                }
+            } else {
+                var activityItems:[AnyObject] = [photo.underlyingImage]
+                if photo.caption != nil {
+                    activityItems.append(photo.caption)
+                }
+                activityViewController = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
+                activityViewController.completionWithItemsHandler = {
+                    (activity, success, items, error) in
+                    self.hideControlsAfterDelay()
+                    self.activityViewController = nil
+                }
+                if UI_USER_INTERFACE_IDIOM() == .Phone {
+                    presentViewController(activityViewController, animated: true, completion: nil)
+                } else {
+                    let popover = UIPopoverController(contentViewController: activityViewController)
+                    popover.presentPopoverFromBarButtonItem(toolActionButton, permittedArrowDirections: .Any, animated: true)
+                }
+            }
+        }
+        
+    }
+    
+    // MARK: UIActionSheetDelegate
+    public func actionSheet(actionSheet: UIActionSheet, didDismissWithButtonIndex buttonIndex: Int) {
+        if actionSheet == self.actionSheet {
+            self.actionSheet = nil
+            
+            if buttonIndex != actionSheet.cancelButtonIndex {
+                self.delegate?.didDismissActionSheetWithButtonIndex?(buttonIndex, photoIndex: currentPageIndex)
+            }
+        }
+    }
     
     // MARK: -  UIScrollView Delegate
     public func scrollViewDidScroll(scrollView: UIScrollView) {
