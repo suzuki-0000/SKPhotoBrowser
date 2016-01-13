@@ -31,6 +31,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate, UIActionShe
     
     // custom abilities
     public var displayAction:Bool = true
+    public var shareExtraCaption:String? = nil
     public var actionButtonTitles:[String]?
     public var displayToolbar:Bool = true
     public var displayCounterLabel:Bool = true
@@ -824,7 +825,11 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate, UIActionShe
             } else {
                 var activityItems:[AnyObject] = [photo.underlyingImage]
                 if photo.caption != nil {
-                    activityItems.append(photo.caption)
+                    if let shareExtraCaption = shareExtraCaption {
+                        activityItems.append(photo.caption + shareExtraCaption)
+                    } else {
+                        activityItems.append(photo.caption)
+                    }
                 }
                 activityViewController = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
                 activityViewController.completionWithItemsHandler = {
