@@ -123,6 +123,11 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate, UIActionShe
         }
     }
     
+    deinit {
+        pagingScrollView = nil
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+    
     func setup() {
         applicationWindow = (UIApplication.sharedApplication().delegate?.window)!
         
@@ -242,14 +247,6 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate, UIActionShe
     public override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(true)
         isViewActive = true
-    }
-    
-    public override func viewDidDisappear(animated: Bool) {
-        super.viewDidDisappear(true)
-        
-        pagingScrollView = nil
-        visiblePages = Set()
-        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
     public override func prefersStatusBarHidden() -> Bool {
