@@ -225,7 +225,9 @@ public class SKZoomingScrollView:UIScrollView, UIScrollViewDelegate, SKDetecting
     }
     
     func handleDoubleTap(view: UIView, touch: UITouch) {
-        // nothing to do
+        var point = self.convertPoint(touch.locationInView(view), toView: self.photoImageView)
+        point.y = 0
+        handleDoubleTap(point)
     }
     
     // MARK: - SKDetectingImageViewDelegate

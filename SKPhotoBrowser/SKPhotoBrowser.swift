@@ -589,7 +589,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate, UIActionShe
         modalTransitionStyle = .CrossDissolve
         senderViewForAnimation?.hidden = false
         prepareForClosePhotoBrowser()
-        dismissViewControllerAnimated(true){
+        dismissViewControllerAnimated(false){
             self.delegate?.didDismissAtPageIndex?(self.currentPageIndex)
         }
     }
