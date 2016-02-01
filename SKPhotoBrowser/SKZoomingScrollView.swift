@@ -8,19 +8,19 @@
 
 import UIKit
 
-public class SKZoomingScrollView:UIScrollView, UIScrollViewDelegate, SKDetectingViewDelegate, SKDetectingImageViewDelegate{
+public class SKZoomingScrollView: UIScrollView, UIScrollViewDelegate, SKDetectingViewDelegate, SKDetectingImageViewDelegate {
     
-    var captionView:SKCaptionView!
-    var photo:SKPhotoProtocol!{
-        didSet{
+    var captionView: SKCaptionView!
+    var photo: SKPhotoProtocol! {
+        didSet {
             photoImageView.image = nil
             displayImage()
         }
     }
     
-    private weak var photoBrowser:SKPhotoBrowser!
-    private var tapView:SKDetectingView!
-    private var photoImageView:SKDetectingImageView!
+    private weak var photoBrowser: SKPhotoBrowser!
+    private var tapView: SKDetectingView!
+    private var photoImageView: SKDetectingImageView!
     private var indicatorView: SKIndicatorView!
     
     required public init?(coder aDecoder: NSCoder) {
@@ -92,12 +92,12 @@ public class SKZoomingScrollView:UIScrollView, UIScrollViewDelegate, SKDetecting
         }
         
         // Center
-        if !CGRectEqualToRect(photoImageView.frame, frameToCenter){
+        if !CGRectEqualToRect(photoImageView.frame, frameToCenter) {
             photoImageView.frame = frameToCenter
         }
     }
     
-    public func setMaxMinZoomScalesForCurrentBounds(){
+    public func setMaxMinZoomScalesForCurrentBounds() {
         
         maximumZoomScale = 1
         minimumZoomScale = 1
@@ -112,8 +112,8 @@ public class SKZoomingScrollView:UIScrollView, UIScrollViewDelegate, SKDetecting
         
         let xScale = boundsSize.width / imageSize.width
         let yScale = boundsSize.height / imageSize.height
-        let minScale:CGFloat = min(xScale, yScale)
-        var maxScale:CGFloat = 4.0
+        let minScale: CGFloat = min(xScale, yScale)
+        var maxScale: CGFloat = 4.0
         
         maximumZoomScale = maxScale
         minimumZoomScale = minScale
@@ -127,16 +127,16 @@ public class SKZoomingScrollView:UIScrollView, UIScrollViewDelegate, SKDetecting
         }
         
         // reset position
-        photoImageView.frame = CGRectMake(0, 0, photoImageView.frame.size.width, photoImageView.frame.size.height)
+        photoImageView.frame = CGRect(x: 0, y: 0, width: photoImageView.frame.size.width, height: photoImageView.frame.size.height)
         setNeedsLayout()
     }
     
-    public func prepareForReuse(){
+    public func prepareForReuse() {
         photo = nil
     }
     
     // MARK: - image
-    public func displayImage(){
+    public func displayImage() {
         // reset scale
         maximumZoomScale = 1
         minimumZoomScale = 1
@@ -169,21 +169,21 @@ public class SKZoomingScrollView:UIScrollView, UIScrollViewDelegate, SKDetecting
         setNeedsLayout()
     }
     
-    public func displayImageFailure(){
+    public func displayImageFailure() {
         indicatorView.stopAnimating()
     }
     
 
     // MARK: - handle tap
-    public func handleDoubleTap(touchPoint: CGPoint){
+    public func handleDoubleTap(touchPoint: CGPoint) {
         NSObject.cancelPreviousPerformRequestsWithTarget(photoBrowser)
         
-        if zoomScale > minimumZoomScale{
+        if zoomScale > minimumZoomScale {
             // zoom out
             setZoomScale(minimumZoomScale, animated: true)
         } else {
             // zoom in
-            var newZoom:CGFloat = zoomScale * 2.0
+            var newZoom: CGFloat = zoomScale * 2.0
             if newZoom >= maximumZoomScale {
                 newZoom = maximumZoomScale
             }
@@ -195,13 +195,13 @@ public class SKZoomingScrollView:UIScrollView, UIScrollViewDelegate, SKDetecting
         photoBrowser.hideControlsAfterDelay()
     }
    
-    public func zoomRectForScrollViewWith(scale:CGFloat, touchPoint:CGPoint) -> CGRect{
+    public func zoomRectForScrollViewWith(scale: CGFloat, touchPoint: CGPoint) -> CGRect {
         let w = frame.size.width / scale
         let h = frame.size.height / scale
         let x = touchPoint.x - (w / 2.0)
         let y = touchPoint.y - (h / 2.0)
         
-        return CGRectMake(x, y, w, h)
+        return CGRect(x: x, y: y, width: w, height: h)
     }
     
     // MARK: - UIScrollViewDelegate

@@ -9,7 +9,7 @@
 import UIKit
 import SKPhotoBrowser
 
-class ViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, SKPhotoBrowserDelegate{
+class ViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, SKPhotoBrowserDelegate {
 
     @IBOutlet weak var collectionView: UICollectionView!
     var images = [SKPhoto]()
@@ -30,7 +30,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        for i in 0..<30{
+        for i in 0..<30 {
             let photo = SKPhoto.photoWithImage(UIImage(named: "image\(i%10).jpg")!)
             photo.caption = caption[i%10]
             images.append(photo)
@@ -39,7 +39,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         setupTableView()
     }
     
-    private func setupTableView(){
+    private func setupTableView() {
         collectionView.delegate = self
         collectionView.dataSource = self
     }
@@ -58,17 +58,21 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("exampleCollectionViewCell", forIndexPath: indexPath) as! ExampleCollectionViewCell
-        
+        guard let cell = collectionView.dequeueReusableCellWithReuseIdentifier("exampleCollectionViewCell", forIndexPath: indexPath) as? ExampleCollectionViewCell else {
+            return UICollectionViewCell()
+        }
         cell.exampleImageView.image = images[indexPath.row].underlyingImage
-        
         return cell
     }
     
     // MARK: - UICollectionViewDelegate
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        let cell = collectionView.cellForItemAtIndexPath(indexPath) as! ExampleCollectionViewCell
-        let originImage = cell.exampleImageView.image!
+        guard let cell = collectionView.cellForItemAtIndexPath(indexPath) as? ExampleCollectionViewCell else {
+            return
+        }
+        guard let originImage = cell.exampleImageView.image else {
+            return
+        }
         let browser = SKPhotoBrowser(originImage: originImage, photos: images, animatedFromView: cell)
         browser.initializePageIndex(indexPath.row)
         browser.delegate = self
@@ -77,7 +81,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         // browser.displayAction = false
         
         // Optional action button titles (if left off, it uses activity controller
-//        browser.actionButtonTitles = ["Do One Action", "Do Another Action"]
+        // browser.actionButtonTitles = ["Do One Action", "Do Another Action"]
         
         presentViewController(browser, animated: true, completion: {})
     }
@@ -101,7 +105,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
 }
 
 
-class ExampleCollectionViewCell:UICollectionViewCell{
+class ExampleCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var exampleImageView: UIImageView!
     

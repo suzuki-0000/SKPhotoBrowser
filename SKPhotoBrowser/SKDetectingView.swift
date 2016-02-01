@@ -9,14 +9,13 @@
 import UIKit
 
 @objc protocol SKDetectingViewDelegate {
-    func handleSingleTap(view:UIView, touch: UITouch)
-    func handleDoubleTap(view:UIView, touch: UITouch)
+    func handleSingleTap(view: UIView, touch: UITouch)
+    func handleDoubleTap(view: UIView, touch: UITouch)
 }
 
 
-class SKDetectingView:UIView{
-    
-    weak var delegate:SKDetectingViewDelegate?
+class SKDetectingView: UIView {
+    weak var delegate: SKDetectingViewDelegate?
     
     override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
         super.touchesEnded(touches, withEvent: event)

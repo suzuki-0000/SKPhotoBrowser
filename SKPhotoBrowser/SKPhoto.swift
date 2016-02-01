@@ -9,45 +9,44 @@
 import UIKit
 
 public protocol SKPhotoProtocol: NSObjectProtocol {
-    var underlyingImage:UIImage! { get }
-    var caption:String! { get }
-    
+    var underlyingImage: UIImage! { get }
+    var caption: String! { get }
     func loadUnderlyingImageAndNotify()
     func checkCache()
 }
 
 // MARK: - SKPhoto
-public class SKPhoto:NSObject,SKPhotoProtocol {
+public class SKPhoto: NSObject, SKPhotoProtocol {
     
-    public var underlyingImage:UIImage!
-    public var photoURL:String!
-    public var shouldCachePhotoURLImage:Bool = false
-    public var caption:String!
+    public var underlyingImage: UIImage!
+    public var photoURL: String!
+    public var shouldCachePhotoURLImage: Bool = false
+    public var caption: String!
     
     override init() {
         super.init()
     }
     
-    convenience init(image: UIImage){
+    convenience init(image: UIImage) {
         self.init()
         underlyingImage = image
     }
     
-    convenience init(url: String){
+    convenience init(url: String) {
         self.init()
         photoURL = url
     }
     
-    public func checkCache(){
+    public func checkCache() {
         if photoURL != nil && shouldCachePhotoURLImage {
-            if let img = UIImage.sharedSKPhotoCache().objectForKey(photoURL) as? UIImage{
+            if let img = UIImage.sharedSKPhotoCache().objectForKey(photoURL) as? UIImage {
                 underlyingImage = img
             }
         }
     }
     
-    public func loadUnderlyingImageAndNotify(){
-        if underlyingImage != nil{
+    public func loadUnderlyingImageAndNotify() {
+        if underlyingImage != nil {
             loadUnderlyingImageComplete()
         }
         
@@ -78,7 +77,7 @@ public class SKPhoto:NSObject,SKPhotoProtocol {
         }
     }
 
-    public func loadUnderlyingImageComplete(){
+    public func loadUnderlyingImageComplete() {
         NSNotificationCenter.defaultCenter().postNotificationName(SKPHOTO_LOADING_DID_END_NOTIFICATION, object: self)
     }
     
