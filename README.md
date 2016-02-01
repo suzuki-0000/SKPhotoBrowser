@@ -67,7 +67,6 @@ images.append(photo)
 
 // create PhotoBrowser Instance, and present. 
 let browser = SKPhotoBrowser(photos: images)
-browser.initializePageIndex(0)
 presentViewController(browser, animated: true, completion: {})
 ```
 
@@ -75,8 +74,8 @@ If you want to use zooming effect from an existing view, use another initializer
 ```swift
 // e.g.: some tableView or collectionView.
 func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-   let cell = collectionView.cellForItemAtIndexPath(indexPath) as! ExampleCollectionViewCell
-   let originImage = cell.exampleImageView.image! // some image for baseImage 
+   let cell = collectionView.cellForItemAtIndexPath(indexPath) 
+   let originImage = cell.exampleImageView.image // some image for baseImage 
    let browser = SKPhotoBrowser(originImage: originImage, photos: images, animatedFromView: cell) 
    browser.initializePageIndex(indexPath.row)
    presentViewController(browser, animated: true, completion: {})
