@@ -51,7 +51,7 @@ public class SKZoomingScrollView:UIScrollView, UIScrollViewDelegate, SKDetecting
         // image
         photoImageView = SKDetectingImageView(frame: frame)
         photoImageView.delegate = self
-        photoImageView.contentMode = .Center
+        photoImageView.contentMode = .ScaleAspectFill
         photoImageView.backgroundColor = .clearColor()
         addSubview(photoImageView)
         
@@ -225,7 +225,7 @@ public class SKZoomingScrollView:UIScrollView, UIScrollViewDelegate, SKDetecting
     }
     
     func handleDoubleTap(view: UIView, touch: UITouch) {
-        // nothing to do
+        handleDoubleTap(touch.locationInView(view))
     }
     
     // MARK: - SKDetectingImageViewDelegate

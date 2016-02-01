@@ -17,6 +17,8 @@ public class SKCaptionView: UIView {
     private var photo:SKPhotoProtocol!
     private var photoLabel:UILabel!
     private var photoLabelPadding:CGFloat = 10
+    private var fadeView:UIView = UIView()
+    private var gradientLayer = CAGradientLayer()
     
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -38,13 +40,12 @@ public class SKCaptionView: UIView {
         autoresizingMask = [.FlexibleWidth, .FlexibleTopMargin, .FlexibleRightMargin, .FlexibleLeftMargin]
         
         // setup background first
-        let fadeView = UIView(frame: CGRectMake(0, -100, screenWidth, bounds.size.height))
-        let gradientLayer = CAGradientLayer()
-        gradientLayer.frame = fadeView.frame
-        gradientLayer.colors = [UIColor(white: 0.0, alpha: 0.0).CGColor, UIColor(white: 0.0, alpha: 0.8).CGColor]
-        fadeView.layer.insertSublayer(gradientLayer, atIndex: 0)
         fadeView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
         addSubview(fadeView)
+        
+        // add layer at fadeView
+        gradientLayer.colors = [UIColor(white: 0.0, alpha: 0.0).CGColor, UIColor(white: 0.0, alpha: 0.8).CGColor]
+        fadeView.layer.insertSublayer(gradientLayer, atIndex: 0)
         
         photoLabel = UILabel(frame: CGRectMake(photoLabelPadding, 0, bounds.size.width - (photoLabelPadding * 2) , bounds.size.height))
         photoLabel.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
@@ -52,7 +53,7 @@ public class SKCaptionView: UIView {
         photoLabel.backgroundColor = .clearColor()
         photoLabel.textColor = .whiteColor()
         photoLabel.textAlignment = .Center
-        photoLabel.lineBreakMode = .ByWordWrapping
+        photoLabel.lineBreakMode = .ByTruncatingTail
         photoLabel.numberOfLines = 3
         photoLabel.shadowColor = UIColor(white: 0.0, alpha: 0.5)
         photoLabel.shadowOffset = CGSizeMake(0.0, 1.0)
@@ -64,11 +65,13 @@ public class SKCaptionView: UIView {
     }
     
     public override func sizeThatFits(size: CGSize) -> CGSize {
-        if photoLabel.text?.characters.count == 0 {
+        guard let text = photoLabel.text else {
+            return CGSizeZero
+        }
+        guard photoLabel.text?.characters.count > 0 else {
             return CGSizeZero
         }
         
-        let text:String = photoLabel.text!
         let font:UIFont = photoLabel.font
         let width:CGFloat = size.width - (photoLabelPadding * 2)
         let height:CGFloat = photoLabel.font.lineHeight * CGFloat(photoLabel.numberOfLines)
@@ -78,6 +81,11 @@ public class SKCaptionView: UIView {
             options: NSStringDrawingOptions.UsesLineFragmentOrigin, context: nil).size
         
         return CGSizeMake(textSize.width, textSize.height + photoLabelPadding * 2)
+    }
+    
+    public override func layoutSubviews() {
+        fadeView.frame = frame
+        gradientLayer.frame = frame
     }
     
 }

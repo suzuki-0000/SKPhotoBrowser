@@ -71,6 +71,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate, UIActionShe
     
     // for status check property
     private var isDraggingPhoto:Bool = false
+    private var isEndAnimationByToolBar:Bool = true
     private var isViewActive:Bool = false
     private var isPerformingLayout:Bool = false
     private var isStatusBarOriginallyHidden:Bool = false
@@ -227,7 +228,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate, UIActionShe
     public override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
         
-        isStatusBarOriginallyHidden = UIApplication.sharedApplication().statusBarHidden
+//        isStatusBarOriginallyHidden = UIApplication.sharedApplication().statusBarHidden
         reloadData()
     }
     
@@ -520,17 +521,26 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate, UIActionShe
             resizableImageView = UIImageView(image: imageFromView)
             resizableImageView.frame = senderViewOriginalFrame
             resizableImageView.clipsToBounds = true
-            resizableImageView.contentMode = .ScaleAspectFill
+            resizableImageView.contentMode = .ScaleToFill
             applicationWindow.addSubview(resizableImageView)
             
             sender.hidden = true
             
-            let scaleFactor = imageFromView.size.width / screenWidth
-            let finalImageViewFrame = CGRectMake(0, (screenHeight/2) - ((imageFromView.size.height / scaleFactor)/2), screenWidth, imageFromView.size.height / scaleFactor)
+            let scaleFactor = UIApplication.sharedApplication().statusBarOrientation == .Portrait
+                ? imageFromView.size.width / screenWidth
+                : imageFromView.size.height / screenHeight
+            
+            let finalImageViewFrame = CGRectMake(
+                (screenWidth/2) - ((imageFromView.size.width / scaleFactor)/2),
+                (screenHeight/2) - ((imageFromView.size.height / scaleFactor)/2),
+                //screenWidth,
+                imageFromView.size.width / scaleFactor,
+                imageFromView.size.height / scaleFactor)
+            
             
             UIView.animateWithDuration(animationDuration,
                 animations: { () -> Void in
-                    self.resizableImageView.layer.frame = finalImageViewFrame
+                    self.resizableImageView.frame = finalImageViewFrame
                     self.doneButton.alpha = 1.0
                     self.doneButton.frame = self.doneButtonShowFrame
                 },
@@ -570,7 +580,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate, UIActionShe
         
         resizableImageView.alpha = 1.0
         resizableImageView.clipsToBounds = true
-        resizableImageView.contentMode = .ScaleAspectFill
+        resizableImageView.contentMode = .ScaleToFill
         applicationWindow.addSubview(resizableImageView)
         
         UIView.animateWithDuration(animationDuration,
@@ -632,6 +642,10 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate, UIActionShe
     
     public func jumpToPageAtIndex(index:Int){
         if index < numberOfPhotos {
+            if !isEndAnimationByToolBar {
+                return
+            }
+            isEndAnimationByToolBar = false
             let pageFrame = frameForPageAtIndex(index)
             pagingScrollView.setContentOffset(CGPointMake(pageFrame.origin.x - 10, 0), animated: true)
             updateToolbar()
@@ -671,23 +685,24 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate, UIActionShe
         }
        
         for(var index = firstIndex; index <= lastIndex; index++){
-            if !isDisplayingPageForIndex(index){
-                
-                let page = SKZoomingScrollView(frame: view.frame, browser: self)
-                page.frame = frameForPageAtIndex(index)
-                page.tag = index + pageIndexTagOffset
-                page.photo = photoAtIndex(index)
-                
-                visiblePages.insert(page)
-                pagingScrollView.addSubview(page)
-                
-                // if exists caption, insert
-                if let captionView = captionViewForPhotoAtIndex(index) {
-                    captionView.frame = frameForCaptionView(captionView, index: index)
-                    pagingScrollView.addSubview(captionView)
-                    // ref val for control
-                    page.captionView = captionView
-                }
+            if isDisplayingPageForIndex(index){
+                continue
+            }
+            
+            let page = SKZoomingScrollView(frame: view.frame, browser: self)
+            page.frame = frameForPageAtIndex(index)
+            page.tag = index + pageIndexTagOffset
+            page.photo = photoAtIndex(index)
+            
+            visiblePages.insert(page)
+            pagingScrollView.addSubview(page)
+            
+            // if exists caption, insert
+            if let captionView = captionViewForPhotoAtIndex(index) {
+                captionView.frame = frameForCaptionView(captionView, index: index)
+                pagingScrollView.addSubview(captionView)
+                // ref val for control
+                page.captionView = captionView
             }
         }
     }
@@ -808,6 +823,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate, UIActionShe
     // MARK: Action Button
     public func actionButtonPressed() {
         let photo = photoAtIndex(currentPageIndex)
+        
         if ((numberOfPhotos > 0) && (photo.underlyingImage != nil)) {
             if let titles = actionButtonTitles {
                 actionSheet = UIActionSheet()
@@ -861,10 +877,10 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate, UIActionShe
     
     // MARK: -  UIScrollView Delegate
     public func scrollViewDidScroll(scrollView: UIScrollView) {
-        if !isViewActive {
+        guard isViewActive else {
             return
         }
-        if isPerformingLayout {
+        guard !isPerformingLayout else {
             return
         }
         
@@ -895,5 +911,9 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate, UIActionShe
     
     public func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
         hideControlsAfterDelay()
+    }
+    
+    public func scrollViewDidEndScrollingAnimation(scrollView: UIScrollView) {
+        isEndAnimationByToolBar = true
     }
 }
