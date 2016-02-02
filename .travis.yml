@@ -1,0 +1,41 @@
+language: objective-c
+osx_image: xcode7.2
+branches:
+  only:
+    - master
+env:
+  global:
+    - LC_CTYPE=en_US.UTF-8
+    - LANG=en_US.UTF-8
+    - FRAMEWORK_NAME="CountdownLabel"
+  matrix:
+    - DESTINATION="OS=9.2,name=iPhone 6"  SCHEME="CountdownLabelTests" SDK="iphonesimulator9.2"  $ACTION="test"
+
+before_install:
+  - brew update
+  - brew install carthage || brew outdated carthage || brew upgrade carthage
+  - carthage version
+
+install:
+  - gem install xcpretty
+  - carthage bootstrap --no-use-binaries --platform iOS
+
+script:
+  - set -o pipefail
+  - xcodebuild -version
+  - xcodebuild -showsdks
+  - xcodebuild
+    -project "$FRAMEWORK_NAME.xcodeproj"
+    -scheme "$SCHEME"
+    -sdk "$SDK"
+    -destination "$DESTINATION"
+    -configuration Debug
+    ONLY_ACTIVE_ARCH=NO
+    GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES
+    GCC_GENERATE_TEST_COVERAGE_FILES=YES
+    "$ACTION"
+    | xcpretty -c
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
+

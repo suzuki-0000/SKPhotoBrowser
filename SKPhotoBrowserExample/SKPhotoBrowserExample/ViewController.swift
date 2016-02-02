@@ -78,7 +78,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         browser.delegate = self
         
         // Can hide the action button by setting to false
-        // browser.displayAction = false
+        browser.displayAction = true
         
         // Optional action button titles (if left off, it uses activity controller
         // browser.actionButtonTitles = ["Do One Action", "Do Another Action"]
@@ -94,6 +94,10 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     func willDismissAtPageIndex(index: Int) {
         // do some handle if you need
     }
+   
+    func willShowActionSheet(photoIndex: Int) {
+        // do some handle if you need
+    }
     
     func didDismissAtPageIndex(index: Int) {
         // do some handle if you need
@@ -102,6 +106,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     func didDismissActionSheetWithButtonIndex(buttonIndex: Int, photoIndex: Int) {
         // handle dismissing custom actions
     }
+    
 }
 
 

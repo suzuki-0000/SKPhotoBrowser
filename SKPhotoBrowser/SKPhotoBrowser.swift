@@ -11,6 +11,7 @@ import UIKit
 @objc public protocol SKPhotoBrowserDelegate {
     func didShowPhotoAtIndex(index: Int)
     optional func willDismissAtPageIndex(index: Int)
+    optional func willShowActionSheet(photoIndex: Int)
     optional func didDismissAtPageIndex(index: Int)
     optional func didDismissActionSheetWithButtonIndex(buttonIndex: Int, photoIndex: Int)
 }
@@ -207,19 +208,20 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate, UIActionShe
         doneButton.setImage(doneImage, forState: UIControlState.Normal)
         doneButton.frame = doneButtonHideFrame
         doneButton.imageEdgeInsets = UIEdgeInsetsMake(15.25, 15.25, 15.25, 15.25)
-        doneButton.backgroundColor = UIColor.clearColor()
+        doneButton.backgroundColor = .clearColor()
         doneButton.addTarget(self, action: "doneButtonPressed:", forControlEvents: UIControlEvents.TouchUpInside)
         doneButton.alpha = 0.0
         view.addSubview(doneButton)
+        
+        // action button
+        toolActionButton = UIBarButtonItem(barButtonSystemItem: .Action, target: self, action: "actionButtonPressed")
+        toolActionButton.tintColor = .whiteColor()
         
         // gesture
         panGesture = UIPanGestureRecognizer(target: self, action: "panGestureRecognized:")
         panGesture.minimumNumberOfTouches = 1
         panGesture.maximumNumberOfTouches = 1
         
-        // actions
-        toolActionButton = UIBarButtonItem(barButtonSystemItem: .Action, target: self, action: "actionButtonPressed")
-        toolActionButton.tintColor = UIColor.whiteColor()
         
         // transition (this must be last call of view did load.)
         performPresentAnimation()
@@ -821,6 +823,8 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate, UIActionShe
     // MARK: Action Button
     public func actionButtonPressed() {
         let photo = photoAtIndex(currentPageIndex)
+        
+        delegate?.willShowActionSheet?(currentPageIndex)
         
         if numberOfPhotos > 0 && photo.underlyingImage != nil {
             if let titles = actionButtonTitles {
