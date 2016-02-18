@@ -228,8 +228,10 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate, UIActionShe
         deleteButton.backgroundColor = .clearColor()
         deleteButton.addTarget(self, action: "deleteButtonPressed:", forControlEvents: UIControlEvents.TouchUpInside)
         deleteButton.alpha = 0.0
-        if displayDelete {
-            view.addSubview(deleteButton)
+        view.addSubview(deleteButton)
+
+        if !displayDelete {
+            deleteButton.hidden = true
         }
         
         // action button
@@ -563,6 +565,8 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate, UIActionShe
                     self.resizableImageView.frame = finalImageViewFrame
                     self.doneButton.alpha = 1.0
                     self.doneButton.frame = self.doneButtonShowFrame
+                    self.deleteButton.alpha = 1.0
+                    self.deleteButton.frame = self.deleteButtonShowFrame
                 },
                 completion: { (Bool) -> Void in
                     self.view.alpha = 1.0
@@ -581,6 +585,8 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate, UIActionShe
                 animations: { () -> Void in
                     self.doneButton.alpha = 1.0
                     self.doneButton.frame = self.doneButtonShowFrame
+                    self.deleteButton.alpha = 1.0
+                    self.deleteButton.frame = self.deleteButtonShowFrame
                 },
                 completion: { (Bool) -> Void in
                     self.view.alpha = 1.0
@@ -813,6 +819,8 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate, UIActionShe
                 self.toolBar.frame = hidden ? self.frameForToolbarHideAtOrientation() : self.frameForToolbarAtOrientation()
                 self.doneButton.alpha = alpha
                 self.doneButton.frame = hidden ? self.doneButtonHideFrame : self.doneButtonShowFrame
+                self.deleteButton.alpha = alpha
+                self.deleteButton.frame = hidden ? self.deleteButtonHideFrame : self.deleteButtonShowFrame
                 for v in captionViews {
                     v.alpha = alpha
                 }
