@@ -14,7 +14,7 @@ import UIKit
     optional func willShowActionSheet(photoIndex: Int)
     optional func didDismissAtPageIndex(index: Int)
     optional func didDismissActionSheetWithButtonIndex(buttonIndex: Int, photoIndex: Int)
-    optional func didDeleted(notDeleted: [SKPhoto]) -> Void
+    optional func didDeleted(deletedIndex: [Int]) -> Void
 }
 
 public let SKPHOTO_LOADING_DID_END_NOTIFICATION = "photoLoadingDidEndNotification"
@@ -98,7 +98,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate, UIActionShe
     var numberOfPhotos: Int {
         return photos.count
     }
-    
+    var deleted = [Int]()
     // MARK - Initializer
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -251,6 +251,12 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate, UIActionShe
     public override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
         reloadData()
+        
+        var i = 0
+        for photo : SKPhotoProtocol in photos {
+            photo.index = i
+            i = i + 1
+        }
     }
     
     public override func viewWillLayoutSubviews() {
@@ -627,7 +633,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate, UIActionShe
         prepareForClosePhotoBrowser()
         dismissViewControllerAnimated(true) {
             self.delegate?.didDismissAtPageIndex?(self.currentPageIndex)
-            self.delegate?.didDeleted?(self.photos as! [SKPhoto])
+            self.delegate?.didDeleted?(self.deleted)
         }
     }
 
@@ -850,11 +856,15 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate, UIActionShe
 
     // MARK: - Button
     public func deleteButtonPressed(sender: UIButton) {
-        photos.removeAtIndex(currentPageIndex)
-        if photos.count == 0 {
-            dismissPhotoBrowser()
-        } else {
+        let index = photos[currentPageIndex].index
+        deleted.append(index!)
+        print(deleted)
+        
+        if photos.count > 1 {
+            photos.removeAtIndex(currentPageIndex)
             reloadData()
+        } else {
+            dismissPhotoBrowser()
         }
     }
 
