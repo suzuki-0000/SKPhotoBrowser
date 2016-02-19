@@ -856,15 +856,26 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate, UIActionShe
 
     // MARK: - Button
     public func deleteButtonPressed(sender: UIButton) {
+        let deleteAlert = UIAlertController(title: "要删除这张照片吗", message: "", preferredStyle: UIAlertControllerStyle.ActionSheet)
+        let deleteAction = UIAlertAction(title: "删除", style: UIAlertActionStyle.Destructive, handler: deletePhoto)
+        deleteAlert.addAction(deleteAction)
+        let canelAction = UIAlertAction(title: "取消", style: UIAlertActionStyle.Cancel,handler: nil)
+        deleteAlert.addAction(canelAction)
+        self.presentViewController(deleteAlert, animated: true, completion: nil)
+    }
+    
+    func deletePhoto(avc:UIAlertAction) -> Void{
         let index = photos[currentPageIndex].index
         deleted.append(index!)
         print(deleted)
-        
-        if photos.count > 1 {
-            photos.removeAtIndex(currentPageIndex)
-            reloadData()
-        } else {
+        if photos.count == 1 {
             dismissPhotoBrowser()
+        } else {
+            photos.removeAtIndex(currentPageIndex)
+            if currentPageIndex > 0 {
+                currentPageIndex = currentPageIndex - 1
+            }
+            reloadData()
         }
     }
 
