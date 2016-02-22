@@ -61,8 +61,8 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate, UIActionShe
     private var doneButtonHideFrame: CGRect = CGRect(x: 5, y: -20, width: 44, height: 44)
     
     private var deleteButton: UIButton!
-    private var deleteButtonShowFrame: CGRect = CGRect(x: UIScreen.mainScreen().bounds.size.width - 60, y: 5, width: 44, height: 44)
-    private var deleteButtonHideFrame: CGRect = CGRect(x: UIScreen.mainScreen().bounds.size.width - 60, y: -20, width: 44, height: 44)
+    private var deleteButtonShowFrame: CGRect = CGRect(x: UIScreen.mainScreen().bounds.size.width - 44 - 5, y: 5, width: 44, height: 44)
+    private var deleteButtonHideFrame: CGRect = CGRect(x: UIScreen.mainScreen().bounds.size.width - 44 - 5, y: -20, width: 44, height: 44)
     
     // photo's paging
     private var visiblePages: Set<SKZoomingScrollView> = Set()
@@ -865,9 +865,10 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate, UIActionShe
     }
     
     func deletePhoto(avc:UIAlertAction) -> Void{
-        let index = photos[currentPageIndex].index
-        deleted.append(index!)
-        print(deleted)
+        guard let index = photos[currentPageIndex].index else {
+            return
+        }
+        deleted.append(index)
         if photos.count == 1 {
             dismissPhotoBrowser()
         } else {
