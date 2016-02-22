@@ -9,7 +9,7 @@
 import UIKit
 
 @objc public protocol SKPhotoBrowserDelegate {
-    func didShowPhotoAtIndex(index: Int)
+    optional func didShowPhotoAtIndex(index: Int)
     optional func willDismissAtPageIndex(index: Int)
     optional func willShowActionSheet(photoIndex: Int)
     optional func didDismissAtPageIndex(index: Int)
@@ -709,7 +709,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate, UIActionShe
     }
     
     private func didStartViewingPageAtIndex(index: Int) {
-        delegate?.didShowPhotoAtIndex(index)
+        delegate?.didShowPhotoAtIndex?(index)
     }
     
     private func captionViewForPhotoAtIndex(index: Int) -> SKCaptionView? {

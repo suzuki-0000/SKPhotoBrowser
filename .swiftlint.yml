@@ -1,4 +1,5 @@
 disabled_rules:
+  - type_body_length
   - line_length
   - trailing_newline
   - trailing_whitespace
@@ -14,6 +15,6 @@ excluded:
 
 variable_name_min_length: 1
 variable_name_max_length: 40
-function_body_length: 300
+function_body_length: 350
 file_length: 800
 type_body_length: 800
