@@ -14,6 +14,7 @@ Simple PhotoBrowser/Viewer inspired by facebook, twitter photo browsers written 
 - has simple ability to custom photobrowser. (hide/show statusbar, some toolbar for controls, swipe control)
 - Handling and caching photos from web
 - Landscape handling.
+- Delete photo support(by offbye). By set displayDelete=true show a delete icon in statusbar, deleted indexes can be obtain from delegate func didDeleted 
 
 ![sample](Screenshots/example01.gif)
 
