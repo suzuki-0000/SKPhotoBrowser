@@ -6,7 +6,7 @@
 //  Copyright © 2015 suzuki_keishi. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 class SKIndicatorView: UIActivityIndicatorView {
     
