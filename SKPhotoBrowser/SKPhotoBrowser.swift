@@ -71,7 +71,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate, UIActionShe
     
     // senderView's property
     private var senderViewForAnimation: UIView?
-    private var senderViewOriginalFrame: CGRect = CGRectZero
+    private var senderViewOriginalFrame: CGRect = CGRect.zero
     private var senderOriginImage: UIImage!
     
     private var resizableImageView: UIImageView = UIImageView()
@@ -253,7 +253,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate, UIActionShe
         reloadData()
         
         var i = 0
-        for photo : SKPhotoProtocol in photos {
+        for photo: SKPhotoProtocol in photos {
             photo.index = i
             i = i + 1
         }
@@ -419,7 +419,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate, UIActionShe
         return CGRect(x: 0, y: view.bounds.size.height + height, width: view.bounds.size.width, height: height)
     }
     
-    public func frameForCaptionView(captionView: SKCaptionView, index: Int) -> CGRect{
+    public func frameForCaptionView(captionView: SKCaptionView, index: Int) -> CGRect {
         let pageFrame = frameForPageAtIndex(index)
         let captionSize = captionView.sizeThatFits(CGSize(width: pageFrame.size.width, height: 0))
         let navHeight = navigationController?.navigationBar.frame.size.height ?? 44
@@ -859,12 +859,12 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate, UIActionShe
         let deleteAlert = UIAlertController(title: "Delete this photo?", message: "", preferredStyle: UIAlertControllerStyle.ActionSheet)
         let deleteAction = UIAlertAction(title: "Delete", style: UIAlertActionStyle.Destructive, handler: deletePhoto)
         deleteAlert.addAction(deleteAction)
-        let canelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel,handler: nil)
+        let canelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil)
         deleteAlert.addAction(canelAction)
         self.presentViewController(deleteAlert, animated: true, completion: nil)
     }
     
-    func deletePhoto(avc:UIAlertAction) -> Void{
+    func deletePhoto(avc: UIAlertAction) -> Void {
         guard let index = photos[currentPageIndex].index else {
             return
         }

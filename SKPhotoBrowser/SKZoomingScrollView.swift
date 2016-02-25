@@ -141,7 +141,7 @@ public class SKZoomingScrollView: UIScrollView, UIScrollViewDelegate, SKDetectin
         maximumZoomScale = 1
         minimumZoomScale = 1
         zoomScale = 1
-        contentSize = CGSizeZero
+        contentSize = CGSize.zero
         
         let image = photoBrowser.imageForPhoto(photo)
         if let image = image {
@@ -152,8 +152,8 @@ public class SKZoomingScrollView: UIScrollView, UIScrollViewDelegate, SKDetectin
             // image
             photoImageView.image = image
 
-            var photoImageViewFrame = CGRectZero
-            photoImageViewFrame.origin = CGPointZero
+            var photoImageViewFrame = CGRect.zero
+            photoImageViewFrame.origin = CGPoint.zero
             photoImageViewFrame.size = image.size
             
             photoImageView.frame = photoImageViewFrame
@@ -225,7 +225,29 @@ public class SKZoomingScrollView: UIScrollView, UIScrollViewDelegate, SKDetectin
     }
     
     func handleDoubleTap(view: UIView, touch: UITouch) {
-        handleDoubleTap(touch.locationInView(view))
+        let needPoint = getViewFramePercent(view, touch: touch)
+        handleDoubleTap(needPoint)
+    }
+    
+    private func getViewFramePercent(view: UIView, touch: UITouch) -> CGPoint {
+        let oneWidthViewPercent = view.bounds.width / 100
+        let viewTouchPoint = touch.locationInView(view)
+        let viewWidthTouch = viewTouchPoint.x
+        let viewPercentTouch = viewWidthTouch / oneWidthViewPercent
+        
+        let photoWidth = photoImageView.bounds.width
+        let onePhotoPercent = photoWidth / 100
+        let needPoint = viewPercentTouch * onePhotoPercent
+        
+        var Y: CGFloat!
+        
+        if viewTouchPoint.y < view.bounds.height / 2 {
+            Y = 0
+        } else {
+            Y = photoImageView.bounds.height
+        }
+        let allPoint = CGPoint(x: needPoint, y: Y)
+        return allPoint
     }
     
     // MARK: - SKDetectingImageViewDelegate

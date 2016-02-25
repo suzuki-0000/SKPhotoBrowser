@@ -65,10 +65,10 @@ public class SKCaptionView: UIView {
     
     public override func sizeThatFits(size: CGSize) -> CGSize {
         guard let text = photoLabel.text else {
-            return CGSizeZero
+            return CGSize.zero
         }
         guard photoLabel.text?.characters.count > 0 else {
-            return CGSizeZero
+            return CGSize.zero
         }
         
         let font: UIFont = photoLabel.font
@@ -86,6 +86,5 @@ public class SKCaptionView: UIView {
         fadeView.frame = frame
         gradientLayer.frame = frame
     }
-    
 }
 
