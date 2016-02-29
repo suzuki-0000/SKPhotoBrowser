@@ -14,7 +14,7 @@ import UIKit
     optional func willShowActionSheet(photoIndex: Int)
     optional func didDismissAtPageIndex(index: Int)
     optional func didDismissActionSheetWithButtonIndex(buttonIndex: Int, photoIndex: Int)
-    optional func didDeleted(deletedIndex: [Int]) -> Void
+    optional func removePhoto(browser: SKPhotoBrowser, index: Int, reload: (() -> Void))
 }
 
 public let SKPHOTO_LOADING_DID_END_NOTIFICATION = "photoLoadingDidEndNotification"
@@ -447,6 +447,26 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate, UIActionShe
         return CGSize(width: bounds.size.width * CGFloat(numberOfPhotos), height: bounds.size.height)
     }
     
+    // MARK: - delete function
+    @objc private func deleteButtonPressed(sender: UIButton) {
+        delegate?.removePhoto?(self, index: currentPageIndex, reload: { () -> Void in
+            self.deleteImage()
+        })
+    }
+    
+    private func deleteImage() {
+        if photos.count > 1 {
+            photos.removeAtIndex(currentPageIndex)
+            if currentPageIndex != 0 {
+                gotoPreviousPage()
+            }
+            updateToolbar()
+        } else if photos.count == 1 {
+            dismissPhotoBrowser()
+        }
+        reloadData()
+    }
+    
     // MARK: - Toolbar
     public func updateToolbar() {
         if numberOfPhotos > 1 {
@@ -633,7 +653,6 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate, UIActionShe
         prepareForClosePhotoBrowser()
         dismissViewControllerAnimated(true) {
             self.delegate?.didDismissAtPageIndex?(self.currentPageIndex)
-            self.delegate?.didDeleted?(self.deleted)
         }
     }
 
@@ -851,32 +870,6 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate, UIActionShe
             performCloseAnimationWithScrollView(pageDisplayedAtIndex(currentPageIndex))
         } else {
             dismissPhotoBrowser()
-        }
-    }
-
-    // MARK: - Button
-    public func deleteButtonPressed(sender: UIButton) {
-        let deleteAlert = UIAlertController(title: "Delete this photo?", message: "", preferredStyle: UIAlertControllerStyle.ActionSheet)
-        let deleteAction = UIAlertAction(title: "Delete", style: UIAlertActionStyle.Destructive, handler: deletePhoto)
-        deleteAlert.addAction(deleteAction)
-        let canelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil)
-        deleteAlert.addAction(canelAction)
-        self.presentViewController(deleteAlert, animated: true, completion: nil)
-    }
-    
-    func deletePhoto(avc: UIAlertAction) -> Void {
-        guard let index = photos[currentPageIndex].index else {
-            return
-        }
-        deleted.append(index)
-        if photos.count == 1 {
-            dismissPhotoBrowser()
-        } else {
-            photos.removeAtIndex(currentPageIndex)
-            if currentPageIndex > 0 {
-                currentPageIndex = currentPageIndex - 1
-            }
-            reloadData()
         }
     }
 
