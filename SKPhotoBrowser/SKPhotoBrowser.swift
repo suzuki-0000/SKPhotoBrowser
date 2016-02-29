@@ -288,8 +288,8 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate, UIActionShe
         let bundle = NSBundle(forClass: SKPhotoBrowser.self)
         if displayDeleteButton == true {
             deleteButton = UIButton(type: .Custom)
-            deleteButtonShowFrame = CGRect(x: UIScreen.mainScreen().bounds.size.width - 44 - 5, y: -5, width: 44, height: 44)
-            deleteButtonHideFrame = CGRect(x: UIScreen.mainScreen().bounds.size.width - 44 - 5, y: -20, width: 44, height: 44)
+            deleteButtonShowFrame = CGRect(x: view.frame.width - 39, y: 5, width: 44, height: 44)
+            deleteButtonHideFrame = CGRect(x: view.frame.width - 39, y: -20, width: 44, height: 44)
             let image = UIImage(named: "SKPhotoBrowser.bundle/images/btn_common_delete_wh", inBundle: bundle, compatibleWithTraitCollection: nil) ?? UIImage()
             deleteButton.imageEdgeInsets = UIEdgeInsets(top: 15.25, left: 15.25, bottom: 15.25, right: 15.25)
             deleteButton.setImage(image, forState: .Normal)
