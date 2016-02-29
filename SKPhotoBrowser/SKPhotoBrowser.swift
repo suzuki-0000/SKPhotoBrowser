@@ -61,8 +61,9 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate, UIActionShe
     private var doneButtonHideFrame: CGRect = CGRect(x: 5, y: -20, width: 44, height: 44)
     
     private var deleteButton: UIButton!
-    private var deleteButtonShowFrame: CGRect = CGRect(x: UIScreen.mainScreen().bounds.size.width - 44 - 5, y: 5, width: 44, height: 44)
-    private var deleteButtonHideFrame: CGRect = CGRect(x: UIScreen.mainScreen().bounds.size.width - 44 - 5, y: -20, width: 44, height: 44)
+    public var displayDeleteButton = false
+    private var deleteButtonShowFrame: CGRect! //= CGRect(x: UIScreen.mainScreen().bounds.size.width - 44 - 5, y: 5, width: 44, height: 44)
+    private var deleteButtonHideFrame: CGRect! //= CGRect(x: UIScreen.mainScreen().bounds.size.width - 44 - 5, y: -20, width: 44, height: 44)
     
     // photo's paging
     private var visiblePages: Set<SKZoomingScrollView> = Set()
@@ -220,15 +221,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate, UIActionShe
         view.addSubview(doneButton)
         
         // delete
-        let deleteImage = UIImage(named: "SKPhotoBrowser.bundle/images/btn_common_delete_wh", inBundle: bundle, compatibleWithTraitCollection: nil) ?? UIImage()
-        deleteButton = UIButton(type: UIButtonType.Custom)
-        deleteButton.setImage(deleteImage, forState: UIControlState.Normal)
-        deleteButton.frame = deleteButtonHideFrame
-        deleteButton.imageEdgeInsets = UIEdgeInsetsMake(15.25, 15.25, 15.25, 15.25)
-        deleteButton.backgroundColor = .clearColor()
-        deleteButton.addTarget(self, action: "deleteButtonPressed:", forControlEvents: UIControlEvents.TouchUpInside)
-        deleteButton.alpha = 0.0
-        view.addSubview(deleteButton)
+        setSettingDeleteButton()
 
         if !displayDelete {
             deleteButton.hidden = true
@@ -291,6 +284,23 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate, UIActionShe
             }
         } else {
             return areControlsHidden()
+        }
+    }
+
+    // MARK: - setting of delete button
+    
+    private func setSettingDeleteButton() {
+        let bundle = NSBundle(forClass: SKPhotoBrowser.self)
+        if displayDeleteButton == true {
+            deleteButton = UIButton(type: .Custom)
+            deleteButtonShowFrame = CGRect(x: UIScreen.mainScreen().bounds.size.width - 44 - 5, y: -5, width: 44, height: 44)
+            deleteButtonHideFrame = CGRect(x: UIScreen.mainScreen().bounds.size.width - 44 - 5, y: -20, width: 44, height: 44)
+            let image = UIImage(named: "SKPhotoBrowser.bundle/images/btn_common_delete_wh", inBundle: bundle, compatibleWithTraitCollection: nil) ?? UIImage()
+            deleteButton.imageEdgeInsets = UIEdgeInsets(top: 15.25, left: 15.25, bottom: 15.25, right: 15.25)
+            deleteButton.setImage(image, forState: .Normal)
+            deleteButton.addTarget(self, action: "deleteButtonPressed:", forControlEvents: UIControlEvents.TouchUpInside)
+            deleteButton.alpha = 0.0
+            view.addSubview(deleteButton)
         }
     }
     
@@ -591,8 +601,10 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate, UIActionShe
                     self.resizableImageView.frame = finalImageViewFrame
                     self.doneButton.alpha = 1.0
                     self.doneButton.frame = self.doneButtonShowFrame
-                    self.deleteButton.alpha = 1.0
-                    self.deleteButton.frame = self.deleteButtonShowFrame
+                    if self.displayDeleteButton == true {
+                        self.deleteButton.alpha = 1.0
+                        self.deleteButton.frame = self.deleteButtonShowFrame
+                    }
                 },
                 completion: { (Bool) -> Void in
                     self.view.alpha = 1.0
@@ -611,8 +623,10 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate, UIActionShe
                 animations: { () -> Void in
                     self.doneButton.alpha = 1.0
                     self.doneButton.frame = self.doneButtonShowFrame
-                    self.deleteButton.alpha = 1.0
-                    self.deleteButton.frame = self.deleteButtonShowFrame
+                    if self.displayDeleteButton == true {
+                        self.deleteButton.alpha = 1.0
+                        self.deleteButton.frame = self.deleteButtonShowFrame
+                    }
                 },
                 completion: { (Bool) -> Void in
                     self.view.alpha = 1.0
@@ -844,8 +858,10 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate, UIActionShe
                 self.toolBar.frame = hidden ? self.frameForToolbarHideAtOrientation() : self.frameForToolbarAtOrientation()
                 self.doneButton.alpha = alpha
                 self.doneButton.frame = hidden ? self.doneButtonHideFrame : self.doneButtonShowFrame
-                self.deleteButton.alpha = alpha
-                self.deleteButton.frame = hidden ? self.deleteButtonHideFrame : self.deleteButtonShowFrame
+                if displayDeleteButton == true {
+                    self.deleteButton.alpha = alpha
+                    self.deleteButton.frame = hidden ? self.deleteButtonHideFrame : self.deleteButtonShowFrame
+                }
                 for v in captionViews {
                     v.alpha = alpha
                 }
