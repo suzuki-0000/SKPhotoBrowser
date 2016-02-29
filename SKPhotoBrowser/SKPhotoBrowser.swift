@@ -40,7 +40,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate, UIActionShe
     public var displayBackAndForwardButton: Bool = true
     public var disableVerticalSwipe: Bool = false
     public var isForceStatusBarHidden: Bool = false
-    public var displayDelete: Bool = false
+    public var displayDeleteButton = false
 
     // actions
     private var actionSheet: UIActionSheet!
@@ -61,7 +61,6 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate, UIActionShe
     private var doneButtonHideFrame: CGRect = CGRect(x: 5, y: -20, width: 44, height: 44)
     
     private var deleteButton: UIButton!
-    public var displayDeleteButton = false
     private var deleteButtonShowFrame: CGRect! //= CGRect(x: UIScreen.mainScreen().bounds.size.width - 44 - 5, y: 5, width: 44, height: 44)
     private var deleteButtonHideFrame: CGRect! //= CGRect(x: UIScreen.mainScreen().bounds.size.width - 44 - 5, y: -20, width: 44, height: 44)
     
@@ -222,10 +221,6 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate, UIActionShe
         
         // delete
         setSettingDeleteButton()
-
-        if !displayDelete {
-            deleteButton.hidden = true
-        }
         
         // action button
         toolActionButton = UIBarButtonItem(barButtonSystemItem: .Action, target: self, action: "actionButtonPressed")
@@ -858,7 +853,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate, UIActionShe
                 self.toolBar.frame = hidden ? self.frameForToolbarHideAtOrientation() : self.frameForToolbarAtOrientation()
                 self.doneButton.alpha = alpha
                 self.doneButton.frame = hidden ? self.doneButtonHideFrame : self.doneButtonShowFrame
-                if displayDeleteButton == true {
+                if self.displayDeleteButton == true {
                     self.deleteButton.alpha = alpha
                     self.deleteButton.frame = hidden ? self.deleteButtonHideFrame : self.deleteButtonShowFrame
                 }
