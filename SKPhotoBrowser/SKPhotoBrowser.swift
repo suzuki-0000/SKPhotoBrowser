@@ -20,7 +20,7 @@ import UIKit
 public let SKPHOTO_LOADING_DID_END_NOTIFICATION = "photoLoadingDidEndNotification"
 
 // MARK: - SKPhotoBrowser
-public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate, UIActionSheetDelegate {
+public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
     
     final let pageIndexTagOffset: Int = 1000
     // animation property
@@ -43,7 +43,6 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate, UIActionShe
     public var displayDeleteButton = false
 
     // actions
-    private var actionSheet: UIActionSheet!
     private var activityViewController: UIActivityViewController!
     
     // tool for controls
@@ -892,17 +891,24 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate, UIActionShe
         
         if numberOfPhotos > 0 && photo.underlyingImage != nil {
             if let titles = actionButtonTitles {
-                actionSheet = UIActionSheet()
-                actionSheet.delegate = self
+                let actionSheetController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+                actionSheetController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: { (action) -> Void in
+                }))
                 for actionTitle in titles {
-                    actionSheet.addButtonWithTitle(actionTitle)
+                    actionSheetController.addAction(UIAlertAction(title: actionTitle, style: .Default, handler: { (action) -> Void in
+                        
+                    }))
                 }
-                actionSheet.cancelButtonIndex = actionSheet.addButtonWithTitle("Cancel")
-                actionSheet.actionSheetStyle = .BlackTranslucent
+                
                 if UI_USER_INTERFACE_IDIOM() == .Phone {
-                    actionSheet.showInView(view)
+                    presentViewController(actionSheetController, animated: true, completion: nil)
                 } else {
-                    actionSheet.showFromBarButtonItem(toolActionButton, animated: true)
+                    actionSheetController.modalPresentationStyle = .Popover
+                    let popoverController = actionSheetController.popoverPresentationController!
+                    popoverController.barButtonItem = toolActionButton
+                    presentViewController(actionSheetController, animated: true, completion: { () -> Void in
+                        
+                    })
                 }
             } else {
                 var activityItems: [AnyObject] = [photo.underlyingImage]
@@ -930,17 +936,6 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate, UIActionShe
             }
         }
         
-    }
-    
-    // MARK: UIActionSheetDelegate
-    public func actionSheet(actionSheet: UIActionSheet, didDismissWithButtonIndex buttonIndex: Int) {
-        if actionSheet == self.actionSheet {
-            self.actionSheet = nil
-            
-            if buttonIndex != actionSheet.cancelButtonIndex {
-                self.delegate?.didDismissActionSheetWithButtonIndex?(buttonIndex, photoIndex: currentPageIndex)
-            }
-        }
     }
     
     // MARK: -  UIScrollView Delegate
