@@ -922,8 +922,10 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate, UIActionShe
                 if UI_USER_INTERFACE_IDIOM() == .Phone {
                     presentViewController(activityViewController, animated: true, completion: nil)
                 } else {
-                    let popover = UIPopoverController(contentViewController: activityViewController)
-                    popover.presentPopoverFromBarButtonItem(toolActionButton, permittedArrowDirections: .Any, animated: true)
+                    activityViewController.modalPresentationStyle = .Popover
+                    let popover: UIPopoverPresentationController! = activityViewController.popoverPresentationController
+                    popover.barButtonItem = toolActionButton
+                    presentViewController(activityViewController, animated: true, completion: nil)
                 }
             }
         }
