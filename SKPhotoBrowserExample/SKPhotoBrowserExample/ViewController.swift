@@ -80,6 +80,9 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         // Can hide the action button by setting to false
         browser.displayAction = true
         
+        // delete action(you must write `removePhoto` delegate, what resource you want to delete)
+        // browser.displayDeleteButton = true
+        
         // Optional action button titles (if left off, it uses activity controller
         // browser.actionButtonTitles = ["Do One Action", "Do Another Action"]
         
@@ -105,6 +108,10 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
     func didDismissActionSheetWithButtonIndex(buttonIndex: Int, photoIndex: Int) {
         // handle dismissing custom actions
+    }
+    
+    func removePhoto(browser: SKPhotoBrowser, index: Int, reload: (() -> Void)) {
+        // do some handle if you need
     }
     
 }
