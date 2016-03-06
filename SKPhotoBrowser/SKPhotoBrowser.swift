@@ -62,11 +62,12 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
     private var closeButtonHideFrame: CGRect! //= CGRect(x: 5, y: -20, width: 44, height: 44)
     
     // custom close button
-    private var customCloseButton: UIButton!
+    private(set) var customCloseButton: UIButton!
     public var customCloseButtonShowFrame: CGRect!
     public var customCloseButtonHideFrame: CGRect!
     public var customCloseButtonImage: UIImage!
     public var customCloseButtonEdgeInsets: UIEdgeInsets!
+    public var customCloseButtonConstraints: [NSLayoutConstraint]!
     
     private var deleteButton: UIButton!
     private var deleteButtonShowFrame: CGRect! //= CGRect(x: UIScreen.mainScreen().bounds.size.width - 44 - 5, y: 5, width: 44, height: 44)
@@ -316,20 +317,24 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
             customCloseButton = UIButton(type: .Custom)
             customCloseButton.addTarget(self, action: "closeButtonPressed:", forControlEvents: .TouchUpInside)
             customCloseButton.backgroundColor = .clearColor()
+            // If another developer has not set their values
             if customCloseButtonImage != nil {
                 customCloseButton.setImage(customCloseButtonImage, forState: .Normal)
             } else {
                 customCloseButton.setImage(closeImage, forState: .Normal)
             }
-            // If another developer has not set their values
             if customCloseButtonShowFrame == nil && customCloseButtonHideFrame == nil {
                 customCloseButtonShowFrame = CGRect(x: 5, y: 5, width: 44, height: 44)
                 customCloseButtonHideFrame = CGRect(x: 5, y: -20, width: 44, height: 44)
             }
             if customCloseButtonEdgeInsets != nil {
                 customCloseButton.imageEdgeInsets = customCloseButtonEdgeInsets
+            } else {
+                customCloseButton.imageEdgeInsets = UIEdgeInsets(top: 15.25, left: 15.25, bottom: 15.25, right: 15.25)
             }
-            customCloseButton.alpha = 0.0
+            if customCloseButtonConstraints != nil {
+                customCloseButton.addConstraints(customCloseButtonConstraints)
+            }
             view.addSubview(customCloseButton)
         }
     }
