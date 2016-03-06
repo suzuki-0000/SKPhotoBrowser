@@ -342,13 +342,16 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
             }
             if customCloseButtonEdgeInsets != nil {
                 customCloseButton.imageEdgeInsets = customCloseButtonEdgeInsets
-            } else {
-                customCloseButton.imageEdgeInsets = UIEdgeInsets(top: 15.25, left: 15.25, bottom: 15.25, right: 15.25)
             }
             if customCloseButtonConstraints != nil {
                 customCloseButton.addConstraints(customCloseButtonConstraints)
             }
+            
+            customCloseButton.translatesAutoresizingMaskIntoConstraints = true
             view.addSubview(customCloseButton)
+            customCloseButton.autoresizingMask = [.FlexibleBottomMargin, .FlexibleLeftMargin, .FlexibleRightMargin, .FlexibleTopMargin]
+            customCloseButton.center = CGPoint(x: CGRectGetMidX(view.bounds), y: CGRectGetMidY(view.bounds))
+            
         }
     }
     
@@ -1071,23 +1074,23 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         setControlsHidden(true, animated: false, permanent: false)
         deleteButtonShowFrame = CGRect(x: view.frame.width - 44, y: 5, width: 44, height: 44)
         deleteButtonHideFrame = CGRect(x: view.frame.width - 44, y: -20, width: 44, height: 44)
-        if displayCustomCloseButton == true {
-            if customCloseButtonShowFrame != nil && customCloseButtonHideFrame != nil {
-                if customCloseButtonConstraints == nil {
-                    switch startOrientation {
-                    case 1, 2:
-                        changeCustomPortraitFrameAfterRotation()
-                    case 3, 4:
-                        changeCustomLandscapeFrameAfterRotation()
-                    default: break
-                    }
-                }
-            }
-        }
+        //        if displayCustomCloseButton == true {
+        //            if customCloseButtonShowFrame != nil && customCloseButtonHideFrame != nil {
+        //                if customCloseButtonConstraints == nil {
+        //                    switch startOrientation {
+        //                    case 1, 2:
+        //                        changeCustomPortraitFrameAfterRotation()
+        //                    case 3, 4:
+        //                        changeCustomLandscapeFrameAfterRotation()
+        //                    default: break
+        //                    }
+        //                }
+        //            }
+        //        }
         setControlsHidden(false, animated: false, permanent: false)
     }
     
-    // FIXME: - there
+    // FIXME: - Maybe it will be needed in the future
     private func changeCustomPortraitFrameAfterRotation() {
         if UIApplication.sharedApplication().statusBarOrientation.isLandscape {
             customCloseButtonShowFrame = CGRect(x: customCloseButtonShowOldFrame.origin.x * 2, y: customCloseButtonShowOldFrame.origin.y / 2 + customCloseButtonShowOldFrame.height / 4, width: customCloseButtonShowOldFrame.width, height: customCloseButtonShowOldFrame.height)
