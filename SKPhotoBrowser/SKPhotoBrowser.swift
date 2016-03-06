@@ -355,8 +355,8 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
     private func setSettingDeleteButton() {
         if displayDeleteButton == true {
             deleteButton = UIButton(type: .Custom)
-            deleteButtonShowFrame = CGRect(x: view.frame.width - 39, y: 5, width: 44, height: 44)
-            deleteButtonHideFrame = CGRect(x: view.frame.width - 39, y: -20, width: 44, height: 44)
+            deleteButtonShowFrame = CGRect(x: view.frame.width - 44, y: 5, width: 44, height: 44)
+            deleteButtonHideFrame = CGRect(x: view.frame.width - 44, y: -20, width: 44, height: 44)
             let image = UIImage(named: "SKPhotoBrowser.bundle/images/btn_common_delete_wh", inBundle: bundle, compatibleWithTraitCollection: nil) ?? UIImage()
             deleteButton.imageEdgeInsets = UIEdgeInsets(top: 15.25, left: 15.25, bottom: 15.25, right: 15.25)
             deleteButton.setImage(image, forState: .Normal)
@@ -1069,8 +1069,8 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
     // MARK: - device rotation
     @objc private func changeOrientation() {
         setControlsHidden(true, animated: false, permanent: false)
-        deleteButtonShowFrame = CGRect(x: view.frame.width - 39, y: 5, width: 44, height: 44)
-        deleteButtonHideFrame = CGRect(x: view.frame.width - 39, y: -20, width: 44, height: 44)
+        deleteButtonShowFrame = CGRect(x: view.frame.width - 44, y: 5, width: 44, height: 44)
+        deleteButtonHideFrame = CGRect(x: view.frame.width - 44, y: -20, width: 44, height: 44)
         if displayCustomCloseButton == true {
             if customCloseButtonShowFrame != nil && customCloseButtonHideFrame != nil {
                 if customCloseButtonConstraints == nil {
