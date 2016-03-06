@@ -1087,9 +1087,10 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         setControlsHidden(false, animated: false, permanent: false)
     }
     
+    // FIXME: - there
     private func changeCustomPortraitFrameAfterRotation() {
         if UIApplication.sharedApplication().statusBarOrientation.isLandscape {
-            customCloseButtonShowFrame = CGRect(x: customCloseButtonShowOldFrame.origin.x * 2, y: customCloseButtonShowOldFrame.origin.y / 2, width: customCloseButtonShowOldFrame.width, height: customCloseButtonShowOldFrame.height)
+            customCloseButtonShowFrame = CGRect(x: customCloseButtonShowOldFrame.origin.x * 2, y: customCloseButtonShowOldFrame.origin.y / 2 + customCloseButtonShowOldFrame.height / 4, width: customCloseButtonShowOldFrame.width, height: customCloseButtonShowOldFrame.height)
             
             customCloseButtonHideFrame = CGRect(x: customCloseButtonHideOldFrame.origin.x * 2, y: customCloseButtonHideOldFrame.origin.y / 2, width: customCloseButtonHideOldFrame.width, height: customCloseButtonHideOldFrame.height)
         } else {
@@ -1101,7 +1102,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
     
     private func changeCustomLandscapeFrameAfterRotation() {
         if UIApplication.sharedApplication().statusBarOrientation.isPortrait {
-            customCloseButtonShowFrame = CGRect(x: customCloseButtonShowOldFrame.origin.x / 2, y: customCloseButtonShowOldFrame.origin.y * 2, width: customCloseButtonShowOldFrame.width, height: customCloseButtonShowOldFrame.height)
+            customCloseButtonShowFrame = CGRect(x: customCloseButtonShowOldFrame.origin.x / 2, y: customCloseButtonShowOldFrame.origin.y * 2 -  customCloseButtonShowOldFrame.height / 2, width: customCloseButtonShowOldFrame.width, height: customCloseButtonShowOldFrame.height)
             
             customCloseButtonHideFrame = CGRect(x: customCloseButtonHideOldFrame.origin.x / 2, y: customCloseButtonHideOldFrame.origin.y * 2 - customCloseButtonShowOldFrame.height / 2, width: customCloseButtonHideOldFrame.width, height: customCloseButtonHideOldFrame.height)
         } else {
