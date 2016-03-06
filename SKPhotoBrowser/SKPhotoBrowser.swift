@@ -1073,12 +1073,14 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         deleteButtonHideFrame = CGRect(x: view.frame.width - 39, y: -20, width: 44, height: 44)
         if displayCustomCloseButton == true {
             if customCloseButtonShowFrame != nil && customCloseButtonHideFrame != nil {
-                switch startOrientation {
-                case 1, 2:
-                    changeCustomPortraitFrameAfterRotation()
-                case 3, 4:
-                    changeCustomLandscapeFrameAfterRotation()
-                default: break
+                if customCloseButtonConstraints == nil {
+                    switch startOrientation {
+                    case 1, 2:
+                        changeCustomPortraitFrameAfterRotation()
+                    case 3, 4:
+                        changeCustomLandscapeFrameAfterRotation()
+                    default: break
+                    }
                 }
             }
         }
@@ -1101,7 +1103,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         if UIApplication.sharedApplication().statusBarOrientation.isPortrait {
             customCloseButtonShowFrame = CGRect(x: customCloseButtonShowOldFrame.origin.x / 2, y: customCloseButtonShowOldFrame.origin.y * 2, width: customCloseButtonShowOldFrame.width, height: customCloseButtonShowOldFrame.height)
             
-            customCloseButtonHideFrame = CGRect(x: customCloseButtonHideOldFrame.origin.x / 2, y: customCloseButtonHideOldFrame.origin.y * 2, width: customCloseButtonHideOldFrame.width, height: customCloseButtonHideOldFrame.height)
+            customCloseButtonHideFrame = CGRect(x: customCloseButtonHideOldFrame.origin.x / 2, y: customCloseButtonHideOldFrame.origin.y * 2 - customCloseButtonShowOldFrame.height / 2, width: customCloseButtonHideOldFrame.width, height: customCloseButtonHideOldFrame.height)
         } else {
             customCloseButtonShowFrame = CGRect(x: customCloseButtonShowOldFrame.origin.x, y: customCloseButtonShowOldFrame.origin.y, width: customCloseButtonShowOldFrame.width, height: customCloseButtonShowOldFrame.height)
             
