@@ -241,6 +241,9 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         
         // transition (this must be last call of view did load.)
         performPresentAnimation()
+        
+        // it change delete button frame while rotation of device
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "changeOrientation", name: UIApplicationDidChangeStatusBarOrientationNotification, object: nil)
     }
     
     public override func viewWillAppear(animated: Bool) {
@@ -1051,5 +1054,13 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
     
     public func scrollViewDidEndScrollingAnimation(scrollView: UIScrollView) {
         isEndAnimationByToolBar = true
+    }
+    
+    // MARK: - device rotation
+    @objc private func changeOrientation() {
+        setControlsHidden(true, animated: false, permanent: false)
+        deleteButtonShowFrame = CGRect(x: view.frame.width - 39, y: 5, width: 44, height: 44)
+        deleteButtonHideFrame = CGRect(x: view.frame.width - 39, y: -20, width: 44, height: 44)
+        setControlsHidden(false, animated: false, permanent: false)
     }
 }
