@@ -157,6 +157,9 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "handleSKPhotoLoadingDidEndNotification:", name: SKPHOTO_LOADING_DID_END_NOTIFICATION, object: nil)
+        
+        // it change delete button frame while rotation of device
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "changeOrientation", name: UIApplicationDidChangeStatusBarOrientationNotification, object: nil)
     }
     
     // MARK: - override
@@ -241,9 +244,6 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         
         // transition (this must be last call of view did load.)
         performPresentAnimation()
-        
-        // it change delete button frame while rotation of device
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "changeOrientation", name: UIApplicationDidChangeStatusBarOrientationNotification, object: nil)
     }
     
     public override func viewWillAppear(animated: Bool) {
