@@ -321,6 +321,8 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
             closeButtonHideFrame = CGRect(x: 5, y: -20, width: 44, height: 44)
             closeButtonShowFrame = CGRect(x: 5, y: 5, width: 44, height: 44)
             view.addSubview(closeButton)
+            closeButton.translatesAutoresizingMaskIntoConstraints = true
+            closeButton.autoresizingMask = [.FlexibleBottomMargin, .FlexibleLeftMargin, .FlexibleRightMargin, .FlexibleTopMargin]
         }
     }
     
@@ -1073,8 +1075,12 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
     // MARK: - device rotation
     @objc private func changeOrientation() {
         //        setControlsHidden(true, animated: false, permanent: false)
-        //        deleteButtonShowFrame = CGRect(x: view.frame.width - 44, y: 5, width: 44, height: 44)
-        //        deleteButtonHideFrame = CGRect(x: view.frame.width - 44, y: -20, width: 44, height: 44)
+        // FIXME: - when we will to resolve this probleb https://github.com/suzuki-0000/SKPhotoBrowser/issues/22  it will need to remove
+        deleteButtonShowFrame = CGRect(x: view.frame.width - 44, y: 5, width: 44, height: 44)
+        deleteButtonHideFrame = CGRect(x: view.frame.width - 44, y: -20, width: 44, height: 44)
+        
+        //        customCloseButtonShowFrame = customCloseButtonShowOldFrame
+        //        customCloseButtonHideFrame = customCloseButtonHideOldFrame
         //        if displayCustomCloseButton == true {
         //            if customCloseButtonShowFrame != nil && customCloseButtonHideFrame != nil {
         //                if customCloseButtonConstraints == nil {
