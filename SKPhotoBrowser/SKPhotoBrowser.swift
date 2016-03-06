@@ -350,7 +350,6 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
             customCloseButton.translatesAutoresizingMaskIntoConstraints = true
             view.addSubview(customCloseButton)
             customCloseButton.autoresizingMask = [.FlexibleBottomMargin, .FlexibleLeftMargin, .FlexibleRightMargin, .FlexibleTopMargin]
-            customCloseButton.center = CGPoint(x: CGRectGetMidX(view.bounds), y: CGRectGetMidY(view.bounds))
             
         }
     }
@@ -366,6 +365,8 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
             deleteButton.addTarget(self, action: "deleteButtonPressed:", forControlEvents: UIControlEvents.TouchUpInside)
             deleteButton.alpha = 0.0
             view.addSubview(deleteButton)
+            deleteButton.translatesAutoresizingMaskIntoConstraints = true
+            deleteButton.autoresizingMask = [.FlexibleBottomMargin, .FlexibleLeftMargin, .FlexibleRightMargin, .FlexibleTopMargin]
         }
     }
     
@@ -1071,9 +1072,9 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
     
     // MARK: - device rotation
     @objc private func changeOrientation() {
-        setControlsHidden(true, animated: false, permanent: false)
-        deleteButtonShowFrame = CGRect(x: view.frame.width - 44, y: 5, width: 44, height: 44)
-        deleteButtonHideFrame = CGRect(x: view.frame.width - 44, y: -20, width: 44, height: 44)
+        //        setControlsHidden(true, animated: false, permanent: false)
+        //        deleteButtonShowFrame = CGRect(x: view.frame.width - 44, y: 5, width: 44, height: 44)
+        //        deleteButtonHideFrame = CGRect(x: view.frame.width - 44, y: -20, width: 44, height: 44)
         //        if displayCustomCloseButton == true {
         //            if customCloseButtonShowFrame != nil && customCloseButtonHideFrame != nil {
         //                if customCloseButtonConstraints == nil {
@@ -1087,7 +1088,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         //                }
         //            }
         //        }
-        setControlsHidden(false, animated: false, permanent: false)
+        //        setControlsHidden(false, animated: false, permanent: false)
     }
     
     // FIXME: - Maybe it will be needed in the future
