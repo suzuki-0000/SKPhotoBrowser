@@ -42,6 +42,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
     public var isForceStatusBarHidden: Bool = false
     public var displayDeleteButton = false
     public var displayCloseButton = true // default is true
+    public var displayCustomCloseButton = false // if it is true displayCloseButton will be false
     
     // actions
     private var activityViewController: UIActivityViewController!
@@ -59,6 +60,13 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
     private var closeButton: UIButton!
     private var closeButtonShowFrame: CGRect! //= CGRect(x: 5, y: 5, width: 44, height: 44)
     private var closeButtonHideFrame: CGRect! //= CGRect(x: 5, y: -20, width: 44, height: 44)
+    
+    // custom close button
+    private var customCloseButton: UIButton!
+    public var customCloseButtonShowFrame: CGRect!
+    public var customCloseButtonHideFrame: CGRect!
+    public var customCloseButtonImage: UIImage!
+    public var customCloseButtonEdgeInsets: UIEdgeInsets!
     
     private var deleteButton: UIButton!
     private var deleteButtonShowFrame: CGRect! //= CGRect(x: UIScreen.mainScreen().bounds.size.width - 44 - 5, y: 5, width: 44, height: 44)
@@ -92,6 +100,9 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
     
     // delegate
     public weak var delegate: SKPhotoBrowserDelegate?
+    
+    // helpers which often used
+    private let bundle = NSBundle(forClass: SKPhotoBrowser.self)
     
     // photos
     var photos: [SKPhotoProtocol] = [SKPhotoProtocol]()
@@ -211,8 +222,11 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         // close
         
         // delete
+        setCustomSetting()
         setSettingCloseButton()
         setSettingDeleteButton()
+        setSettingCustomCloseButton()
+        
         
         // action button
         toolActionButton = UIBarButtonItem(barButtonSystemItem: .Action, target: self, action: "actionButtonPressed")
@@ -275,27 +289,52 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
     }
     
     // MARK: - setting of buttons
+    // This function should be at the beginning of the other functions
+    private func setCustomSetting() {
+        if displayCustomCloseButton == true {
+            displayCloseButton = false
+        }
+    }
     
     private func setSettingCloseButton() {
         if displayCloseButton == true {
-            let bundle = NSBundle(forClass: SKPhotoBrowser.self)
             let doneImage = UIImage(named: "SKPhotoBrowser.bundle/images/btn_common_close_wh", inBundle: bundle, compatibleWithTraitCollection: nil) ?? UIImage()
             closeButton = UIButton(type: UIButtonType.Custom)
             closeButton.setImage(doneImage, forState: UIControlState.Normal)
-            // TODO: - close frame
-            //            closeButton.frame = closeButtonHideFrame
             closeButton.imageEdgeInsets = UIEdgeInsetsMake(15.25, 15.25, 15.25, 15.25)
             closeButton.backgroundColor = .clearColor()
-            closeButton.addTarget(self, action: "doneButtonPressed:", forControlEvents: UIControlEvents.TouchUpInside)
+            closeButton.addTarget(self, action: "closeButtonPressed:", forControlEvents: UIControlEvents.TouchUpInside)
             closeButtonHideFrame = CGRect(x: 5, y: -20, width: 44, height: 44)
             closeButtonShowFrame = CGRect(x: 5, y: 5, width: 44, height: 44)
-            closeButton.alpha = 0.0
             view.addSubview(closeButton)
         }
     }
     
+    private func setSettingCustomCloseButton() {
+        if displayCustomCloseButton == true {
+            let closeImage = UIImage(named: "SKPhotoBrowser.bundle/images/btn_common_close_wh", inBundle: bundle, compatibleWithTraitCollection: nil) ?? UIImage()
+            customCloseButton = UIButton(type: .Custom)
+            customCloseButton.addTarget(self, action: "closeButtonPressed:", forControlEvents: .TouchUpInside)
+            customCloseButton.backgroundColor = .clearColor()
+            if customCloseButtonImage != nil {
+                customCloseButton.setImage(customCloseButtonImage, forState: .Normal)
+            } else {
+                customCloseButton.setImage(closeImage, forState: .Normal)
+            }
+            // If another developer has not set their values
+            if customCloseButtonShowFrame == nil && customCloseButtonHideFrame == nil {
+                customCloseButtonShowFrame = CGRect(x: 5, y: 5, width: 44, height: 44)
+                customCloseButtonHideFrame = CGRect(x: 5, y: -20, width: 44, height: 44)
+            }
+            if customCloseButtonEdgeInsets != nil {
+                customCloseButton.imageEdgeInsets = customCloseButtonEdgeInsets
+            }
+            customCloseButton.alpha = 0.0
+            view.addSubview(customCloseButton)
+        }
+    }
+    
     private func setSettingDeleteButton() {
-        let bundle = NSBundle(forClass: SKPhotoBrowser.self)
         if displayDeleteButton == true {
             deleteButton = UIButton(type: .Custom)
             deleteButtonShowFrame = CGRect(x: view.frame.width - 39, y: 5, width: 44, height: 44)
@@ -612,6 +651,10 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
                         self.deleteButton.alpha = 1.0
                         self.deleteButton.frame = self.deleteButtonShowFrame
                     }
+                    if self.displayCustomCloseButton == true {
+                        self.customCloseButton.alpha = 1.0
+                        self.customCloseButton.frame = self.customCloseButtonShowFrame
+                    }
                 },
                 completion: { (Bool) -> Void in
                     self.view.alpha = 1.0
@@ -635,6 +678,10 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
                     if self.displayDeleteButton == true {
                         self.deleteButton.alpha = 1.0
                         self.deleteButton.frame = self.deleteButtonShowFrame
+                    }
+                    if self.displayCustomCloseButton == true {
+                        self.customCloseButton.alpha = 1.0
+                        self.customCloseButton.frame = self.customCloseButtonShowFrame
                     }
                 },
                 completion: { (Bool) -> Void in
@@ -873,6 +920,10 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
                     self.deleteButton.alpha = alpha
                     self.deleteButton.frame = hidden ? self.deleteButtonHideFrame : self.deleteButtonShowFrame
                 }
+                if self.displayCustomCloseButton == true {
+                    self.customCloseButton.alpha = alpha
+                    self.customCloseButton.frame = hidden ? self.customCloseButtonHideFrame : self.customCloseButtonShowFrame
+                }
                 for v in captionViews {
                     v.alpha = alpha
                 }
@@ -892,7 +943,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
     }
     
     // MARK: - Button
-    public func doneButtonPressed(sender: UIButton) {
+    public func closeButtonPressed(sender: UIButton) {
         if currentPageIndex == initialPageIndex {
             performCloseAnimationWithScrollView(pageDisplayedAtIndex(currentPageIndex))
         } else {
