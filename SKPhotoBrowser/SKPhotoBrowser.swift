@@ -193,7 +193,6 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         }
         
         // arrows:back
-        let bundle = NSBundle(forClass: SKPhotoBrowser.self)
         let previousBtn = UIButton(type: .Custom)
         let previousImage = UIImage(named: "SKPhotoBrowser.bundle/images/btn_common_back_wh", inBundle: bundle, compatibleWithTraitCollection: nil) ?? UIImage()
         previousBtn.frame = CGRect(x: 0, y: 0, width: 44, height: 44)
@@ -1061,6 +1060,9 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         setControlsHidden(true, animated: false, permanent: false)
         deleteButtonShowFrame = CGRect(x: view.frame.width - 39, y: 5, width: 44, height: 44)
         deleteButtonHideFrame = CGRect(x: view.frame.width - 39, y: -20, width: 44, height: 44)
+        if customCloseButtonShowFrame != nil && customCloseButtonHideFrame != nil {
+            
+        }
         setControlsHidden(false, animated: false, permanent: false)
     }
 }
