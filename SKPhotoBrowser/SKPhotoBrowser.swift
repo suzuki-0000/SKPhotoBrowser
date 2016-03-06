@@ -68,6 +68,8 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
     public var customCloseButtonImage: UIImage!
     public var customCloseButtonEdgeInsets: UIEdgeInsets!
     public var customCloseButtonConstraints: [NSLayoutConstraint]!
+    private var customCloseButtonHideOldFrame: CGRect!
+    private var customCloseButtonShowOldFrame: CGRect!
     
     private var deleteButton: UIButton!
     private var deleteButtonShowFrame: CGRect! //= CGRect(x: UIScreen.mainScreen().bounds.size.width - 44 - 5, y: 5, width: 44, height: 44)
@@ -91,6 +93,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
     private var isViewActive: Bool = false
     private var isPerformingLayout: Bool = false
     private var isStatusBarOriginallyHidden: Bool = false
+    private var startOrientation: Int!
     
     // scroll property
     private var firstX: CGFloat = 0.0
@@ -222,9 +225,8 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         
         toolCounterButton = UIBarButtonItem(customView: toolCounterLabel)
         
-        // close
-        
-        // delete
+        // starting setting
+        setStartupValue()
         setCustomSetting()
         setSettingCloseButton()
         setSettingDeleteButton()
@@ -289,6 +291,15 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         } else {
             return areControlsHidden()
         }
+    }
+    
+    // MARK: - set startap values
+    private func setStartupValue() {
+        if customCloseButtonHideFrame != nil && customCloseButtonShowFrame != nil {
+            customCloseButtonHideOldFrame = customCloseButtonHideFrame
+            customCloseButtonShowOldFrame = customCloseButtonShowFrame
+        }
+        startOrientation = UIApplication.sharedApplication().statusBarOrientation.rawValue
     }
     
     // MARK: - setting of buttons
@@ -1060,9 +1071,41 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         setControlsHidden(true, animated: false, permanent: false)
         deleteButtonShowFrame = CGRect(x: view.frame.width - 39, y: 5, width: 44, height: 44)
         deleteButtonHideFrame = CGRect(x: view.frame.width - 39, y: -20, width: 44, height: 44)
-        if customCloseButtonShowFrame != nil && customCloseButtonHideFrame != nil {
-            
+        if displayCustomCloseButton == true {
+            if customCloseButtonShowFrame != nil && customCloseButtonHideFrame != nil {
+                switch startOrientation {
+                case 1, 2:
+                    changeCustomPortraitFrameAfterRotation()
+                case 3, 4:
+                    changeCustomLandscapeFrameAfterRotation()
+                default: break
+                }
+            }
         }
         setControlsHidden(false, animated: false, permanent: false)
+    }
+    
+    private func changeCustomPortraitFrameAfterRotation() {
+        if UIApplication.sharedApplication().statusBarOrientation.isLandscape {
+            customCloseButtonShowFrame = CGRect(x: customCloseButtonShowOldFrame.origin.x * 2, y: customCloseButtonShowOldFrame.origin.y / 2, width: customCloseButtonShowOldFrame.width, height: customCloseButtonShowOldFrame.height)
+            
+            customCloseButtonHideFrame = CGRect(x: customCloseButtonHideOldFrame.origin.x * 2, y: customCloseButtonHideOldFrame.origin.y / 2, width: customCloseButtonHideOldFrame.width, height: customCloseButtonHideOldFrame.height)
+        } else {
+            customCloseButtonShowFrame = CGRect(x: customCloseButtonShowOldFrame.origin.x, y: customCloseButtonShowOldFrame.origin.y, width: customCloseButtonShowOldFrame.width, height: customCloseButtonShowOldFrame.height)
+            
+            customCloseButtonHideFrame = CGRect(x: customCloseButtonHideOldFrame.origin.x, y: customCloseButtonHideOldFrame.origin.y, width: customCloseButtonHideOldFrame.width, height: customCloseButtonHideOldFrame.height)
+        }
+    }
+    
+    private func changeCustomLandscapeFrameAfterRotation() {
+        if UIApplication.sharedApplication().statusBarOrientation.isPortrait {
+            customCloseButtonShowFrame = CGRect(x: customCloseButtonShowOldFrame.origin.x / 2, y: customCloseButtonShowOldFrame.origin.y * 2, width: customCloseButtonShowOldFrame.width, height: customCloseButtonShowOldFrame.height)
+            
+            customCloseButtonHideFrame = CGRect(x: customCloseButtonHideOldFrame.origin.x / 2, y: customCloseButtonHideOldFrame.origin.y * 2, width: customCloseButtonHideOldFrame.width, height: customCloseButtonHideOldFrame.height)
+        } else {
+            customCloseButtonShowFrame = CGRect(x: customCloseButtonShowOldFrame.origin.x, y: customCloseButtonShowOldFrame.origin.y, width: customCloseButtonShowOldFrame.width, height: customCloseButtonShowOldFrame.height)
+            
+            customCloseButtonHideFrame = CGRect(x: customCloseButtonHideOldFrame.origin.x, y: customCloseButtonHideOldFrame.origin.y, width: customCloseButtonHideOldFrame.width, height: customCloseButtonHideOldFrame.height)
+        }
     }
 }
