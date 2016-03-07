@@ -102,8 +102,17 @@ browser.displayAction = false                 // action button will be hidden
 browser.displayDeleteButton = true            // delete button will be shown
 ```
 
-#### Delete
-You can delete your photo for your own hanlding
+#### CustomButton Image
+Close button is able to change image and frame.
+``` swift
+browser.displayCustomCloseButton = true // custom close button will be enable
+browser.customCloseButtonImage = UIImage(named: "some.png")
+browser.customCloseButtonShowFrame = CGRect()
+browser.customCloseButtonHideFrame = CGRect()
+```
+
+#### Delete 
+You can delete your photo for your own hanlding.
 
 #### Photo Captions
 Photo captions can be displayed simply bottom of PhotoBrowser. by setting the `caption` property on specific photos:
