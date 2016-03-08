@@ -2,7 +2,7 @@ SKPhotoBrowser
 ========================
 
 [![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
-[![Cocoapods Compatible](https://img.shields.io/badge/pod-v1.6.1-blue.svg)](http://cocoadocs.org/docsets/SKPhotoBrowser)
+[![Cocoapods Compatible](https://img.shields.io/badge/pod-v1.6.2-blue.svg)](http://cocoadocs.org/docsets/SKPhotoBrowser)
 [![Swift 2.0](https://img.shields.io/badge/Swift-2.0-orange.svg?style=flat)](https://developer.apple.com/swift/)
 
 Simple PhotoBrowser/Viewer inspired by facebook, twitter photo browsers written by swift2.0, based on [IDMPhotoBrowser](https://github.com/ideaismobile/IDMPhotoBrowser), [MWPhotoBrowser](https://github.com/mwaterfall/MWPhotoBrowser).
