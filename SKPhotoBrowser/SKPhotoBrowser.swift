@@ -43,6 +43,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
     public var displayDeleteButton = false
     public var displayCloseButton = true // default is true
     public var displayCustomCloseButton = false // if it is true displayCloseButton will be false
+    public var displayCustomDeleteButton = false // if it is true displayDeleteButton will be false
     
     // actions
     private var activityViewController: UIActivityViewController!
@@ -57,23 +58,31 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
     private var toolNextButton: UIBarButtonItem!
     private var pagingScrollView: UIScrollView!
     private var panGesture: UIPanGestureRecognizer!
+    // MARK: close button
     private var closeButton: UIButton!
     private var closeButtonShowFrame: CGRect! //= CGRect(x: 5, y: 5, width: 44, height: 44)
     private var closeButtonHideFrame: CGRect! //= CGRect(x: 5, y: -20, width: 44, height: 44)
+    // MARK: delete button
+    private var deleteButton: UIButton!
+    private var deleteButtonShowFrame: CGRect!
+    private var deleteButtonHideFrame: CGRect!
     
-    // custom close button
+    // MARK: - custom buttons
+    // MARK: CustomCloseButton
     private var customCloseButton: UIButton!
     public var customCloseButtonShowFrame: CGRect!
     public var customCloseButtonHideFrame: CGRect!
     public var customCloseButtonImage: UIImage!
     public var customCloseButtonEdgeInsets: UIEdgeInsets!
-    public var customCloseButtonConstraints: [NSLayoutConstraint]!
     private var customCloseButtonHideOldFrame: CGRect!
     private var customCloseButtonShowOldFrame: CGRect!
     
-    private var deleteButton: UIButton!
-    private var deleteButtonShowFrame: CGRect! //= CGRect(x: UIScreen.mainScreen().bounds.size.width - 44 - 5, y: 5, width: 44, height: 44)
-    private var deleteButtonHideFrame: CGRect! //= CGRect(x: UIScreen.mainScreen().bounds.size.width - 44 - 5, y: -20, width: 44, height: 44)
+    // MARK: CustomDeleteButton
+    private var customDeleteButton: UIButton!
+    public var customDeleteButtonShowFrame: CGRect!
+    public var customDeleteButtonHideFrame: CGRect!
+    public var customDeleteButtonImage: UIImage!
+    public var customDeleteButtonEdgeInsets: UIEdgeInsets!
     
     // photo's paging
     private var visiblePages: Set<SKZoomingScrollView> = Set()
@@ -231,6 +240,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         setSettingCloseButton()
         setSettingDeleteButton()
         setSettingCustomCloseButton()
+        setSettingCustomDeleteButton()
         
         
         // action button
@@ -308,8 +318,13 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         if displayCustomCloseButton == true {
             displayCloseButton = false
         }
+        if displayCustomDeleteButton == true {
+            displayDeleteButton = false
+        }
     }
     
+    // MARK: - Buttons' setting
+    // MARK: Close button
     private func setSettingCloseButton() {
         if displayCloseButton == true {
             let doneImage = UIImage(named: "SKPhotoBrowser.bundle/images/btn_common_close_wh", inBundle: bundle, compatibleWithTraitCollection: nil) ?? UIImage()
@@ -330,6 +345,31 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         }
     }
     
+    // MARK: Delete button
+    
+    private func setSettingDeleteButton() {
+        if displayDeleteButton == true {
+            deleteButton = UIButton(type: .Custom)
+            deleteButtonShowFrame = CGRect(x: view.frame.width - 44, y: 5, width: 44, height: 44)
+            deleteButtonHideFrame = CGRect(x: view.frame.width - 44, y: -20, width: 44, height: 44)
+            let image = UIImage(named: "SKPhotoBrowser.bundle/images/btn_common_delete_wh", inBundle: bundle, compatibleWithTraitCollection: nil) ?? UIImage()
+            if UI_USER_INTERFACE_IDIOM() == .Phone {
+                deleteButton.imageEdgeInsets = UIEdgeInsets(top: 15.25, left: 15.25, bottom: 15.25, right: 15.25)
+            } else {
+                deleteButton.imageEdgeInsets = UIEdgeInsetsMake(12.3, 12.3, 12.3, 12.3)
+            }
+            deleteButton.setImage(image, forState: .Normal)
+            deleteButton.addTarget(self, action: "deleteButtonPressed:", forControlEvents: UIControlEvents.TouchUpInside)
+            deleteButton.alpha = 0.0
+            view.addSubview(deleteButton)
+            deleteButton.translatesAutoresizingMaskIntoConstraints = true
+            deleteButton.autoresizingMask = [.FlexibleBottomMargin, .FlexibleLeftMargin, .FlexibleRightMargin, .FlexibleTopMargin]
+        }
+    }
+    
+    // MARK: - Custom buttons' setting
+    // MARK: Custom Close Button
+    
     private func setSettingCustomCloseButton() {
         if displayCustomCloseButton == true {
             let closeImage = UIImage(named: "SKPhotoBrowser.bundle/images/btn_common_close_wh", inBundle: bundle, compatibleWithTraitCollection: nil) ?? UIImage()
@@ -349,9 +389,6 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
             if customCloseButtonEdgeInsets != nil {
                 customCloseButton.imageEdgeInsets = customCloseButtonEdgeInsets
             }
-            if customCloseButtonConstraints != nil {
-                customCloseButton.addConstraints(customCloseButtonConstraints)
-            }
             
             customCloseButton.translatesAutoresizingMaskIntoConstraints = true
             view.addSubview(customCloseButton)
@@ -360,23 +397,26 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         }
     }
     
-    private func setSettingDeleteButton() {
-        if displayDeleteButton == true {
-            deleteButton = UIButton(type: .Custom)
-            deleteButtonShowFrame = CGRect(x: view.frame.width - 44, y: 5, width: 44, height: 44)
-            deleteButtonHideFrame = CGRect(x: view.frame.width - 44, y: -20, width: 44, height: 44)
-            let image = UIImage(named: "SKPhotoBrowser.bundle/images/btn_common_delete_wh", inBundle: bundle, compatibleWithTraitCollection: nil) ?? UIImage()
-            if UI_USER_INTERFACE_IDIOM() == .Phone {
-                deleteButton.imageEdgeInsets = UIEdgeInsets(top: 15.25, left: 15.25, bottom: 15.25, right: 15.25)
-            } else {
-                deleteButton.imageEdgeInsets = UIEdgeInsetsMake(12.3, 12.3, 12.3, 12.3)
+    // MARK: Custom Delete Button
+    private func setSettingCustomDeleteButton() {
+        if displayCustomDeleteButton == true {
+            customDeleteButton = UIButton(type: .Custom)
+            customDeleteButton.backgroundColor = .clearColor()
+            customDeleteButton.addTarget(self, action: "deleteButtonPressed:", forControlEvents: .TouchUpInside)
+            // If another developer has not set their values
+            if customDeleteButtonShowFrame == nil && customDeleteButtonHideFrame == nil {
+                customDeleteButtonShowFrame = CGRect(x: view.frame.width - 44, y: 5, width: 44, height: 44)
+                customDeleteButtonHideFrame = CGRect(x: view.frame.width - 44, y: -20, width: 44, height: 44)
             }
-            deleteButton.setImage(image, forState: .Normal)
-            deleteButton.addTarget(self, action: "deleteButtonPressed:", forControlEvents: UIControlEvents.TouchUpInside)
-            deleteButton.alpha = 0.0
-            view.addSubview(deleteButton)
-            deleteButton.translatesAutoresizingMaskIntoConstraints = true
-            deleteButton.autoresizingMask = [.FlexibleBottomMargin, .FlexibleLeftMargin, .FlexibleRightMargin, .FlexibleTopMargin]
+            if let _customDeleteButtonImage = customDeleteButtonImage {
+                customDeleteButton.setImage(_customDeleteButtonImage, forState: .Normal)
+            }
+            if let _customDeleteButtonEdgeInsets = customDeleteButtonEdgeInsets {
+                customDeleteButton.imageEdgeInsets = _customDeleteButtonEdgeInsets
+            }
+            view.addSubview(customDeleteButton)
+            customDeleteButton.translatesAutoresizingMaskIntoConstraints = true
+            customDeleteButton.autoresizingMask = [.FlexibleBottomMargin, .FlexibleLeftMargin, .FlexibleRightMargin, .FlexibleTopMargin]
         }
     }
     
@@ -687,6 +727,10 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
                         self.customCloseButton.alpha = 1.0
                         self.customCloseButton.frame = self.customCloseButtonShowFrame
                     }
+                    if self.displayCustomDeleteButton == true {
+                        self.customDeleteButton.alpha = 1.0
+                        self.customDeleteButton.frame = self.customDeleteButtonShowFrame
+                    }
                 },
                 completion: { (Bool) -> Void in
                     self.view.alpha = 1.0
@@ -714,6 +758,10 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
                     if self.displayCustomCloseButton == true {
                         self.customCloseButton.alpha = 1.0
                         self.customCloseButton.frame = self.customCloseButtonShowFrame
+                    }
+                    if self.displayCustomDeleteButton == true {
+                        self.customDeleteButton.alpha = 1.0
+                        self.customDeleteButton.frame = self.customDeleteButtonShowFrame
                     }
                 },
                 completion: { (Bool) -> Void in
@@ -956,6 +1004,10 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
                     self.customCloseButton.alpha = alpha
                     self.customCloseButton.frame = hidden ? self.customCloseButtonHideFrame : self.customCloseButtonShowFrame
                 }
+                if self.displayCustomDeleteButton == true {
+                    self.customDeleteButton.alpha = alpha
+                    self.customDeleteButton.frame = hidden ? self.customDeleteButtonHideFrame : self.customDeleteButtonShowFrame
+                }
                 for v in captionViews {
                     v.alpha = alpha
                 }
@@ -1086,6 +1138,9 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         // FIXME: - when we will to resolve this problem https://github.com/suzuki-0000/SKPhotoBrowser/issues/22  it will need to remove
         deleteButtonShowFrame = CGRect(x: view.frame.width - 44, y: 5, width: 44, height: 44)
         deleteButtonHideFrame = CGRect(x: view.frame.width - 44, y: -20, width: 44, height: 44)
+        // I didn't add customDeleteButton frame here
+        
+        
         
         //        customCloseButtonShowFrame = customCloseButtonShowOldFrame
         //        customCloseButtonHideFrame = customCloseButtonHideOldFrame
