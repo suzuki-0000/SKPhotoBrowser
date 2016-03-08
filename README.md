@@ -2,7 +2,7 @@ SKPhotoBrowser
 ========================
 
 [![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
-[![Cocoapods Compatible](https://img.shields.io/cocoapods/v/SKPhotoBrowser.svg?style=flat)](http://cocoadocs.org/docsets/SKPhotoBrowser)
+[![Cocoapods Compatible](https://img.shields.io/badge/pod-v1.6.1-blue.svg)](http://cocoadocs.org/docsets/SKPhotoBrowser)
 [![Swift 2.0](https://img.shields.io/badge/Swift-2.0-orange.svg?style=flat)](https://developer.apple.com/swift/)
 
 Simple PhotoBrowser/Viewer inspired by facebook, twitter photo browsers written by swift2.0, based on [IDMPhotoBrowser](https://github.com/ideaismobile/IDMPhotoBrowser), [MWPhotoBrowser](https://github.com/mwaterfall/MWPhotoBrowser).
@@ -109,6 +109,13 @@ browser.displayCustomCloseButton = true // custom close button will be enable
 browser.customCloseButtonImage = UIImage(named: "some.png")
 browser.customCloseButtonShowFrame = CGRect()
 browser.customCloseButtonHideFrame = CGRect()
+```
+Delete button is able to change image and frame.
+``` swift
+browser.displayCustomDeleteButton = true // custom delete button will be enable
+browser.customDeleteButtonImage = UIImage(named: "some.png")
+browser.customDeleteButtonShowFrame = CGRect()
+browser.customDeleteButtonHideFrame = CGRect()
 ```
 
 #### Delete 
