@@ -24,7 +24,18 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
     
     final let pageIndexTagOffset: Int = 1000
     // animation property
-    final let animationDuration: Double = 0.35
+    var animationDuration: NSTimeInterval {
+        if bounceAnimation {
+            return 0.5
+        }
+        return 0.35
+    }
+    var animationDamping: CGFloat {
+        if bounceAnimation {
+            return 0.8
+        }
+        return 1
+    }
     
     // device property
     final let screenBound = UIScreen.mainScreen().bounds
@@ -44,6 +55,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
     public var displayCloseButton = true // default is true
     public var displayCustomCloseButton = false // if it is true displayCloseButton will be false
     public var displayCustomDeleteButton = false // if it is true displayDeleteButton will be false
+    public var bounceAnimation = false
     
     // actions
     private var activityViewController: UIActivityViewController!
@@ -242,7 +254,6 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         setSettingCustomCloseButton()
         setSettingCustomDeleteButton()
         
-        
         // action button
         toolActionButton = UIBarButtonItem(barButtonSystemItem: .Action, target: self, action: "actionButtonPressed")
         toolActionButton.tintColor = .whiteColor()
@@ -251,7 +262,6 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         panGesture = UIPanGestureRecognizer(target: self, action: "panGestureRecognized:")
         panGesture.minimumNumberOfTouches = 1
         panGesture.maximumNumberOfTouches = 1
-        
         
         // transition (this must be last call of view did load.)
         performPresentAnimation()
@@ -649,10 +659,9 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
                     finalY = -(viewHalfHeight)
                 }
                 
-                let animationDuration = 0.35
                 UIView.beginAnimations(nil, context: nil)
                 UIView.setAnimationDuration(animationDuration)
-                UIView.setAnimationCurve(UIViewAnimationCurve.EaseIn)
+                UIView.setAnimationCurve(.EaseIn)
                 scrollView.center = CGPoint(x: finalX, y: finalY)
                 UIView.commitAnimations()
                 
@@ -663,7 +672,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
                 isDraggingPhoto = false
                 setNeedsStatusBarAppearanceUpdate()
                 
-                let velocityY: CGFloat = 0.35 * sender.velocityInView(self.view).y
+                let velocityY: CGFloat = CGFloat(self.animationDuration) * sender.velocityInView(self.view).y
                 let finalX: CGFloat = firstX
                 let finalY: CGFloat = viewHalfHeight
                 
@@ -684,19 +693,20 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         view.alpha = 0.0
         pagingScrollView.alpha = 0.0
         
+        let fadeView = UIView(frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight))
+        fadeView.backgroundColor = .blackColor()
+        fadeView.alpha = 0.0
+        applicationWindow.addSubview(fadeView)
+        
         if let sender = senderViewForAnimation {
             
             senderViewOriginalFrame = (sender.superview?.convertRect(sender.frame, toView:nil))!
-            
-            let fadeView = UIView(frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight))
-            fadeView.backgroundColor = UIColor.clearColor()
-            applicationWindow.addSubview(fadeView)
             
             let imageFromView = senderOriginImage != nil ? senderOriginImage : getImageFromView(sender)
             resizableImageView = UIImageView(image: imageFromView)
             resizableImageView.frame = senderViewOriginalFrame
             resizableImageView.clipsToBounds = true
-            resizableImageView.contentMode = .ScaleToFill
+            resizableImageView.contentMode = .ScaleAspectFill
             applicationWindow.addSubview(resizableImageView)
             
             sender.hidden = true
@@ -711,10 +721,17 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
                 width: imageFromView.size.width / scaleFactor,
                 height: imageFromView.size.height / scaleFactor)
             
+            if sender.layer.cornerRadius != 0 {
+                let duration = (animationDuration * Double(animationDamping))
+                self.resizableImageView.layer.masksToBounds = true
+                self.resizableImageView.addCornerRadiusAnimation(sender.layer.cornerRadius, to: 0, duration: duration)
+            }
             
-            UIView.animateWithDuration(animationDuration,
-                animations: { () -> Void in
+            UIView.animateWithDuration(animationDuration, delay:0, usingSpringWithDamping:animationDamping, initialSpringVelocity:0, options:.CurveEaseInOut, animations: { () -> Void in
+                
+                    fadeView.alpha = 1.0
                     self.resizableImageView.frame = finalImageViewFrame
+                
                     if self.displayCloseButton == true {
                         self.closeButton.alpha = 1.0
                         self.closeButton.frame = self.closeButtonShowFrame
@@ -741,12 +758,8 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
             
         } else {
             
-            let fadeView = UIView(frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight))
-            fadeView.backgroundColor = .clearColor()
-            applicationWindow.addSubview(fadeView)
-            
-            UIView.animateWithDuration(animationDuration,
-                animations: { () -> Void in
+            UIView.animateWithDuration(animationDuration, delay:0, usingSpringWithDamping:animationDamping, initialSpringVelocity:0, options:.CurveEaseInOut, animations: { () -> Void in
+                    fadeView.alpha = 1.0
                     if self.displayCloseButton == true {
                         self.closeButton.alpha = 1.0
                         self.closeButton.frame = self.closeButtonShowFrame
@@ -773,20 +786,37 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
     }
     
     public func performCloseAnimationWithScrollView(scrollView: SKZoomingScrollView) {
+        
         view.hidden = true
         
         let fadeView = UIView(frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight))
+        let contentOffset = scrollView.contentOffset
+        let scrollFrame = scrollView.photoImageView.frame
+        let offsetY = scrollView.center.y - (scrollView.bounds.height/2)
+        
+        let frame = CGRect(
+            x: scrollFrame.origin.x - contentOffset.x,
+            y: scrollFrame.origin.y + contentOffset.y + offsetY,
+            width: scrollFrame.width,
+            height: scrollFrame.height)
+        
         fadeView.backgroundColor = .blackColor()
         fadeView.alpha = 1.0
-        applicationWindow.addSubview(fadeView)
         
+        applicationWindow.addSubview(fadeView)
+        resizableImageView.frame = frame
         resizableImageView.alpha = 1.0
         resizableImageView.clipsToBounds = true
-        resizableImageView.contentMode = .ScaleToFill
+        resizableImageView.contentMode = .ScaleAspectFill
         applicationWindow.addSubview(resizableImageView)
         
-        UIView.animateWithDuration(animationDuration,
-            animations: { () -> () in
+        if let view = senderViewForAnimation where view.layer.cornerRadius != 0 {
+            let duration = (animationDuration * Double(animationDamping))
+            self.resizableImageView.layer.masksToBounds = true
+            self.resizableImageView.addCornerRadiusAnimation(0, to: view.layer.cornerRadius, duration: duration)
+        }
+        
+        UIView.animateWithDuration(animationDuration, delay:0, usingSpringWithDamping:animationDamping, initialSpringVelocity:0, options:.CurveEaseInOut, animations: { () -> () in
                 fadeView.alpha = 0.0
                 self.resizableImageView.layer.frame = self.senderViewOriginalFrame
             },
@@ -987,7 +1017,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
             }
         }
         
-        UIView.animateWithDuration(0.35,
+        UIView.animateWithDuration(animationDuration,
             animations: { () -> Void in
                 let alpha: CGFloat = hidden ? 0.0 : 1.0
                 self.toolBar.alpha = alpha
@@ -1182,5 +1212,19 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
             
             customCloseButtonHideFrame = CGRect(x: customCloseButtonHideOldFrame.origin.x, y: customCloseButtonHideOldFrame.origin.y, width: customCloseButtonHideOldFrame.width, height: customCloseButtonHideOldFrame.height)
         }
+    }
+}
+
+extension UIView
+{
+    func addCornerRadiusAnimation(from: CGFloat, to: CGFloat, duration: CFTimeInterval)
+    {
+        let animation = CABasicAnimation(keyPath:"cornerRadius")
+        animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionLinear)
+        animation.fromValue = from
+        animation.toValue = to
+        animation.duration = duration
+        self.layer.addAnimation(animation, forKey: "cornerRadius")
+        self.layer.cornerRadius = to
     }
 }

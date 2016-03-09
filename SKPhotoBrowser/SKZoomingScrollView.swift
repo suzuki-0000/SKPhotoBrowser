@@ -18,9 +18,9 @@ public class SKZoomingScrollView: UIScrollView, UIScrollViewDelegate, SKDetectin
         }
     }
     
+    private(set) var photoImageView: SKDetectingImageView!
     private weak var photoBrowser: SKPhotoBrowser!
     private var tapView: SKDetectingView!
-    private var photoImageView: SKDetectingImageView!
     private var indicatorView: SKIndicatorView!
     
     required public init?(coder aDecoder: NSCoder) {
