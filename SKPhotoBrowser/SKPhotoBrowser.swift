@@ -87,7 +87,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
     public var customDeleteButtonEdgeInsets: UIEdgeInsets!
     
     // photo's paging
-    private var visiblePages: Set<SKZoomingScrollView> = Set()
+    private var visiblePages = [SKZoomingScrollView]()//: Set<SKZoomingScrollView> = Set()
     private var initialPageIndex: Int = 0
     private var currentPageIndex: Int = 0
     
@@ -278,20 +278,19 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         pagingScrollView.contentSize = contentSizeForPagingScrollView()
         
         if visiblePages.count > 0 {
-            for page in visiblePages {
-                page.frame = frameForPageAtIndex(currentPageIndex)
-                page.setMaxMinZoomScalesForCurrentBounds()
-                if page.captionView != nil {
-                    page.captionView.frame = frameForCaptionView(page.captionView, index: currentPageIndex)
-                }
+            let page = visiblePages[currentPageIndex]
+            page.frame = frameForPageAtIndex(currentPageIndex)
+            page.setMaxMinZoomScalesForCurrentBounds()
+            if page.captionView != nil {
+                page.captionView.frame = frameForCaptionView(page.captionView, index: currentPageIndex)
             }
         }
         
         pagingScrollView.contentOffset = contentOffsetForPageAtIndex(currentPageIndex)
-        
-        toolBar.frame = frameForToolbarAtOrientation()
         // where did start
         didStartViewingPageAtIndex(currentPageIndex)
+        
+        toolBar.frame = frameForToolbarAtOrientation()
         isPerformingLayout = false
     }
     
@@ -909,7 +908,8 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
             page.tag = index + pageIndexTagOffset
             page.photo = photoAtIndex(index)
             
-            visiblePages.insert(page)
+            //            visiblePages.insert(page)
+            visiblePages.append(page)
             pagingScrollView.addSubview(page)
             
             // if exists caption, insert
