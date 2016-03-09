@@ -276,10 +276,22 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         
         pagingScrollView.frame = frameForPagingScrollView()
         pagingScrollView.contentSize = contentSizeForPagingScrollView()
+        
+        if visiblePages.count > 0 {
+            for page in visiblePages {
+                page.frame = frameForPageAtIndex(currentPageIndex)
+                page.setMaxMinZoomScalesForCurrentBounds()
+                if page.captionView != nil {
+                    page.captionView.frame = frameForCaptionView(page.captionView, index: currentPageIndex)
+                }
+            }
+        }
+        
         pagingScrollView.contentOffset = contentOffsetForPageAtIndex(currentPageIndex)
         
         toolBar.frame = frameForToolbarAtOrientation()
-        
+        // where did start
+        didStartViewingPageAtIndex(currentPageIndex)
         isPerformingLayout = false
     }
     
