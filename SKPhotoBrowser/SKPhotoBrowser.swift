@@ -56,6 +56,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
     public var displayCustomCloseButton = false // if it is true displayCloseButton will be false
     public var displayCustomDeleteButton = false // if it is true displayDeleteButton will be false
     public var bounceAnimation = false
+    public var enableZoomBlackArea = true
     
     // actions
     private var activityViewController: UIActivityViewController!
@@ -97,7 +98,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
     public var customDeleteButtonEdgeInsets: UIEdgeInsets!
     
     // photo's paging
-    private var visiblePages: Set<SKZoomingScrollView> = Set()
+    private var visiblePages = [SKZoomingScrollView]()//: Set<SKZoomingScrollView> = Set()
     private var initialPageIndex: Int = 0
     private var currentPageIndex: Int = 0
     
@@ -134,7 +135,6 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
     var numberOfPhotos: Int {
         return photos.count
     }
-    var deleted = [Int]()
     // MARK - Initializer
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -285,10 +285,21 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         
         pagingScrollView.frame = frameForPagingScrollView()
         pagingScrollView.contentSize = contentSizeForPagingScrollView()
+        
+        if visiblePages.count > 0 {
+            let page = visiblePages[currentPageIndex]
+            page.frame = frameForPageAtIndex(currentPageIndex)
+            page.setMaxMinZoomScalesForCurrentBounds()
+            if page.captionView != nil {
+                page.captionView.frame = frameForCaptionView(page.captionView, index: currentPageIndex)
+            }
+        }
+        
         pagingScrollView.contentOffset = contentOffsetForPageAtIndex(currentPageIndex)
+        // where did start
+        didStartViewingPageAtIndex(currentPageIndex)
         
         toolBar.frame = frameForToolbarAtOrientation()
-        
         isPerformingLayout = false
     }
     
@@ -926,7 +937,8 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
             page.tag = index + pageIndexTagOffset
             page.photo = photoAtIndex(index)
             
-            visiblePages.insert(page)
+            //            visiblePages.insert(page)
+            visiblePages.append(page)
             pagingScrollView.addSubview(page)
             
             // if exists caption, insert
