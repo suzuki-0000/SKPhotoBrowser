@@ -124,7 +124,6 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
     var numberOfPhotos: Int {
         return photos.count
     }
-    var deleted = [Int]()
     // MARK - Initializer
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
