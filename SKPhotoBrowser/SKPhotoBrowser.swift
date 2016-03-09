@@ -44,6 +44,8 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
     public var displayCloseButton = true // default is true
     public var displayCustomCloseButton = false // if it is true displayCloseButton will be false
     public var displayCustomDeleteButton = false // if it is true displayDeleteButton will be false
+    /// This makes it possible zoom in the black area. By default is true
+    public var enableZoomBlackArea = true
     
     // actions
     private var activityViewController: UIActivityViewController!
