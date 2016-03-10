@@ -282,25 +282,14 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         super.viewWillLayoutSubviews()
         
         isPerformingLayout = true
-        
         pagingScrollView.frame = frameForPagingScrollView()
         pagingScrollView.contentSize = contentSizeForPagingScrollView()
-        //If we open the SKPhotoBrowser from CollectionView not the first image, we have one element in visiblepages and we should to take 0 element from visibleindex but that we should to use frame we should use currentPageIndex for frame's functions.
-        if visiblePages.count > 0 {
-            if visiblePages.count == 1 {
-                let page = visiblePages[0]
-                page.frame = frameForPageAtIndex(currentPageIndex)
-                page.setMaxMinZoomScalesForCurrentBounds()
-                if page.captionView != nil {
-                    page.captionView.frame = frameForCaptionView(page.captionView, index: currentPageIndex)
-                }
-            } else {
-                let page = visiblePages[currentPageIndex]
-                page.frame = frameForPageAtIndex(currentPageIndex)
-                page.setMaxMinZoomScalesForCurrentBounds()
-                if page.captionView != nil {
-                    page.captionView.frame = frameForCaptionView(page.captionView, index: currentPageIndex)
-                }
+
+        if let page = visiblePages.first {
+            page.frame = frameForPageAtIndex(currentPageIndex)
+            page.setMaxMinZoomScalesForCurrentBounds()
+            if page.captionView != nil {
+                page.captionView.frame = frameForCaptionView(page.captionView, index: currentPageIndex)
             }
         }
         
