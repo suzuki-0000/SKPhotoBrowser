@@ -699,7 +699,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
     // MARK: - perform animation
     public func performPresentAnimation() {
         
-        view.alpha = 0.0
+        view.hidden = true
         pagingScrollView.alpha = 0.0
         
         let fadeView = UIView(frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight))
@@ -759,7 +759,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
                     }
                 },
                 completion: { (Bool) -> Void in
-                    self.view.alpha = 1.0
+                    self.view.hidden = false
                     self.pagingScrollView.alpha = 1.0
                     self.resizableImageView.alpha = 0.0
                     fadeView.removeFromSuperview()
@@ -787,7 +787,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
                     }
                 },
                 completion: { (Bool) -> Void in
-                    self.view.alpha = 1.0
+                    self.view.hidden = false
                     self.pagingScrollView.alpha = 1.0
                     fadeView.removeFromSuperview()
             })
