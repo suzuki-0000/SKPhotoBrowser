@@ -76,6 +76,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         let browser = SKPhotoBrowser(originImage: originImage, photos: images, animatedFromView: cell)
         browser.initializePageIndex(indexPath.row)
         browser.delegate = self
+        browser.bounceAnimation = true
         
         // Can hide the action button by setting to false
         browser.displayAction = true
@@ -124,6 +125,8 @@ class ExampleCollectionViewCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         exampleImageView.image = nil
+        layer.cornerRadius = 25.0
+        layer.masksToBounds = true
     }
     
     override func prepareForReuse() {
