@@ -715,7 +715,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
             
             senderViewOriginalFrame = (sender.superview?.convertRect(sender.frame, toView:nil))!
             
-            let imageFromView = senderOriginImage != nil ? senderOriginImage : getImageFromView(sender)
+            let imageFromView = senderOriginImage ?? getImageFromView(sender)
             resizableImageView = UIImageView(image: imageFromView)
             resizableImageView.frame = senderViewOriginalFrame
             resizableImageView.clipsToBounds = true
