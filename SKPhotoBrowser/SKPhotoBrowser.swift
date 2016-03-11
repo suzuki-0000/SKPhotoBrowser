@@ -288,7 +288,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
 
         //If we open the SKPhotoBrowser from CollectionView not the first image, we have one element in visiblepages and we should to take 0 element from visibleindex but that we should to use frame we should use currentPageIndex for frame's functions.
         // TODO: - need to fix this bug
-        if visiblePages.count > 0 {
+        /*if visiblePages.count > 0 {
             let currentIndex = visiblePages.count - 1
             let page = visiblePages[currentIndex]
             page.frame = frameForPageAtIndex(currentPageIndex)
@@ -296,7 +296,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
             if page.captionView != nil {
                 page.captionView.frame = frameForCaptionView(page.captionView, index: currentIndex)
             }
-        }
+        }*/
         
         pagingScrollView.contentOffset = contentOffsetForPageAtIndex(currentPageIndex)
         // where did start
@@ -1185,50 +1185,6 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         // FIXME: - when we will to resolve this problem https://github.com/suzuki-0000/SKPhotoBrowser/issues/22  it will need to remove
         deleteButtonShowFrame = CGRect(x: view.frame.width - 44, y: 5, width: 44, height: 44)
         deleteButtonHideFrame = CGRect(x: view.frame.width - 44, y: -20, width: 44, height: 44)
-        // I didn't add customDeleteButton frame here
-        
-        
-        
-        //        customCloseButtonShowFrame = customCloseButtonShowOldFrame
-        //        customCloseButtonHideFrame = customCloseButtonHideOldFrame
-        //        if displayCustomCloseButton == true {
-        //            if customCloseButtonShowFrame != nil && customCloseButtonHideFrame != nil {
-        //                if customCloseButtonConstraints == nil {
-        //                    switch startOrientation {
-        //                    case 1, 2:
-        //                        changeCustomPortraitFrameAfterRotation()
-        //                    case 3, 4:
-        //                        changeCustomLandscapeFrameAfterRotation()
-        //                    default: break
-        //                    }
-        //                }
-        //            }
-        //        }
-        //        setControlsHidden(false, animated: false, permanent: false)
-    }
-    
-    // FIXME: - Maybe it will be needed in the future
-    private func changeCustomPortraitFrameAfterRotation() {
-        if UIApplication.sharedApplication().statusBarOrientation.isLandscape {
-            customCloseButtonShowFrame = CGRect(x: customCloseButtonShowOldFrame.origin.x * 2, y: customCloseButtonShowOldFrame.origin.y / 2 + customCloseButtonShowOldFrame.height / 4, width: customCloseButtonShowOldFrame.width, height: customCloseButtonShowOldFrame.height)
-            customCloseButtonHideFrame = CGRect(x: customCloseButtonHideOldFrame.origin.x * 2, y: customCloseButtonHideOldFrame.origin.y / 2, width: customCloseButtonHideOldFrame.width, height: customCloseButtonHideOldFrame.height)
-        } else {
-            customCloseButtonShowFrame = CGRect(x: customCloseButtonShowOldFrame.origin.x, y: customCloseButtonShowOldFrame.origin.y, width: customCloseButtonShowOldFrame.width, height: customCloseButtonShowOldFrame.height)
-            
-            customCloseButtonHideFrame = CGRect(x: customCloseButtonHideOldFrame.origin.x, y: customCloseButtonHideOldFrame.origin.y, width: customCloseButtonHideOldFrame.width, height: customCloseButtonHideOldFrame.height)
-        }
-    }
-    
-    private func changeCustomLandscapeFrameAfterRotation() {
-        if UIApplication.sharedApplication().statusBarOrientation.isPortrait {
-            customCloseButtonShowFrame = CGRect(x: customCloseButtonShowOldFrame.origin.x / 2, y: customCloseButtonShowOldFrame.origin.y * 2 -  customCloseButtonShowOldFrame.height / 2, width: customCloseButtonShowOldFrame.width, height: customCloseButtonShowOldFrame.height)
-            
-            customCloseButtonHideFrame = CGRect(x: customCloseButtonHideOldFrame.origin.x / 2, y: customCloseButtonHideOldFrame.origin.y * 2 - customCloseButtonShowOldFrame.height / 2, width: customCloseButtonHideOldFrame.width, height: customCloseButtonHideOldFrame.height)
-        } else {
-            customCloseButtonShowFrame = CGRect(x: customCloseButtonShowOldFrame.origin.x, y: customCloseButtonShowOldFrame.origin.y, width: customCloseButtonShowOldFrame.width, height: customCloseButtonShowOldFrame.height)
-            
-            customCloseButtonHideFrame = CGRect(x: customCloseButtonHideOldFrame.origin.x, y: customCloseButtonHideOldFrame.origin.y, width: customCloseButtonHideOldFrame.width, height: customCloseButtonHideOldFrame.height)
-        }
     }
 }
 
