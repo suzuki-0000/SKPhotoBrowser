@@ -277,7 +277,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         pagingScrollView.frame = frameForPagingScrollView()
         pagingScrollView.contentSize = contentSizeForPagingScrollView()
         //If we open the SKPhotoBrowser from CollectionView not the first image, we have one element in visiblepages and we should to take 0 element from visibleindex but that we should to use frame we should use currentPageIndex for frame's functions.
-        // TODO: - need to fix this bug 
+        // TODO: - need to fix this bug
         if visiblePages.count > 0 {
             let currentIndex = visiblePages.count - 1
             let page = visiblePages[currentIndex]
