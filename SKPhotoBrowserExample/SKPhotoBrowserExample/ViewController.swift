@@ -96,7 +96,8 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     }
     
     func willDismissAtPageIndex(index: Int) {
-        // do some handle if you need
+        collectionView.visibleCells().forEach({$0.hidden = false})
+        collectionView.cellForItemAtIndexPath(NSIndexPath(forItem: index, inSection: 0))?.hidden = true
     }
    
     func willShowActionSheet(photoIndex: Int) {
@@ -104,7 +105,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     }
     
     func didDismissAtPageIndex(index: Int) {
-        // do some handle if you need
+        collectionView.cellForItemAtIndexPath(NSIndexPath(forItem: index, inSection: 0))?.hidden = false
     }
     
     func didDismissActionSheetWithButtonIndex(buttonIndex: Int, photoIndex: Int) {
@@ -115,6 +116,10 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         // do some handle if you need
     }
     
+    func viewForPhoto(browser: SKPhotoBrowser, index: Int) -> UIView? {
+        
+        return collectionView.cellForItemAtIndexPath(NSIndexPath(forItem: index, inSection: 0))
+    }
 }
 
 

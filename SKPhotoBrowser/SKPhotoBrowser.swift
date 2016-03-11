@@ -15,6 +15,7 @@ import UIKit
     optional func didDismissAtPageIndex(index: Int)
     optional func didDismissActionSheetWithButtonIndex(buttonIndex: Int, photoIndex: Int)
     optional func removePhoto(browser: SKPhotoBrowser, index: Int, reload: (() -> Void))
+    optional func viewForPhoto(browser: SKPhotoBrowser, index: Int) -> UIView?
 }
 
 public let SKPHOTO_LOADING_DID_END_NOTIFICATION = "photoLoadingDidEndNotification"
@@ -537,7 +538,6 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
     public func prepareForClosePhotoBrowser() {
         applicationWindow.removeGestureRecognizer(panGesture)
         NSObject.cancelPreviousPerformRequestsWithTarget(self)
-        delegate?.willDismissAtPageIndex?(currentPageIndex)
     }
     
     // MARK: - frame calculation
@@ -657,28 +657,10 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         // gesture end
         if sender.state == .Ended {
             if scrollView.center.y > viewHalfHeight+40 || scrollView.center.y < viewHalfHeight-40 {
-                if currentPageIndex == initialPageIndex {
-                    performCloseAnimationWithScrollView(scrollView)
-                    return
-                }
                 
-                let finalX: CGFloat = firstX
-                var finalY: CGFloat = 0.0
-                let windowHeight = applicationWindow.frame.size.height
-                
-                if scrollView.center.y > viewHalfHeight+30 {
-                    finalY = windowHeight * 2.0
-                } else {
-                    finalY = -(viewHalfHeight)
-                }
-                
-                UIView.beginAnimations(nil, context: nil)
-                UIView.setAnimationDuration(animationDuration)
-                UIView.setAnimationCurve(.EaseIn)
-                scrollView.center = CGPoint(x: finalX, y: finalY)
-                UIView.commitAnimations()
-                
-                dismissPhotoBrowser()
+                determineAndClose()
+                return
+
             } else {
                 
                 // Continue Showing View
@@ -711,7 +693,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         fadeView.alpha = 0.0
         applicationWindow.addSubview(fadeView)
         
-        if let sender = senderViewForAnimation {
+        if let sender = delegate?.viewForPhoto?(self, index: initialPageIndex) ?? senderViewForAnimation {
             
             senderViewOriginalFrame = (sender.superview?.convertRect(sender.frame, toView:nil))!
             
@@ -802,6 +784,10 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         
         view.hidden = true
         
+        if let sender = senderViewForAnimation {
+            senderViewOriginalFrame = (sender.superview?.convertRect(sender.frame, toView:nil))!
+        }
+        
         let fadeView = UIView(frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight))
         let contentOffset = scrollView.contentOffset
         let scrollFrame = scrollView.photoImageView.frame
@@ -848,10 +834,30 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
             self.delegate?.didDismissAtPageIndex?(self.currentPageIndex)
         }
     }
+
+    private func determineAndClose() {
+        
+        delegate?.willDismissAtPageIndex?(currentPageIndex)
+        let scrollView = pageDisplayedAtIndex(currentPageIndex)
+        
+        if currentPageIndex == initialPageIndex {
+            performCloseAnimationWithScrollView(scrollView)
+            return
+        } else if let sender = delegate?.viewForPhoto?(self, index: currentPageIndex), image = photoAtIndex(currentPageIndex).underlyingImage {
+            
+            senderViewForAnimation = sender
+            resizableImageView.image = image
+            performCloseAnimationWithScrollView(scrollView)
+            return
+        } else {
+            dismissPhotoBrowser()
+        }
+        
+    }
     
     //MARK: - image
     private func getImageFromView(sender: UIView) -> UIImage {
-        UIGraphicsBeginImageContextWithOptions(sender.frame.size, true, 2.0)
+        UIGraphicsBeginImageContextWithOptions(sender.frame.size, true, 0.0)
         sender.layer.renderInContext(UIGraphicsGetCurrentContext()!)
         let result = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
@@ -1072,11 +1078,8 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
     
     // MARK: - Button
     public func closeButtonPressed(sender: UIButton) {
-        if currentPageIndex == initialPageIndex {
-            performCloseAnimationWithScrollView(pageDisplayedAtIndex(currentPageIndex))
-        } else {
-            dismissPhotoBrowser()
-        }
+        
+        determineAndClose()
     }
     
     // MARK: Action Button
