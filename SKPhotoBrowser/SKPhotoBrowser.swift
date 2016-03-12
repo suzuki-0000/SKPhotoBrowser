@@ -54,8 +54,10 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
     public var isForceStatusBarHidden: Bool = false
     public var displayDeleteButton = false
     public var displayCloseButton = true // default is true
-    public var displayCustomCloseButton = false // if it is true displayCloseButton will be false
-    public var displayCustomDeleteButton = false // if it is true displayDeleteButton will be false
+    /// If it is true displayCloseButton will be false
+    public var displayCustomCloseButton = false
+    /// If it is true displayDeleteButton will be false
+    public var displayCustomDeleteButton = false
     public var bounceAnimation = false
     public var enableZoomBlackArea = true
     
@@ -74,8 +76,8 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
     private var panGesture: UIPanGestureRecognizer!
     // MARK: close button
     private var closeButton: UIButton!
-    private var closeButtonShowFrame: CGRect! //= CGRect(x: 5, y: 5, width: 44, height: 44)
-    private var closeButtonHideFrame: CGRect! //= CGRect(x: 5, y: -20, width: 44, height: 44)
+    private var closeButtonShowFrame: CGRect!
+    private var closeButtonHideFrame: CGRect!
     // MARK: delete button
     private var deleteButton: UIButton!
     private var deleteButtonShowFrame: CGRect!
@@ -88,8 +90,6 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
     public var customCloseButtonHideFrame: CGRect!
     public var customCloseButtonImage: UIImage!
     public var customCloseButtonEdgeInsets: UIEdgeInsets!
-    private var customCloseButtonHideOldFrame: CGRect!
-    private var customCloseButtonShowOldFrame: CGRect!
     
     // MARK: CustomDeleteButton
     private var customDeleteButton: UIButton!
@@ -182,9 +182,6 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "handleSKPhotoLoadingDidEndNotification:", name: SKPHOTO_LOADING_DID_END_NOTIFICATION, object: nil)
-        
-        // it change delete button frame while rotation of device
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "changeOrientation", name: UIApplicationDidChangeStatusBarOrientationNotification, object: nil)
     }
     
     // MARK: - override
@@ -286,6 +283,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         pagingScrollView.frame = frameForPagingScrollView()
         pagingScrollView.contentSize = contentSizeForPagingScrollView()
 
+        frameForButton()
         //If we open the SKPhotoBrowser from CollectionView not the first image, we have one element in visiblepages and we should to take 0 element from visibleindex but that we should to use frame we should use currentPageIndex for frame's functions.
         // TODO: - need to fix this bug
         /*if visiblePages.count > 0 {
@@ -329,10 +327,6 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
     
     // MARK: - set startap values
     private func setStartupValue() {
-        if customCloseButtonHideFrame != nil && customCloseButtonShowFrame != nil {
-            customCloseButtonHideOldFrame = customCloseButtonHideFrame
-            customCloseButtonShowOldFrame = customCloseButtonShowFrame
-        }
         startOrientation = UIApplication.sharedApplication().statusBarOrientation.rawValue
     }
     
@@ -594,6 +588,22 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
     public func contentSizeForPagingScrollView() -> CGSize {
         let bounds = pagingScrollView.bounds
         return CGSize(width: bounds.size.width * CGFloat(numberOfPhotos), height: bounds.size.height)
+    }
+    
+    /// This function changes buttons's frame after the rotation of the device
+    private func frameForButton() {
+        if displayDeleteButton == true {
+            deleteButtonShowFrame = CGRect(x: view.frame.width - 44, y: 5, width: 44, height: 44)
+            deleteButtonHideFrame = CGRect(x: view.frame.width - 44, y: -20, width: 44, height: 44)
+        }
+        if displayCustomDeleteButton == true {
+            customDeleteButtonShowFrame = CGRect(x: customDeleteButtonShowFrame.origin.y, y: customDeleteButtonShowFrame.origin.x, width: customDeleteButtonShowFrame.width, height: customDeleteButtonShowFrame.height)
+            customDeleteButtonHideFrame = CGRect(x: customDeleteButtonHideFrame.origin.y, y: customDeleteButtonHideFrame.origin.x, width: customDeleteButtonHideFrame.width, height: customDeleteButtonHideFrame.height)
+        }
+        if displayCustomCloseButton == true {
+            customCloseButtonHideFrame = CGRect(x: customCloseButtonHideFrame.origin.y, y: customCloseButtonHideFrame.origin.x, width: customCloseButtonHideFrame.width, height: customCloseButtonHideFrame.height)
+            customCloseButtonShowFrame = CGRect(x: customCloseButtonShowFrame.origin.y, y: customCloseButtonShowFrame.origin.x, width: customCloseButtonShowFrame.width, height: customCloseButtonShowFrame.height)
+        }
     }
     
     // MARK: - delete function
@@ -1177,14 +1187,6 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
     
     public func scrollViewDidEndScrollingAnimation(scrollView: UIScrollView) {
         isEndAnimationByToolBar = true
-    }
-    
-    // MARK: - device rotation
-    @objc private func changeOrientation() {
-        //        setControlsHidden(true, animated: false, permanent: false)
-        // FIXME: - when we will to resolve this problem https://github.com/suzuki-0000/SKPhotoBrowser/issues/22  it will need to remove
-        deleteButtonShowFrame = CGRect(x: view.frame.width - 44, y: 5, width: 44, height: 44)
-        deleteButtonHideFrame = CGRect(x: view.frame.width - 44, y: -20, width: 44, height: 44)
     }
 }
 
