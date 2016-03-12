@@ -55,7 +55,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
     public var displayDeleteButton = false
     public var displayCloseButton = true // default is true
     /// If it is true displayCloseButton will be false
-    public var displayCustomCloseButton = false 
+    public var displayCustomCloseButton = false
     /// If it is true displayDeleteButton will be false
     public var displayCustomDeleteButton = false
     public var bounceAnimation = false
@@ -76,8 +76,8 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
     private var panGesture: UIPanGestureRecognizer!
     // MARK: close button
     private var closeButton: UIButton!
-    private var closeButtonShowFrame: CGRect! //= CGRect(x: 5, y: 5, width: 44, height: 44)
-    private var closeButtonHideFrame: CGRect! //= CGRect(x: 5, y: -20, width: 44, height: 44)
+    private var closeButtonShowFrame: CGRect!
+    private var closeButtonHideFrame: CGRect!
     // MARK: delete button
     private var deleteButton: UIButton!
     private var deleteButtonShowFrame: CGRect!
@@ -283,7 +283,6 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         pagingScrollView.frame = frameForPagingScrollView()
         pagingScrollView.contentSize = contentSizeForPagingScrollView()
 
-      
         frameForButton()
         //If we open the SKPhotoBrowser from CollectionView not the first image, we have one element in visiblepages and we should to take 0 element from visibleindex but that we should to use frame we should use currentPageIndex for frame's functions.
         // TODO: - need to fix this bug
@@ -605,7 +604,6 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
             customCloseButtonHideFrame = CGRect(x: customCloseButtonHideFrame.origin.y, y: customCloseButtonHideFrame.origin.x, width: customCloseButtonHideFrame.width, height: customCloseButtonHideFrame.height)
             customCloseButtonShowFrame = CGRect(x: customCloseButtonShowFrame.origin.y, y: customCloseButtonShowFrame.origin.x, width: customCloseButtonShowFrame.width, height: customCloseButtonShowFrame.height)
         }
-        
     }
     
     // MARK: - delete function
