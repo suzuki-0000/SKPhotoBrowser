@@ -950,13 +950,13 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         
         //
         for page in visiblePages {
-            if let pageIndex: Int = visiblePages.indexOf(page) {
-                if (pageIndex < firstIndex || pageIndex > lastIndex) {
-                    recycledPages.append(page)
-                    page.prepareForReuse()
-                    page.removeFromSuperview()
-                    print("Removed page at index \(pageIndex)")
-                }
+            let newPageIndex = page.tag - pageIndexTagOffset
+            print(newPageIndex)
+            if newPageIndex < firstIndex || newPageIndex > lastIndex {
+                recycledPages.append(page)
+                page.prepareForReuse()
+                page.removeFromSuperview()
+                print("Removed page at index \(newPageIndex)")
             }
         }
         
