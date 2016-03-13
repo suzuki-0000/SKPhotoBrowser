@@ -287,13 +287,10 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         // this algorithm resizes the current image after device rotation
         if visiblePages.count > 0 {
             for page in visiblePages {
-                let pageIndex = page.tag - pageIndexTagOffset
-                print(pageIndex)
-                let page = visiblePages[visiblePages.count-1]
                 page.frame = frameForPageAtIndex(currentPageIndex)
                 page.setMaxMinZoomScalesForCurrentBounds()
                 if page.captionView != nil {
-                    page.captionView.frame = frameForCaptionView(page.captionView, index: pageIndex)
+                    page.captionView.frame = frameForCaptionView(page.captionView, index: currentPageIndex)
                 }
             }
         }
