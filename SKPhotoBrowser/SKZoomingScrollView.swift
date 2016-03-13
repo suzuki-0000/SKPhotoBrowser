@@ -146,6 +146,10 @@ public class SKZoomingScrollView: UIScrollView, UIScrollViewDelegate, SKDetectin
     
     public func prepareForReuse() {
         photo = nil
+        if captionView != nil {
+            captionView.removeFromSuperview()
+            captionView = nil 
+        }
     }
     
     // MARK: - image
