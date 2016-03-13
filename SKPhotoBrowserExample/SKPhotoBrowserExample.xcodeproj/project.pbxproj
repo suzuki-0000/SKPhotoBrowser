@@ -12,7 +12,6 @@
 		8909B5601BC792150060A053 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8909B55E1BC792150060A053 /* Main.storyboard */; };
 		8909B5621BC792150060A053 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8909B5611BC792150060A053 /* Assets.xcassets */; };
 		8909B5651BC792150060A053 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8909B5631BC792150060A053 /* LaunchScreen.storyboard */; };
-		8909B5731BC792AF0060A053 /* SKPhotoBrowser.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8909B5711BC792570060A053 /* SKPhotoBrowser.framework */; };
 		8909B5811BC792DC0060A053 /* image0.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8909B5751BC792DC0060A053 /* image0.jpg */; };
 		8909B5821BC792DC0060A053 /* image1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8909B5761BC792DC0060A053 /* image1.jpg */; };
 		8909B5831BC792DC0060A053 /* image10.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8909B5771BC792DC0060A053 /* image10.jpg */; };
@@ -25,6 +24,8 @@
 		8909B58A1BC792DC0060A053 /* image7.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8909B57E1BC792DC0060A053 /* image7.jpg */; };
 		8909B58B1BC792DC0060A053 /* image8.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8909B57F1BC792DC0060A053 /* image8.jpg */; };
 		8909B58C1BC792DC0060A053 /* image9.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8909B5801BC792DC0060A053 /* image9.jpg */; };
+		A6A7B7801C9578E30025AC07 /* SKPhotoBrowser.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8909B5711BC792570060A053 /* SKPhotoBrowser.framework */; };
+		A6A7B7811C9578E30025AC07 /* SKPhotoBrowser.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8909B5711BC792570060A053 /* SKPhotoBrowser.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,7 +36,28 @@
 			remoteGlobalIDString = 8909B5301BC791280060A053;
 			remoteInfo = SKPhotoBrowser;
 		};
+		A6A7B7821C9578E30025AC07 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8909B56C1BC792570060A053 /* SKPhotoBrowser.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8909B52F1BC791280060A053;
+			remoteInfo = SKPhotoBrowser;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		A6A7B7841C9578E30025AC07 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				A6A7B7811C9578E30025AC07 /* SKPhotoBrowser.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		8909B5571BC792150060A053 /* SKPhotoBrowserExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SKPhotoBrowserExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -65,7 +87,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8909B5731BC792AF0060A053 /* SKPhotoBrowser.framework in Frameworks */,
+				A6A7B7801C9578E30025AC07 /* SKPhotoBrowser.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -140,10 +162,12 @@
 				8909B5531BC792150060A053 /* Sources */,
 				8909B5541BC792150060A053 /* Frameworks */,
 				8909B5551BC792150060A053 /* Resources */,
+				A6A7B7841C9578E30025AC07 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				A6A7B7831C9578E30025AC07 /* PBXTargetDependency */,
 			);
 			name = SKPhotoBrowserExample;
 			productName = SKPhotoBrowserExample;
@@ -234,6 +258,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		A6A7B7831C9578E30025AC07 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SKPhotoBrowser;
+			targetProxy = A6A7B7821C9578E30025AC07 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		8909B55E1BC792150060A053 /* Main.storyboard */ = {
@@ -342,6 +374,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = SKPhotoBrowserExample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.keishi.suzuki.SKPhotoBrowserExample;
@@ -353,6 +386,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = SKPhotoBrowserExample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.keishi.suzuki.SKPhotoBrowserExample;
