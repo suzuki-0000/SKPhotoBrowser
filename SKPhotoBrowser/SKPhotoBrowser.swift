@@ -974,10 +974,8 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
             page.tag = index + pageIndexTagOffset
             page.photo = photoAtIndex(index)
             
-            //            visiblePages.insert(page)
             visiblePages.append(page)
             pagingScrollView.addSubview(page)
-            print("Page added at index \(index)")
             // if exists caption, insert
             if let captionView = captionViewForPhotoAtIndex(index) {
                 captionView.frame = frameForCaptionView(captionView, index: index)
