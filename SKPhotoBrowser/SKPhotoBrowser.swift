@@ -950,7 +950,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         
         //
         for page in visiblePages {
-            if let pageIndex = visiblePages.indexOf(page) {
+            if let pageIndex: Int = visiblePages.indexOf(page) {
                 if (pageIndex < firstIndex || pageIndex > lastIndex) {
                     recycledPages.append(page)
                     page.prepareForReuse()
