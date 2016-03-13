@@ -14,7 +14,9 @@ public class SKZoomingScrollView: UIScrollView, UIScrollViewDelegate, SKDetectin
     var photo: SKPhotoProtocol! {
         didSet {
             photoImageView.image = nil
-            displayImage()
+            if photo != nil {
+                displayImage()
+            }
         }
     }
     
