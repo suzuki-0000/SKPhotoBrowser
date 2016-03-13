@@ -282,20 +282,22 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         isPerformingLayout = true
         pagingScrollView.frame = frameForPagingScrollView()
         pagingScrollView.contentSize = contentSizeForPagingScrollView()
-
+        // resize frames of buttons after the device rotation
         frameForButton()
-        //If we open the SKPhotoBrowser from CollectionView not the first image, we have one element in visiblepages and we should to take 0 element from visibleindex but that we should to use frame we should use currentPageIndex for frame's functions.
-        // TODO: - need to fix this bug
-        /*if visiblePages.count > 0 {
-            let currentIndex = visiblePages.count - 1
-            let page = visiblePages[currentIndex]
-            page.frame = frameForPageAtIndex(currentPageIndex)
-            page.setMaxMinZoomScalesForCurrentBounds()
-            if page.captionView != nil {
-                page.captionView.frame = frameForCaptionView(page.captionView, index: currentIndex)
+        // this algorithm resizes the current image after device rotation
+        if visiblePages.count > 0 {
+            for page in visiblePages {
+                let pageIndex = page.tag - pageIndexTagOffset
+                print(pageIndex)
+                let page = visiblePages[visiblePages.count-1]
+                page.frame = frameForPageAtIndex(currentPageIndex)
+                page.setMaxMinZoomScalesForCurrentBounds()
+                if page.captionView != nil {
+                    page.captionView.frame = frameForCaptionView(page.captionView, index: pageIndex)
+                }
             }
-        }*/
-        
+        }
+
         pagingScrollView.contentOffset = contentOffsetForPageAtIndex(currentPageIndex)
         // where did start
         didStartViewingPageAtIndex(currentPageIndex)
