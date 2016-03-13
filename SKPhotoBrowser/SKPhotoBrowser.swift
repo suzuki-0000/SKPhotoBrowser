@@ -100,6 +100,8 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
     
     // photo's paging
     private var visiblePages = [SKZoomingScrollView]()//: Set<SKZoomingScrollView> = Set()
+    private var recycledPages = [SKZoomingScrollView]()
+    
     private var initialPageIndex: Int = 0
     private var currentPageIndex: Int = 0
     
@@ -325,6 +327,11 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         }
     }
     
+    public override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        recycledPages.removeAll()
+    }
+    
     // MARK: - set startap values
     private func setStartupValue() {
         startOrientation = UIApplication.sharedApplication().statusBarOrientation.rawValue
@@ -512,6 +519,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         
         // reset local cache
         visiblePages.removeAll()
+        recycledPages.removeAll()
         
         // set content offset
         pagingScrollView.contentOffset = contentOffsetForPageAtIndex(currentPageIndex)
@@ -945,6 +953,27 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
             lastIndex = numberOfPhotos - 1
         }
         
+        //
+        for page in visiblePages {
+            if let pageIndex = visiblePages.indexOf(page) {
+                if (pageIndex < firstIndex || pageIndex > lastIndex) {
+                    recycledPages.append(page)
+                    page.prepareForReuse() //TODO: - it need to change
+                    page.removeFromSuperview()
+                    print("Removed page at index \(pageIndex)")
+                }
+            }
+        }
+        
+        let visibleSet = Set(visiblePages)
+        visiblePages = Array(visibleSet.subtract(recycledPages))
+        
+        while (recycledPages.count > 2) {
+            recycledPages.removeFirst()
+        }
+        
+        
+        //
         for var index = firstIndex; index <= lastIndex; index++ {
             if isDisplayingPageForIndex(index) {
                 continue
@@ -958,7 +987,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
             //            visiblePages.insert(page)
             visiblePages.append(page)
             pagingScrollView.addSubview(page)
-            
+            print("Page added at index \(index)")
             // if exists caption, insert
             if let captionView = captionViewForPhotoAtIndex(index) {
                 captionView.frame = frameForCaptionView(captionView, index: index)
