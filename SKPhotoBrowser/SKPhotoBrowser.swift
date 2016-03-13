@@ -118,7 +118,6 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
     private var isViewActive: Bool = false
     private var isPerformingLayout: Bool = false
     private var isStatusBarOriginallyHidden: Bool = false
-    private var startOrientation: Int!
     
     // scroll property
     private var firstX: CGFloat = 0.0
@@ -247,7 +246,6 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         toolCounterButton = UIBarButtonItem(customView: toolCounterLabel)
         
         // starting setting
-        setStartupValue()
         setCustomSetting()
         setSettingCloseButton()
         setSettingDeleteButton()
@@ -333,9 +331,6 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
     }
     
     // MARK: - set startap values
-    private func setStartupValue() {
-        startOrientation = UIApplication.sharedApplication().statusBarOrientation.rawValue
-    }
     
     // MARK: - setting of buttons
     // This function should be at the beginning of the other functions
