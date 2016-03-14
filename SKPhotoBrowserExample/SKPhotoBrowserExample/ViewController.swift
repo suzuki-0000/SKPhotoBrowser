@@ -76,6 +76,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         let browser = SKPhotoBrowser(originImage: originImage, photos: images, animatedFromView: cell)
         browser.initializePageIndex(indexPath.row)
         browser.delegate = self
+        browser.statusBarStyle = .LightContent
         browser.bounceAnimation = true
         
         // Can hide the action button by setting to false

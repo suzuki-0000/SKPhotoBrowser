@@ -51,7 +51,6 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
     public var displayCounterLabel: Bool = true
     public var displayBackAndForwardButton: Bool = true
     public var disableVerticalSwipe: Bool = false
-    public var isForceStatusBarHidden: Bool = false
     public var displayDeleteButton = false
     public var displayCloseButton = true // default is true
     /// If it is true displayCloseButton will be false
@@ -60,6 +59,8 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
     public var displayCustomDeleteButton = false
     public var bounceAnimation = false
     public var enableZoomBlackArea = true
+    /// Set nil to force the statusbar to be hidden
+    public var statusBarStyle:UIStatusBarStyle?
     
     // actions
     private var activityViewController: UIActivityViewController!
@@ -117,7 +118,8 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
     private var isEndAnimationByToolBar: Bool = true
     private var isViewActive: Bool = false
     private var isPerformingLayout: Bool = false
-    private var isStatusBarOriginallyHidden: Bool = false
+    private var isStatusBarOriginallyHidden = UIApplication.sharedApplication().statusBarHidden
+    private var buttonTopOffset:CGFloat { return statusBarStyle == nil ? 5 : 25 }
     
     // scroll property
     private var firstX: CGFloat = 0.0
@@ -310,19 +312,15 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
     }
     
     public override func prefersStatusBarHidden() -> Bool {
-        if isForceStatusBarHidden {
+        if statusBarStyle == nil {
             return true
         }
         
-        if isDraggingPhoto {
-            if isStatusBarOriginallyHidden {
-                return true
-            } else {
-                return false
-            }
-        } else {
-            return areControlsHidden()
+        if isDraggingPhoto && !areControlsHidden() {
+            return isStatusBarOriginallyHidden
         }
+        
+        return areControlsHidden()
     }
     
     public override func didReceiveMemoryWarning() {
@@ -358,7 +356,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
             closeButton.backgroundColor = .clearColor()
             closeButton.addTarget(self, action: "closeButtonPressed:", forControlEvents: UIControlEvents.TouchUpInside)
             closeButtonHideFrame = CGRect(x: 5, y: -20, width: 44, height: 44)
-            closeButtonShowFrame = CGRect(x: 5, y: 5, width: 44, height: 44)
+            closeButtonShowFrame = CGRect(x: 5, y: buttonTopOffset, width: 44, height: 44)
             view.addSubview(closeButton)
             closeButton.translatesAutoresizingMaskIntoConstraints = true
             closeButton.autoresizingMask = [.FlexibleBottomMargin, .FlexibleLeftMargin, .FlexibleRightMargin, .FlexibleTopMargin]
@@ -370,7 +368,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
     private func setSettingDeleteButton() {
         if displayDeleteButton == true {
             deleteButton = UIButton(type: .Custom)
-            deleteButtonShowFrame = CGRect(x: view.frame.width - 44, y: 5, width: 44, height: 44)
+            deleteButtonShowFrame = CGRect(x: view.frame.width - 44, y: buttonTopOffset, width: 44, height: 44)
             deleteButtonHideFrame = CGRect(x: view.frame.width - 44, y: -20, width: 44, height: 44)
             let image = UIImage(named: "SKPhotoBrowser.bundle/images/btn_common_delete_wh", inBundle: bundle, compatibleWithTraitCollection: nil) ?? UIImage()
             if UI_USER_INTERFACE_IDIOM() == .Phone {
@@ -403,7 +401,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
                 customCloseButton.setImage(closeImage, forState: .Normal)
             }
             if customCloseButtonShowFrame == nil && customCloseButtonHideFrame == nil {
-                customCloseButtonShowFrame = CGRect(x: 5, y: 5, width: 44, height: 44)
+                customCloseButtonShowFrame = CGRect(x: 5, y: buttonTopOffset, width: 44, height: 44)
                 customCloseButtonHideFrame = CGRect(x: 5, y: -20, width: 44, height: 44)
             }
             if customCloseButtonEdgeInsets != nil {
@@ -425,7 +423,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
             customDeleteButton.addTarget(self, action: "deleteButtonPressed:", forControlEvents: .TouchUpInside)
             // If another developer has not set their values
             if customDeleteButtonShowFrame == nil && customDeleteButtonHideFrame == nil {
-                customDeleteButtonShowFrame = CGRect(x: view.frame.width - 44, y: 5, width: 44, height: 44)
+                customDeleteButtonShowFrame = CGRect(x: view.frame.width - 44, y: buttonTopOffset, width: 44, height: 44)
                 customDeleteButtonHideFrame = CGRect(x: view.frame.width - 44, y: -20, width: 44, height: 44)
             }
             if let _customDeleteButtonImage = customDeleteButtonImage {
@@ -1204,6 +1202,11 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
     
     public func scrollViewDidEndScrollingAnimation(scrollView: UIScrollView) {
         isEndAnimationByToolBar = true
+    }
+    
+    override public func preferredStatusBarStyle() -> UIStatusBarStyle {
+        
+        return statusBarStyle ?? super.preferredStatusBarStyle()
     }
 }
 
