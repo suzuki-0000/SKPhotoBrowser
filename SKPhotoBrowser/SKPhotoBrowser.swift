@@ -511,6 +511,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         updateToolbar()
         
         // reset local cache
+        visiblePages.forEach({$0.removeFromSuperview()})
         visiblePages.removeAll()
         recycledPages.removeAll()
         
@@ -594,7 +595,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
     /// This function changes buttons's frame after the rotation of the device
     private func frameForButton() {
         if displayDeleteButton == true {
-            deleteButtonShowFrame = CGRect(x: view.frame.width - 44, y: 5, width: 44, height: 44)
+            deleteButtonShowFrame = CGRect(x: view.frame.width - 44, y: buttonTopOffset, width: 44, height: 44)
             deleteButtonHideFrame = CGRect(x: view.frame.width - 44, y: -20, width: 44, height: 44)
         }
         if displayCustomDeleteButton == true {
@@ -814,6 +815,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         fadeView.alpha = 1.0
         
         applicationWindow.addSubview(fadeView)
+        resizableImageView.image = scrollView.photo.underlyingImage
         resizableImageView.frame = frame
         resizableImageView.alpha = 1.0
         resizableImageView.clipsToBounds = true
