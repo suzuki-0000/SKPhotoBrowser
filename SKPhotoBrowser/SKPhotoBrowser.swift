@@ -710,7 +710,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
             senderViewOriginalFrame = (sender.superview?.convertRect(sender.frame, toView:nil))!
             
             let imageFromView = senderOriginImage != nil ? senderOriginImage : getImageFromView(sender)
-            resizableImageView = UIImageView(image: imageFromView)
+            resizableImageView = UIImageView(image: imageFromView.rotateImageByOrientation())
             resizableImageView.frame = senderViewOriginalFrame
             resizableImageView.clipsToBounds = true
             resizableImageView.contentMode = .ScaleAspectFill
@@ -815,7 +815,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         fadeView.alpha = 1.0
         
         applicationWindow.addSubview(fadeView)
-        resizableImageView.image = scrollView.photo.underlyingImage
+        resizableImageView.image = scrollView.photo.underlyingImage.rotateImageByOrientation()
         resizableImageView.frame = frame
         resizableImageView.alpha = 1.0
         resizableImageView.clipsToBounds = true
@@ -1209,19 +1209,5 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
     override public func preferredStatusBarStyle() -> UIStatusBarStyle {
         
         return statusBarStyle ?? super.preferredStatusBarStyle()
-    }
-}
-
-extension UIView
-{
-    func addCornerRadiusAnimation(from: CGFloat, to: CGFloat, duration: CFTimeInterval)
-    {
-        let animation = CABasicAnimation(keyPath:"cornerRadius")
-        animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionLinear)
-        animation.fromValue = from
-        animation.toValue = to
-        animation.duration = duration
-        self.layer.addAnimation(animation, forKey: "cornerRadius")
-        self.layer.cornerRadius = to
     }
 }
