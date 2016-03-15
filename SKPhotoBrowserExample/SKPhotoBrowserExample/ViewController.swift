@@ -76,6 +76,8 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         let browser = SKPhotoBrowser(originImage: originImage, photos: images, animatedFromView: cell)
         browser.initializePageIndex(indexPath.row)
         browser.delegate = self
+        browser.displayDeleteButton = true
+        browser.statusBarStyle = .LightContent
         browser.bounceAnimation = true
         
         // Can hide the action button by setting to false
@@ -113,7 +115,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     }
     
     func removePhoto(browser: SKPhotoBrowser, index: Int, reload: (() -> Void)) {
-        // do some handle if you need
+        reload()
     }
     
     func viewForPhoto(browser: SKPhotoBrowser, index: Int) -> UIView? {
