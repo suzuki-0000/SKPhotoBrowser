@@ -708,25 +708,30 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         if let sender = delegate?.viewForPhoto?(self, index: initialPageIndex) ?? senderViewForAnimation {
             
             senderViewOriginalFrame = (sender.superview?.convertRect(sender.frame, toView:nil))!
+            sender.hidden = true
             
-            let imageFromView = senderOriginImage != nil ? senderOriginImage : getImageFromView(sender)
-            resizableImageView = UIImageView(image: imageFromView.rotateImageByOrientation())
+            let imageFromView = (senderOriginImage != nil ? senderOriginImage : getImageFromView(sender)).rotateImageByOrientation()
+            let screenScale = applicationWindow.frame.width / applicationWindow.frame.height
+            let imageScale = imageFromView.size.width / imageFromView.size.height
+            let finalImageViewFrame:CGRect
+            
+            resizableImageView = UIImageView(image: imageFromView)
             resizableImageView.frame = senderViewOriginalFrame
             resizableImageView.clipsToBounds = true
             resizableImageView.contentMode = .ScaleAspectFill
             applicationWindow.addSubview(resizableImageView)
             
-            sender.hidden = true
-            
-            let scaleFactor = UIApplication.sharedApplication().statusBarOrientation == .Portrait
-                ? imageFromView.size.width / screenWidth
-                : imageFromView.size.height / screenHeight
-            
-            let finalImageViewFrame = CGRect(
-                x: (screenWidth/2) - ((imageFromView.size.width / scaleFactor)/2),
-                y: (screenHeight/2) - ((imageFromView.size.height / scaleFactor)/2),
-                width: imageFromView.size.width / scaleFactor,
-                height: imageFromView.size.height / scaleFactor)
+            if screenScale < imageScale {
+                let width = applicationWindow.frame.width
+                let height = width / imageScale
+                let yOffset = (applicationWindow.frame.height - height) / 2
+                finalImageViewFrame = CGRect(x: 0, y: yOffset, width: width, height: height)
+            } else {
+                let height = applicationWindow.frame.height
+                let width = height * imageScale
+                let xOffset = (applicationWindow.frame.width - width) / 2
+                finalImageViewFrame = CGRect(x: xOffset, y: 0, width: width, height: height)
+            }
             
             if sender.layer.cornerRadius != 0 {
                 let duration = (animationDuration * Double(animationDamping))
