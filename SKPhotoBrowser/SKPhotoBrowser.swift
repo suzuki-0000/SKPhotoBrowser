@@ -119,6 +119,9 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
     private var isViewActive: Bool = false
     private var isPerformingLayout: Bool = false
     private var isStatusBarOriginallyHidden = UIApplication.sharedApplication().statusBarHidden
+    private var originalStatusBarStyle:UIStatusBarStyle {
+        return self.presentingViewController?.preferredStatusBarStyle() ?? UIApplication.sharedApplication().statusBarStyle
+    }
     private var buttonTopOffset:CGFloat { return statusBarStyle == nil ? 5 : 25 }
     
     // scroll property
@@ -800,6 +803,9 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
     public func performCloseAnimationWithScrollView(scrollView: SKZoomingScrollView) {
         
         view.hidden = true
+        
+        statusBarStyle = isStatusBarOriginallyHidden ? nil : originalStatusBarStyle
+        setNeedsStatusBarAppearanceUpdate()
         
         if let sender = senderViewForAnimation {
             senderViewOriginalFrame = (sender.superview?.convertRect(sender.frame, toView:nil))!

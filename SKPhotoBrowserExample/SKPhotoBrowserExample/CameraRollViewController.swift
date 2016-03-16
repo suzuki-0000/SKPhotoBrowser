@@ -175,6 +175,14 @@ class CameraRollViewController: UIViewController, SKPhotoBrowserDelegate, UIColl
             }
         }
     }
+    
+    override func prefersStatusBarHidden() -> Bool {
+        return false
+    }
+    
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return .LightContent
+    }
 }
 
 class AssetExampleCollectionViewCell : ExampleCollectionViewCell {
