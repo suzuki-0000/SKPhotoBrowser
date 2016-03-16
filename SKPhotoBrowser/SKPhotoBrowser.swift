@@ -241,8 +241,9 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
     public override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = UIColor.clearColor()
+        view.backgroundColor = UIColor.blackColor()
         view.clipsToBounds = true
+        view.opaque = false
         
         backgroundView = UIView(frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight))
         backgroundView.backgroundColor = .blackColor()
@@ -256,7 +257,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         pagingScrollView.delegate = self
         pagingScrollView.showsHorizontalScrollIndicator = true
         pagingScrollView.showsVerticalScrollIndicator = true
-        pagingScrollView.backgroundColor = UIColor.blackColor()
+        pagingScrollView.backgroundColor = UIColor.clearColor()
         pagingScrollView.contentSize = contentSizeForPagingScrollView()
         view.addSubview(pagingScrollView)
         
@@ -698,6 +699,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
     // MARK: - panGestureRecognized
     public func panGestureRecognized(sender: UIPanGestureRecognizer) {
         
+        backgroundView.hidden = true
         let scrollView = pageDisplayedAtIndex(currentPageIndex)
         
         let viewHeight = scrollView.frame.size.height
@@ -719,12 +721,15 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         translatedPoint = CGPoint(x: firstX, y: firstY + translatedPoint.y)
         scrollView.center = translatedPoint
         
-        view.opaque = true
+        let minOffset = viewHalfHeight/4
+        let offset = 1 - (scrollView.center.y > viewHalfHeight ? scrollView.center.y - viewHalfHeight : -(scrollView.center.y - viewHalfHeight)) / viewHalfHeight
+        view.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(max(0.5, offset))
         
         // gesture end
         if sender.state == .Ended {
-            if scrollView.center.y > viewHalfHeight+40 || scrollView.center.y < viewHalfHeight-40 {
+            if scrollView.center.y > viewHalfHeight + minOffset || scrollView.center.y < viewHalfHeight - minOffset {
                 
+                backgroundView.backgroundColor = self.view.backgroundColor
                 determineAndClose()
                 return
 
@@ -743,6 +748,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
                 UIView.beginAnimations(nil, context: nil)
                 UIView.setAnimationDuration(animationDuration)
                 UIView.setAnimationCurve(UIViewAnimationCurve.EaseIn)
+                view.backgroundColor = UIColor.blackColor()
                 scrollView.center = CGPoint(x: finalX, y: finalY)
                 UIView.commitAnimations()
             }
