@@ -723,7 +723,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         
         let minOffset = viewHalfHeight/4
         let offset = 1 - (scrollView.center.y > viewHalfHeight ? scrollView.center.y - viewHalfHeight : -(scrollView.center.y - viewHalfHeight)) / viewHalfHeight
-        view.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(max(0.5, offset))
+        view.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(max(0.7, offset))
         
         // gesture end
         if sender.state == .Ended {
@@ -874,7 +874,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
             width: scrollFrame.width,
             height: scrollFrame.height)
         
-        resizableImageView.image = scrollView.photo.underlyingImage.rotateImageByOrientation()
+        resizableImageView.image = scrollView.photo?.underlyingImage.rotateImageByOrientation() ?? resizableImageView.image
         resizableImageView.frame = frame
         resizableImageView.alpha = 1.0
         resizableImageView.clipsToBounds = true
