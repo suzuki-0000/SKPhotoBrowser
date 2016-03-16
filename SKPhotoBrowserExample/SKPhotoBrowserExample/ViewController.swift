@@ -94,7 +94,8 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
     // MARK: - SKPhotoBrowserDelegate
     func didShowPhotoAtIndex(index: Int) {
-        // do some handle if you need
+        collectionView.visibleCells().forEach({$0.hidden = false})
+        collectionView.cellForItemAtIndexPath(NSIndexPath(forItem: index, inSection: 0))?.hidden = true
     }
     
     func willDismissAtPageIndex(index: Int) {
@@ -121,6 +122,10 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     func viewForPhoto(browser: SKPhotoBrowser, index: Int) -> UIView? {
         
         return collectionView.cellForItemAtIndexPath(NSIndexPath(forItem: index, inSection: 0))
+    }
+    
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return .LightContent
     }
 }
 
