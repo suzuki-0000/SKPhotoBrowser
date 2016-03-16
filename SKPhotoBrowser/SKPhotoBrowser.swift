@@ -39,9 +39,10 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
     }
     
     // device property
-    final let screenBound = UIScreen.mainScreen().bounds
-    var screenWidth: CGFloat { return screenBound.size.width }
-    var screenHeight: CGFloat { return screenBound.size.height }
+    final let screenBounds = UIScreen.mainScreen().bounds
+    var screenWidth: CGFloat { return screenBounds.size.width }
+    var screenHeight: CGFloat { return screenBounds.size.height }
+    var screenRatio: CGFloat { return screenWidth / screenHeight }
     
     // custom abilities
     public var displayAction: Bool = true
@@ -67,6 +68,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
     
     // tool for controls
     private var applicationWindow: UIWindow!
+    private var backgroundView: UIView!
     private var toolBar: UIToolbar!
     private var toolCounterLabel: UILabel!
     private var toolCounterButton: UIBarButtonItem!
@@ -191,8 +193,13 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
     public override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = UIColor.blackColor()
+        view.backgroundColor = UIColor.clearColor()
         view.clipsToBounds = true
+        
+        backgroundView = UIView(frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight))
+        backgroundView.backgroundColor = .blackColor()
+        backgroundView.alpha = 0.0
+        applicationWindow.addSubview(backgroundView)
         
         // setup paging
         let pagingScrollViewFrame = frameForPagingScrollView()
@@ -699,20 +706,15 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         
         view.hidden = true
         pagingScrollView.alpha = 0.0
-        
-        let fadeView = UIView(frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight))
-        fadeView.backgroundColor = .blackColor()
-        fadeView.alpha = 0.0
-        applicationWindow.addSubview(fadeView)
+        backgroundView.alpha = 0
         
         if let sender = delegate?.viewForPhoto?(self, index: initialPageIndex) ?? senderViewForAnimation {
             
             senderViewOriginalFrame = (sender.superview?.convertRect(sender.frame, toView:nil))!
             sender.hidden = true
             
-            let imageFromView = (senderOriginImage != nil ? senderOriginImage : getImageFromView(sender)).rotateImageByOrientation()
-            let screenScale = applicationWindow.frame.width / applicationWindow.frame.height
-            let imageScale = imageFromView.size.width / imageFromView.size.height
+            let imageFromView = (senderOriginImage ?? getImageFromView(sender)).rotateImageByOrientation()
+            let imageRatio = imageFromView.size.width / imageFromView.size.height
             let finalImageViewFrame:CGRect
             
             resizableImageView = UIImageView(image: imageFromView)
@@ -721,14 +723,14 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
             resizableImageView.contentMode = .ScaleAspectFill
             applicationWindow.addSubview(resizableImageView)
             
-            if screenScale < imageScale {
+            if screenRatio < imageRatio {
                 let width = applicationWindow.frame.width
-                let height = width / imageScale
+                let height = width / imageRatio
                 let yOffset = (applicationWindow.frame.height - height) / 2
                 finalImageViewFrame = CGRect(x: 0, y: yOffset, width: width, height: height)
             } else {
                 let height = applicationWindow.frame.height
-                let width = height * imageScale
+                let width = height * imageRatio
                 let xOffset = (applicationWindow.frame.width - width) / 2
                 finalImageViewFrame = CGRect(x: xOffset, y: 0, width: width, height: height)
             }
@@ -741,7 +743,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
             
             UIView.animateWithDuration(animationDuration, delay:0, usingSpringWithDamping:animationDamping, initialSpringVelocity:0, options:.CurveEaseInOut, animations: { () -> Void in
                 
-                    fadeView.alpha = 1.0
+                    self.backgroundView.alpha = 1.0
                     self.resizableImageView.frame = finalImageViewFrame
                 
                     if self.displayCloseButton == true {
@@ -763,15 +765,16 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
                 },
                 completion: { (Bool) -> Void in
                     self.view.hidden = false
+                    self.backgroundView.hidden = true
                     self.pagingScrollView.alpha = 1.0
                     self.resizableImageView.alpha = 0.0
-                    fadeView.removeFromSuperview()
             })
             
         } else {
             
             UIView.animateWithDuration(animationDuration, delay:0, usingSpringWithDamping:animationDamping, initialSpringVelocity:0, options:.CurveEaseInOut, animations: { () -> Void in
-                    fadeView.alpha = 1.0
+                
+                    self.backgroundView.alpha = 1.0
                     if self.displayCloseButton == true {
                         self.closeButton.alpha = 1.0
                         self.closeButton.frame = self.closeButtonShowFrame
@@ -792,7 +795,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
                 completion: { (Bool) -> Void in
                     self.view.hidden = false
                     self.pagingScrollView.alpha = 1.0
-                    fadeView.removeFromSuperview()
+                    self.backgroundView.hidden = true
             })
         }
     }
@@ -800,12 +803,13 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
     public func performCloseAnimationWithScrollView(scrollView: SKZoomingScrollView) {
         
         view.hidden = true
+        backgroundView.hidden = false
+        backgroundView.alpha = 1
         
         if let sender = senderViewForAnimation {
             senderViewOriginalFrame = (sender.superview?.convertRect(sender.frame, toView:nil))!
         }
         
-        let fadeView = UIView(frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight))
         let contentOffset = scrollView.contentOffset
         let scrollFrame = scrollView.photoImageView.frame
         let offsetY = scrollView.center.y - (scrollView.bounds.height/2)
@@ -816,10 +820,6 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
             width: scrollFrame.width,
             height: scrollFrame.height)
         
-        fadeView.backgroundColor = .blackColor()
-        fadeView.alpha = 1.0
-        
-        applicationWindow.addSubview(fadeView)
         resizableImageView.image = scrollView.photo.underlyingImage.rotateImageByOrientation()
         resizableImageView.frame = frame
         resizableImageView.alpha = 1.0
@@ -834,12 +834,12 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         }
         
         UIView.animateWithDuration(animationDuration, delay:0, usingSpringWithDamping:animationDamping, initialSpringVelocity:0, options:.CurveEaseInOut, animations: { () -> () in
-                fadeView.alpha = 0.0
+                self.backgroundView.alpha = 0.0
                 self.resizableImageView.layer.frame = self.senderViewOriginalFrame
             },
             completion: { (Bool) -> () in
                 self.resizableImageView.removeFromSuperview()
-                fadeView.removeFromSuperview()
+                self.backgroundView.removeFromSuperview()
                 self.dismissPhotoBrowser()
         })
     }
