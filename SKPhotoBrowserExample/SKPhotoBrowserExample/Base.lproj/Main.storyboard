@@ -119,7 +119,7 @@
                                 </connections>
                             </collectionView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="l1U-c1-FNM" firstAttribute="top" secondItem="f1m-3Z-8mE" secondAttribute="bottom" id="D1M-80-UYO"/>
                             <constraint firstAttribute="trailing" secondItem="f1m-3Z-8mE" secondAttribute="trailing" id="UY9-Uk-tuW"/>

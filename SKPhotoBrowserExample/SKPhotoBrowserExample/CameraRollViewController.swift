@@ -110,6 +110,7 @@ class CameraRollViewController: UIViewController, SKPhotoBrowserDelegate, UIColl
             browser.bounceAnimation = true
             browser.displayDeleteButton = true
             browser.displayAction = false
+            browser.statusBarStyle = .LightContent
             self.presentViewController(browser, animated: true, completion: {})
         }
         
