@@ -169,6 +169,9 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
     private var isViewActive: Bool = false
     private var isPerformingLayout: Bool = false
     private var isStatusBarOriginallyHidden = UIApplication.sharedApplication().statusBarHidden
+    private var originalStatusBarStyle:UIStatusBarStyle {
+        return self.presentingViewController?.preferredStatusBarStyle() ?? UIApplication.sharedApplication().statusBarStyle
+    }
     private var buttonTopOffset:CGFloat { return statusBarStyle == nil ? 5 : 25 }
     
     // scroll property
@@ -770,7 +773,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
             let imageFromView = (senderOriginImage ?? getImageFromView(sender)).rotateImageByOrientation()
             let imageRatio = imageFromView.size.width / imageFromView.size.height
             let finalImageViewFrame:CGRect
-            
+
             resizableImageView = UIImageView(image: imageFromView)
             resizableImageView.frame = senderViewOriginalFrame
             resizableImageView.clipsToBounds = true
@@ -859,6 +862,9 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         view.hidden = true
         backgroundView.hidden = false
         backgroundView.alpha = 1
+        
+        statusBarStyle = isStatusBarOriginallyHidden ? nil : originalStatusBarStyle
+        setNeedsStatusBarAppearanceUpdate()
         
         if let sender = senderViewForAnimation {
             senderViewOriginalFrame = (sender.superview?.convertRect(sender.frame, toView:nil))!

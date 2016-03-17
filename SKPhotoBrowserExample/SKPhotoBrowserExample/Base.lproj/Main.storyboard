@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="qgG-zu-Htx">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Local Images-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="SKPhotoBrowserExample" customModuleProvider="target" sceneMemberID="viewController">
@@ -17,7 +17,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="ZcN-ut-rvO">
-                                <rect key="frame" x="0.0" y="20" width="600" height="580"/>
+                                <rect key="frame" x="0.0" y="20" width="600" height="531"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="D0c-dd-EhH">
                                     <size key="itemSize" width="182" height="182"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -58,6 +58,7 @@
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="ZcN-ut-rvO" secondAttribute="bottom" id="jxM-4I-Axo"/>
                         </constraints>
                     </view>
+                    <tabBarItem key="tabBarItem" title="Local Images" id="KFf-qk-pEk"/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
                     <connections>
                         <outlet property="collectionView" destination="ZcN-ut-rvO" id="bJb-LN-o9w"/>
@@ -65,7 +66,94 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="234" y="445"/>
+            <point key="canvasLocation" x="1680" y="-305"/>
+        </scene>
+        <!--Camera Roll-->
+        <scene sceneID="V6Y-ws-thI">
+            <objects>
+                <viewController id="aTQ-Do-sRD" customClass="CameraRollViewController" customModule="SKPhotoBrowserExample" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="9hr-eY-Ckr"/>
+                        <viewControllerLayoutGuide type="bottom" id="l1U-c1-FNM"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="FhP-Hc-46e">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="f1m-3Z-8mE">
+                                <rect key="frame" x="0.0" y="20" width="600" height="531"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Vak-iW-bLh">
+                                    <size key="itemSize" width="182" height="182"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="exampleCollectionViewCell" id="6Rl-Fl-Pik" customClass="AssetExampleCollectionViewCell" customModule="SKPhotoBrowserExample" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="182" height="182"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="182" height="182"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="NkL-63-CXI">
+                                                    <rect key="frame" x="0.0" y="0.0" width="182" height="182"/>
+                                                </imageView>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <constraints>
+                                            <constraint firstItem="NkL-63-CXI" firstAttribute="leading" secondItem="6Rl-Fl-Pik" secondAttribute="leading" id="4VA-fI-wdu"/>
+                                            <constraint firstItem="NkL-63-CXI" firstAttribute="top" secondItem="6Rl-Fl-Pik" secondAttribute="top" id="DOR-QZ-jxS"/>
+                                            <constraint firstAttribute="bottom" secondItem="NkL-63-CXI" secondAttribute="bottom" id="iWN-eh-eWk"/>
+                                            <constraint firstAttribute="trailing" secondItem="NkL-63-CXI" secondAttribute="trailing" id="rcG-Ap-R4Q"/>
+                                        </constraints>
+                                        <connections>
+                                            <outlet property="exampleImageView" destination="NkL-63-CXI" id="eY7-KA-Za7"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="aTQ-Do-sRD" id="9dn-je-VUj"/>
+                                    <outlet property="delegate" destination="aTQ-Do-sRD" id="mHq-Ur-KJl"/>
+                                </connections>
+                            </collectionView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="l1U-c1-FNM" firstAttribute="top" secondItem="f1m-3Z-8mE" secondAttribute="bottom" id="D1M-80-UYO"/>
+                            <constraint firstAttribute="trailing" secondItem="f1m-3Z-8mE" secondAttribute="trailing" id="UY9-Uk-tuW"/>
+                            <constraint firstItem="f1m-3Z-8mE" firstAttribute="leading" secondItem="FhP-Hc-46e" secondAttribute="leading" id="kWJ-eS-7O0"/>
+                            <constraint firstItem="f1m-3Z-8mE" firstAttribute="top" secondItem="9hr-eY-Ckr" secondAttribute="bottom" id="qdD-8q-n5J"/>
+                        </constraints>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Camera Roll" id="fDV-zv-lCk"/>
+                    <connections>
+                        <outlet property="collectionView" destination="f1m-3Z-8mE" id="W6f-GL-fNz"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="X3n-FY-lyb" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1680" y="1049"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="MxJ-Af-928">
+            <objects>
+                <tabBarController id="qgG-zu-Htx" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="TLg-GF-sn7"/>
+                    <tabBar key="tabBar" contentMode="scaleToFill" id="qXa-Ne-beE">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="TmI-eA-2RC"/>
+                        <segue destination="aTQ-Do-sRD" kind="relationship" relationship="viewControllers" id="j9q-XO-aL9"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="j93-V4-LxV" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="726" y="160"/>
         </scene>
     </scenes>
 </document>

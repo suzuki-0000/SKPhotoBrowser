@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		212705831C92BB2A00466223 /* SKPhotoBrowser.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8909B5711BC792570060A053 /* SKPhotoBrowser.framework */; };
+		212705841C92BB2A00466223 /* SKPhotoBrowser.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8909B5711BC792570060A053 /* SKPhotoBrowser.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		212705891C92C69C00466223 /* CameraRollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212705881C92C69C00466223 /* CameraRollViewController.swift */; };
 		8909B55B1BC792150060A053 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8909B55A1BC792150060A053 /* AppDelegate.swift */; };
 		8909B55D1BC792150060A053 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8909B55C1BC792150060A053 /* ViewController.swift */; };
 		8909B5601BC792150060A053 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8909B55E1BC792150060A053 /* Main.storyboard */; };
@@ -29,6 +32,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		212705851C92BB2A00466223 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8909B56C1BC792570060A053 /* SKPhotoBrowser.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8909B52F1BC791280060A053;
+			remoteInfo = SKPhotoBrowser;
+		};
 		8909B5701BC792570060A053 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 8909B56C1BC792570060A053 /* SKPhotoBrowser.xcodeproj */;
@@ -60,6 +70,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		212705881C92C69C00466223 /* CameraRollViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraRollViewController.swift; sourceTree = "<group>"; };
 		8909B5571BC792150060A053 /* SKPhotoBrowserExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SKPhotoBrowserExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8909B55A1BC792150060A053 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8909B55C1BC792150060A053 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -115,6 +126,7 @@
 			isa = PBXGroup;
 			children = (
 				8909B55A1BC792150060A053 /* AppDelegate.swift */,
+				212705881C92C69C00466223 /* CameraRollViewController.swift */,
 				8909B55C1BC792150060A053 /* ViewController.swift */,
 				8909B55E1BC792150060A053 /* Main.storyboard */,
 				8909B5611BC792150060A053 /* Assets.xcassets */,
@@ -185,6 +197,7 @@
 				TargetAttributes = {
 					8909B5561BC792150060A053 = {
 						CreatedOnToolsVersion = 7.0;
+						DevelopmentTeam = M7NG7AS4GP;
 					};
 				};
 			};
@@ -252,6 +265,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				212705891C92C69C00466223 /* CameraRollViewController.swift in Sources */,
 				8909B55D1BC792150060A053 /* ViewController.swift in Sources */,
 				8909B55B1BC792150060A053 /* AppDelegate.swift in Sources */,
 			);
@@ -377,7 +391,7 @@
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = SKPhotoBrowserExample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.keishi.suzuki.SKPhotoBrowserExample;
+				PRODUCT_BUNDLE_IDENTIFIER = com.keishi.suzuki.aSKPhotoBrowserExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -389,7 +403,7 @@
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = SKPhotoBrowserExample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.keishi.suzuki.SKPhotoBrowserExample;
+				PRODUCT_BUNDLE_IDENTIFIER = com.keishi.suzuki.aSKPhotoBrowserExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
