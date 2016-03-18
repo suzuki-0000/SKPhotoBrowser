@@ -21,7 +21,7 @@ public class SKZoomingScrollView: UIScrollView, UIScrollViewDelegate, SKDetectin
     }
     
     private(set) var photoImageView: SKDetectingImageView!
-    private weak var photoBrowser: SKPhotoBrowser!
+    private weak var photoBrowser: SKPhotoBrowser?
     private var tapView: SKDetectingView!
     private var indicatorView: SKIndicatorView!
     
@@ -41,6 +41,9 @@ public class SKZoomingScrollView: UIScrollView, UIScrollViewDelegate, SKDetectin
         setup()
     }
     
+    deinit {
+        photoBrowser = nil
+    }
     
     func setup() {
         // tap
@@ -72,7 +75,6 @@ public class SKZoomingScrollView: UIScrollView, UIScrollViewDelegate, SKDetectin
     
     // MARK: - override
     public override func layoutSubviews() {
-        
         tapView.frame = bounds
         
         super.layoutSubviews()
@@ -162,9 +164,7 @@ public class SKZoomingScrollView: UIScrollView, UIScrollViewDelegate, SKDetectin
         zoomScale = 1
         contentSize = CGSize.zero
         
-        let image = photoBrowser.imageForPhoto(photo)
-        if let image = image {
-            
+        if let image = photoBrowser?.imageForPhoto(photo) {
             // indicator
             indicatorView.stopAnimating()
             
@@ -195,7 +195,9 @@ public class SKZoomingScrollView: UIScrollView, UIScrollViewDelegate, SKDetectin
     
     // MARK: - handle tap
     public func handleDoubleTap(touchPoint: CGPoint) {
-        NSObject.cancelPreviousPerformRequestsWithTarget(photoBrowser)
+        if let photoBrowser = photoBrowser {
+            NSObject.cancelPreviousPerformRequestsWithTarget(photoBrowser)
+        }
         
         if zoomScale > minimumZoomScale {
             // zoom out
@@ -211,7 +213,7 @@ public class SKZoomingScrollView: UIScrollView, UIScrollViewDelegate, SKDetectin
         }
         
         // delay control
-        photoBrowser.hideControlsAfterDelay()
+        photoBrowser?.hideControlsAfterDelay()
     }
     
     public func zoomRectForScrollViewWith(scale: CGFloat, touchPoint: CGPoint) -> CGRect {
@@ -229,7 +231,7 @@ public class SKZoomingScrollView: UIScrollView, UIScrollViewDelegate, SKDetectin
     }
     
     public func scrollViewWillBeginZooming(scrollView: UIScrollView, withView view: UIView?) {
-        photoBrowser.cancelControlHiding()
+        photoBrowser?.cancelControlHiding()
     }
     
     public func scrollViewDidZoom(scrollView: UIScrollView) {
@@ -240,13 +242,13 @@ public class SKZoomingScrollView: UIScrollView, UIScrollViewDelegate, SKDetectin
     
     // MARK: - SKDetectingViewDelegate
     func handleSingleTap(view: UIView, touch: UITouch) {
-        if photoBrowser.enableZoomBlackArea == true {
-            photoBrowser.toggleControls()
+        if photoBrowser?.enableZoomBlackArea == true {
+            photoBrowser?.toggleControls()
         }
     }
     
     func handleDoubleTap(view: UIView, touch: UITouch) {
-        if photoBrowser.enableZoomBlackArea == true {
+        if photoBrowser?.enableZoomBlackArea == true {
             let needPoint = getViewFramePercent(view, touch: touch)
             handleDoubleTap(needPoint)
         }
@@ -275,7 +277,7 @@ public class SKZoomingScrollView: UIScrollView, UIScrollViewDelegate, SKDetectin
     
     // MARK: - SKDetectingImageViewDelegate
     func handleImageViewSingleTap(view: UIImageView, touch: UITouch) {
-        photoBrowser.toggleControls()
+        photoBrowser?.toggleControls()
     }
     
     func handleImageViewDoubleTap(view: UIImageView, touch: UITouch) {
