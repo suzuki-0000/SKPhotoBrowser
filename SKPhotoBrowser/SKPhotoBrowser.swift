@@ -591,6 +591,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
     }
     
     public func prepareForClosePhotoBrowser() {
+        cancelControlHiding()
         applicationWindow.removeGestureRecognizer(panGesture)
         NSObject.cancelPreviousPerformRequestsWithTarget(self)
     }
