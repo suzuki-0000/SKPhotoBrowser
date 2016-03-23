@@ -677,6 +677,8 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
     
     private func deleteImage() {
         if photos.count > 1 {
+            // index equals 0 because when we slide between photos delete button is hidden and user cannot to touch on delete button. And visible pages number equals 0
+            visiblePages[0].captionView?.removeFromSuperview()
             photos.removeAtIndex(currentPageIndex)
             if currentPageIndex != 0 {
                 gotoPreviousPage()
