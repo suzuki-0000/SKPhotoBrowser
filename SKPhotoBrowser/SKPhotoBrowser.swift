@@ -1031,28 +1031,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         }
         
         // this is a new style but it works very slow
-//        for index in 0...lastIndex {
-//            if isDisplayingPageForIndex(index) {
-//                continue
-//            }
-//            
-//            let page = SKZoomingScrollView(frame: view.frame, browser: self)
-//            page.frame = frameForPageAtIndex(index)
-//            page.tag = index + pageIndexTagOffset
-//            page.photo = photoAtIndex(index)
-//            
-//            visiblePages.append(page)
-//            pagingScrollView.addSubview(page)
-//            // if exists caption, insert
-//            if let captionView = captionViewForPhotoAtIndex(index) {
-//                captionView.frame = frameForCaptionView(captionView, index: index)
-//                pagingScrollView.addSubview(captionView)
-//                // ref val for control
-//                page.captionView = captionView
-//            }
-//        }
-        
-        for var index = firstIndex; index <= lastIndex; index += 1 {
+        for index in firstIndex...lastIndex {
             if isDisplayingPageForIndex(index) {
                 continue
             }
