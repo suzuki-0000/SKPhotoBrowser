@@ -881,7 +881,9 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
             width: scrollFrame.width,
             height: scrollFrame.height)
         
-        resizableImageView.image = scrollView.photo?.underlyingImage.rotateImageByOrientation() ?? resizableImageView.image
+        if scrollView.photo?.underlyingImage != nil {
+            resizableImageView.image = scrollView.photo?.underlyingImage.rotateImageByOrientation()
+        }
         resizableImageView.frame = frame
         resizableImageView.alpha = 1.0
         resizableImageView.clipsToBounds = true
@@ -909,7 +911,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         modalTransitionStyle = .CrossDissolve
         senderViewForAnimation?.hidden = false
         prepareForClosePhotoBrowser()
-        dismissViewControllerAnimated(true) {
+        dismissViewControllerAnimated(false) {
             self.delegate?.didDismissAtPageIndex?(self.currentPageIndex)
         }
     }

@@ -10,6 +10,8 @@ import UIKit
 
 public protocol SKPhotoProtocol: NSObjectProtocol {
     var underlyingImage: UIImage! { get }
+    /// use it when loading URL
+    var holderImage: UIImage? { get }
     var caption: String! { get }
     var index: Int? { get set}
     func loadUnderlyingImageAndNotify()
@@ -20,6 +22,7 @@ public protocol SKPhotoProtocol: NSObjectProtocol {
 public class SKPhoto: NSObject, SKPhotoProtocol {
     
     public var underlyingImage: UIImage!
+    public var holderImage: UIImage?
     public var photoURL: String!
     public var shouldCachePhotoURLImage: Bool = false
     public var caption: String!
@@ -34,6 +37,13 @@ public class SKPhoto: NSObject, SKPhotoProtocol {
         underlyingImage = image
     }
     
+    convenience init(url: String, holder: UIImage?) {
+        self.init()
+        photoURL = url
+        holderImage = holder
+    }
+    
+    ///  deprecated
     convenience init(url: String) {
         self.init()
         photoURL = url
@@ -87,6 +97,10 @@ public class SKPhoto: NSObject, SKPhotoProtocol {
     public class func photoWithImage(image: UIImage) -> SKPhoto {
         return SKPhoto(image: image)
     }
+    public class func photoWithImageURL(url: String, holder: UIImage?) -> SKPhoto {
+        return SKPhoto(url: url, holder: holder)
+    }
+    ///  deprecated
     public class func photoWithImageURL(url: String) -> SKPhoto {
         return SKPhoto(url: url)
     }

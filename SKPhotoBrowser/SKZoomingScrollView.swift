@@ -167,20 +167,13 @@ public class SKZoomingScrollView: UIScrollView, UIScrollViewDelegate, SKDetectin
         if let image = photoBrowser?.imageForPhoto(photo) {
             // indicator
             indicatorView.stopAnimating()
+            setPhotoImageView(image)
             
-            // image
-            photoImageView.image = image
-            
-            var photoImageViewFrame = CGRect.zero
-            photoImageViewFrame.origin = CGPoint.zero
-            photoImageViewFrame.size = image.size
-            
-            photoImageView.frame = photoImageViewFrame
-            
-            contentSize = photoImageViewFrame.size
-            
-            setMaxMinZoomScalesForCurrentBounds()
         } else {
+            // use the holderImage
+            if let image = photo.holderImage {
+                setPhotoImageView(image)
+            }
             // indicator
             indicatorView.startAnimating()
         }
@@ -188,10 +181,24 @@ public class SKZoomingScrollView: UIScrollView, UIScrollViewDelegate, SKDetectin
         setNeedsLayout()
     }
     
+    private func setPhotoImageView(image: UIImage) {
+        // image
+        photoImageView.image = image
+        
+        var photoImageViewFrame = CGRect.zero
+        photoImageViewFrame.origin = CGPoint.zero
+        photoImageViewFrame.size = image.size
+        
+        photoImageView.frame = photoImageViewFrame
+        
+        contentSize = photoImageViewFrame.size
+        
+        setMaxMinZoomScalesForCurrentBounds()
+    }
+    
     public func displayImageFailure() {
         indicatorView.stopAnimating()
     }
-    
     
     // MARK: - handle tap
     public func handleDoubleTap(touchPoint: CGPoint) {
