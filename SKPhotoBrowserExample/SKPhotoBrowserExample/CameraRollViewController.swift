@@ -124,7 +124,7 @@ class CameraRollViewController: UIViewController, SKPhotoBrowserDelegate, UIColl
                 if let image = image, index = self?.assets.indexOf(asset) {
                     fetchedImages[index] = image
                 }
-                fetched++
+                fetched += 1
                 
                 if self?.assets.count == fetched {
                     open(fetchedImages)
