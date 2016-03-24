@@ -109,7 +109,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
     public var bounceAnimation = false
     public var enableZoomBlackArea = true
     /// Set nil to force the statusbar to be hidden
-    public var statusBarStyle:UIStatusBarStyle?
+    public var statusBarStyle: UIStatusBarStyle?
     
     // actions
     private var activityViewController: UIActivityViewController!
@@ -470,7 +470,6 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
             customCloseButton.translatesAutoresizingMaskIntoConstraints = true
             view.addSubview(customCloseButton)
             customCloseButton.autoresizingMask = [.FlexibleBottomMargin, .FlexibleLeftMargin, .FlexibleRightMargin, .FlexibleTopMargin]
-            
         }
     }
     
@@ -499,7 +498,6 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
     
     // MARK: - notification
     public func handleSKPhotoLoadingDidEndNotification(notification: NSNotification) {
-        
         guard let photo = notification.object as? SKPhotoProtocol else {
             return
         }
@@ -704,7 +702,6 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
     
     // MARK: - panGestureRecognized
     public func panGestureRecognized(sender: UIPanGestureRecognizer) {
-        
         backgroundView.hidden = true
         let scrollView = pageDisplayedAtIndex(currentPageIndex)
         
@@ -763,7 +760,6 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
     
     // MARK: - perform animation
     public func performPresentAnimation() {
-        
         view.hidden = true
         pagingScrollView.alpha = 0.0
         backgroundView.alpha = 0
@@ -831,7 +827,6 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
             })
             
         } else {
-            
             UIView.animateWithDuration(animationDuration, delay:0, usingSpringWithDamping:animationDamping, initialSpringVelocity:0, options:.CurveEaseInOut, animations: { () -> Void in
                 
                     self.backgroundView.alpha = 1.0
@@ -861,7 +856,6 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
     }
     
     public func performCloseAnimationWithScrollView(scrollView: SKZoomingScrollView) {
-        
         view.hidden = true
         backgroundView.hidden = false
         backgroundView.alpha = 1
@@ -917,7 +911,6 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
     }
 
     private func determineAndClose() {
-        
         delegate?.willDismissAtPageIndex?(currentPageIndex)
         let scrollView = pageDisplayedAtIndex(currentPageIndex)
         
@@ -998,7 +991,6 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
     }
     
     public func tilePages() {
-        
         let visibleBounds = pagingScrollView.bounds
         
         var firstIndex = Int(floor((CGRectGetMinX(visibleBounds) + 10 * 2) / CGRectGetWidth(visibleBounds)))
@@ -1113,7 +1105,6 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         cancelControlHiding()
         // start
         controlVisibilityTimer = NSTimer.scheduledTimerWithTimeInterval(4.0, target: self, selector: #selector(SKPhotoBrowser.hideControls(_:)), userInfo: nil, repeats: false)
-        
     }
     
     public func hideControls(timer: NSTimer) {
@@ -1174,7 +1165,6 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
     
     // MARK: - Button
     public func closeButtonPressed(sender: UIButton) {
-        
         determineAndClose()
     }
     
@@ -1276,7 +1266,6 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
     }
     
     override public func preferredStatusBarStyle() -> UIStatusBarStyle {
-        
         return statusBarStyle ?? super.preferredStatusBarStyle()
     }
 }
