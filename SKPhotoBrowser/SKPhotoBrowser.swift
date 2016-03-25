@@ -880,7 +880,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
             width: scrollFrame.width,
             height: scrollFrame.height)
         
-        resizableImageView.image = scrollView.photo?.underlyingImage.rotateImageByOrientation() ?? resizableImageView.image
+        resizableImageView.image = scrollView.photo?.underlyingImage?.rotateImageByOrientation() ?? resizableImageView.image
         resizableImageView.frame = frame
         resizableImageView.alpha = 1.0
         resizableImageView.clipsToBounds = true
