@@ -1179,9 +1179,9 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
                 let actionSheetController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
                 actionSheetController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: { (action) -> Void in
                 }))
-                for actionTitle in titles {
-                    actionSheetController.addAction(UIAlertAction(title: actionTitle, style: .Default, handler: { (action) -> Void in
-                        
+                for idx in titles.indices {
+                    actionSheetController.addAction(UIAlertAction(title: titles[idx], style: .Default, handler: { (action) -> Void in
+                        self.delegate?.didDismissActionSheetWithButtonIndex?(idx, photoIndex: self.currentPageIndex)
                     }))
                 }
                 
