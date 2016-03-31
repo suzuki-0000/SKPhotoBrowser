@@ -57,7 +57,6 @@ public class SKPhoto: NSObject, SKPhotoProtocol {
         //判断主图，当url为空时，表示主图不是占位图，直接发送加载完成通知；否则继续加载网络图片
         if underlyingImage != nil && photoURL == nil {
             loadUnderlyingImageComplete()
-            return
         }
         
         if photoURL != nil {

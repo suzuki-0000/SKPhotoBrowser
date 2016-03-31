@@ -877,9 +877,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
             width: scrollFrame.width,
             height: scrollFrame.height)
         
-        if scrollView.photo?.underlyingImage != nil {
-            resizableImageView.image = scrollView.photo?.underlyingImage.rotateImageByOrientation()
-        }
+        resizableImageView.image = scrollView.photo?.underlyingImage?.rotateImageByOrientation() ?? resizableImageView.image
         resizableImageView.frame = frame
         resizableImageView.alpha = 1.0
         resizableImageView.clipsToBounds = true
@@ -1018,6 +1016,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
             recycledPages.removeFirst()
         }
         
+        // this is a new style but it works very slow
         for index in firstIndex...lastIndex {
             if isDisplayingPageForIndex(index) {
                 continue

@@ -33,8 +33,11 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        for i in 0..<30 {
+        for i in 0..<3 {
             let photo = SKPhoto.photoWithImage(UIImage(named: "image\(i%10).jpg")!)
+            if i == 0 {
+                photo.photoURL = "http://image2.sina.com.cn/IT/cr/2007/0326/177123092.jpg"
+            }
             photo.caption = caption[i%10]
             images.append(photo)
         }
