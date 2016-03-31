@@ -15,7 +15,7 @@ public class SKZoomingScrollView: UIScrollView, UIScrollViewDelegate, SKDetectin
         didSet {
             photoImageView.image = nil
             if photo != nil {
-                displayImage()
+                displayImage(complete: false)
             }
         }
     }
@@ -156,44 +156,43 @@ public class SKZoomingScrollView: UIScrollView, UIScrollViewDelegate, SKDetectin
         }
     }
     
-    // MARK: - image
-    public func displayImage() {
+    // MARK: - image 显示图片
+    public func displayImage(complete flag: Bool) {
         // reset scale
         maximumZoomScale = 1
         minimumZoomScale = 1
         zoomScale = 1
         contentSize = CGSize.zero
         
-        if let image = photoBrowser?.imageForPhoto(photo) {
-            // indicator
-            indicatorView.stopAnimating()
-            setPhotoImageView(image)
-            
-        } else {
-            // use the holderImage
-            if let image = photo.holderImage {
-                setPhotoImageView(image)
-            }
-            // indicator
+        // MARK: 此处需要判断是否已经加载完成！！！！！！
+        // 当有设置主图或占位图时，此处的判断无法完成加载状态的判断！！！！！！！！
+        
+        // 从传入的完成标志进行判断是否已经加载完成最终图片
+        if !flag {
             indicatorView.startAnimating()
+            photo.loadUnderlyingImageAndNotify()
+        }else {
+            indicatorView.stopAnimating()
+        }
+        
+//        if let image = photoBrowser?.imageForPhoto(photo) {
+        if let image = photo.underlyingImage {
+
+            // image
+            photoImageView.image = image
+            
+            var photoImageViewFrame = CGRect.zero
+            photoImageViewFrame.origin = CGPoint.zero
+            photoImageViewFrame.size = image.size
+            
+            photoImageView.frame = photoImageViewFrame
+            
+            contentSize = photoImageViewFrame.size
+            
+            setMaxMinZoomScalesForCurrentBounds()
         }
         
         setNeedsLayout()
-    }
-    
-    private func setPhotoImageView(image: UIImage) {
-        // image
-        photoImageView.image = image
-        
-        var photoImageViewFrame = CGRect.zero
-        photoImageViewFrame.origin = CGPoint.zero
-        photoImageViewFrame.size = image.size
-        
-        photoImageView.frame = photoImageViewFrame
-        
-        contentSize = photoImageViewFrame.size
-        
-        setMaxMinZoomScalesForCurrentBounds()
     }
     
     public func displayImageFailure() {
