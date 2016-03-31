@@ -10,6 +10,9 @@ import UIKit
 import SKPhotoBrowser
 
 class ViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, SKPhotoBrowserDelegate {
+    private final let screenBound = UIScreen.mainScreen().bounds
+    private var screenWidth: CGFloat { return screenBound.size.width }
+    private var screenHeight: CGFloat { return screenBound.size.height }
 
     @IBOutlet weak var collectionView: UICollectionView!
     var images = [SKPhoto]()
@@ -90,6 +93,14 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         // browser.actionButtonTitles = ["Do One Action", "Do Another Action"]
         
         presentViewController(browser, animated: true, completion: {})
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        if UIDevice.currentDevice().userInterfaceIdiom == .Pad {
+            return CGSize(width: screenWidth/2 - 5, height: 300)
+        } else {
+            return CGSize(width: screenWidth/2 - 5, height: 200)
+        }
     }
     
     // MARK: - SKPhotoBrowserDelegate

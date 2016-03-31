@@ -3,9 +3,8 @@ SKPhotoBrowser
 
 [![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![Cocoapods Compatible](https://img.shields.io/cocoapods/v/SKPhotoBrowser.svg?style=flat)](http://cocoadocs.org/docsets/SKPhotoBrowser)
-[![Swift 2.0](https://img.shields.io/badge/Swift-2.0-orange.svg?style=flat)](https://developer.apple.com/swift/)
 
-Simple PhotoBrowser/Viewer inspired by facebook, twitter photo browsers written by swift2.0, based on [IDMPhotoBrowser](https://github.com/ideaismobile/IDMPhotoBrowser), [MWPhotoBrowser](https://github.com/mwaterfall/MWPhotoBrowser).
+Simple PhotoBrowser/Viewer inspired by facebook, twitter photo browsers written by swift, based on [IDMPhotoBrowser](https://github.com/ideaismobile/IDMPhotoBrowser), [MWPhotoBrowser](https://github.com/mwaterfall/MWPhotoBrowser).
 
 ## features
 - Can display one or more images by providing either `UIImage` objects, or string of URL array.
@@ -16,7 +15,7 @@ Simple PhotoBrowser/Viewer inspired by facebook, twitter photo browsers written 
 - Landscape handling.
 - Delete photo support(by offbye). By set displayDelete=true show a delete icon in statusbar, deleted indexes can be obtain from delegate func didDeleted 
 
-![sample](Screenshots/example01.gif)
+![sample](Screenshots/example02.gif)
 
 ## Requirements
 - iOS 8.0+
