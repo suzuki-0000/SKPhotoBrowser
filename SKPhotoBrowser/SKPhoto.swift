@@ -39,6 +39,12 @@ public class SKPhoto: NSObject, SKPhotoProtocol {
         photoURL = url
     }
     
+    convenience init(url: String, holder: UIImage?) {
+        self.init()
+        photoURL = url
+        underlyingImage = holder
+    }
+    
     public func checkCache() {
         if photoURL != nil && shouldCachePhotoURLImage {
             if let img = UIImage.sharedSKPhotoCache().objectForKey(photoURL) as? UIImage {
@@ -48,7 +54,8 @@ public class SKPhoto: NSObject, SKPhotoProtocol {
     }
     
     public func loadUnderlyingImageAndNotify() {
-        if underlyingImage != nil {
+        
+        if underlyingImage != nil && photoURL == nil {
             loadUnderlyingImageComplete()
         }
         
@@ -58,11 +65,13 @@ public class SKPhoto: NSObject, SKPhotoProtocol {
             if let nsURL = NSURL(string: photoURL) {
                 session.dataTaskWithURL(nsURL, completionHandler: { [weak self](response: NSData?, data: NSURLResponse?, error: NSError?) in
                     if let _self = self {
+                        
                         if error != nil {
                             dispatch_async(dispatch_get_main_queue()) {
                                 _self.loadUnderlyingImageComplete()
                             }
                         }
+                        
                         if let res = response, let image = UIImage(data: res) {
                             if _self.shouldCachePhotoURLImage {
                                 UIImage.sharedSKPhotoCache().setObject(image, forKey: _self.photoURL)
@@ -87,8 +96,13 @@ public class SKPhoto: NSObject, SKPhotoProtocol {
     public class func photoWithImage(image: UIImage) -> SKPhoto {
         return SKPhoto(image: image)
     }
+    
     public class func photoWithImageURL(url: String) -> SKPhoto {
         return SKPhoto(url: url)
+    }
+    
+    public class func photoWithImageURL(url: String, holder: UIImage?) -> SKPhoto {
+        return SKPhoto(url: url, holder: holder)
     }
 }
 
