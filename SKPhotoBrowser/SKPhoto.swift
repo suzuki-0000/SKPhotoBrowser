@@ -9,7 +9,6 @@
 import UIKit
 
 public protocol SKPhotoProtocol: NSObjectProtocol {
-    
     // MARK: 在加载网络图片时使用主图片代替占位图
     var underlyingImage: UIImage! { get }
     var caption: String! { get }
@@ -35,6 +34,11 @@ public class SKPhoto: NSObject, SKPhotoProtocol {
     convenience init(image: UIImage) {
         self.init()
         underlyingImage = image
+    }
+    
+    convenience init(url: String) {
+        self.init()
+        photoURL = url
     }
     
     convenience init(url: String, holder: UIImage?) {
@@ -97,6 +101,11 @@ public class SKPhoto: NSObject, SKPhotoProtocol {
     public class func photoWithImage(image: UIImage) -> SKPhoto {
         return SKPhoto(image: image)
     }
+    
+    public class func photoWithImageURL(url: String) -> SKPhoto {
+        return SKPhoto(url: url)
+    }
+    
     public class func photoWithImageURL(url: String, holder: UIImage?) -> SKPhoto {
         return SKPhoto(url: url, holder: holder)
     }

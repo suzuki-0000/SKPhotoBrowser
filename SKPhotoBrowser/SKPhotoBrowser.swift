@@ -501,16 +501,26 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         guard let photo = notification.object as? SKPhotoProtocol else {
             return
         }
-        let page = pageDisplayingAtPhoto(photo)
-        if page.photo == nil {
-            return
+        
+        dispatch_async(dispatch_get_global_queue(0, 0)) { 
+            
+            let page = self.pageDisplayingAtPhoto(photo)
+            if page.photo == nil {
+                return
+            }
+            
+            dispatch_async(dispatch_get_main_queue(), {
+                
+                if page.photo.underlyingImage != nil {
+                    page.displayImage(complete: true)
+                    self.loadAdjacentPhotosIfNecessary(photo)
+                } else {
+                    page.displayImageFailure()
+                }
+            })
+            
         }
-        if page.photo.underlyingImage != nil {
-            page.displayImage(complete: true)
-            loadAdjacentPhotosIfNecessary(photo)
-        } else {
-            page.displayImageFailure()
-        }
+        
     }
     
     public func loadAdjacentPhotosIfNecessary(photo: SKPhotoProtocol) {
