@@ -496,7 +496,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         }
     }
     
-    // MARK: - 图片加载完成通知响应方法！！！！！！！！！！！！！
+    // MARK: - notification
     public func handleSKPhotoLoadingDidEndNotification(notification: NSNotification) {
         guard let photo = notification.object as? SKPhotoProtocol else {
             return
@@ -939,7 +939,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         
     }
     
-    //MARK: - image 图片获取方法
+    //MARK: - image
     private func getImageFromView(sender: UIView) -> UIImage {
         UIGraphicsBeginImageContextWithOptions(sender.frame.size, true, 0.0)
         sender.layer.renderInContext(UIGraphicsGetCurrentContext()!)

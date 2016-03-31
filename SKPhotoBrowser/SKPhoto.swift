@@ -9,11 +9,9 @@
 import UIKit
 
 public protocol SKPhotoProtocol: NSObjectProtocol {
-    // MARK: 在加载网络图片时使用主图片代替占位图
     var underlyingImage: UIImage! { get }
     var caption: String! { get }
     var index: Int? { get set}
-    //协议方法，去加载图片并在完成后通知
     func loadUnderlyingImageAndNotify()
     func checkCache()
 }
@@ -44,7 +42,6 @@ public class SKPhoto: NSObject, SKPhotoProtocol {
     convenience init(url: String, holder: UIImage?) {
         self.init()
         photoURL = url
-        //加原占位图参数改为传至主图
         underlyingImage = holder
     }
     
@@ -58,7 +55,6 @@ public class SKPhoto: NSObject, SKPhotoProtocol {
     
     public func loadUnderlyingImageAndNotify() {
         
-        //判断主图，当url为空时，表示主图不是占位图，直接发送加载完成通知；否则继续加载网络图片
         if underlyingImage != nil && photoURL == nil {
             loadUnderlyingImageComplete()
         }
@@ -92,7 +88,6 @@ public class SKPhoto: NSObject, SKPhotoProtocol {
         }
     }
 
-    // MARK: 此方法发出的通知才是最终是否加载完成的标志
     public func loadUnderlyingImageComplete() {
         NSNotificationCenter.defaultCenter().postNotificationName(SKPHOTO_LOADING_DID_END_NOTIFICATION, object: self)
     }

@@ -164,10 +164,6 @@ public class SKZoomingScrollView: UIScrollView, UIScrollViewDelegate, SKDetectin
         zoomScale = 1
         contentSize = CGSize.zero
         
-        // MARK: 此处需要判断是否已经加载完成！！！！！！
-        // 当有设置主图或占位图时，此处的判断无法完成加载状态的判断！！！！！！！！
-        
-        // 从传入的完成标志进行判断是否已经加载完成最终图片
         if !flag {
             indicatorView.startAnimating()
             photo.loadUnderlyingImageAndNotify()
@@ -175,7 +171,6 @@ public class SKZoomingScrollView: UIScrollView, UIScrollViewDelegate, SKDetectin
             indicatorView.stopAnimating()
         }
         
-//        if let image = photoBrowser?.imageForPhoto(photo) {
         if let image = photo.underlyingImage {
 
             // image
