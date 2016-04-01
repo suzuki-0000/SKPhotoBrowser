@@ -156,7 +156,7 @@ public class SKZoomingScrollView: UIScrollView, UIScrollViewDelegate, SKDetectin
         }
     }
     
-    // MARK: - image 显示图片
+    // MARK: - image
     public func displayImage(complete flag: Bool) {
         // reset scale
         maximumZoomScale = 1
