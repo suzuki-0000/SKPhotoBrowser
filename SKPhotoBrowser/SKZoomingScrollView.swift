@@ -127,10 +127,12 @@ public class SKZoomingScrollView: UIScrollView, UIScrollViewDelegate, SKDetectin
             } else {
                 maxScale = 2.0
             }
-        } else {
+        } else if photoImageView.frame.width > deviceScreenWidth {
             maxScale = 1.0
+        } else {
+            // here if photoImageView.frame.width == deviceScreenWidth
+            maxScale = 2.5
         }
-        
         
         maximumZoomScale = maxScale
         minimumZoomScale = minScale
