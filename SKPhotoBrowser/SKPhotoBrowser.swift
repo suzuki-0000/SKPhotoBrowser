@@ -237,7 +237,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         modalPresentationCapturesStatusBarAppearance = true
         modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SKPhotoBrowser.handleSKPhotoLoadingDidEndNotification(_:)), name: SKPHOTO_LOADING_DID_END_NOTIFICATION, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.handleSKPhotoLoadingDidEndNotification(_:)), name: SKPHOTO_LOADING_DID_END_NOTIFICATION, object: nil)
     }
     
     // MARK: - override
@@ -282,7 +282,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         previousBtn.frame = CGRect(x: 0, y: 0, width: 44, height: 44)
         previousBtn.imageEdgeInsets = UIEdgeInsetsMake(13.25, 17.25, 13.25, 17.25)
         previousBtn.setImage(previousImage, forState: .Normal)
-        previousBtn.addTarget(self, action: #selector(SKPhotoBrowser.gotoPreviousPage), forControlEvents: .TouchUpInside)
+        previousBtn.addTarget(self, action: #selector(self.gotoPreviousPage), forControlEvents: .TouchUpInside)
         previousBtn.contentMode = .Center
         toolPreviousButton = UIBarButtonItem(customView: previousBtn)
         
@@ -292,7 +292,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         nextBtn.frame = CGRect(x: 0, y: 0, width: 44, height: 44)
         nextBtn.imageEdgeInsets = UIEdgeInsetsMake(13.25, 17.25, 13.25, 17.25)
         nextBtn.setImage(nextImage, forState: .Normal)
-        nextBtn.addTarget(self, action: #selector(SKPhotoBrowser.gotoNextPage), forControlEvents: .TouchUpInside)
+        nextBtn.addTarget(self, action: #selector(self.gotoNextPage), forControlEvents: .TouchUpInside)
         nextBtn.contentMode = .Center
         toolNextButton = UIBarButtonItem(customView: nextBtn)
         
@@ -478,7 +478,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         if displayCustomDeleteButton == true {
             customDeleteButton = UIButton(type: .Custom)
             customDeleteButton.backgroundColor = .clearColor()
-            customDeleteButton.addTarget(self, action: #selector(SKPhotoBrowser.deleteButtonPressed(_:)), forControlEvents: .TouchUpInside)
+            customDeleteButton.addTarget(self, action: #selector(self.deleteButtonPressed(_:)), forControlEvents: .TouchUpInside)
             // If another developer has not set their values
             if customDeleteButtonShowFrame == nil && customDeleteButtonHideFrame == nil {
                 customDeleteButtonShowFrame = CGRect(x: view.frame.width - 44, y: buttonTopOffset, width: 44, height: 44)
@@ -724,7 +724,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         translatedPoint = CGPoint(x: firstX, y: firstY + translatedPoint.y)
         scrollView.center = translatedPoint
         
-        let minOffset = viewHalfHeight/4
+        let minOffset = viewHalfHeight / 4
         let offset = 1 - (scrollView.center.y > viewHalfHeight ? scrollView.center.y - viewHalfHeight : -(scrollView.center.y - viewHalfHeight)) / viewHalfHeight
         view.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(max(0.7, offset))
         
@@ -797,7 +797,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
                 self.resizableImageView.addCornerRadiusAnimation(sender.layer.cornerRadius, to: 0, duration: duration)
             }
             
-            UIView.animateWithDuration(animationDuration, delay:0, usingSpringWithDamping:animationDamping, initialSpringVelocity:0, options:.CurveEaseInOut, animations: { () -> Void in
+            UIView.animateWithDuration(animationDuration, delay: 0, usingSpringWithDamping:animationDamping, initialSpringVelocity:0, options:.CurveEaseInOut, animations: { () -> Void in
                 
                     self.backgroundView.alpha = 1.0
                     self.resizableImageView.frame = finalImageViewFrame
@@ -1024,7 +1024,6 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
             recycledPages.removeFirst()
         }
         
-        // this is a new style but it works very slow
         for index in firstIndex...lastIndex {
             if isDisplayingPageForIndex(index) {
                 continue
