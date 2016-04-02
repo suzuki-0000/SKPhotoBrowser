@@ -387,7 +387,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         recycledPages.removeAll()
     }
     
-    // MARK: - set startap values
+    // MARK: - set startup values
     
     // MARK: - setting of buttons
     // This function should be at the beginning of the other functions
@@ -501,16 +501,22 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         guard let photo = notification.object as? SKPhotoProtocol else {
             return
         }
-        let page = pageDisplayingAtPhoto(photo)
-        if page.photo == nil {
-            return
-        }
-        if page.photo.underlyingImage != nil {
-            page.displayImage()
-            loadAdjacentPhotosIfNecessary(photo)
-        } else {
-            page.displayImageFailure()
-        }
+        
+        dispatch_async(dispatch_get_main_queue(), {
+            
+            let page = self.pageDisplayingAtPhoto(photo)
+            if page.photo == nil {
+                return
+            }
+            
+            if page.photo.underlyingImage != nil {
+                page.displayImage(complete: true)
+                self.loadAdjacentPhotosIfNecessary(photo)
+            } else {
+                page.displayImageFailure()
+            }
+        })
+        
     }
     
     public func loadAdjacentPhotosIfNecessary(photo: SKPhotoProtocol) {
@@ -905,7 +911,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         modalTransitionStyle = .CrossDissolve
         senderViewForAnimation?.hidden = false
         prepareForClosePhotoBrowser()
-        dismissViewControllerAnimated(true) {
+        dismissViewControllerAnimated(false) {
             self.delegate?.didDismissAtPageIndex?(self.currentPageIndex)
         }
     }
@@ -938,14 +944,6 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         return result
     }
     
-    public func imageForPhoto(photo: SKPhotoProtocol) -> UIImage? {
-        if photo.underlyingImage != nil {
-            return photo.underlyingImage
-        } else {
-            photo.loadUnderlyingImageAndNotify()
-            return nil
-        }
-    }
     
     // MARK: - paging
     public func initializePageIndex(index: Int) {
@@ -1104,6 +1102,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         cancelControlHiding()
         // start
         controlVisibilityTimer = NSTimer.scheduledTimerWithTimeInterval(4.0, target: self, selector: #selector(SKPhotoBrowser.hideControls(_:)), userInfo: nil, repeats: false)
+        
     }
     
     public func hideControls(timer: NSTimer) {
