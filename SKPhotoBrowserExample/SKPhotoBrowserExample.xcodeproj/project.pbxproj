@@ -117,13 +117,10 @@
 			isa = PBXGroup;
 			children = (
 				8909B55A1BC792150060A053 /* AppDelegate.swift */,
-				212705881C92C69C00466223 /* CameraRollViewController.swift */,
-				8909B55C1BC792150060A053 /* ViewController.swift */,
-				8909B55E1BC792150060A053 /* Main.storyboard */,
-				8909B5611BC792150060A053 /* Assets.xcassets */,
-				8909B5631BC792150060A053 /* LaunchScreen.storyboard */,
-				8909B5661BC792150060A053 /* Info.plist */,
-				8909B5741BC792DC0060A053 /* SampleImages */,
+				A6EBAD761CAFB87A00F80595 /* Controllers */,
+				A6EBAD771CAFB89300F80595 /* UI */,
+				A6EBAD781CAFB8A500F80595 /* Resource */,
+				A6EBAD791CAFB96C00F80595 /* Info */,
 			);
 			path = SKPhotoBrowserExample;
 			sourceTree = "<group>";
@@ -153,6 +150,41 @@
 				8909B5801BC792DC0060A053 /* image9.jpg */,
 			);
 			path = SampleImages;
+			sourceTree = "<group>";
+		};
+		A6EBAD761CAFB87A00F80595 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				8909B55C1BC792150060A053 /* ViewController.swift */,
+				212705881C92C69C00466223 /* CameraRollViewController.swift */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		A6EBAD771CAFB89300F80595 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				8909B55E1BC792150060A053 /* Main.storyboard */,
+				8909B5631BC792150060A053 /* LaunchScreen.storyboard */,
+			);
+			name = UI;
+			sourceTree = "<group>";
+		};
+		A6EBAD781CAFB8A500F80595 /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				8909B5741BC792DC0060A053 /* SampleImages */,
+				8909B5611BC792150060A053 /* Assets.xcassets */,
+			);
+			name = Resource;
+			sourceTree = "<group>";
+		};
+		A6EBAD791CAFB96C00F80595 /* Info */ = {
+			isa = PBXGroup;
+			children = (
+				8909B5661BC792150060A053 /* Info.plist */,
+			);
+			name = Info;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

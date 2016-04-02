@@ -244,7 +244,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
     public override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = UIColor.blackColor()
+        view.backgroundColor = .blackColor()
         view.clipsToBounds = true
         view.opaque = false
         
@@ -298,10 +298,10 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         
         toolCounterLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 95, height: 40))
         toolCounterLabel.textAlignment = .Center
-        toolCounterLabel.backgroundColor = UIColor.clearColor()
+        toolCounterLabel.backgroundColor = .clearColor()
         toolCounterLabel.font  = UIFont(name: "Helvetica", size: 16.0)
-        toolCounterLabel.textColor = UIColor.whiteColor()
-        toolCounterLabel.shadowColor = UIColor.darkTextColor()
+        toolCounterLabel.textColor = .whiteColor()
+        toolCounterLabel.shadowColor = .darkTextColor()
         toolCounterLabel.shadowOffset = CGSize(width: 0.0, height: 1.0)
         
         toolCounterButton = UIBarButtonItem(customView: toolCounterLabel)
@@ -339,7 +339,6 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
     
     public override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-        
         isPerformingLayout = true
         pagingScrollView.frame = frameForPagingScrollView()
         pagingScrollView.contentSize = contentSizeForPagingScrollView()
@@ -413,7 +412,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
                 closeButton.imageEdgeInsets = UIEdgeInsetsMake(12, 12, 12, 12)
             }
             closeButton.backgroundColor = .clearColor()
-            closeButton.addTarget(self, action: #selector(SKPhotoBrowser.closeButtonPressed(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+            closeButton.addTarget(self, action: #selector(self.closeButtonPressed(_:)), forControlEvents: UIControlEvents.TouchUpInside)
             closeButtonHideFrame = CGRect(x: 5, y: -20, width: 44, height: 44)
             closeButtonShowFrame = CGRect(x: 5, y: buttonTopOffset, width: 44, height: 44)
             view.addSubview(closeButton)
@@ -436,7 +435,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
                 deleteButton.imageEdgeInsets = UIEdgeInsetsMake(12.3, 12.3, 12.3, 12.3)
             }
             deleteButton.setImage(image, forState: .Normal)
-            deleteButton.addTarget(self, action: #selector(SKPhotoBrowser.deleteButtonPressed(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+            deleteButton.addTarget(self, action: #selector(self.deleteButtonPressed(_:)), forControlEvents: UIControlEvents.TouchUpInside)
             deleteButton.alpha = 0.0
             view.addSubview(deleteButton)
             deleteButton.translatesAutoresizingMaskIntoConstraints = true
@@ -451,7 +450,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         if displayCustomCloseButton == true {
             let closeImage = UIImage(named: "SKPhotoBrowser.bundle/images/btn_common_close_wh", inBundle: bundle, compatibleWithTraitCollection: nil) ?? UIImage()
             customCloseButton = UIButton(type: .Custom)
-            customCloseButton.addTarget(self, action: #selector(SKPhotoBrowser.closeButtonPressed(_:)), forControlEvents: .TouchUpInside)
+            customCloseButton.addTarget(self, action: #selector(self.closeButtonPressed(_:)), forControlEvents: .TouchUpInside)
             customCloseButton.backgroundColor = .clearColor()
             // If another developer has not set their values
             if customCloseButtonImage != nil {
@@ -503,7 +502,6 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         }
         
         dispatch_async(dispatch_get_main_queue(), {
-            
             let page = self.pageDisplayingAtPhoto(photo)
             if page.photo == nil {
                 return
@@ -591,7 +589,6 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         if !disableVerticalSwipe {
             view.addGestureRecognizer(panGesture)
         }
-        
     }
     
     public func prepareForClosePhotoBrowser() {
@@ -614,7 +611,6 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         if UIInterfaceOrientationIsLandscape(currentOrientation) {
             height = 32
         }
-        
         return CGRect(x: 0, y: view.bounds.size.height - height, width: view.bounds.size.width, height: height)
     }
     
@@ -624,7 +620,6 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         if UIInterfaceOrientationIsLandscape(currentOrientation) {
             height = 32
         }
-        
         return CGRect(x: 0, y: view.bounds.size.height + height, width: view.bounds.size.width, height: height)
     }
     
@@ -632,7 +627,6 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         let pageFrame = frameForPageAtIndex(index)
         let captionSize = captionView.sizeThatFits(CGSize(width: pageFrame.size.width, height: 0))
         let navHeight = navigationController?.navigationBar.frame.size.height ?? 44
-        
         return CGRect(x: pageFrame.origin.x, y: pageFrame.size.height - captionSize.height - navHeight,
             width: pageFrame.size.width, height: captionSize.height)
     }
@@ -737,13 +731,10 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         // gesture end
         if sender.state == .Ended {
             if scrollView.center.y > viewHalfHeight + minOffset || scrollView.center.y < viewHalfHeight - minOffset {
-                
                 backgroundView.backgroundColor = self.view.backgroundColor
                 determineAndClose()
                 return
-
             } else {
-                
                 // Continue Showing View
                 isDraggingPhoto = false
                 setNeedsStatusBarAppearanceUpdate()
@@ -771,7 +762,6 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         backgroundView.alpha = 0
         
         if let sender = delegate?.viewForPhoto?(self, index: initialPageIndex) ?? senderViewForAnimation {
-            
             senderViewOriginalFrame = (sender.superview?.convertRect(sender.frame, toView:nil))!
             sender.hidden = true
             
@@ -831,10 +821,8 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
                     self.pagingScrollView.alpha = 1.0
                     self.resizableImageView.alpha = 0.0
             })
-            
         } else {
             UIView.animateWithDuration(animationDuration, delay:0, usingSpringWithDamping:animationDamping, initialSpringVelocity:0, options:.CurveEaseInOut, animations: { () -> Void in
-                
                     self.backgroundView.alpha = 1.0
                     if self.displayCloseButton == true {
                         self.closeButton.alpha = 1.0
@@ -924,7 +912,6 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
             performCloseAnimationWithScrollView(scrollView)
             return
         } else if let sender = delegate?.viewForPhoto?(self, index: currentPageIndex), image = photoAtIndex(currentPageIndex).underlyingImage {
-            
             senderViewForAnimation = sender
             resizableImageView.image = image
             performCloseAnimationWithScrollView(scrollView)
@@ -932,7 +919,6 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         } else {
             dismissPhotoBrowser()
         }
-        
     }
     
     //MARK: - image
@@ -943,7 +929,6 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         UIGraphicsEndImageContext()
         return result
     }
-    
     
     // MARK: - paging
     public func initializePageIndex(index: Int) {
@@ -1102,7 +1087,6 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         cancelControlHiding()
         // start
         controlVisibilityTimer = NSTimer.scheduledTimerWithTimeInterval(4.0, target: self, selector: #selector(SKPhotoBrowser.hideControls(_:)), userInfo: nil, repeats: false)
-        
     }
     
     public func hideControls(timer: NSTimer) {
@@ -1143,8 +1127,8 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
                     self.customDeleteButton.alpha = alpha
                     self.customDeleteButton.frame = hidden ? self.customDeleteButtonHideFrame : self.customDeleteButtonShowFrame
                 }
-                for v in captionViews {
-                    v.alpha = alpha
+                for captionView in captionViews {
+                    captionView.alpha = alpha
                 }
             },
             completion: { (Bool) -> Void in
@@ -1153,7 +1137,6 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         if !permanent {
             hideControlsAfterDelay()
         }
-        
         setNeedsStatusBarAppearanceUpdate()
     }
     
@@ -1190,7 +1173,6 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
                     let popoverController = actionSheetController.popoverPresentationController!
                     popoverController.barButtonItem = toolActionButton
                     presentViewController(actionSheetController, animated: true, completion: { () -> Void in
-                        
                     })
                 }
             } else {
@@ -1218,7 +1200,6 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
                 }
             }
         }
-        
     }
     
     // MARK: -  UIScrollView Delegate
