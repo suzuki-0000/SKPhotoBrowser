@@ -75,7 +75,6 @@
 		8909B5321BC791280060A053 /* SKPhotoBrowser */ = {
 			isa = PBXGroup;
 			children = (
-				210E53EB1C986D1C008DD5E3 /* extensions */,
 				8909B53B1BC791510060A053 /* SKCaptionView.swift */,
 				8909B53C1BC791510060A053 /* SKDetectingImageView.swift */,
 				8909B53D1BC791510060A053 /* SKDetectingView.swift */,
@@ -85,6 +84,7 @@
 				8909B5421BC791510060A053 /* SKZoomingScrollView.swift */,
 				8909B5331BC791280060A053 /* SKPhotoBrowser.h */,
 				8909B5351BC791280060A053 /* Info.plist */,
+				210E53EB1C986D1C008DD5E3 /* extensions */,
 				8909B54C1BC7916E0060A053 /* SKPhotoBrowser.bundle */,
 			);
 			path = SKPhotoBrowser;
