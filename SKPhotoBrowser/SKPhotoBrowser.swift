@@ -339,7 +339,6 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
     
     public override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-        
         isPerformingLayout = true
         pagingScrollView.frame = frameForPagingScrollView()
         pagingScrollView.contentSize = contentSizeForPagingScrollView()
@@ -413,7 +412,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
                 closeButton.imageEdgeInsets = UIEdgeInsetsMake(12, 12, 12, 12)
             }
             closeButton.backgroundColor = .clearColor()
-            closeButton.addTarget(self, action: #selector(SKPhotoBrowser.closeButtonPressed(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+            closeButton.addTarget(self, action: #selector(self.closeButtonPressed(_:)), forControlEvents: UIControlEvents.TouchUpInside)
             closeButtonHideFrame = CGRect(x: 5, y: -20, width: 44, height: 44)
             closeButtonShowFrame = CGRect(x: 5, y: buttonTopOffset, width: 44, height: 44)
             view.addSubview(closeButton)
@@ -436,7 +435,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
                 deleteButton.imageEdgeInsets = UIEdgeInsetsMake(12.3, 12.3, 12.3, 12.3)
             }
             deleteButton.setImage(image, forState: .Normal)
-            deleteButton.addTarget(self, action: #selector(SKPhotoBrowser.deleteButtonPressed(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+            deleteButton.addTarget(self, action: #selector(self.deleteButtonPressed(_:)), forControlEvents: UIControlEvents.TouchUpInside)
             deleteButton.alpha = 0.0
             view.addSubview(deleteButton)
             deleteButton.translatesAutoresizingMaskIntoConstraints = true
@@ -451,7 +450,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         if displayCustomCloseButton == true {
             let closeImage = UIImage(named: "SKPhotoBrowser.bundle/images/btn_common_close_wh", inBundle: bundle, compatibleWithTraitCollection: nil) ?? UIImage()
             customCloseButton = UIButton(type: .Custom)
-            customCloseButton.addTarget(self, action: #selector(SKPhotoBrowser.closeButtonPressed(_:)), forControlEvents: .TouchUpInside)
+            customCloseButton.addTarget(self, action: #selector(self.closeButtonPressed(_:)), forControlEvents: .TouchUpInside)
             customCloseButton.backgroundColor = .clearColor()
             // If another developer has not set their values
             if customCloseButtonImage != nil {
