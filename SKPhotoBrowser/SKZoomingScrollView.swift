@@ -142,11 +142,11 @@ public class SKZoomingScrollView: UIScrollView, UIScrollViewDelegate, SKDetectin
         if photoImageView.frame.width < deviceScreenWidth {
             // I think that we should to get coefficient between device screen width and image width and assign it to maxScale. I made two mode that we will get the same result for different device orientations.
             if UIApplication.sharedApplication().statusBarOrientation.isPortrait {
-                print("first photoImageView.frame.width < deviceScreenHeight", deviceScreenHeight / photoImageView.frame.width)
+                print("Portrait", deviceScreenHeight / photoImageView.frame.width)
                 maxScale = deviceScreenHeight / photoImageView.frame.width
             } else {
-                print("second photoImageView.frame.width < deviceScreenWidth", (deviceScreenWidth) / photoImageView.frame.width)
-                maxScale = deviceScreenWidth / photoImageView.frame.width
+                print("landscape", (deviceScreenWidth) / photoImageView.frame.width)
+                maxScale = deviceScreenWidth / photoImageView.frame.width 
             }
         } else if photoImageView.frame.width > deviceScreenWidth {
             maxScale = 1.0
@@ -161,7 +161,7 @@ public class SKZoomingScrollView: UIScrollView, UIScrollViewDelegate, SKDetectin
         
         // on high resolution screens we have double the pixel density, so we will be seeing every pixel if we limit the
         // maximum zoom scale to 0.5
-        maxScale = maxScale / UIScreen.mainScreen().scale
+        maxScale = maxScale / scale 
         if maxScale < minScale {
             maxScale = minScale * 2
         }
@@ -209,7 +209,7 @@ public class SKZoomingScrollView: UIScrollView, UIScrollViewDelegate, SKDetectin
             
             setMaxMinZoomScalesForCurrentBounds()
         }
-        
+        print(photoImageView.frame)
         setNeedsLayout()
     }
     
@@ -305,6 +305,7 @@ public class SKZoomingScrollView: UIScrollView, UIScrollViewDelegate, SKDetectin
     }
     
     func handleImageViewDoubleTap(view: UIImageView, touch: UITouch) {
+        print(photoImageView.frame)
         handleDoubleTap(touch.locationInView(view))
     }
 }
