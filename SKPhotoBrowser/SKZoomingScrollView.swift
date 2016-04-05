@@ -119,9 +119,10 @@ public class SKZoomingScrollView: UIScrollView, UIScrollViewDelegate, SKDetectin
         let minScale: CGFloat = min(xScale, yScale)
         var maxScale: CGFloat!
         
-        let deviceScreenWidth = UIScreen.mainScreen().bounds.width
-        let deviceScreenHeight = UIScreen.mainScreen().bounds.height
+        
         let scale = UIScreen.mainScreen().scale
+        let deviceScreenWidth = UIScreen.mainScreen().bounds.width * scale // width in pixels. scale needs to remove if to use the old algorithm
+        let deviceScreenHeight = UIScreen.mainScreen().bounds.height * scale // height in pixels. scale needs to remove if to use the old algorithm
         
 //        if photoImageView.frame.width < deviceScreenWidth {
 //            // I think that we should to get coefficient between device screen width and image width and assign it to maxScale. I made two mode that we will get the same result for different device orientations.
@@ -136,16 +137,17 @@ public class SKZoomingScrollView: UIScrollView, UIScrollViewDelegate, SKDetectin
 //            // here if photoImageView.frame.width == deviceScreenWidth
 //            maxScale = 2.5
 //        }
-        if photoImageView.frame.width < deviceScreenWidth * scale {
+        
+        if photoImageView.frame.width < deviceScreenWidth {
             // I think that we should to get coefficient between device screen width and image width and assign it to maxScale. I made two mode that we will get the same result for different device orientations.
             if UIApplication.sharedApplication().statusBarOrientation.isPortrait {
-                print("first photoImageView.frame.width < deviceScreenHeight", deviceScreenHeight * scale / photoImageView.frame.width)
-                maxScale = deviceScreenHeight * scale / photoImageView.frame.width
+                print("first photoImageView.frame.width < deviceScreenHeight", deviceScreenHeight / photoImageView.frame.width)
+                maxScale = deviceScreenHeight / photoImageView.frame.width
             } else {
-                print("second photoImageView.frame.width < deviceScreenWidth", (deviceScreenWidth * scale) / photoImageView.frame.width)
-                maxScale = deviceScreenWidth * scale / photoImageView.frame.width
+                print("second photoImageView.frame.width < deviceScreenWidth", (deviceScreenWidth) / photoImageView.frame.width)
+                maxScale = deviceScreenWidth / photoImageView.frame.width
             }
-        } else if photoImageView.frame.width > deviceScreenWidth * scale {
+        } else if photoImageView.frame.width > deviceScreenWidth {
             maxScale = 1.0
         } else {
             // here if photoImageView.frame.width == deviceScreenWidth
