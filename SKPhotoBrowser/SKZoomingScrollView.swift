@@ -124,19 +124,20 @@ public class SKZoomingScrollView: UIScrollView, UIScrollViewDelegate, SKDetectin
         let deviceScreenWidth = UIScreen.mainScreen().bounds.width * scale // width in pixels. scale needs to remove if to use the old algorithm
         let deviceScreenHeight = UIScreen.mainScreen().bounds.height * scale // height in pixels. scale needs to remove if to use the old algorithm
         
-//        if photoImageView.frame.width < deviceScreenWidth {
-//            // I think that we should to get coefficient between device screen width and image width and assign it to maxScale. I made two mode that we will get the same result for different device orientations.
-//            if UIApplication.sharedApplication().statusBarOrientation.isPortrait {
-//                maxScale = deviceScreenHeight / photoImageView.frame.width
-//            } else {
-//                maxScale = deviceScreenWidth / photoImageView.frame.width
-//            }
-//        } else if photoImageView.frame.width > deviceScreenWidth {
-//            maxScale = 1.0
-//        } else {
-//            // here if photoImageView.frame.width == deviceScreenWidth
-//            maxScale = 2.5
-//        }
+        // it is the old algorithm
+       /* if photoImageView.frame.width < deviceScreenWidth {
+            // I think that we should to get coefficient between device screen width and image width and assign it to maxScale. I made two mode that we will get the same result for different device orientations.
+            if UIApplication.sharedApplication().statusBarOrientation.isPortrait {
+                maxScale = deviceScreenHeight / photoImageView.frame.width
+            } else {
+                maxScale = deviceScreenWidth / photoImageView.frame.width
+            }
+        } else if photoImageView.frame.width > deviceScreenWidth {
+            maxScale = 1.0
+        } else {
+            // here if photoImageView.frame.width == deviceScreenWidth
+            maxScale = 2.5
+        } */
         
         if photoImageView.frame.width < deviceScreenWidth {
             // I think that we should to get coefficient between device screen width and image width and assign it to maxScale. I made two mode that we will get the same result for different device orientations.
