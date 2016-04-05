@@ -74,8 +74,10 @@ public class SKZoomingScrollView: UIScrollView, UIScrollViewDelegate, SKDetectin
     }
     
     // MARK: - override
+    
     public override func layoutSubviews() {
         tapView.frame = bounds
+        indicatorView.frame = frame 
         
         super.layoutSubviews()
         
@@ -119,8 +121,25 @@ public class SKZoomingScrollView: UIScrollView, UIScrollViewDelegate, SKDetectin
         let minScale: CGFloat = min(xScale, yScale)
         var maxScale: CGFloat!
         
-        let deviceScreenWidth = UIScreen.mainScreen().bounds.width
-        let deviceScreenHeight = UIScreen.mainScreen().bounds.height
+        
+        let scale = UIScreen.mainScreen().scale
+        let deviceScreenWidth = UIScreen.mainScreen().bounds.width * scale // width in pixels. scale needs to remove if to use the old algorithm
+        let deviceScreenHeight = UIScreen.mainScreen().bounds.height * scale // height in pixels. scale needs to remove if to use the old algorithm
+        
+        // it is the old algorithm
+       /* if photoImageView.frame.width < deviceScreenWidth {
+            // I think that we should to get coefficient between device screen width and image width and assign it to maxScale. I made two mode that we will get the same result for different device orientations.
+            if UIApplication.sharedApplication().statusBarOrientation.isPortrait {
+                maxScale = deviceScreenHeight / photoImageView.frame.width
+            } else {
+                maxScale = deviceScreenWidth / photoImageView.frame.width
+            }
+        } else if photoImageView.frame.width > deviceScreenWidth {
+            maxScale = 1.0
+        } else {
+            // here if photoImageView.frame.width == deviceScreenWidth
+            maxScale = 2.5
+        } */
         
         if photoImageView.frame.width < deviceScreenWidth {
             // I think that we should to get coefficient between device screen width and image width and assign it to maxScale. I made two mode that we will get the same result for different device orientations.
@@ -142,10 +161,13 @@ public class SKZoomingScrollView: UIScrollView, UIScrollViewDelegate, SKDetectin
         
         // on high resolution screens we have double the pixel density, so we will be seeing every pixel if we limit the
         // maximum zoom scale to 0.5
-        maxScale = maxScale / UIScreen.mainScreen().scale
+        // After changing this value, we still never use more
+        /*
+        maxScale = maxScale / scale 
         if maxScale < minScale {
             maxScale = minScale * 2
         }
+        */
         
         // reset position
         photoImageView.frame = CGRect(x: 0, y: 0, width: photoImageView.frame.size.width, height: photoImageView.frame.size.height)
@@ -190,7 +212,6 @@ public class SKZoomingScrollView: UIScrollView, UIScrollViewDelegate, SKDetectin
             
             setMaxMinZoomScalesForCurrentBounds()
         }
-        
         setNeedsLayout()
     }
     
@@ -209,12 +230,13 @@ public class SKZoomingScrollView: UIScrollView, UIScrollViewDelegate, SKDetectin
             setZoomScale(minimumZoomScale, animated: true)
         } else {
             // zoom in
-            var newZoom: CGFloat = zoomScale * 3.13
+            // I think that the result should be the same after double touch or pinch
+           /* var newZoom: CGFloat = zoomScale * 3.13
             if newZoom >= maximumZoomScale {
                 newZoom = maximumZoomScale
             }
-            
-            zoomToRect(zoomRectForScrollViewWith(newZoom, touchPoint:touchPoint), animated:true)
+            */
+            zoomToRect(zoomRectForScrollViewWith(maximumZoomScale, touchPoint: touchPoint), animated: true)
         }
         
         // delay control
