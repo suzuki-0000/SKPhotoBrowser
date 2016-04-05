@@ -74,8 +74,12 @@ public class SKZoomingScrollView: UIScrollView, UIScrollViewDelegate, SKDetectin
     }
     
     // MARK: - override
+    
     public override func layoutSubviews() {
         tapView.frame = bounds
+        
+        //
+        indicatorView.frame = frame 
         
         super.layoutSubviews()
         
