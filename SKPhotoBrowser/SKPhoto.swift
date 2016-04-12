@@ -62,7 +62,23 @@ public class SKPhoto: NSObject, SKPhotoProtocol {
         if photoURL != nil {
             // Fetch Image
             let session = NSURLSession(configuration: NSURLSessionConfiguration.defaultSessionConfiguration())
+            if NSFileManager.defaultManager().fileExistsAtPath(photoURL) {
+                
+                if let data = NSFileManager.defaultManager().contentsAtPath(photoURL) {
+                    self.loadUnderlyingImageComplete()
+                    if let image = UIImage(data: data) {
+                        if self.shouldCachePhotoURLImage {
+                            UIImage.sharedSKPhotoCache().setObject(image, forKey: self.photoURL)
+                        }
+                        self.underlyingImage = image
+                        self.loadUnderlyingImageComplete()
+                    }
+                    
+                }
+                
+            } else 
             if let nsURL = NSURL(string: photoURL) {
+
                 session.dataTaskWithURL(nsURL, completionHandler: { [weak self](response: NSData?, data: NSURLResponse?, error: NSError?) in
                     if let _self = self {
                         
