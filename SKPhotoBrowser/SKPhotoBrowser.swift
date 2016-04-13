@@ -203,25 +203,21 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         setup()
     }
     
-    public convenience init(photos:[ AnyObject]) {
+    public convenience init(photos: [SKPhotoProtocol]) {
         self.init(nibName: nil, bundle: nil)
-        for anyObject in photos {
-            if let photo = anyObject as? SKPhotoProtocol {
-                photo.checkCache()
-                self.photos.append(photo)
-            }
+        for photo in photos {
+            photo.checkCache()
+            self.photos.append(photo)
         }
     }
     
-    public convenience init(originImage: UIImage, photos: [AnyObject], animatedFromView: UIView) {
+    public convenience init(originImage: UIImage, photos: [SKPhotoProtocol], animatedFromView: UIView) {
         self.init(nibName: nil, bundle: nil)
         self.senderOriginImage = originImage
         self.senderViewForAnimation = animatedFromView
-        for anyObject in photos {
-            if let photo = anyObject as? SKPhotoProtocol {
-                photo.checkCache()
-                self.photos.append(photo)
-            }
+        for photo in photos {
+            photo.checkCache()
+            self.photos.append(photo)
         }
     }
     
