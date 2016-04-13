@@ -70,6 +70,18 @@ let browser = SKPhotoBrowser(photos: images)
 presentViewController(browser, animated: true, completion: {})
 ```
 
+from local files:
+```swift
+// images from local files
+var images = [SKLocalPhoto]()
+let photo = SKLocalPhoto.photoWithImageURL("..some_local_path/150x150.png")
+images.append(photo)
+
+// create PhotoBrowser Instance, and present. 
+let browser = SKPhotoBrowser(photos: images)
+presentViewController(browser, animated: true, completion: {})
+```
+
 If you want to use zooming effect from an existing view, use another initializer:
 ```swift
 // e.g.: some tableView or collectionView.
