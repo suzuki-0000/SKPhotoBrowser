@@ -1166,8 +1166,12 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
                     presentViewController(actionSheetController, animated: true, completion: nil)
                 } else {
                     actionSheetController.modalPresentationStyle = .Popover
-                    let popoverController = actionSheetController.popoverPresentationController!
-                    popoverController.barButtonItem = toolActionButton
+                    
+                    if let popoverController = actionSheetController.popoverPresentationController {
+						popoverController.sourceView = self.view
+					    popoverController.barButtonItem = toolActionButton
+					}
+                
                     presentViewController(actionSheetController, animated: true, completion: { () -> Void in
                     })
                 }
