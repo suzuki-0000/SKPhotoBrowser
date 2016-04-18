@@ -203,7 +203,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         setup()
     }
     
-    public convenience init(photos: [SKPhotoProtocol]) {
+    public convenience init(photos: [SKPhoto]) {
         self.init(nibName: nil, bundle: nil)
         for photo in photos {
             photo.checkCache()
@@ -211,7 +211,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         }
     }
     
-    public convenience init(originImage: UIImage, photos: [SKPhotoProtocol], animatedFromView: UIView) {
+    public convenience init(originImage: UIImage, photos: [SKPhoto], animatedFromView: UIView) {
         self.init(nibName: nil, bundle: nil)
         self.senderOriginImage = originImage
         self.senderViewForAnimation = animatedFromView
