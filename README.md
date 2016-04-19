@@ -46,7 +46,7 @@ See the code snippet below for an example of how to implement, or example projec
 	
 ```swift
 // add SKPhoto Array from UIImage
-var images = [SKPhoto]()
+var images = [SKPhotoProtocol]()
 let photo = SKPhoto.photoWithImage(UIImage())// add some UIImage
 images.append(photo) 
 
@@ -60,7 +60,7 @@ presentViewController(browser, animated: true, completion: {})
 from web URLs:
 ```swift
 // URL pattern snippet
-var images = [SKPhoto]()
+var images = [SKPhotoProtocol]()
 let photo = SKPhoto.photoWithImageURL("https://placehold.jp/150x150.png")
 photo.shouldCachePhotoURLImage = false // you can use image cache by true(NSCache)
 images.append(photo)
@@ -73,7 +73,7 @@ presentViewController(browser, animated: true, completion: {})
 from local files:
 ```swift
 // images from local files
-var images = [SKLocalPhoto]()
+var images = [SKPhotoProtocol]()
 let photo = SKLocalPhoto.photoWithImageURL("..some_local_path/150x150.png")
 images.append(photo)
 
