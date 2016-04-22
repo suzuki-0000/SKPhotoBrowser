@@ -42,14 +42,6 @@ class SKPhotoBrowserTests: XCTestCase {
         images.append(photo)
         let _ = FakeSKPhotoBrowser(photos: images)
     }
-    
-    func testSKPhotoProtocolArray() {
-        var images = [SKPhotoProtocol]()
-        let photo = SKPhoto.photoWithImage(UIImage())// add some UIImage
-        images.append(photo)
-        let _ =  FakeSKPhotoBrowser(photos: images)
-    }
-
 
     func testPerformanceExample() {
         // This is an example of a performance test case.
