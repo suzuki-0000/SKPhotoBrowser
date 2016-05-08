@@ -102,7 +102,7 @@ class CameraRollViewController: UIViewController, SKPhotoBrowserDelegate, UIColl
         
         func open(images:[UIImage]) {
             
-            let photoImages:[SKPhotoProtocol] = images.map({ return SKPhoto.photoWithImage($0) })
+            let photoImages:[SKPhoto] = images.map({ return SKPhoto.photoWithImage($0) })
             let browser = SKPhotoBrowser(originImage: cell.exampleImageView.image!, photos: photoImages, animatedFromView: cell)
             
             browser.initializePageIndex(indexPath.row)
