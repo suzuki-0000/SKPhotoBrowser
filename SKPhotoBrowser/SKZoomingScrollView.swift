@@ -270,6 +270,9 @@ public class SKZoomingScrollView: UIScrollView, UIScrollViewDelegate, SKDetectin
     // MARK: - SKDetectingViewDelegate
     func handleSingleTap(view: UIView, touch: UITouch) {
         if photoBrowser?.enableZoomBlackArea == true {
+            if photoBrowser?.areControlsHidden() == false && photoBrowser?.enableSingleTapDismiss == true {
+                photoBrowser?.determineAndClose()
+            }
             photoBrowser?.toggleControls()
         }
     }
@@ -304,6 +307,9 @@ public class SKZoomingScrollView: UIScrollView, UIScrollViewDelegate, SKDetectin
     
     // MARK: - SKDetectingImageViewDelegate
     func handleImageViewSingleTap(view: UIImageView, touch: UITouch) {
+        if photoBrowser?.areControlsHidden() == false && photoBrowser?.enableSingleTapDismiss == true {
+            photoBrowser?.determineAndClose()
+        }
         photoBrowser?.toggleControls()
     }
     

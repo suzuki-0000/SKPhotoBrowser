@@ -108,6 +108,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
     public var displayCustomDeleteButton = false
     public var bounceAnimation = false
     public var enableZoomBlackArea = true
+    public var enableSingleTapDismiss = false
     /// Set nil to force the statusbar to be hidden
     public var statusBarStyle: UIStatusBarStyle?
     
@@ -662,7 +663,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
             deleteButtonShowFrame = CGRect(x: view.frame.width - 44, y: buttonTopOffset, width: 44, height: 44)
             deleteButtonHideFrame = CGRect(x: view.frame.width - 44, y: -20, width: 44, height: 44)
         }
-        if displayCustomDeleteButton  {
+        if displayCustomDeleteButton {
             customDeleteButtonShowFrame = CGRect(x: customDeleteButtonShowFrame.origin.y, y: customDeleteButtonShowFrame.origin.x, width: customDeleteButtonShowFrame.width, height: customDeleteButtonShowFrame.height)
             customDeleteButtonHideFrame = CGRect(x: customDeleteButtonHideFrame.origin.y, y: customDeleteButtonHideFrame.origin.x, width: customDeleteButtonHideFrame.width, height: customDeleteButtonHideFrame.height)
         }
@@ -911,7 +912,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         }
     }
 
-    private func determineAndClose() {
+    public func determineAndClose() {
         delegate?.willDismissAtPageIndex?(currentPageIndex)
         let scrollView = pageDisplayedAtIndex(currentPageIndex)
         

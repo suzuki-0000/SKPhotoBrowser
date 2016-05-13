@@ -147,13 +147,6 @@ let browser = SKPhotoBrowser(originImage: originImage, photos: images, animatedF
 browser.disableVerticalSwipe = true 
 ``` 
 
-#### StatusBar
-you can hide statusbar forcely using property:
-``` swift
-let browser = SKPhotoBrowser(originImage: originImage, photos: images, animatedFromView: cell)
-browser.isForceStatusBarHidden = true 
-``` 
-
 #### Delegate
 There's some trigger point you can handle using delegate. those are optional.
 - didShowPhotoAtIndex(index:Int) 
@@ -180,6 +173,16 @@ func didDismissAtPageIndex(index: Int) {
 }
 
 ```
+
+#### Minor Option
+- blackArea handling which is appearing outside of photo
+- single tap handling, dismiss/noaction
+- bounce animation when appearing/dismissing
+``` swift
+enableZoomBlackArea    = true  // default true
+enableSingleTapDismiss = true  // default false
+bounceAnimation        = true  // default false
+``` 
 
 ## Photos from
 - [Unsplash](https://unsplash.com)
