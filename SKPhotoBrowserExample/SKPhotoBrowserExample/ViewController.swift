@@ -89,6 +89,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         browser.displayDeleteButton = true
         browser.statusBarStyle = .LightContent
         browser.bounceAnimation = true
+//        browser.enableSingleTapDismiss = true
         
         // Can hide the action button by setting to false
         browser.displayAction = true
