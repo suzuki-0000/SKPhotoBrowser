@@ -306,14 +306,15 @@ public class SKZoomingScrollView: UIScrollView, UIScrollViewDelegate, SKDetectin
     }
     
     // MARK: - SKDetectingImageViewDelegate
-    func handleImageViewSingleTap(view: UIImageView, touch: UITouch) {
-        if photoBrowser?.areControlsHidden() == false && photoBrowser?.enableSingleTapDismiss == true {
+    func handleImageViewSingleTap(touchPoint: CGPoint) {
+        if photoBrowser!.enableSingleTapDismiss {
             photoBrowser?.determineAndClose()
+        } else {
+            photoBrowser?.toggleControls()
         }
-        photoBrowser?.toggleControls()
     }
     
-    func handleImageViewDoubleTap(view: UIImageView, touch: UITouch) {
-        handleDoubleTap(touch.locationInView(view))
+    func handleImageViewDoubleTap(touchPoint: CGPoint) {
+        handleDoubleTap(touchPoint)
     }
 }
