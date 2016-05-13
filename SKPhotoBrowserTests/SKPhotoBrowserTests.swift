@@ -10,9 +10,8 @@ import XCTest
 @testable import SKPhotoBrowser
 
 
-class FakeSKPhotoBrowser : SKPhotoBrowser {
+class FakeSKPhotoBrowser: SKPhotoBrowser {
     override func setup () {
-        
     }
 }
 

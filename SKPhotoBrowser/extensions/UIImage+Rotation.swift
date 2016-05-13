@@ -17,9 +17,9 @@ extension UIImage {
         
         // We need to calculate the proper transformation to make the image upright.
         // We do it in 2 steps: Rotate if Left/Right/Down, and then flip if Mirrored.
-        var transform = CGAffineTransformIdentity;
+        var transform = CGAffineTransformIdentity
         
-        switch (self.imageOrientation) {
+        switch self.imageOrientation {
         case .Down, .DownMirrored:
             transform = CGAffineTransformTranslate(transform, self.size.width, self.size.height)
             transform = CGAffineTransformRotate(transform, CGFloat(M_PI))
@@ -36,7 +36,7 @@ extension UIImage {
             break
         }
         
-        switch (self.imageOrientation) {
+        switch self.imageOrientation {
         case .UpMirrored, .DownMirrored:
             transform = CGAffineTransformTranslate(transform, self.size.width, 0)
             transform = CGAffineTransformScale(transform, -1, 1)
@@ -56,12 +56,13 @@ extension UIImage {
             CGImageGetColorSpace(self.CGImage),
             CGImageGetBitmapInfo(self.CGImage).rawValue)
         CGContextConcatCTM(ctx, transform)
-        switch (self.imageOrientation) {
+        
+        switch self.imageOrientation {
         case .Left, .LeftMirrored, .Right, .RightMirrored:
-            CGContextDrawImage(ctx, CGRectMake(0,0,self.size.height,self.size.width), self.CGImage)
+            CGContextDrawImage(ctx, CGRect(x: 0, y: 0, width: size.height, height: size.width), self.CGImage)
             
         default:
-            CGContextDrawImage(ctx, CGRectMake(0,0,self.size.width,self.size.height), self.CGImage)
+            CGContextDrawImage(ctx, CGRect(x: 0, y: 0, width: size.width, height: size.height), self.CGImage)
         }
         
         // And now we just create a new UIImage from the drawing context

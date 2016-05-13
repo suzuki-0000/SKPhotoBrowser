@@ -193,7 +193,7 @@ public class SKZoomingScrollView: UIScrollView, UIScrollViewDelegate, SKDetectin
         if !flag {
             indicatorView.startAnimating()
             photo.loadUnderlyingImageAndNotify()
-        }else {
+        } else {
             indicatorView.stopAnimating()
         }
         

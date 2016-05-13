@@ -169,10 +169,12 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
     private var isViewActive: Bool = false
     private var isPerformingLayout: Bool = false
     private var isStatusBarOriginallyHidden = UIApplication.sharedApplication().statusBarHidden
-    private var originalStatusBarStyle:UIStatusBarStyle {
+    private var originalStatusBarStyle: UIStatusBarStyle {
         return self.presentingViewController?.preferredStatusBarStyle() ?? UIApplication.sharedApplication().statusBarStyle
     }
-    private var buttonTopOffset:CGFloat { return statusBarStyle == nil ? 5 : 25 }
+    private var buttonTopOffset: CGFloat {
+        return statusBarStyle == nil ? 5 : 25
+    }
     
     // scroll property
     private var firstX: CGFloat = 0.0
@@ -203,20 +205,20 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         setup()
     }
     
-    public convenience init(photos: [AnyObject]) {
+    public convenience init(photos: [SKPhotoProtocol]) {
         self.init(nibName: nil, bundle: nil)
-        let picutres = photos.flatMap {$0 as? SKPhotoProtocol}
+        let picutres = photos.flatMap {$0 }
         for photo in picutres {
             photo.checkCache()
             self.photos.append(photo)
         }
     }
     
-    public convenience init(originImage: UIImage, photos: [AnyObject], animatedFromView: UIView) {
+    public convenience init(originImage: UIImage, photos: [SKPhotoProtocol], animatedFromView: UIView) {
         self.init(nibName: nil, bundle: nil)
         self.senderOriginImage = originImage
         self.senderViewForAnimation = animatedFromView
-        let picutres = photos.flatMap {$0 as? SKPhotoProtocol}
+        let picutres = photos.flatMap { $0 }
         for photo in picutres {
             photo.checkCache()
             self.photos.append(photo)
@@ -229,11 +231,14 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
     }
     
     func setup() {
-        applicationWindow = (UIApplication.sharedApplication().delegate?.window)!
+        guard let window = UIApplication.sharedApplication().delegate?.window else {
+            return
+        }
+        applicationWindow = window
         
-        modalPresentationStyle = UIModalPresentationStyle.Custom
         modalPresentationCapturesStatusBarAppearance = true
-        modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
+        modalPresentationStyle = .Custom
+        modalTransitionStyle = .CrossDissolve
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.handleSKPhotoLoadingDidEndNotification(_:)), name: SKPHOTO_LOADING_DID_END_NOTIFICATION, object: nil)
     }
@@ -258,13 +263,13 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         pagingScrollView.delegate = self
         pagingScrollView.showsHorizontalScrollIndicator = true
         pagingScrollView.showsVerticalScrollIndicator = true
-        pagingScrollView.backgroundColor = UIColor.clearColor()
+        pagingScrollView.backgroundColor = .clearColor()
         pagingScrollView.contentSize = contentSizeForPagingScrollView()
         view.addSubview(pagingScrollView)
         
         // toolbar
         toolBar = UIToolbar(frame: frameForToolbarAtOrientation())
-        toolBar.backgroundColor = UIColor.clearColor()
+        toolBar.backgroundColor = .clearColor()
         toolBar.clipsToBounds = true
         toolBar.translucent = true
         toolBar.setBackgroundImage(UIImage(), forToolbarPosition: .Any, barMetrics: .Default)
@@ -340,8 +345,10 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         isPerformingLayout = true
         pagingScrollView.frame = frameForPagingScrollView()
         pagingScrollView.contentSize = contentSizeForPagingScrollView()
+        
         // resize frames of buttons after the device rotation
         frameForButton()
+        
         // this algorithm resizes the current image after device rotation
         if visiblePages.count > 0 {
             for page in visiblePages {
@@ -765,7 +772,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
             
             let imageFromView = (senderOriginImage ?? getImageFromView(sender)).rotateImageByOrientation()
             let imageRatio = imageFromView.size.width / imageFromView.size.height
-            let finalImageViewFrame:CGRect
+            let finalImageViewFrame: CGRect
 
             resizableImageView = UIImageView(image: imageFromView)
             resizableImageView.frame = senderViewOriginalFrame
@@ -1001,7 +1008,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         let visibleSet = Set(visiblePages)
         visiblePages = Array(visibleSet.subtract(recycledPages))
         
-        while (recycledPages.count > 2) {
+        while recycledPages.count > 2 {
             recycledPages.removeFirst()
         }
         
@@ -1043,7 +1050,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
     
     public func isDisplayingPageForIndex(index: Int) -> Bool {
         for page in visiblePages {
-            if (page.tag - pageIndexTagOffset) == index {
+            if page.tag - pageIndexTagOffset == index {
                 return true
             }
         }
@@ -1051,9 +1058,9 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
     }
     
     public func pageDisplayedAtIndex(index: Int) -> SKZoomingScrollView {
-        var thePage: SKZoomingScrollView = SKZoomingScrollView()
+        var thePage = SKZoomingScrollView()
         for page in visiblePages {
-            if (page.tag - pageIndexTagOffset) == index {
+            if page.tag - pageIndexTagOffset == index {
                 thePage = page
                 break
             }
@@ -1062,7 +1069,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
     }
     
     public func pageDisplayingAtPhoto(photo: SKPhotoProtocol) -> SKZoomingScrollView {
-        var thePage: SKZoomingScrollView = SKZoomingScrollView()
+        var thePage = SKZoomingScrollView()
         for page in visiblePages {
             if page.photo === photo {
                 thePage = page
@@ -1153,53 +1160,59 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         
         delegate?.willShowActionSheet?(currentPageIndex)
         
-        if numberOfPhotos > 0 && photo.underlyingImage != nil {
-            if let titles = actionButtonTitles {
-                let actionSheetController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
-                actionSheetController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: { (action) -> Void in
+        guard numberOfPhotos > 0 else {
+            return
+        }
+        
+        if let titles = actionButtonTitles {
+            let actionSheetController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+            actionSheetController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: { (action) -> Void in
+            }))
+            for idx in titles.indices {
+                actionSheetController.addAction(UIAlertAction(title: titles[idx], style: .Default, handler: { (action) -> Void in
+                    self.delegate?.didDismissActionSheetWithButtonIndex?(idx, photoIndex: self.currentPageIndex)
                 }))
-                for idx in titles.indices {
-                    actionSheetController.addAction(UIAlertAction(title: titles[idx], style: .Default, handler: { (action) -> Void in
-                        self.delegate?.didDismissActionSheetWithButtonIndex?(idx, photoIndex: self.currentPageIndex)
-                    }))
-                }
-                
-                if UI_USER_INTERFACE_IDIOM() == .Phone {
-                    presentViewController(actionSheetController, animated: true, completion: nil)
-                } else {
-                    actionSheetController.modalPresentationStyle = .Popover
-                    
-                    if let popoverController = actionSheetController.popoverPresentationController {
-						popoverController.sourceView = self.view
-					    popoverController.barButtonItem = toolActionButton
-					}
-                
-                    presentViewController(actionSheetController, animated: true, completion: { () -> Void in
-                    })
-                }
+            }
+            
+            if UI_USER_INTERFACE_IDIOM() == .Phone {
+                presentViewController(actionSheetController, animated: true, completion: nil)
             } else {
-                var activityItems: [AnyObject] = [photo.underlyingImage]
-                if photo.caption != nil {
-                    if let shareExtraCaption = shareExtraCaption {
-                        activityItems.append(photo.caption + shareExtraCaption)
-                    } else {
-                        activityItems.append(photo.caption)
-                    }
-                }
-                activityViewController = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
-                activityViewController.completionWithItemsHandler = {
-                    (activity, success, items, error) in
-                    self.hideControlsAfterDelay()
-                    self.activityViewController = nil
-                }
-                if UI_USER_INTERFACE_IDIOM() == .Phone {
-                    presentViewController(activityViewController, animated: true, completion: nil)
+                actionSheetController.modalPresentationStyle = .Popover
+                
+                if let popoverController = actionSheetController.popoverPresentationController {
+					popoverController.sourceView = self.view
+				    popoverController.barButtonItem = toolActionButton
+				}
+            
+                presentViewController(actionSheetController, animated: true, completion: { () -> Void in
+                })
+            }
+        } else {
+            guard let underlyingImage = photo.underlyingImage else {
+                return
+            }
+            
+            var activityItems: [AnyObject] = [underlyingImage]
+            if photo.caption != nil {
+                if let shareExtraCaption = shareExtraCaption {
+                    activityItems.append(photo.caption + shareExtraCaption)
                 } else {
-                    activityViewController.modalPresentationStyle = .Popover
-                    let popover: UIPopoverPresentationController! = activityViewController.popoverPresentationController
-                    popover.barButtonItem = toolActionButton
-                    presentViewController(activityViewController, animated: true, completion: nil)
+                    activityItems.append(photo.caption)
                 }
+            }
+            activityViewController = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
+            activityViewController.completionWithItemsHandler = {
+                (activity, success, items, error) in
+                self.hideControlsAfterDelay()
+                self.activityViewController = nil
+            }
+            if UI_USER_INTERFACE_IDIOM() == .Phone {
+                presentViewController(activityViewController, animated: true, completion: nil)
+            } else {
+                activityViewController.modalPresentationStyle = .Popover
+                let popover: UIPopoverPresentationController! = activityViewController.popoverPresentationController
+                popover.barButtonItem = toolActionButton
+                presentViewController(activityViewController, animated: true, completion: nil)
             }
         }
     }
