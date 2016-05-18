@@ -15,7 +15,7 @@ public class SKLocalPhoto: NSObject, SKPhotoProtocol {
     public var photoURL: String!
     public var shouldCachePhotoURLImage: Bool = false
     public var caption: String!
-    public var index: Int?
+    public var index: Int = 0
     
     override init() {
         super.init()
