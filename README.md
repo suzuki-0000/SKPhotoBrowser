@@ -151,9 +151,12 @@ browser.disableVerticalSwipe = true
 There's some trigger point you can handle using delegate. those are optional.
 - didShowPhotoAtIndex(index:Int) 
 - willDismissAtPageIndex(index:Int)
+- willShowActionSheet(photoIndex: Int)
 - didDismissAtPageIndex(index:Int)
 - didDismissActionSheetWithButtonIndex(buttonIndex: Int, photoIndex: Int)
+- didScrollToIndex(index: Int)
 - removePhoto(browser: SKPhotoBrowser, index: Int, reload: (() -> Void))
+- viewForPhoto(browser: SKPhotoBrowser, index: Int) -> UIView?
 
 ```swift
 let browser = SKPhotoBrowser(originImage: originImage, photos: images, animatedFromView: cell)

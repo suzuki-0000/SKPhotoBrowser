@@ -45,7 +45,14 @@ import UIKit
      - Parameter photoIndex: the index of the current photo
      */
     optional func didDismissActionSheetWithButtonIndex(buttonIndex: Int, photoIndex: Int)
-    
+
+    /**
+     Tells the delegate that the browser did scroll to index
+
+     - Parameter index: the index of the photo where the user had scroll
+     */
+    optional func didScrollToIndex(index: Int)
+
     /**
      Tells the delegate the user removed a photo, when implementing this call, be sure to call reload to finish the deletion process
      
@@ -1256,6 +1263,9 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
     
     public func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
         hideControlsAfterDelay()
+
+        let currentIndex = self.pagingScrollView.contentOffset.x / self.pagingScrollView.frame.size.width
+        self.delegate?.didScrollToIndex?(Int(currentIndex))
     }
     
     public func scrollViewDidEndScrollingAnimation(scrollView: UIScrollView) {
