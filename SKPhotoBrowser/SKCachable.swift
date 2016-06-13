@@ -1,5 +1,5 @@
 //
-//  SKCachable.swift
+//  SKCacheable.swift
 //  SKPhotoBrowser
 //
 //  Created by Kevin Wolkober on 6/13/16.
@@ -8,7 +8,7 @@
 
 import UIKit.UIImage
 
-protocol SKCachable {
+public protocol SKCacheable {
     func imageForKey(key: String) -> UIImage?
     func setImage(image: UIImage, forKey key: String)
     func removeImageForKey(key: String)

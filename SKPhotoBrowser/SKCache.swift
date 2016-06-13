@@ -11,7 +11,7 @@ import UIKit
 public class SKCache {
 
     static let sharedCache = SKCache()
-    var imageCache: SKCachable
+    var imageCache: SKCacheable
 
     init() {
         self.imageCache = SKDefaultImageCache()
@@ -30,7 +30,7 @@ public class SKCache {
     }
 }
 
-class SKDefaultImageCache: SKCachable {
+class SKDefaultImageCache: SKCacheable {
     var cache: NSCache
 
     init() {
