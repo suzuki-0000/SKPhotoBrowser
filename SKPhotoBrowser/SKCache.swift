@@ -10,27 +10,39 @@ import UIKit
 
 public class SKCache {
 
-    static let sharedCache = SKCache()
-    var imageCache: SKCacheable
+    public static let sharedCache = SKCache()
+    public var imageCache: SKCacheable
 
     init() {
         self.imageCache = SKDefaultImageCache()
     }
 
     public func imageForKey(key: String) -> UIImage? {
-        return self.imageCache.imageForKey(key)
+        return (self.imageCache as! SKImageCacheable).imageForKey(key)
     }
 
     public func setImage(image: UIImage, forKey key: String) {
-        self.imageCache.setImage(image, forKey: key)
+        (self.imageCache as! SKImageCacheable).setImage(image, forKey: key)
     }
 
     public func removeImageForKey(key: String) {
-        self.imageCache.removeImageForKey(key)
+        (self.imageCache as! SKImageCacheable).removeImageForKey(key)
+    }
+
+    public func imageForRequest(request: NSURLRequest) -> UIImage? {
+        let response = (self.imageCache as! SKRequestResponseCacheable).cachedResponseForRequest(request)
+        let data = response.data
+
+        return UIImage(data: data)
+    }
+
+    public func setImageData(data: NSData, response: NSURLResponse, request: NSURLRequest) {
+        let cachedResponse = NSCachedURLResponse(response: response, data: data)
+        (self.imageCache as! SKRequestResponseCacheable).storeCachedResponse(cachedResponse, forRequest: request)
     }
 }
 
-class SKDefaultImageCache: SKCacheable {
+class SKDefaultImageCache: SKImageCacheable {
     var cache: NSCache
 
     init() {
