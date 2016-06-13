@@ -15,7 +15,7 @@ public protocol SKImageCacheable: SKCacheable {
 }
 
 public protocol SKRequestResponseCacheable: SKCacheable {
-    func cachedResponseForRequest(request: NSURLRequest) -> NSCachedURLResponse
+    func cachedResponseForRequest(request: NSURLRequest) -> NSCachedURLResponse?
     func storeCachedResponse(cachedResponse: NSCachedURLResponse, forRequest request: NSURLRequest)
 }
 

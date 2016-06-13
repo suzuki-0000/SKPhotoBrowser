@@ -30,10 +30,13 @@ public class SKCache {
     }
 
     public func imageForRequest(request: NSURLRequest) -> UIImage? {
-        let response = (self.imageCache as! SKRequestResponseCacheable).cachedResponseForRequest(request)
-        let data = response.data
+        if let response = (self.imageCache as! SKRequestResponseCacheable).cachedResponseForRequest(request) {
+            let data = response.data
 
-        return UIImage(data: data)
+            return UIImage(data: data)
+        }
+
+        return nil
     }
 
     public func setImageData(data: NSData, response: NSURLResponse, request: NSURLRequest) {
