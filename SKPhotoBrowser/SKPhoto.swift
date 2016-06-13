@@ -47,8 +47,15 @@ public class SKPhoto: NSObject, SKPhotoProtocol {
     
     public func checkCache() {
         if photoURL != nil && shouldCachePhotoURLImage {
-            if let img = SKCache.sharedCache.imageForKey(photoURL) {
-                underlyingImage = img
+            if SKCache.sharedCache.imageCache is SKRequestResponseCacheable {
+                let request = NSURLRequest(URL: NSURL(string: photoURL)!)
+                if let img = SKCache.sharedCache.imageForRequest(request) {
+                    underlyingImage = img
+                }
+            } else {
+                if let img = SKCache.sharedCache.imageForKey(photoURL) {
+                    underlyingImage = img
+                }
             }
         }
     }
@@ -63,7 +70,8 @@ public class SKPhoto: NSObject, SKPhotoProtocol {
             // Fetch Image
             let session = NSURLSession(configuration: NSURLSessionConfiguration.defaultSessionConfiguration())
             if let nsURL = NSURL(string: photoURL) {
-                session.dataTaskWithURL(nsURL, completionHandler: { [weak self](response: NSData?, data: NSURLResponse?, error: NSError?) in
+                var task: NSURLSessionDataTask!
+                task = session.dataTaskWithURL(nsURL, completionHandler: { [weak self](response: NSData?, data: NSURLResponse?, error: NSError?) in
                     if let _self = self {
                         
                         if error != nil {
@@ -74,7 +82,11 @@ public class SKPhoto: NSObject, SKPhotoProtocol {
                         
                         if let res = response, let image = UIImage(data: res) {
                             if _self.shouldCachePhotoURLImage {
-                                SKCache.sharedCache.setImage(image, forKey: _self.photoURL)
+                                if SKCache.sharedCache.imageCache is SKRequestResponseCacheable {
+                                    SKCache.sharedCache.setImageData(response!, response: data!, request: task.originalRequest!)
+                                } else {
+                                    SKCache.sharedCache.setImage(image, forKey: _self.photoURL)
+                                }
                             }
                             dispatch_async(dispatch_get_main_queue()) {
                                 _self.underlyingImage = image
@@ -83,7 +95,8 @@ public class SKPhoto: NSObject, SKPhotoProtocol {
                         }
                         session.finishTasksAndInvalidate()
                     }
-                }).resume()
+                })
+                task.resume()
             }
         }
     }
