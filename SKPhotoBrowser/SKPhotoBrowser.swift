@@ -776,7 +776,11 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         backgroundView.alpha = 0
         
         if let sender = delegate?.viewForPhoto?(self, index: initialPageIndex) ?? senderViewForAnimation {
-            senderViewOriginalFrame = (sender.superview?.convertRect(sender.frame, toView:nil))!
+            if let senderViewOriginalFrameTemp = sender.superview?.convertRect(sender.frame, toView:nil) {
+                senderViewOriginalFrame = senderViewOriginalFrameTemp
+            } else if let senderViewOriginalFrameTemp = sender.layer.superlayer?.convertRect(sender.frame, toLayer: nil) {
+                senderViewOriginalFrame = senderViewOriginalFrameTemp
+            }
             sender.hidden = true
             
             let imageFromView = (senderOriginImage ?? getImageFromView(sender)).rotateImageByOrientation()
@@ -872,7 +876,11 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         setNeedsStatusBarAppearanceUpdate()
         
         if let sender = senderViewForAnimation {
-            senderViewOriginalFrame = (sender.superview?.convertRect(sender.frame, toView:nil))!
+            if let senderViewOriginalFrameTemp = sender.superview?.convertRect(sender.frame, toView:nil) {
+                senderViewOriginalFrame = senderViewOriginalFrameTemp
+            } else if let senderViewOriginalFrameTemp = sender.layer.superlayer?.convertRect(sender.frame, toLayer: nil) {
+                senderViewOriginalFrame = senderViewOriginalFrameTemp
+            }
         }
         
         let contentOffset = scrollView.contentOffset
