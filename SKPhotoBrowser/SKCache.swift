@@ -18,19 +18,19 @@ public class SKCache {
     }
 
     public func imageForKey(key: String) -> UIImage? {
-        return (self.imageCache as! SKImageCacheable).imageForKey(key)
+        return (self.imageCache as? SKImageCacheable)!.imageForKey(key)
     }
 
     public func setImage(image: UIImage, forKey key: String) {
-        (self.imageCache as! SKImageCacheable).setImage(image, forKey: key)
+        (self.imageCache as? SKImageCacheable)!.setImage(image, forKey: key)
     }
 
     public func removeImageForKey(key: String) {
-        (self.imageCache as! SKImageCacheable).removeImageForKey(key)
+        (self.imageCache as? SKImageCacheable)!.removeImageForKey(key)
     }
 
     public func imageForRequest(request: NSURLRequest) -> UIImage? {
-        if let response = (self.imageCache as! SKRequestResponseCacheable).cachedResponseForRequest(request) {
+        if let response = (self.imageCache as? SKRequestResponseCacheable)!.cachedResponseForRequest(request) {
             let data = response.data
 
             return UIImage(data: data)
@@ -41,7 +41,7 @@ public class SKCache {
 
     public func setImageData(data: NSData, response: NSURLResponse, request: NSURLRequest) {
         let cachedResponse = NSCachedURLResponse(response: response, data: data)
-        (self.imageCache as! SKRequestResponseCacheable).storeCachedResponse(cachedResponse, forRequest: request)
+        (self.imageCache as? SKRequestResponseCacheable)!.storeCachedResponse(cachedResponse, forRequest: request)
     }
 }
 
