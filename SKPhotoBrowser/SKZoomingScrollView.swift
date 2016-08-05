@@ -191,7 +191,9 @@ public class SKZoomingScrollView: UIScrollView, UIScrollViewDelegate, SKDetectin
         contentSize = CGSize.zero
         
         if !flag {
-            indicatorView.startAnimating()
+            if photo.underlyingImage == nil {
+                indicatorView.startAnimating()
+            }
             photo.loadUnderlyingImageAndNotify()
         } else {
             indicatorView.stopAnimating()
