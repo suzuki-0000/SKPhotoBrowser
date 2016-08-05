@@ -929,14 +929,12 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
 
     public func determineAndClose() {
         delegate?.willDismissAtPageIndex?(currentPageIndex)
-        let scrollView = pageDisplayedAtIndex(currentPageIndex)
         
-        if currentPageIndex == initialPageIndex {
-            performCloseAnimationWithScrollView(scrollView)
-            
-        } else if let sender = delegate?.viewForPhoto?(self, index: currentPageIndex), image = photoAtIndex(currentPageIndex).underlyingImage {
+        if let sender = delegate?.viewForPhoto?(self, index: currentPageIndex), image = photoAtIndex(currentPageIndex).underlyingImage {
             senderViewForAnimation = sender
             resizableImageView.image = image
+            
+            let scrollView = pageDisplayedAtIndex(currentPageIndex)
             performCloseAnimationWithScrollView(scrollView)
             
         } else {

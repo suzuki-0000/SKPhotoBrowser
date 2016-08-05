@@ -10,7 +10,7 @@ import UIKit
 import Photos
 import SKPhotoBrowser
 
-class CameraRollViewController: UIViewController, SKPhotoBrowserDelegate, UICollectionViewDataSource, UICollectionViewDelegate {
+class FromCameraRollViewController: UIViewController, SKPhotoBrowserDelegate, UICollectionViewDataSource, UICollectionViewDelegate {
 
     @IBOutlet weak var collectionView: UICollectionView!
     

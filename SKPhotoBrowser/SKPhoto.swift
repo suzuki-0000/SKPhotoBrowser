@@ -105,16 +105,20 @@ public class SKPhoto: NSObject, SKPhotoProtocol {
         NSNotificationCenter.defaultCenter().postNotificationName(SKPHOTO_LOADING_DID_END_NOTIFICATION, object: self)
     }
     
-    // MARK: - class func
-    public class func photoWithImage(image: UIImage) -> SKPhoto {
+}
+
+// MARK: - Static Function
+
+extension SKPhoto {
+    public static func photoWithImage(image: UIImage) -> SKPhoto {
         return SKPhoto(image: image)
     }
     
-    public class func photoWithImageURL(url: String) -> SKPhoto {
+    public static func photoWithImageURL(url: String) -> SKPhoto {
         return SKPhoto(url: url)
     }
     
-    public class func photoWithImageURL(url: String, holder: UIImage?) -> SKPhoto {
+    public static func photoWithImageURL(url: String, holder: UIImage?) -> SKPhoto {
         return SKPhoto(url: url, holder: holder)
     }
 }
