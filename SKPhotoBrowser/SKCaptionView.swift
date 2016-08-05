@@ -9,14 +9,9 @@
 import UIKit
 
 public class SKCaptionView: UIView {
-    final let screenBound = UIScreen.mainScreen().bounds
-    private var screenWidth: CGFloat { return screenBound.size.width }
-    private var screenHeight: CGFloat { return screenBound.size.height }
-    private var photo: SKPhotoProtocol!
+    private var photo: SKPhotoProtocol?
     private var photoLabel: UILabel!
     private var photoLabelPadding: CGFloat = 10
-    private var fadeView: UIView = UIView()
-    private var gradientLayer = CAGradientLayer()
     
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -42,19 +37,13 @@ public class SKCaptionView: UIView {
         }
         
         let font: UIFont = photoLabel.font
-        let width: CGFloat = size.width - (photoLabelPadding * 2)
+        let width: CGFloat = size.width - photoLabelPadding * 2
         let height: CGFloat = photoLabel.font.lineHeight * CGFloat(photoLabel.numberOfLines)
         
         let attributedText = NSAttributedString(string: text, attributes: [NSFontAttributeName: font])
-        let textSize = attributedText.boundingRectWithSize(CGSize(width: width, height: height),
-            options: NSStringDrawingOptions.UsesLineFragmentOrigin, context: nil).size
+        let textSize = attributedText.boundingRectWithSize(CGSize(width: width, height: height), options: .UsesLineFragmentOrigin, context: nil).size
         
         return CGSize(width: textSize.width, height: textSize.height + photoLabelPadding * 2)
-    }
-    
-    public override func layoutSubviews() {
-        fadeView.frame = frame
-        gradientLayer.frame = frame
     }
 }
 
@@ -63,19 +52,8 @@ private extension SKCaptionView {
         opaque = false
         autoresizingMask = [.FlexibleWidth, .FlexibleTopMargin, .FlexibleRightMargin, .FlexibleLeftMargin]
         
-        // setup background first
-        setupFadeView()
-        
         // setup photoLabel
         setupPhotoLabel()
-    }
-    
-    func setupFadeView() {
-        fadeView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
-        addSubview(fadeView)
-        
-        gradientLayer.colors = [UIColor(white: 0, alpha: 0).CGColor, UIColor(white: 0, alpha: 0.8).CGColor]
-        fadeView.layer.insertSublayer(gradientLayer, atIndex: 0)
     }
     
     func setupPhotoLabel() {
@@ -90,7 +68,7 @@ private extension SKCaptionView {
         photoLabel.shadowColor = UIColor(white: 0.0, alpha: 0.5)
         photoLabel.shadowOffset = CGSize(width: 0.0, height: 1.0)
         photoLabel.font = UIFont.systemFontOfSize(17.0)
-        photoLabel.text = photo.caption
+        photoLabel.text = photo?.caption
         addSubview(photoLabel)
     }
 }
