@@ -13,7 +13,6 @@ import UIKit
     func handleDoubleTap(view: UIView, touch: UITouch)
 }
 
-
 class SKDetectingView: UIView {
     weak var delegate: SKDetectingViewDelegate?
     
