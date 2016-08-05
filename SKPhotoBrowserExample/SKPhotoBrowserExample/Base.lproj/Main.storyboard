@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="qgG-zu-Htx">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="qgG-zu-Htx">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <scenes>
-        <!--Local Images-->
+        <!--FromLocal-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="SKPhotoBrowserExample" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="FromLocalViewController" customModule="SKPhotoBrowserExample" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -58,7 +58,7 @@
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="ZcN-ut-rvO" secondAttribute="bottom" id="jxM-4I-Axo"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Local Images" id="KFf-qk-pEk"/>
+                    <tabBarItem key="tabBarItem" title="FromLocal" id="KFf-qk-pEk"/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
                     <connections>
                         <outlet property="collectionView" destination="ZcN-ut-rvO" id="bJb-LN-o9w"/>
@@ -66,12 +66,45 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1680" y="-305"/>
+            <point key="canvasLocation" x="1678" y="-667"/>
         </scene>
-        <!--Camera Roll-->
+        <!--FromWeb-->
+        <scene sceneID="mNO-ib-nK2">
+            <objects>
+                <viewController id="wTD-ba-cWw" customClass="FromWebViewController" customModule="SKPhotoBrowserExample" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="GH3-21-jcQ"/>
+                        <viewControllerLayoutGuide type="bottom" id="y5T-GC-T6k"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="pNX-nL-SLw">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZK0-HE-9Bs">
+                                <rect key="frame" x="220" y="253" width="161" height="94"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-UltraLight" family="Helvetica Neue" pointSize="40"/>
+                                <state key="normal" title="Present"/>
+                                <connections>
+                                    <action selector="pushButton:" destination="wTD-ba-cWw" eventType="touchUpInside" id="xIc-2O-Gmb"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="ZK0-HE-9Bs" firstAttribute="centerY" secondItem="pNX-nL-SLw" secondAttribute="centerY" id="9jd-Un-cAK"/>
+                            <constraint firstItem="ZK0-HE-9Bs" firstAttribute="centerX" secondItem="pNX-nL-SLw" secondAttribute="centerX" id="h6U-H1-RV4"/>
+                        </constraints>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="FromWeb" id="2lE-np-9H3"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jdP-ty-Ygs" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1678" y="34"/>
+        </scene>
+        <!--CameraRoll-->
         <scene sceneID="V6Y-ws-thI">
             <objects>
-                <viewController id="aTQ-Do-sRD" customClass="CameraRollViewController" customModule="SKPhotoBrowserExample" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="aTQ-Do-sRD" customClass="FromCameraRollViewController" customModule="SKPhotoBrowserExample" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="9hr-eY-Ckr"/>
                         <viewControllerLayoutGuide type="bottom" id="l1U-c1-FNM"/>
@@ -127,14 +160,14 @@
                             <constraint firstItem="f1m-3Z-8mE" firstAttribute="top" secondItem="9hr-eY-Ckr" secondAttribute="bottom" id="qdD-8q-n5J"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Camera Roll" id="fDV-zv-lCk"/>
+                    <tabBarItem key="tabBarItem" title="CameraRoll" id="fDV-zv-lCk"/>
                     <connections>
                         <outlet property="collectionView" destination="f1m-3Z-8mE" id="W6f-GL-fNz"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="X3n-FY-lyb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1680" y="1049"/>
+            <point key="canvasLocation" x="1678" y="694"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="MxJ-Af-928">
@@ -148,6 +181,7 @@
                     </tabBar>
                     <connections>
                         <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="TmI-eA-2RC"/>
+                        <segue destination="wTD-ba-cWw" kind="relationship" relationship="viewControllers" id="prf-dw-yqt"/>
                         <segue destination="aTQ-Do-sRD" kind="relationship" relationship="viewControllers" id="j9q-XO-aL9"/>
                     </connections>
                 </tabBarController>

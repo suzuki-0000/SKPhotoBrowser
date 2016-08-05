@@ -9,7 +9,7 @@
 import UIKit
 import SKPhotoBrowser
 
-class ViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, SKPhotoBrowserDelegate {
+class FromLocalViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, SKPhotoBrowserDelegate {
     @IBOutlet weak var collectionView: UICollectionView!
     
     var images = [SKPhotoProtocol]()
@@ -36,7 +36,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
 
 
  // MARK: - UICollectionViewDataSource
-extension ViewController {
+extension FromLocalViewController {
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return images.count
     }
@@ -53,7 +53,7 @@ extension ViewController {
 
 // MARK: - UICollectionViewDelegate
 
-extension ViewController {
+extension FromLocalViewController {
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         guard let cell = collectionView.cellForItemAtIndexPath(indexPath) as? ExampleCollectionViewCell else {
             return
@@ -62,16 +62,10 @@ extension ViewController {
             return
         }
         let browser = SKPhotoBrowser(originImage: originImage, photos: images, animatedFromView: cell)
+//        let browser = SKPhotoBrowser(photos: images)
         browser.initializePageIndex(indexPath.row)
         browser.delegate = self
         browser.statusBarStyle = .LightContent
-        
-        // delete action(you must write `removePhoto` delegate, what resource you want to delete)
-        // browser.displayDeleteButton = true
-        
-        // Optional action button titles (if left off, it uses activity controller
-        // browser.displayAction = false
-        // browser.actionButtonTitles = ["Do One Action", "Do Another Action"]
         
         presentViewController(browser, animated: true, completion: {})
     }
@@ -88,7 +82,7 @@ extension ViewController {
 
 // MARK: - SKPhotoBrowserDelegate
 
-extension ViewController {
+extension FromLocalViewController {
     func didShowPhotoAtIndex(index: Int) {
         collectionView.visibleCells().forEach({$0.hidden = false})
         collectionView.cellForItemAtIndexPath(NSIndexPath(forItem: index, inSection: 0))?.hidden = true
@@ -122,10 +116,9 @@ extension ViewController {
 
 // MARK: - private
 
-private extension ViewController {
+private extension FromLocalViewController {
     private func setupTestData() {
         images = createLocalPhotos()
-//        images = createWebPhotos()
     }
     
     private func setupCollectionView() {
@@ -136,14 +129,6 @@ private extension ViewController {
     func createLocalPhotos() -> [SKPhotoProtocol] {
         return (0..<10).map { (i: Int) -> SKPhotoProtocol in
             let photo = SKPhoto.photoWithImage(UIImage(named: "image\(i%10).jpg")!)
-            photo.caption = caption[i%10]
-            return photo
-        }
-    }
-    
-    func createWebPhotos() -> [SKPhotoProtocol] {
-        return (0..<10).map { (i: Int) -> SKPhotoProtocol in
-            let photo = SKPhoto.photoWithImageURL("https://placehold.jp/150x150.png")
             photo.caption = caption[i%10]
             return photo
         }
