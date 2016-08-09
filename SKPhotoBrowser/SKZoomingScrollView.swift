@@ -309,10 +309,13 @@ public class SKZoomingScrollView: UIScrollView, UIScrollViewDelegate, SKDetectin
     
     // MARK: - SKDetectingImageViewDelegate
     func handleImageViewSingleTap(touchPoint: CGPoint) {
-        if photoBrowser!.enableSingleTapDismiss {
-            photoBrowser?.determineAndClose()
+        guard let browser = photoBrowser else {
+            return
+        }
+        if browser.enableSingleTapDismiss {
+            browser.determineAndClose()
         } else {
-            photoBrowser?.toggleControls()
+            browser.toggleControls()
         }
     }
     

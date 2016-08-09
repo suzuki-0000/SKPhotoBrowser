@@ -21,6 +21,8 @@
 		8909B5491BC791510060A053 /* SKPhotoBrowser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8909B5411BC791510060A053 /* SKPhotoBrowser.swift */; };
 		8909B54A1BC791510060A053 /* SKZoomingScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8909B5421BC791510060A053 /* SKZoomingScrollView.swift */; };
 		8909B54D1BC7916E0060A053 /* SKPhotoBrowser.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8909B54C1BC7916E0060A053 /* SKPhotoBrowser.bundle */; };
+		89D0BA471D5994A8002A811B /* SKAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D0BA461D5994A8002A811B /* SKAnimator.swift */; };
+		89D0BA491D59966B002A811B /* SKMesurement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D0BA481D59966B002A811B /* SKMesurement.swift */; };
 		8CA6C6521CBE76E80054D3C2 /* SKLocalPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CA6C6511CBE76E80054D3C2 /* SKLocalPhoto.swift */; };
 		A64B89361CB04222000071B9 /* SKPhotoBrowserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A64B89351CB04222000071B9 /* SKPhotoBrowserTests.swift */; };
 		A64B89381CB04222000071B9 /* SKPhotoBrowser.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8909B5301BC791280060A053 /* SKPhotoBrowser.framework */; };
@@ -53,6 +55,8 @@
 		8909B5411BC791510060A053 /* SKPhotoBrowser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKPhotoBrowser.swift; sourceTree = "<group>"; };
 		8909B5421BC791510060A053 /* SKZoomingScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKZoomingScrollView.swift; sourceTree = "<group>"; };
 		8909B54C1BC7916E0060A053 /* SKPhotoBrowser.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SKPhotoBrowser.bundle; sourceTree = "<group>"; };
+		89D0BA461D5994A8002A811B /* SKAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKAnimator.swift; sourceTree = "<group>"; };
+		89D0BA481D59966B002A811B /* SKMesurement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKMesurement.swift; sourceTree = "<group>"; };
 		8CA6C6511CBE76E80054D3C2 /* SKLocalPhoto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKLocalPhoto.swift; sourceTree = "<group>"; };
 		A64B89331CB04222000071B9 /* SKPhotoBrowserTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SKPhotoBrowserTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A64B89351CB04222000071B9 /* SKPhotoBrowserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKPhotoBrowserTests.swift; sourceTree = "<group>"; };
@@ -108,6 +112,7 @@
 		8909B5321BC791280060A053 /* SKPhotoBrowser */ = {
 			isa = PBXGroup;
 			children = (
+				89D0BA461D5994A8002A811B /* SKAnimator.swift */,
 				26C97AD41D0EB6870039F6CB /* SKCache.swift */,
 				26C97AD81D0EB8BB0039F6CB /* SKCacheable.swift */,
 				8909B53B1BC791510060A053 /* SKCaptionView.swift */,
@@ -119,6 +124,7 @@
 				8909B5411BC791510060A053 /* SKPhotoBrowser.swift */,
 				8909B5421BC791510060A053 /* SKZoomingScrollView.swift */,
 				8909B5331BC791280060A053 /* SKPhotoBrowser.h */,
+				89D0BA481D59966B002A811B /* SKMesurement.swift */,
 				8909B5351BC791280060A053 /* Info.plist */,
 				210E53EB1C986D1C008DD5E3 /* extensions */,
 				8909B54C1BC7916E0060A053 /* SKPhotoBrowser.bundle */,
@@ -266,7 +272,9 @@
 				8909B5441BC791510060A053 /* SKDetectingImageView.swift in Sources */,
 				8909B54A1BC791510060A053 /* SKZoomingScrollView.swift in Sources */,
 				8CA6C6521CBE76E80054D3C2 /* SKLocalPhoto.swift in Sources */,
+				89D0BA471D5994A8002A811B /* SKAnimator.swift in Sources */,
 				210E53ED1C986D3A008DD5E3 /* UIView+Radius.swift in Sources */,
+				89D0BA491D59966B002A811B /* SKMesurement.swift in Sources */,
 				8909B5471BC791510060A053 /* SKPhoto.swift in Sources */,
 				8909B5461BC791510060A053 /* SKIndicatorView.swift in Sources */,
 				26C97AD51D0EB6870039F6CB /* SKCache.swift in Sources */,
