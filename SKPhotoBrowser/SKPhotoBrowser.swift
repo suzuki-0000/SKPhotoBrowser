@@ -175,8 +175,8 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
     private var isEndAnimationByToolBar: Bool = true
     private var isViewActive: Bool = false
     private var isPerformingLayout: Bool = false
-    private var isStatusBarOriginallyHidden = UIApplication.sharedApplication().statusBarHidden
-    private var originalStatusBarStyle: UIStatusBarStyle {
+    var isStatusBarOriginallyHidden = UIApplication.sharedApplication().statusBarHidden
+    var originalStatusBarStyle: UIStatusBarStyle {
         return self.presentingViewController?.preferredStatusBarStyle() ?? UIApplication.sharedApplication().statusBarStyle
     }
     private var buttonTopOffset: CGFloat {

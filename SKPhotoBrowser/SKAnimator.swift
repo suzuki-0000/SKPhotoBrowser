@@ -35,7 +35,6 @@ class SKAnimator: NSObject, SKPhotoBrowserAnimatorDelegate {
         guard let window = appWindow else {
             return
         }
-        
         guard let sender = browser.delegate?.viewForPhoto?(browser, index: browser.initialPageIndex) ?? browser.senderViewForAnimation else {
             presentAnimation(browser)
             return
@@ -65,6 +64,53 @@ class SKAnimator: NSObject, SKPhotoBrowserAnimatorDelegate {
     }
     
     func willDismiss(browser: SKPhotoBrowser) {
+        guard let appWindow = UIApplication.sharedApplication().delegate?.window else {
+            return
+        }
+        guard let window = appWindow else {
+            return
+        }
+        
+        browser.view.hidden = true
+        browser.backgroundView.hidden = false
+        browser.backgroundView.alpha = 1
+        
+        browser.statusBarStyle = browser.isStatusBarOriginallyHidden ? nil : browser.originalStatusBarStyle
+        browser.setNeedsStatusBarAppearanceUpdate()
+        
+        if let sender = browser.senderViewForAnimation {
+            if let senderViewOriginalFrameTemp = sender.superview?.convertRect(sender.frame, toView:nil) {
+                senderViewOriginalFrame = senderViewOriginalFrameTemp
+            } else if let senderViewOriginalFrameTemp = sender.layer.superlayer?.convertRect(sender.frame, toLayer: nil) {
+                senderViewOriginalFrame = senderViewOriginalFrameTemp
+            }
+        }
+        
+        let scrollView = browser.pageDisplayedAtIndex(browser.currentPageIndex)
+        let contentOffset = scrollView.contentOffset
+        let scrollFrame = scrollView.photoImageView.frame
+        let offsetY = scrollView.center.y - (scrollView.bounds.height/2)
+        
+        let frame = CGRect(
+            x: scrollFrame.origin.x - contentOffset.x,
+            y: scrollFrame.origin.y + contentOffset.y + offsetY,
+            width: scrollFrame.width,
+            height: scrollFrame.height)
+        
+        browser.resizableImageView.image = scrollView.photo?.underlyingImage?.rotateImageByOrientation() ?? browser.resizableImageView.image
+        browser.resizableImageView.frame = frame
+        browser.resizableImageView.alpha = 1.0
+        browser.resizableImageView.clipsToBounds = true
+        browser.resizableImageView.contentMode = .ScaleAspectFill
+        window.addSubview(browser.resizableImageView)
+        
+        if let view = browser.senderViewForAnimation where view.layer.cornerRadius != 0 {
+            let duration = (animationDuration * Double(animationDamping))
+            browser.resizableImageView.layer.masksToBounds = true
+            browser.resizableImageView.addCornerRadiusAnimation(0, to: view.layer.cornerRadius, duration: duration)
+        }
+        
+        dismissAnimation(browser)
     }
 }
 
@@ -95,8 +141,7 @@ private extension SKAnimator {
 }
 
 private extension SKAnimator {
-    
-    func presentAnimation (browser: SKPhotoBrowser, completion: (Void -> Void)? = nil) {
+    func presentAnimation(browser: SKPhotoBrowser, completion: (Void -> Void)? = nil) {
         browser.view.hidden = true
         browser.view.alpha = 0.0
         
@@ -116,6 +161,24 @@ private extension SKAnimator {
                 browser.pagingScrollView.alpha = 1.0
                 browser.backgroundView.hidden = true
                 browser.resizableImageView.alpha = 0.0
+            })
+    }
+    
+    func dismissAnimation(browser: SKPhotoBrowser, completion: (Void -> Void)? = nil) {
+        UIView.animateWithDuration(
+            animationDuration,
+            delay:0,
+            usingSpringWithDamping:animationDamping,
+            initialSpringVelocity:0,
+            options:.CurveEaseInOut,
+            animations: { () -> () in
+                browser.backgroundView.alpha = 0.0
+                browser.resizableImageView.layer.frame = self.senderViewOriginalFrame
+                },
+            completion: { (Bool) -> () in
+                browser.resizableImageView.removeFromSuperview()
+                browser.backgroundView.removeFromSuperview()
+                browser.dismissPhotoBrowser()
             })
     }
 }
