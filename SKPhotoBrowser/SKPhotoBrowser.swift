@@ -62,23 +62,9 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
     private var panGesture: UIPanGestureRecognizer!
     // MARK: close button
     private var closeButton: SKCloseButton!
-    // MARK: delete button
-    var deleteButton: UIButton!
-    var deleteButtonShowFrame: CGRect!
-    var deleteButtonHideFrame: CGRect!
-    
-    // MARK: - custom buttons
-    // MARK: CustomCloseButton
-    var customCloseButton: UIButton!
-    public var customCloseButtonShowFrame: CGRect!
-    public var customCloseButtonHideFrame: CGRect!
+    private var deleteButton: SKDeleteButton!
     public var customCloseButtonImage: UIImage!
     public var customCloseButtonEdgeInsets: UIEdgeInsets!
-    
-    // MARK: CustomDeleteButton
-    var customDeleteButton: UIButton!
-    public var customDeleteButtonShowFrame: CGRect!
-    public var customDeleteButtonHideFrame: CGRect!
     public var customDeleteButtonImage: UIImage!
     public var customDeleteButtonEdgeInsets: UIEdgeInsets!
     
@@ -238,8 +224,6 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         setCustomSetting()
         setSettingCloseButton()
         setSettingDeleteButton()
-        setSettingCustomCloseButton()
-        setSettingCustomDeleteButton()
         
         // action button
         toolActionButton = UIBarButtonItem(barButtonSystemItem: .Action, target: self, action: #selector(SKPhotoBrowser.actionButtonPressed))
@@ -317,72 +301,33 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         }
     }
     
-    // MARK: - Buttons' setting
     private func setSettingCloseButton() {
         closeButton = SKCloseButton(frame: view.frame)
         closeButton.addTarget(self, action: #selector(closeButtonPressed(_:)), forControlEvents: UIControlEvents.TouchUpInside)
         closeButton.hidden = !displayCloseButton
         view.addSubview(closeButton)
+        
+        // If another developer has not set their values
+        if customCloseButtonImage != nil {
+            closeButton.setImage(customCloseButtonImage, forState: .Normal)
+        }
+        if customCloseButtonEdgeInsets != nil {
+            closeButton.imageEdgeInsets = customCloseButtonEdgeInsets
+        }
     }
-    
-    // MARK: Delete button
     
     private func setSettingDeleteButton() {
         deleteButton = SKDeleteButton(frame: view.frame)
         deleteButton.addTarget(self, action: #selector(deleteButtonPressed(_:)), forControlEvents: UIControlEvents.TouchUpInside)
         deleteButton.hidden = !displayDeleteButton
         view.addSubview(deleteButton)
-    }
-    
-    // MARK: - Custom buttons' setting
-    // MARK: Custom Close Button
-    
-    private func setSettingCustomCloseButton() {
-        if displayCustomCloseButton == true {
-            let closeImage = UIImage(named: "SKPhotoBrowser.bundle/images/btn_common_close_wh", inBundle: bundle, compatibleWithTraitCollection: nil) ?? UIImage()
-            customCloseButton = UIButton(type: .Custom)
-            customCloseButton.addTarget(self, action: #selector(self.closeButtonPressed(_:)), forControlEvents: .TouchUpInside)
-            customCloseButton.backgroundColor = .clearColor()
-            // If another developer has not set their values
-            if customCloseButtonImage != nil {
-                customCloseButton.setImage(customCloseButtonImage, forState: .Normal)
-            } else {
-                customCloseButton.setImage(closeImage, forState: .Normal)
-            }
-            if customCloseButtonShowFrame == nil && customCloseButtonHideFrame == nil {
-                customCloseButtonShowFrame = CGRect(x: 5, y: buttonTopOffset, width: 44, height: 44)
-                customCloseButtonHideFrame = CGRect(x: 5, y: -20, width: 44, height: 44)
-            }
-            if customCloseButtonEdgeInsets != nil {
-                customCloseButton.imageEdgeInsets = customCloseButtonEdgeInsets
-            }
-            
-            customCloseButton.translatesAutoresizingMaskIntoConstraints = true
-            view.addSubview(customCloseButton)
-            customCloseButton.autoresizingMask = [.FlexibleBottomMargin, .FlexibleLeftMargin, .FlexibleRightMargin, .FlexibleTopMargin]
+        
+        // If another developer has not set their values
+        if customDeleteButtonImage != nil {
+            deleteButton.setImage(customCloseButtonImage, forState: .Normal)
         }
-    }
-    
-    // MARK: Custom Delete Button
-    private func setSettingCustomDeleteButton() {
-        if displayCustomDeleteButton == true {
-            customDeleteButton = UIButton(type: .Custom)
-            customDeleteButton.backgroundColor = .clearColor()
-            customDeleteButton.addTarget(self, action: #selector(self.deleteButtonPressed(_:)), forControlEvents: .TouchUpInside)
-            // If another developer has not set their values
-            if customDeleteButtonShowFrame == nil && customDeleteButtonHideFrame == nil {
-                customDeleteButtonShowFrame = CGRect(x: view.frame.width - 44, y: buttonTopOffset, width: 44, height: 44)
-                customDeleteButtonHideFrame = CGRect(x: view.frame.width - 44, y: -20, width: 44, height: 44)
-            }
-            if let _customDeleteButtonImage = customDeleteButtonImage {
-                customDeleteButton.setImage(_customDeleteButtonImage, forState: .Normal)
-            }
-            if let _customDeleteButtonEdgeInsets = customDeleteButtonEdgeInsets {
-                customDeleteButton.imageEdgeInsets = _customDeleteButtonEdgeInsets
-            }
-            view.addSubview(customDeleteButton)
-            customDeleteButton.translatesAutoresizingMaskIntoConstraints = true
-            customDeleteButton.autoresizingMask = [.FlexibleBottomMargin, .FlexibleLeftMargin, .FlexibleRightMargin, .FlexibleTopMargin]
+        if customDeleteButtonEdgeInsets != nil {
+            deleteButton.imageEdgeInsets = customCloseButtonEdgeInsets
         }
     }
     
@@ -488,15 +433,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         }
         if displayDeleteButton {
             deleteButton.alpha = 1
-            deleteButton.frame = deleteButtonShowFrame
-        }
-        if displayCustomCloseButton {
-            customCloseButton.alpha = 1
-            customCloseButton.frame = customCloseButtonShowFrame
-        }
-        if displayCustomDeleteButton {
-            customDeleteButton.alpha = 1
-            customDeleteButton.frame = customDeleteButtonShowFrame
+            deleteButton.frame = deleteButton.showFrame
         }
     }
     
@@ -561,18 +498,6 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
     
     /// This function changes buttons's frame after the rotation of the device
     private func frameForButton() {
-        if displayDeleteButton {
-            deleteButtonShowFrame = CGRect(x: view.frame.width - 44, y: buttonTopOffset, width: 44, height: 44)
-            deleteButtonHideFrame = CGRect(x: view.frame.width - 44, y: -20, width: 44, height: 44)
-        }
-        if displayCustomDeleteButton {
-            customDeleteButtonShowFrame = CGRect(x: customDeleteButtonShowFrame.origin.y, y: customDeleteButtonShowFrame.origin.x, width: customDeleteButtonShowFrame.width, height: customDeleteButtonShowFrame.height)
-            customDeleteButtonHideFrame = CGRect(x: customDeleteButtonHideFrame.origin.y, y: customDeleteButtonHideFrame.origin.x, width: customDeleteButtonHideFrame.width, height: customDeleteButtonHideFrame.height)
-        }
-        if displayCustomCloseButton {
-            customCloseButtonHideFrame = CGRect(x: customCloseButtonHideFrame.origin.y, y: customCloseButtonHideFrame.origin.x, width: customCloseButtonHideFrame.width, height: customCloseButtonHideFrame.height)
-            customCloseButtonShowFrame = CGRect(x: customCloseButtonShowFrame.origin.y, y: customCloseButtonShowFrame.origin.x, width: customCloseButtonShowFrame.width, height: customCloseButtonShowFrame.height)
-        }
     }
     
     // MARK: - delete function
@@ -876,15 +801,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
                 }
                 if self.displayDeleteButton {
                     self.deleteButton.alpha = alpha
-                    self.deleteButton.frame = hidden ? self.deleteButtonHideFrame : self.deleteButtonShowFrame
-                }
-                if self.displayCustomCloseButton {
-                    self.customCloseButton.alpha = alpha
-                    self.customCloseButton.frame = hidden ? self.customCloseButtonHideFrame : self.customCloseButtonShowFrame
-                }
-                if self.displayCustomDeleteButton {
-                    self.customDeleteButton.alpha = alpha
-                    self.customDeleteButton.frame = hidden ? self.customDeleteButtonHideFrame : self.customDeleteButtonShowFrame
+                    self.deleteButton.frame = hidden ? self.deleteButton.hideFrame : self.deleteButton.showFrame
                 }
                 for captionView in captionViews {
                     captionView.alpha = alpha

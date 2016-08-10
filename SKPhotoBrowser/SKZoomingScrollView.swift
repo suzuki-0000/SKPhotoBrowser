@@ -271,14 +271,17 @@ public class SKZoomingScrollView: UIScrollView, UIScrollViewDelegate, SKDetectin
     
     // MARK: - SKDetectingViewDelegate
     func handleSingleTap(view: UIView, touch: UITouch) {
-        guard photoBrowser?.enableZoomBlackArea == true else {
+        guard let browser = photoBrowser else {
+            return
+        }
+        guard browser.enableZoomBlackArea == true else {
             return
         }
         
-        if photoBrowser?.areControlsHidden() == false && photoBrowser?.enableSingleTapDismiss == true {
-            photoBrowser?.determineAndClose()
+        if browser.areControlsHidden() == false && browser.enableSingleTapDismiss == true {
+            browser.determineAndClose()
         } else {
-            photoBrowser?.toggleControls()
+            browser.toggleControls()
         }
     }
     

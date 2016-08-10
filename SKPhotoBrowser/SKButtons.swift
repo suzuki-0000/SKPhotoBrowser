@@ -1,5 +1,5 @@
 //
-//  SKButtonBuilder.swift
+//  SKButtons.swift
 //  SKPhotoBrowser
 //
 //  Created by 鈴木 啓司 on 2016/08/09.
