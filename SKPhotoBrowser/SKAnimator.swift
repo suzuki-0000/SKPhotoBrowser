@@ -9,10 +9,15 @@
 import UIKit
 
 class SKAnimator: NSObject, SKPhotoBrowserAnimatorDelegate {
+    var resizableImageView: UIImageView?
+    
+    var senderOriginImage: UIImage!
     var senderViewOriginalFrame: CGRect = .zero
+    var senderViewForAnimation: UIView?
+    
     var finalImageViewFrame: CGRect = .zero
+    
     var bounceAnimation: Bool = false
-    // animation property
     var animationDuration: NSTimeInterval {
         if bounceAnimation {
             return 0.5
@@ -35,79 +40,67 @@ class SKAnimator: NSObject, SKPhotoBrowserAnimatorDelegate {
         guard let window = appWindow else {
             return
         }
-        guard let sender = browser.delegate?.viewForPhoto?(browser, index: browser.initialPageIndex) ?? browser.senderViewForAnimation else {
+        guard let sender = browser.delegate?.viewForPhoto?(browser, index: browser.initialPageIndex) ?? senderViewForAnimation else {
             presentAnimation(browser)
             return
         }
         
-        
-        let imageFromView = (browser.senderOriginImage ?? browser.getImageFromView(sender)).rotateImageByOrientation()
+        let imageFromView = (senderOriginImage ?? browser.getImageFromView(sender)).rotateImageByOrientation()
         let imageRatio = imageFromView.size.width / imageFromView.size.height
         
         senderViewOriginalFrame = calcOriginFrame(sender)
-        
-        browser.resizableImageView = UIImageView(image: imageFromView)
-        browser.resizableImageView.frame = senderViewOriginalFrame
-        browser.resizableImageView.clipsToBounds = true
-        browser.resizableImageView.contentMode = .ScaleAspectFill
-        window.addSubview(browser.resizableImageView)
-        
         finalImageViewFrame = calcFinalFrame(imageRatio)
         
+        resizableImageView = UIImageView(image: imageFromView)
+        resizableImageView!.frame = senderViewOriginalFrame
+        resizableImageView!.clipsToBounds = true
+        resizableImageView!.contentMode = .ScaleAspectFill
         if sender.layer.cornerRadius != 0 {
             let duration = (animationDuration * Double(animationDamping))
-            browser.resizableImageView.layer.masksToBounds = true
-            browser.resizableImageView.addCornerRadiusAnimation(sender.layer.cornerRadius, to: 0, duration: duration)
+            resizableImageView!.layer.masksToBounds = true
+            resizableImageView!.addCornerRadiusAnimation(sender.layer.cornerRadius, to: 0, duration: duration)
         }
+        window.addSubview(resizableImageView!)
         
         presentAnimation(browser)
     }
     
     func willDismiss(browser: SKPhotoBrowser) {
-        guard let appWindow = UIApplication.sharedApplication().delegate?.window else {
-            return
-        }
-        guard let window = appWindow else {
+        guard let sender = browser.delegate?.viewForPhoto?(browser, index: browser.currentPageIndex),
+            image = browser.photoAtIndex(browser.currentPageIndex).underlyingImage else {
+                
+            senderViewForAnimation?.hidden = false
+            browser.dismissPhotoBrowser()
             return
         }
         
+        senderViewForAnimation = sender
         browser.view.hidden = true
         browser.backgroundView.hidden = false
         browser.backgroundView.alpha = 1
         
-        browser.statusBarStyle = browser.isStatusBarOriginallyHidden ? nil : browser.originalStatusBarStyle
-        browser.setNeedsStatusBarAppearanceUpdate()
-        
-        if let sender = browser.senderViewForAnimation {
-            if let senderViewOriginalFrameTemp = sender.superview?.convertRect(sender.frame, toView:nil) {
-                senderViewOriginalFrame = senderViewOriginalFrameTemp
-            } else if let senderViewOriginalFrameTemp = sender.layer.superlayer?.convertRect(sender.frame, toLayer: nil) {
-                senderViewOriginalFrame = senderViewOriginalFrameTemp
-            }
-        }
+        senderViewOriginalFrame = calcOriginFrame(sender)
         
         let scrollView = browser.pageDisplayedAtIndex(browser.currentPageIndex)
         let contentOffset = scrollView.contentOffset
         let scrollFrame = scrollView.photoImageView.frame
         let offsetY = scrollView.center.y - (scrollView.bounds.height/2)
-        
         let frame = CGRect(
             x: scrollFrame.origin.x - contentOffset.x,
             y: scrollFrame.origin.y + contentOffset.y + offsetY,
             width: scrollFrame.width,
             height: scrollFrame.height)
         
-        browser.resizableImageView.image = scrollView.photo?.underlyingImage?.rotateImageByOrientation() ?? browser.resizableImageView.image
-        browser.resizableImageView.frame = frame
-        browser.resizableImageView.alpha = 1.0
-        browser.resizableImageView.clipsToBounds = true
-        browser.resizableImageView.contentMode = .ScaleAspectFill
-        window.addSubview(browser.resizableImageView)
-        
-        if let view = browser.senderViewForAnimation where view.layer.cornerRadius != 0 {
+//        resizableImageView.image = scrollView.photo?.underlyingImage?.rotateImageByOrientation()
+        resizableImageView!.image = image
+        resizableImageView!.frame = frame
+        resizableImageView!.alpha = 1.0
+        resizableImageView!.clipsToBounds = true
+        resizableImageView!.contentMode = .ScaleAspectFill
+        if let view = senderViewForAnimation where view.layer.cornerRadius != 0 {
             let duration = (animationDuration * Double(animationDamping))
-            browser.resizableImageView.layer.masksToBounds = true
-            browser.resizableImageView.addCornerRadiusAnimation(0, to: view.layer.cornerRadius, duration: duration)
+            resizableImageView!.layer.masksToBounds = true
+            resizableImageView!.addCornerRadiusAnimation(0, to: view.layer.cornerRadius, duration: duration)
         }
         
         dismissAnimation(browser)
@@ -151,16 +144,18 @@ private extension SKAnimator {
             usingSpringWithDamping:animationDamping,
             initialSpringVelocity:0,
             options:.CurveEaseInOut,
-            animations: { () -> Void in
+            animations: {
                 browser.showButtons()
                 browser.backgroundView.alpha = 1.0
-                browser.resizableImageView.frame = self.finalImageViewFrame
+                
+                self.resizableImageView?.frame = self.finalImageViewFrame
             },
             completion: { (Bool) -> Void in
                 browser.view.hidden = false
                 browser.pagingScrollView.alpha = 1.0
                 browser.backgroundView.hidden = true
-                browser.resizableImageView.alpha = 0.0
+                
+                self.resizableImageView?.alpha = 0.0
             })
     }
     
@@ -171,18 +166,16 @@ private extension SKAnimator {
             usingSpringWithDamping:animationDamping,
             initialSpringVelocity:0,
             options:.CurveEaseInOut,
-            animations: { () -> () in
+            animations: {
                 browser.backgroundView.alpha = 0.0
-                browser.resizableImageView.layer.frame = self.senderViewOriginalFrame
-                },
+                
+                self.resizableImageView?.layer.frame = self.senderViewOriginalFrame
+            },
             completion: { (Bool) -> () in
-                browser.resizableImageView.removeFromSuperview()
-                browser.backgroundView.removeFromSuperview()
-                browser.dismissPhotoBrowser()
+                browser.dismissPhotoBrowser() {
+                    self.resizableImageView?.removeFromSuperview()
+                }
             })
     }
 }
-
-
-
 

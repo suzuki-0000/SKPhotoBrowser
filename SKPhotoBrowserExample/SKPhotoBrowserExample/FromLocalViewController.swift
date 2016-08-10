@@ -65,7 +65,6 @@ extension FromLocalViewController {
 //        let browser = SKPhotoBrowser(photos: images)
         browser.initializePageIndex(indexPath.row)
         browser.delegate = self
-        browser.statusBarStyle = .LightContent
         
         presentViewController(browser, animated: true, completion: {})
     }
