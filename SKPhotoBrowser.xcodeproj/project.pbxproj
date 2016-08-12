@@ -21,6 +21,7 @@
 		8909B5491BC791510060A053 /* SKPhotoBrowser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8909B5411BC791510060A053 /* SKPhotoBrowser.swift */; };
 		8909B54A1BC791510060A053 /* SKZoomingScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8909B5421BC791510060A053 /* SKZoomingScrollView.swift */; };
 		8909B54D1BC7916E0060A053 /* SKPhotoBrowser.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8909B54C1BC7916E0060A053 /* SKPhotoBrowser.bundle */; };
+		890A6F201D5D9E53003B01F0 /* SKToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 890A6F1F1D5D9E53003B01F0 /* SKToolbar.swift */; };
 		8917B1B01D5A13DE000CE1C4 /* SKPhotoBrowserDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8917B1AF1D5A13DE000CE1C4 /* SKPhotoBrowserDelegate.swift */; };
 		8917B1B21D5A1407000CE1C4 /* SKPhotoBrowserAnimatorDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8917B1B11D5A1407000CE1C4 /* SKPhotoBrowserAnimatorDelegate.swift */; };
 		8917B1B41D5A14B0000CE1C4 /* SKButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8917B1B31D5A14B0000CE1C4 /* SKButtons.swift */; };
@@ -58,6 +59,7 @@
 		8909B5411BC791510060A053 /* SKPhotoBrowser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKPhotoBrowser.swift; sourceTree = "<group>"; };
 		8909B5421BC791510060A053 /* SKZoomingScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKZoomingScrollView.swift; sourceTree = "<group>"; };
 		8909B54C1BC7916E0060A053 /* SKPhotoBrowser.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SKPhotoBrowser.bundle; sourceTree = "<group>"; };
+		890A6F1F1D5D9E53003B01F0 /* SKToolbar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKToolbar.swift; sourceTree = "<group>"; };
 		8917B1AF1D5A13DE000CE1C4 /* SKPhotoBrowserDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKPhotoBrowserDelegate.swift; sourceTree = "<group>"; };
 		8917B1B11D5A1407000CE1C4 /* SKPhotoBrowserAnimatorDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKPhotoBrowserAnimatorDelegate.swift; sourceTree = "<group>"; };
 		8917B1B31D5A14B0000CE1C4 /* SKButtons.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKButtons.swift; sourceTree = "<group>"; };
@@ -118,22 +120,23 @@
 		8909B5321BC791280060A053 /* SKPhotoBrowser */ = {
 			isa = PBXGroup;
 			children = (
-				8917B1B31D5A14B0000CE1C4 /* SKButtons.swift */,
 				89D0BA461D5994A8002A811B /* SKAnimator.swift */,
+				8917B1B31D5A14B0000CE1C4 /* SKButtons.swift */,
 				26C97AD41D0EB6870039F6CB /* SKCache.swift */,
 				26C97AD81D0EB8BB0039F6CB /* SKCacheable.swift */,
 				8909B53B1BC791510060A053 /* SKCaptionView.swift */,
 				8909B53C1BC791510060A053 /* SKDetectingImageView.swift */,
 				8909B53D1BC791510060A053 /* SKDetectingView.swift */,
 				8909B53E1BC791510060A053 /* SKIndicatorView.swift */,
-				8909B53F1BC791510060A053 /* SKPhoto.swift */,
 				8CA6C6511CBE76E80054D3C2 /* SKLocalPhoto.swift */,
+				8909B53F1BC791510060A053 /* SKPhoto.swift */,
 				8909B5411BC791510060A053 /* SKPhotoBrowser.swift */,
 				8917B1B11D5A1407000CE1C4 /* SKPhotoBrowserAnimatorDelegate.swift */,
-				8909B5421BC791510060A053 /* SKZoomingScrollView.swift */,
+				890A6F1F1D5D9E53003B01F0 /* SKToolbar.swift */,
 				8909B5331BC791280060A053 /* SKPhotoBrowser.h */,
 				8917B1AF1D5A13DE000CE1C4 /* SKPhotoBrowserDelegate.swift */,
 				89D0BA481D59966B002A811B /* SKMesurement.swift */,
+				8909B5421BC791510060A053 /* SKZoomingScrollView.swift */,
 				8909B5351BC791280060A053 /* Info.plist */,
 				210E53EB1C986D1C008DD5E3 /* extensions */,
 				8909B54C1BC7916E0060A053 /* SKPhotoBrowser.bundle */,
@@ -278,6 +281,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				26C97AD91D0EB8BB0039F6CB /* SKCacheable.swift in Sources */,
+				890A6F201D5D9E53003B01F0 /* SKToolbar.swift in Sources */,
 				8917B1B21D5A1407000CE1C4 /* SKPhotoBrowserAnimatorDelegate.swift in Sources */,
 				8909B5441BC791510060A053 /* SKDetectingImageView.swift in Sources */,
 				8909B54A1BC791510060A053 /* SKZoomingScrollView.swift in Sources */,

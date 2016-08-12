@@ -19,21 +19,19 @@ class SKAnimator: NSObject, SKPhotoBrowserAnimatorDelegate {
     
     var bounceAnimation: Bool = false
     var animationDuration: NSTimeInterval {
-        if bounceAnimation {
+        if SKPhotoBrowserOptions.bounceAnimation {
             return 0.5
         }
         return 0.35
     }
     var animationDamping: CGFloat {
-        if bounceAnimation {
+        if SKPhotoBrowserOptions.bounceAnimation {
             return 0.8
         }
         return 1
     }
     
     func willPresent(browser: SKPhotoBrowser) {
-        bounceAnimation = browser.bounceAnimation
-        
         guard let appWindow = UIApplication.sharedApplication().delegate?.window else {
             return
         }
@@ -70,7 +68,7 @@ class SKAnimator: NSObject, SKPhotoBrowserAnimatorDelegate {
             image = browser.photoAtIndex(browser.currentPageIndex).underlyingImage else {
                 
             senderViewForAnimation?.hidden = false
-            browser.dismissPhotoBrowser()
+            browser.dismissPhotoBrowser(animated: false)
             return
         }
         
@@ -152,7 +150,7 @@ private extension SKAnimator {
             },
             completion: { (Bool) -> Void in
                 browser.view.hidden = false
-                browser.pagingScrollView.alpha = 1.0
+                browser.view.alpha = 1.0
                 browser.backgroundView.hidden = true
                 
                 self.resizableImageView?.alpha = 0.0
@@ -172,7 +170,7 @@ private extension SKAnimator {
                 self.resizableImageView?.layer.frame = self.senderViewOriginalFrame
             },
             completion: { (Bool) -> () in
-                browser.dismissPhotoBrowser() {
+                browser.dismissPhotoBrowser(animated: true) {
                     self.resizableImageView?.removeFromSuperview()
                 }
             })

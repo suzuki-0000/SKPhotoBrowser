@@ -107,9 +107,9 @@ class FromCameraRollViewController: UIViewController, SKPhotoBrowserDelegate, UI
             
             browser.initializePageIndex(indexPath.row)
             browser.delegate = self
-            browser.bounceAnimation = true
-            browser.displayDeleteButton = true
-            browser.displayAction = false
+//            browser.bounceAnimation = true
+//            browser.displayDeleteButton = true
+//            browser.displayAction = false
             self.presentViewController(browser, animated: true, completion: {})
         }
         

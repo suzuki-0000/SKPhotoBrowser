@@ -274,11 +274,11 @@ public class SKZoomingScrollView: UIScrollView, UIScrollViewDelegate, SKDetectin
         guard let browser = photoBrowser else {
             return
         }
-        guard browser.enableZoomBlackArea == true else {
+        guard SKPhotoBrowserOptions.enableZoomBlackArea == true else {
             return
         }
         
-        if browser.areControlsHidden() == false && browser.enableSingleTapDismiss == true {
+        if browser.areControlsHidden() == false && SKPhotoBrowserOptions.enableSingleTapDismiss == true {
             browser.determineAndClose()
         } else {
             browser.toggleControls()
@@ -286,7 +286,7 @@ public class SKZoomingScrollView: UIScrollView, UIScrollViewDelegate, SKDetectin
     }
     
     func handleDoubleTap(view: UIView, touch: UITouch) {
-        if photoBrowser?.enableZoomBlackArea == true {
+        if SKPhotoBrowserOptions.enableZoomBlackArea == true {
             let needPoint = getViewFramePercent(view, touch: touch)
             handleDoubleTap(needPoint)
         }
@@ -318,7 +318,7 @@ public class SKZoomingScrollView: UIScrollView, UIScrollViewDelegate, SKDetectin
         guard let browser = photoBrowser else {
             return
         }
-        if browser.enableSingleTapDismiss {
+        if SKPhotoBrowserOptions.enableSingleTapDismiss {
             browser.determineAndClose()
         } else {
             browser.toggleControls()
