@@ -28,6 +28,8 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         return 1
     }
     
+    lazy var buttons: SKButtons = SKButtons(browser: self)
+    
     // custom abilities
     public var displayAction: Bool = true
     public var shareExtraCaption: String? = nil
@@ -61,8 +63,12 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
     var pagingScrollView: UIScrollView!
     private var panGesture: UIPanGestureRecognizer!
     // MARK: close button
-    private var closeButton: SKCloseButton!
-    private var deleteButton: SKDeleteButton!
+    private var closeButton: SKCloseButton {
+        return buttons.closeButton
+    }
+    private var deleteButton: SKDeleteButton {
+        return buttons.deleteButton
+    }
     public var customCloseButtonImage: UIImage!
     public var customCloseButtonEdgeInsets: UIEdgeInsets!
     public var customDeleteButtonImage: UIImage!
@@ -148,7 +154,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         }
         applicationWindow = window
         
-        modalPresentationCapturesStatusBarAppearance = true
+//        modalPresentationCapturesStatusBarAppearance = true
         modalPresentationStyle = .Custom
         modalTransitionStyle = .CrossDissolve
         
@@ -162,6 +168,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         view.backgroundColor = .blackColor()
         view.clipsToBounds = true
         view.opaque = false
+        
         
         backgroundView = UIView(frame: CGRect(x: 0, y: 0, width: SKMesurement.screenWidth, height: SKMesurement.screenHeight))
         backgroundView.backgroundColor = .blackColor()
@@ -221,9 +228,11 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         toolCounterButton = UIBarButtonItem(customView: toolCounterLabel)
         
         // starting setting
-        setCustomSetting()
-        setSettingCloseButton()
-        setSettingDeleteButton()
+//        setCustomSetting()
+//        setSettingCloseButton()
+//        setSettingDeleteButton()
+        
+        buttons.setup()
         
         // action button
         toolActionButton = UIBarButtonItem(barButtonSystemItem: .Action, target: self, action: #selector(SKPhotoBrowser.actionButtonPressed))
@@ -288,47 +297,6 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
     override public func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         recycledPages.removeAll()
-    }
-    
-    // MARK: - setting of buttons
-    // This function should be at the beginning of the other functions
-    private func setCustomSetting() {
-        if displayCustomCloseButton == true {
-            displayCloseButton = false
-        }
-        if displayCustomDeleteButton == true {
-            displayDeleteButton = false
-        }
-    }
-    
-    private func setSettingCloseButton() {
-        closeButton = SKCloseButton(frame: view.frame)
-        closeButton.addTarget(self, action: #selector(closeButtonPressed(_:)), forControlEvents: UIControlEvents.TouchUpInside)
-        closeButton.hidden = !displayCloseButton
-        view.addSubview(closeButton)
-        
-        // If another developer has not set their values
-        if customCloseButtonImage != nil {
-            closeButton.setImage(customCloseButtonImage, forState: .Normal)
-        }
-        if customCloseButtonEdgeInsets != nil {
-            closeButton.imageEdgeInsets = customCloseButtonEdgeInsets
-        }
-    }
-    
-    private func setSettingDeleteButton() {
-        deleteButton = SKDeleteButton(frame: view.frame)
-        deleteButton.addTarget(self, action: #selector(deleteButtonPressed(_:)), forControlEvents: UIControlEvents.TouchUpInside)
-        deleteButton.hidden = !displayDeleteButton
-        view.addSubview(deleteButton)
-        
-        // If another developer has not set their values
-        if customDeleteButtonImage != nil {
-            deleteButton.setImage(customCloseButtonImage, forState: .Normal)
-        }
-        if customDeleteButtonEdgeInsets != nil {
-            deleteButton.imageEdgeInsets = customCloseButtonEdgeInsets
-        }
     }
     
     // MARK: - notification
@@ -501,7 +469,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
     }
     
     // MARK: - delete function
-    @objc private func deleteButtonPressed(sender: UIButton) {
+    @objc func deleteButtonPressed(sender: UIButton) {
         delegate?.removePhoto?(self, index: currentPageIndex, reload: { () -> Void in
             self.deleteImage()
         })
