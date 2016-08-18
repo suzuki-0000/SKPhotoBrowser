@@ -10,24 +10,6 @@ import UIKit
 
 public let SKPHOTO_LOADING_DID_END_NOTIFICATION = "photoLoadingDidEndNotification"
 
-public struct SKPhotoBrowserOptions {
-    public static var displayAction: Bool = true
-    public static var shareExtraCaption: String? = nil
-    public static var actionButtonTitles: [String]?
-    
-    public static var displayToolbar: Bool = true
-    public static var displayCounterLabel: Bool = true
-    public static var displayBackAndForwardButton: Bool = true
-    public static var disableVerticalSwipe: Bool = false
-    
-    public static var displayCloseButton = true
-    public static var displayDeleteButton = false
-    
-    public static var bounceAnimation = false
-    public static var enableZoomBlackArea = true
-    public static var enableSingleTapDismiss = false
-}
-
 // MARK: - SKPhotoBrowser
 public class SKPhotoBrowser: UIViewController {
     
@@ -42,7 +24,7 @@ public class SKPhotoBrowser: UIViewController {
     
     // tool for controls
     private var applicationWindow: UIWindow!
-    private var pagingScrollView: UIScrollView!
+    private var pagingScrollView: SKPagingScrollView!
     var backgroundView: UIView!
     
     private var closeButton: SKCloseButton {
@@ -161,24 +143,13 @@ public class SKPhotoBrowser: UIViewController {
     override public func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         isPerformingLayout = true
-        pagingScrollView.frame = frameForPagingScrollView()
-        pagingScrollView.contentSize = contentSizeForPagingScrollView()
         
         closeButton.updateFrame()
         deleteButton.updateFrame()
         
         // this algorithm resizes the current image after device rotation
-        if visiblePages.count > 0 {
-            for page in visiblePages {
-                let pageIndex = page.tag - pageIndexTagOffset
-                page.frame = frameForPageAtIndex(pageIndex)
-                page.setMaxMinZoomScalesForCurrentBounds()
-                if page.captionView != nil {
-                    page.captionView.frame = frameForCaptionView(page.captionView, index: pageIndex)
-                }
-            }
-        }
-
+        pagingScrollView.updateFrame(view.bounds)
+        pagingScrollView.updateContentSize()
         pagingScrollView.contentOffset = contentOffsetForPageAtIndex(currentPageIndex)
         // where did start
         didStartViewingPageAtIndex(currentPageIndex)
@@ -197,15 +168,14 @@ public class SKPhotoBrowser: UIViewController {
         recycledPages.removeAll()
     }
     
-    // MARK: - notification
+    // MARK: - Notification
     public func handleSKPhotoLoadingDidEndNotification(notification: NSNotification) {
         guard let photo = notification.object as? SKPhotoProtocol else {
             return
         }
         
         dispatch_async(dispatch_get_main_queue(), {
-            let page = self.pageDisplayingAtPhoto(photo)
-            guard let photo = page.photo else {
+            guard let page = self.pagingScrollView.pageDisplayingAtPhoto(photo), let photo = page.photo else {
                 return
             }
             
@@ -219,7 +189,9 @@ public class SKPhotoBrowser: UIViewController {
     }
     
     public func loadAdjacentPhotosIfNecessary(photo: SKPhotoProtocol) {
-        let page = pageDisplayingAtPhoto(photo)
+        guard let page = self.pagingScrollView.pageDisplayingAtPhoto(photo) else {
+            return
+        }
         let pageIndex = (page.tag - pageIndexTagOffset)
         if currentPageIndex == pageIndex {
             if pageIndex > 0 {
@@ -288,13 +260,6 @@ public class SKPhotoBrowser: UIViewController {
     }
     
     // MARK: - frame calculation
-    public func frameForPagingScrollView() -> CGRect {
-        var frame = view.bounds
-        frame.origin.x -= 10
-        frame.size.width += (2 * 10)
-        return frame
-    }
-    
     public func frameForToolbarAtOrientation() -> CGRect {
         let currentOrientation = UIApplication.sharedApplication().statusBarOrientation
         var height: CGFloat = navigationController?.navigationBar.frame.size.height ?? 44
@@ -313,14 +278,6 @@ public class SKPhotoBrowser: UIViewController {
         return CGRect(x: 0, y: view.bounds.size.height + height, width: view.bounds.size.width, height: height)
     }
     
-    public func frameForCaptionView(captionView: SKCaptionView, index: Int) -> CGRect {
-        let pageFrame = frameForPageAtIndex(index)
-        let captionSize = captionView.sizeThatFits(CGSize(width: pageFrame.size.width, height: 0))
-        let navHeight = navigationController?.navigationBar.frame.size.height ?? 44
-        return CGRect(x: pageFrame.origin.x, y: pageFrame.size.height - captionSize.height - navHeight,
-            width: pageFrame.size.width, height: captionSize.height)
-    }
-    
     public func frameForPageAtIndex(index: Int) -> CGRect {
         let bounds = pagingScrollView.bounds
         var pageFrame = bounds
@@ -333,11 +290,6 @@ public class SKPhotoBrowser: UIViewController {
         let pageWidth = pagingScrollView.bounds.size.width
         let newOffset = CGFloat(index) * pageWidth
         return CGPoint(x: newOffset, y: 0)
-    }
-    
-    public func contentSizeForPagingScrollView() -> CGSize {
-        let bounds = pagingScrollView.bounds
-        return CGSize(width: bounds.size.width * CGFloat(numberOfPhotos), height: bounds.size.height)
     }
     
     // MARK: - delete function
@@ -357,17 +309,10 @@ public class SKPhotoBrowser: UIViewController {
         backgroundView.alpha = 0.0
         applicationWindow.addSubview(backgroundView)
         
-        // setup paging
-        let pagingScrollViewFrame = frameForPagingScrollView()
-        pagingScrollView = UIScrollView(frame: pagingScrollViewFrame)
-        pagingScrollView.pagingEnabled = true
+        pagingScrollView = SKPagingScrollView(frame: view.frame, browser: self)
         pagingScrollView.delegate = self
-        pagingScrollView.showsHorizontalScrollIndicator = true
-        pagingScrollView.showsVerticalScrollIndicator = true
-        pagingScrollView.contentSize = contentSizeForPagingScrollView()
         view.addSubview(pagingScrollView)
         
-        // gesture
         panGesture = UIPanGestureRecognizer(target: self, action: #selector(SKPhotoBrowser.panGestureRecognized(_:)))
         panGesture.minimumNumberOfTouches = 1
         panGesture.maximumNumberOfTouches = 1
@@ -391,10 +336,13 @@ public class SKPhotoBrowser: UIViewController {
     
     // MARK: - panGestureRecognized
     public func panGestureRecognized(sender: UIPanGestureRecognizer) {
-        backgroundView.hidden = true
-        let scrollView = pageDisplayedAtIndex(currentPageIndex)
+        guard let zoomingScrollView = pagingScrollView.pageDisplayedAtIndex(currentPageIndex) else {
+            return
+        }
         
-        let viewHeight = scrollView.frame.size.height
+        backgroundView.hidden = true
+        
+        let viewHeight = zoomingScrollView.frame.size.height
         let viewHalfHeight = viewHeight/2
         
         var translatedPoint = sender.translationInView(self.view)
@@ -402,24 +350,30 @@ public class SKPhotoBrowser: UIViewController {
         // gesture began
         if sender.state == .Began {
             
-            firstX = scrollView.center.x
-            firstY = scrollView.center.y
+            firstX = zoomingScrollView.center.x
+            firstY = zoomingScrollView.center.y
             
             isDraggingPhoto = true
+//            setControlsHidden(true, animated: true, permanent: false)
             setNeedsStatusBarAppearanceUpdate()
         }
         
         translatedPoint = CGPoint(x: firstX, y: firstY + translatedPoint.y)
-        scrollView.center = translatedPoint
+        zoomingScrollView.center = translatedPoint
         
         let minOffset = viewHalfHeight / 4
-        let offset = 1 - (scrollView.center.y > viewHalfHeight ? scrollView.center.y - viewHalfHeight : -(scrollView.center.y - viewHalfHeight)) / viewHalfHeight
+        let offset = 1 - (zoomingScrollView.center.y > viewHalfHeight
+            ? zoomingScrollView.center.y - viewHalfHeight
+            : -(zoomingScrollView.center.y - viewHalfHeight)) / viewHalfHeight
+        
         view.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(max(0.7, offset))
         
         // gesture end
         if sender.state == .Ended {
             
-            if scrollView.center.y > viewHalfHeight + minOffset || scrollView.center.y < viewHalfHeight - minOffset {
+            if zoomingScrollView.center.y > viewHalfHeight + minOffset
+                || zoomingScrollView.center.y < viewHalfHeight - minOffset {
+                
                 backgroundView.backgroundColor = view.backgroundColor
                 determineAndClose()
                 
@@ -438,7 +392,7 @@ public class SKPhotoBrowser: UIViewController {
                 UIView.setAnimationDuration(animationDuration)
                 UIView.setAnimationCurve(UIViewAnimationCurve.EaseIn)
                 view.backgroundColor = UIColor.blackColor()
-                scrollView.center = CGPoint(x: finalX, y: finalY)
+                zoomingScrollView.center = CGPoint(x: finalX, y: finalY)
                 UIView.commitAnimations()
             }
         }
@@ -501,7 +455,7 @@ public class SKPhotoBrowser: UIViewController {
             }
             isEndAnimationByToolBar = false
             let pageFrame = frameForPageAtIndex(index)
-            pagingScrollView.setContentOffset(CGPoint(x: pageFrame.origin.x - 10, y: 0), animated: true)
+            pagingScrollView.updateContentOffset(pageFrame)
             toolbar.updateToolbar(currentPageIndex)
         }
         hideControlsAfterDelay()
@@ -520,104 +474,19 @@ public class SKPhotoBrowser: UIViewController {
     }
     
     public func tilePages() {
-        let visibleBounds = pagingScrollView.bounds
-        
-        var firstIndex = Int(floor((CGRectGetMinX(visibleBounds) + 10 * 2) / CGRectGetWidth(visibleBounds)))
-        var lastIndex  = Int(floor((CGRectGetMaxX(visibleBounds) - 10 * 2 - 1) / CGRectGetWidth(visibleBounds)))
-        if firstIndex < 0 {
-            firstIndex = 0
-        }
-        if firstIndex > numberOfPhotos - 1 {
-            firstIndex = numberOfPhotos - 1
-        }
-        if lastIndex < 0 {
-            lastIndex = 0
-        }
-        if lastIndex > numberOfPhotos - 1 {
-            lastIndex = numberOfPhotos - 1
-        }
-        
-        for page in visiblePages {
-            let newPageIndex = page.tag - pageIndexTagOffset
-            if newPageIndex < firstIndex || newPageIndex > lastIndex {
-                recycledPages.append(page)
-                page.prepareForReuse()
-                page.removeFromSuperview()
-            }
-        }
-        
-        let visibleSet = Set(visiblePages)
-        visiblePages = Array(visibleSet.subtract(recycledPages))
-        
-        while recycledPages.count > 2 {
-            recycledPages.removeFirst()
-        }
-        
-        for index in firstIndex...lastIndex {
-            if isDisplayingPageForIndex(index) {
-                continue
-            }
-            
-            let page = SKZoomingScrollView(frame: view.frame, browser: self)
-            page.frame = frameForPageAtIndex(index)
-            page.tag = index + pageIndexTagOffset
-            page.photo = photoAtIndex(index)
-            
-            visiblePages.append(page)
-            pagingScrollView.addSubview(page)
-            // if exists caption, insert
-            if let captionView = captionViewForPhotoAtIndex(index) {
-                captionView.frame = frameForCaptionView(captionView, index: index)
-                pagingScrollView.addSubview(captionView)
-                // ref val for control
-                page.captionView = captionView
-            }
-        }
+        pagingScrollView.tilePages(numberOfPhotos)
     }
     
     private func didStartViewingPageAtIndex(index: Int) {
         delegate?.didShowPhotoAtIndex?(index)
     }
     
-    private func captionViewForPhotoAtIndex(index: Int) -> SKCaptionView? {
-        let photo = photoAtIndex(index)
-        if let _ = photo.caption {
-            let captionView = SKCaptionView(photo: photo)
-            captionView.alpha = areControlsHidden() ? 0.0 : 1.0
-            return captionView
-        }
-        return nil
+    public func pageDisplayedAtIndex(index: Int) -> SKZoomingScrollView? {
+        return pagingScrollView.pageDisplayedAtIndex(index)
     }
     
-    public func isDisplayingPageForIndex(index: Int) -> Bool {
-        for page in visiblePages {
-            if page.tag - pageIndexTagOffset == index {
-                return true
-            }
-        }
-        return false
-    }
-    
-    public func pageDisplayedAtIndex(index: Int) -> SKZoomingScrollView {
-        var thePage = SKZoomingScrollView()
-        for page in visiblePages {
-            if page.tag - pageIndexTagOffset == index {
-                thePage = page
-                break
-            }
-        }
-        return thePage
-    }
-    
-    public func pageDisplayingAtPhoto(photo: SKPhotoProtocol) -> SKZoomingScrollView {
-        var thePage = SKZoomingScrollView()
-        for page in visiblePages {
-            if page.photo === photo {
-                thePage = page
-                break
-            }
-        }
-        return thePage
+    public func pageDisplayingAtPhoto(photo: SKPhotoProtocol) -> SKZoomingScrollView? {
+        return pagingScrollView.pageDisplayingAtPhoto(photo)
     }
     
     // MARK: - Control Hiding / Showing
@@ -645,12 +514,8 @@ public class SKPhotoBrowser: UIViewController {
     
     public func setControlsHidden(hidden: Bool, animated: Bool, permanent: Bool) {
         cancelControlHiding()
-        var captionViews = Set<SKCaptionView>()
-        for page in visiblePages {
-            if page.captionView != nil {
-                captionViews.insert(page.captionView)
-            }
-        }
+        
+        let captionViews = pagingScrollView.getCaptionViews()
         
         UIView.animateWithDuration(0.35,
             animations: { () -> Void in
@@ -665,12 +530,9 @@ public class SKPhotoBrowser: UIViewController {
                     self.deleteButton.alpha = alpha
                     self.deleteButton.frame = hidden ? self.deleteButton.hideFrame : self.deleteButton.showFrame
                 }
-                for captionView in captionViews {
-                    captionView.alpha = alpha
-                }
+                captionViews.forEach { $0.alpha = alpha }
             },
-            completion: { (Bool) -> Void in
-        })
+            completion: nil)
         
         if !permanent {
             hideControlsAfterDelay()
@@ -792,7 +654,7 @@ extension SKPhotoBrowser: UIScrollViewDelegate {
     public func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
         hideControlsAfterDelay()
         
-        let currentIndex = self.pagingScrollView.contentOffset.x / self.pagingScrollView.frame.size.width
+        let currentIndex = pagingScrollView.contentOffset.x / pagingScrollView.frame.size.width
         self.delegate?.didScrollToIndex?(Int(currentIndex))
     }
     

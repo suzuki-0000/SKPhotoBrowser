@@ -65,7 +65,8 @@ class SKAnimator: NSObject, SKPhotoBrowserAnimatorDelegate {
     
     func willDismiss(browser: SKPhotoBrowser) {
         guard let sender = browser.delegate?.viewForPhoto?(browser, index: browser.currentPageIndex),
-            image = browser.photoAtIndex(browser.currentPageIndex).underlyingImage else {
+            image = browser.photoAtIndex(browser.currentPageIndex).underlyingImage,
+            scrollView = browser.pageDisplayedAtIndex(browser.currentPageIndex) else {
                 
             senderViewForAnimation?.hidden = false
             browser.dismissPhotoBrowser(animated: false)
@@ -79,7 +80,6 @@ class SKAnimator: NSObject, SKPhotoBrowserAnimatorDelegate {
         
         senderViewOriginalFrame = calcOriginFrame(sender)
         
-        let scrollView = browser.pageDisplayedAtIndex(browser.currentPageIndex)
         let contentOffset = scrollView.contentOffset
         let scrollFrame = scrollView.photoImageView.frame
         let offsetY = scrollView.center.y - (scrollView.bounds.height/2)

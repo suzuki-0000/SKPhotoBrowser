@@ -23,7 +23,6 @@ class SKButtons {
     
     private weak var browser: SKPhotoBrowser?
     
-    
     init(browser: SKPhotoBrowser) {
         self.browser = browser
         
