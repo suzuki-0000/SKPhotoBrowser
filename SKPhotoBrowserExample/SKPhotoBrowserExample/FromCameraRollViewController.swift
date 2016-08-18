@@ -167,8 +167,7 @@ class FromCameraRollViewController: UIViewController, SKPhotoBrowserDelegate, UI
                 let requestId = dict?[PHImageResultRequestIDKey] as? NSNumber
                 completion(image: image, requestId: requestId?.intValue)
             }
-        }
-        else {
+        } else {
             return imageManager.requestImageForAsset(asset, targetSize: targetSize, contentMode: .AspectFill, options: options) { image, dict in
                 let requestId = dict?[PHImageResultRequestIDKey] as? NSNumber
                 completion(image: image, requestId: requestId?.intValue)

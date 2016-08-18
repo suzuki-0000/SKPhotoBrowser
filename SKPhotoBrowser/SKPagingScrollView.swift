@@ -10,7 +10,6 @@ import Foundation
 
 class SKPagingScrollView: UIScrollView {
     let pageIndexTagOffset: Int = 1000
-    // photo's paging
     private var visiblePages = [SKZoomingScrollView]()
     private var recycledPages = [SKZoomingScrollView]()
     
@@ -45,6 +44,29 @@ class SKPagingScrollView: UIScrollView {
         visiblePages.forEach({$0.removeFromSuperview()})
         visiblePages.removeAll()
         recycledPages.removeAll()
+    }
+    
+    func loadAdjacentPhotosIfNecessary(photo: SKPhotoProtocol, currentPageIndex: Int) {
+        guard let browser = browser, page = pageDisplayingAtPhoto(photo) else {
+            return
+        }
+        let pageIndex = (page.tag - pageIndexTagOffset)
+        if currentPageIndex == pageIndex {
+            // Previous
+            if pageIndex > 0 {
+                let previousPhoto = browser.photos[pageIndex - 1]
+                if previousPhoto.underlyingImage == nil {
+                    previousPhoto.loadUnderlyingImageAndNotify()
+                }
+            }
+            // Next
+            if pageIndex < numberOfPhotos - 1 {
+                let nextPhoto = browser.photos[pageIndex + 1]
+                if nextPhoto.underlyingImage == nil {
+                    nextPhoto.loadUnderlyingImageAndNotify()
+                }
+            }
+        }
     }
     
     func deleteImage() {
@@ -93,23 +115,8 @@ class SKPagingScrollView: UIScrollView {
     func tilePages() {
         guard let browser = browser else { return }
         
-        let numberOfPhotos = browser.photos.count
-        let visibleBounds = bounds
-        
-        var firstIndex = Int(floor((CGRectGetMinX(visibleBounds) + 10 * 2) / CGRectGetWidth(visibleBounds)))
-        var lastIndex  = Int(floor((CGRectGetMaxX(visibleBounds) - 10 * 2 - 1) / CGRectGetWidth(visibleBounds)))
-        if firstIndex < 0 {
-            firstIndex = 0
-        }
-        if firstIndex > numberOfPhotos - 1 {
-            firstIndex = numberOfPhotos - 1
-        }
-        if lastIndex < 0 {
-            lastIndex = 0
-        }
-        if lastIndex > numberOfPhotos - 1 {
-            lastIndex = numberOfPhotos - 1
-        }
+        let firstIndex = getFirstIndex()
+        let lastIndex = getLastIndex()
         
         for page in visiblePages {
             let newPageIndex = page.tag - pageIndexTagOffset
@@ -205,7 +212,28 @@ private extension SKPagingScrollView {
         }
         return nil
     }
-
+    
+    func getFirstIndex() -> Int {
+        let firstIndex = Int(floor((CGRectGetMinX(bounds) + 10 * 2) / CGRectGetWidth(bounds)))
+        if firstIndex < 0 {
+            return 0
+        }
+        if firstIndex > numberOfPhotos - 1 {
+            return numberOfPhotos - 1
+        }
+        return firstIndex
+    }
+    
+    func getLastIndex() -> Int {
+        let lastIndex  = Int(floor((CGRectGetMaxX(bounds) - 10 * 2 - 1) / CGRectGetWidth(bounds)))
+        if lastIndex < 0 {
+            return 0
+        }
+        if lastIndex > numberOfPhotos - 1 {
+            return numberOfPhotos - 1
+        }
+        return lastIndex
+    }
 }
 
 

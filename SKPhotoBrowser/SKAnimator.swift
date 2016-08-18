@@ -8,6 +8,12 @@
 
 import UIKit
 
+
+@objc public protocol SKPhotoBrowserAnimatorDelegate {
+    func willPresent(browser: SKPhotoBrowser)
+    func willDismiss(browser: SKPhotoBrowser)
+}
+
 class SKAnimator: NSObject, SKPhotoBrowserAnimatorDelegate {
     var resizableImageView: UIImageView?
     

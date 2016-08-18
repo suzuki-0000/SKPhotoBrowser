@@ -180,26 +180,7 @@ public class SKPhotoBrowser: UIViewController {
     }
     
     public func loadAdjacentPhotosIfNecessary(photo: SKPhotoProtocol) {
-        guard let page = self.pagingScrollView.pageDisplayingAtPhoto(photo) else {
-            return
-        }
-        let pageIndex = (page.tag - pageIndexTagOffset)
-        if currentPageIndex == pageIndex {
-            if pageIndex > 0 {
-                // Preload index - 1
-                let previousPhoto = photoAtIndex(pageIndex - 1)
-                if previousPhoto.underlyingImage == nil {
-                    previousPhoto.loadUnderlyingImageAndNotify()
-                }
-            }
-            if pageIndex < numberOfPhotos - 1 {
-                // Preload index + 1
-                let nextPhoto = photoAtIndex(pageIndex + 1)
-                if nextPhoto.underlyingImage == nil {
-                    nextPhoto.loadUnderlyingImageAndNotify()
-                }
-            }
-        }
+        pagingScrollView.loadAdjacentPhotosIfNecessary(photo, currentPageIndex: currentPageIndex)
     }
     
     // MARK: - initialize / setup
@@ -401,7 +382,6 @@ public class SKPhotoBrowser: UIViewController {
     public func determineAndClose() {
         delegate?.willDismissAtPageIndex?(currentPageIndex)
         animator.willDismiss(self)
-        
     }
     
     func getImageFromView(sender: UIView) -> UIImage {
@@ -531,14 +511,13 @@ public class SKPhotoBrowser: UIViewController {
     
     // MARK: Action Button
     public func actionButtonPressed() {
-        let photo = photoAtIndex(currentPageIndex)
-        
         delegate?.willShowActionSheet?(currentPageIndex)
         
         guard numberOfPhotos > 0 else {
             return
         }
         
+        let photo = photos[currentPageIndex]
         if let titles = SKPhotoBrowserOptions.actionButtonTitles {
             let actionSheetController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
             actionSheetController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: { (action) -> Void in

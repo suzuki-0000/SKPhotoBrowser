@@ -35,6 +35,7 @@ extension FromWebViewController {
     }
     
     func removePhoto(browser: SKPhotoBrowser, index: Int, reload: (() -> Void)) {
+        reload()
     }
 }
 
