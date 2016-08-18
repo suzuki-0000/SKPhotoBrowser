@@ -34,10 +34,6 @@ public class SKPhotoBrowser: UIViewController {
         return buttons.deleteButton
     }
     
-    // photo's paging
-    private var visiblePages = [SKZoomingScrollView]()
-    private var recycledPages = [SKZoomingScrollView]()
-    
     var initialPageIndex: Int = 0
     var currentPageIndex: Int = 0
     
@@ -152,7 +148,7 @@ public class SKPhotoBrowser: UIViewController {
         pagingScrollView.updateContentSize()
         pagingScrollView.contentOffset = contentOffsetForPageAtIndex(currentPageIndex)
         // where did start
-        didStartViewingPageAtIndex(currentPageIndex)
+        delegate?.didShowPhotoAtIndex?(currentPageIndex)
         
         toolbar.frame = frameForToolbarAtOrientation()
         isPerformingLayout = false
@@ -161,11 +157,6 @@ public class SKPhotoBrowser: UIViewController {
     override public func viewDidAppear(animated: Bool) {
         super.viewDidAppear(true)
         isViewActive = true
-    }
-    
-    override public func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        recycledPages.removeAll()
     }
     
     // MARK: - Notification
@@ -223,23 +214,15 @@ public class SKPhotoBrowser: UIViewController {
         toolbar.updateToolbar(currentPageIndex)
         
         // reset local cache
-        visiblePages.forEach({$0.removeFromSuperview()})
-        visiblePages.removeAll()
-        recycledPages.removeAll()
+        pagingScrollView.reload()
         
-        // set content offset
+        // reframe
         pagingScrollView.contentOffset = contentOffsetForPageAtIndex(currentPageIndex)
+        pagingScrollView.tilePages()
         
-        // tile page
-        tilePages()
-        didStartViewingPageAtIndex(currentPageIndex)
+        delegate?.didShowPhotoAtIndex?(currentPageIndex)
         
         isPerformingLayout = false
-        
-        // add pangesture if need
-        if !SKPhotoBrowserOptions.disableVerticalSwipe {
-            view.addGestureRecognizer(panGesture)
-        }
     }
     
     func showButtons() {
@@ -292,13 +275,6 @@ public class SKPhotoBrowser: UIViewController {
         return CGPoint(x: newOffset, y: 0)
     }
     
-    // MARK: - delete function
-    @objc func deleteButtonPressed(sender: UIButton) {
-        delegate?.removePhoto?(self, index: currentPageIndex, reload: { () -> Void in
-            self.deleteImage()
-        })
-    }
-    
     private func setupAppearance() {
         view.backgroundColor = .blackColor()
         view.clipsToBounds = true
@@ -316,12 +292,19 @@ public class SKPhotoBrowser: UIViewController {
         panGesture = UIPanGestureRecognizer(target: self, action: #selector(SKPhotoBrowser.panGestureRecognized(_:)))
         panGesture.minimumNumberOfTouches = 1
         panGesture.maximumNumberOfTouches = 1
+        if !SKPhotoBrowserOptions.disableVerticalSwipe {
+            view.addGestureRecognizer(panGesture)
+        }
     }
     
     private func deleteImage() {
+        defer {
+            reloadData()
+        }
+        
         if photos.count > 1 {
-            // index equals 0 because when we slide between photos delete button is hidden and user cannot to touch on delete button. And visible pages number equals 0
-            visiblePages[0].captionView?.removeFromSuperview()
+            pagingScrollView.deleteImage()
+            
             photos.removeAtIndex(currentPageIndex)
             if currentPageIndex != 0 {
                 gotoPreviousPage()
@@ -331,7 +314,6 @@ public class SKPhotoBrowser: UIViewController {
         } else if photos.count == 1 {
             dismissPhotoBrowser(animated: false)
         }
-        reloadData()
     }
     
     // MARK: - panGestureRecognized
@@ -354,7 +336,7 @@ public class SKPhotoBrowser: UIViewController {
             firstY = zoomingScrollView.center.y
             
             isDraggingPhoto = true
-//            setControlsHidden(true, animated: true, permanent: false)
+            setControlsHidden(true, animated: true, permanent: false)
             setNeedsStatusBarAppearanceUpdate()
         }
         
@@ -443,7 +425,7 @@ public class SKPhotoBrowser: UIViewController {
         if isViewLoaded() {
             jumpToPageAtIndex(index)
             if !isViewActive {
-                tilePages()
+                pagingScrollView.tilePages()
             }
         }
     }
@@ -471,14 +453,6 @@ public class SKPhotoBrowser: UIViewController {
     
     public func gotoNextPage() {
         jumpToPageAtIndex(currentPageIndex + 1)
-    }
-    
-    public func tilePages() {
-        pagingScrollView.tilePages(numberOfPhotos)
-    }
-    
-    private func didStartViewingPageAtIndex(index: Int) {
-        delegate?.didShowPhotoAtIndex?(index)
     }
     
     public func pageDisplayedAtIndex(index: Int) -> SKZoomingScrollView? {
@@ -545,6 +519,12 @@ public class SKPhotoBrowser: UIViewController {
     }
     
     // MARK: - Button
+    @objc func deleteButtonPressed(sender: UIButton) {
+        delegate?.removePhoto?(self, index: currentPageIndex) { [weak self] in
+            self?.deleteImage()
+        }
+    }
+    
     public func closeButtonPressed(sender: UIButton) {
         determineAndClose()
     }
@@ -627,7 +607,7 @@ extension SKPhotoBrowser: UIScrollViewDelegate {
         }
         
         // tile page
-        tilePages()
+        pagingScrollView.tilePages()
         
         // Calculate current page
         let visibleBounds = pagingScrollView.bounds
@@ -642,7 +622,7 @@ extension SKPhotoBrowser: UIScrollViewDelegate {
         let previousCurrentPage = currentPageIndex
         currentPageIndex = index
         if currentPageIndex != previousCurrentPage {
-            didStartViewingPageAtIndex(currentPageIndex)
+            delegate?.didShowPhotoAtIndex?(currentPageIndex)
             toolbar.updateToolbar(currentPageIndex)
         }
     }

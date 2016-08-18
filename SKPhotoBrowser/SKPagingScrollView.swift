@@ -41,6 +41,19 @@ class SKPagingScrollView: UIScrollView {
         updateContentSize()
     }
     
+    func reload() {
+        visiblePages.forEach({$0.removeFromSuperview()})
+        visiblePages.removeAll()
+        recycledPages.removeAll()
+    }
+    
+    func deleteImage() {
+        // index equals 0 because when we slide between photos delete button is hidden and user cannot to touch on delete button. And visible pages number equals 0
+        if numberOfPhotos > 0 {
+            visiblePages[0].captionView?.removeFromSuperview()
+        }
+    }
+    
     func updateFrame(bounds: CGRect) {
         var frame = bounds
         frame.origin.x -= 10
@@ -77,9 +90,10 @@ class SKPagingScrollView: UIScrollView {
         return false
     }
     
-    func tilePages(numberOfPhotos: Int) {
+    func tilePages() {
         guard let browser = browser else { return }
         
+        let numberOfPhotos = browser.photos.count
         let visibleBounds = bounds
         
         var firstIndex = Int(floor((CGRectGetMinX(visibleBounds) + 10 * 2) / CGRectGetWidth(visibleBounds)))
