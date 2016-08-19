@@ -49,6 +49,7 @@ class SKAnimator: NSObject, SKPhotoBrowserAnimatorDelegate {
             return
         }
         
+        let photo = browser.photoAtIndex(browser.currentPageIndex)
         let imageFromView = (senderOriginImage ?? browser.getImageFromView(sender)).rotateImageByOrientation()
         let imageRatio = imageFromView.size.width / imageFromView.size.height
         
@@ -58,7 +59,7 @@ class SKAnimator: NSObject, SKPhotoBrowserAnimatorDelegate {
         resizableImageView = UIImageView(image: imageFromView)
         resizableImageView!.frame = senderViewOriginalFrame
         resizableImageView!.clipsToBounds = true
-        resizableImageView!.contentMode = .ScaleAspectFill
+        resizableImageView!.contentMode = photo.contentMode
         if sender.layer.cornerRadius != 0 {
             let duration = (animationDuration * Double(animationDamping))
             resizableImageView!.layer.masksToBounds = true
@@ -86,6 +87,7 @@ class SKAnimator: NSObject, SKPhotoBrowserAnimatorDelegate {
         
         senderViewOriginalFrame = calcOriginFrame(sender)
         
+        let photo = browser.photoAtIndex(browser.currentPageIndex)
         let contentOffset = scrollView.contentOffset
         let scrollFrame = scrollView.photoImageView.frame
         let offsetY = scrollView.center.y - (scrollView.bounds.height/2)
@@ -96,11 +98,11 @@ class SKAnimator: NSObject, SKPhotoBrowserAnimatorDelegate {
             height: scrollFrame.height)
         
 //        resizableImageView.image = scrollView.photo?.underlyingImage?.rotateImageByOrientation()
-        resizableImageView!.image = image
+        resizableImageView!.image = image.rotateImageByOrientation()
         resizableImageView!.frame = frame
         resizableImageView!.alpha = 1.0
         resizableImageView!.clipsToBounds = true
-        resizableImageView!.contentMode = .ScaleAspectFill
+        resizableImageView!.contentMode = photo.contentMode
         if let view = senderViewForAnimation where view.layer.cornerRadius != 0 {
             let duration = (animationDuration * Double(animationDamping))
             resizableImageView!.layer.masksToBounds = true

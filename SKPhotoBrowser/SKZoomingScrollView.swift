@@ -56,7 +56,7 @@ public class SKZoomingScrollView: UIScrollView, UIScrollViewDelegate, SKDetectin
         // image
         photoImageView = SKDetectingImageView(frame: frame)
         photoImageView.delegate = self
-        photoImageView.contentMode = .ScaleAspectFill
+        photoImageView.contentMode = .Bottom
         photoImageView.backgroundColor = .clearColor()
         addSubview(photoImageView)
         
@@ -203,6 +203,7 @@ public class SKZoomingScrollView: UIScrollView, UIScrollViewDelegate, SKDetectin
 
             // image
             photoImageView.image = image
+            photoImageView.contentMode = photo.contentMode
             
             var photoImageViewFrame = CGRect.zero
             photoImageViewFrame.origin = CGPoint.zero

@@ -312,12 +312,11 @@ public class SKPhotoBrowser: UIViewController {
         
         // gesture began
         if sender.state == .Began {
-            
             firstX = zoomingScrollView.center.x
             firstY = zoomingScrollView.center.y
             
             isDraggingPhoto = true
-            setControlsHidden(true, animated: true, permanent: false)
+            hideControls()
             setNeedsStatusBarAppearanceUpdate()
         }
         
@@ -383,14 +382,7 @@ public class SKPhotoBrowser: UIViewController {
         delegate?.willDismissAtPageIndex?(currentPageIndex)
         animator.willDismiss(self)
     }
-    
-    func getImageFromView(sender: UIView) -> UIImage {
-        UIGraphicsBeginImageContextWithOptions(sender.frame.size, true, 0.0)
-        sender.layer.renderInContext(UIGraphicsGetCurrentContext()!)
-        let result = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        return result
-    }
+
     
     // MARK: - paging
     public func initializePageIndex(index: Int) {
@@ -434,72 +426,10 @@ public class SKPhotoBrowser: UIViewController {
     public func gotoNextPage() {
         jumpToPageAtIndex(currentPageIndex + 1)
     }
-    
-    public func pageDisplayedAtIndex(index: Int) -> SKZoomingScrollView? {
-        return pagingScrollView.pageDisplayedAtIndex(index)
-    }
-    
-    public func pageDisplayingAtPhoto(photo: SKPhotoProtocol) -> SKZoomingScrollView? {
-        return pagingScrollView.pageDisplayingAtPhoto(photo)
-    }
-    
-    // MARK: - Control Hiding / Showing
-    public func cancelControlHiding() {
-        if controlVisibilityTimer != nil {
-            controlVisibilityTimer.invalidate()
-            controlVisibilityTimer = nil
-        }
-    }
-    
-    public func hideControlsAfterDelay() {
-        // reset
-        cancelControlHiding()
-        // start
-        controlVisibilityTimer = NSTimer.scheduledTimerWithTimeInterval(4.0, target: self, selector: #selector(SKPhotoBrowser.hideControls(_:)), userInfo: nil, repeats: false)
-    }
-    
-    public func hideControls(timer: NSTimer) {
-        setControlsHidden(true, animated: true, permanent: false)
-    }
-    
-    public func toggleControls() {
-        setControlsHidden(!areControlsHidden(), animated: true, permanent: false)
-    }
-    
-    public func setControlsHidden(hidden: Bool, animated: Bool, permanent: Bool) {
-        cancelControlHiding()
-        
-        let captionViews = pagingScrollView.getCaptionViews()
-        
-        UIView.animateWithDuration(0.35,
-            animations: { () -> Void in
-                let alpha: CGFloat = hidden ? 0.0 : 1.0
-                self.toolbar.alpha = alpha
-                self.toolbar.frame = hidden ? self.frameForToolbarHideAtOrientation() : self.frameForToolbarAtOrientation()
-                if SKPhotoBrowserOptions.displayCloseButton {
-                    self.closeButton.alpha = alpha
-                    self.closeButton.frame = hidden ? self.closeButton.hideFrame : self.closeButton.showFrame
-                }
-                if SKPhotoBrowserOptions.displayDeleteButton {
-                    self.deleteButton.alpha = alpha
-                    self.deleteButton.frame = hidden ? self.deleteButton.hideFrame : self.deleteButton.showFrame
-                }
-                captionViews.forEach { $0.alpha = alpha }
-            },
-            completion: nil)
-        
-        if !permanent {
-            hideControlsAfterDelay()
-        }
-        setNeedsStatusBarAppearanceUpdate()
-    }
-    
-    public func areControlsHidden() -> Bool {
-        return toolbar.alpha == 0.0
-    }
+
     
     // MARK: - Button
-    @objc func deleteButtonPressed(sender: UIButton) {
+    public func deleteButtonPressed(sender: UIButton) {
         delegate?.removePhoto?(self, index: currentPageIndex) { [weak self] in
             self?.deleteImage()
         }
@@ -570,8 +500,87 @@ public class SKPhotoBrowser: UIViewController {
             }
         }
     }
+}
+
+// MARK: - Public Function For Toolbar Control
+public extension SKPhotoBrowser {
+    func cancelControlHiding() {
+        if controlVisibilityTimer != nil {
+            controlVisibilityTimer.invalidate()
+            controlVisibilityTimer = nil
+        }
+    }
     
-  
+    func hideControlsAfterDelay() {
+        // reset
+        cancelControlHiding()
+        // start
+        controlVisibilityTimer = NSTimer.scheduledTimerWithTimeInterval(4.0, target: self, selector: #selector(SKPhotoBrowser.hideControls(_:)), userInfo: nil, repeats: false)
+    }
+    
+    func hideControls() {
+        setControlsHidden(true, animated: true, permanent: false)
+    }
+    
+    func hideControls(timer: NSTimer) {
+        hideControls()
+    }
+    
+    func toggleControls() {
+        setControlsHidden(!areControlsHidden(), animated: true, permanent: false)
+    }
+    
+    func areControlsHidden() -> Bool {
+        return toolbar.alpha == 0.0
+    }
+}
+
+
+// MARK: - Internal Function
+
+internal extension SKPhotoBrowser {
+    func pageDisplayedAtIndex(index: Int) -> SKZoomingScrollView? {
+        return pagingScrollView.pageDisplayedAtIndex(index)
+    }
+    
+    func getImageFromView(sender: UIView) -> UIImage {
+        UIGraphicsBeginImageContextWithOptions(sender.frame.size, true, 0.0)
+        sender.layer.renderInContext(UIGraphicsGetCurrentContext()!)
+        let result = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return result
+    }
+}
+
+// MARK: - Private Function 
+private extension SKPhotoBrowser {
+    func setControlsHidden(hidden: Bool, animated: Bool, permanent: Bool) {
+        cancelControlHiding()
+        
+        let captionViews = pagingScrollView.getCaptionViews()
+        
+        UIView.animateWithDuration(0.35,
+                                   animations: { () -> Void in
+                                    let alpha: CGFloat = hidden ? 0.0 : 1.0
+                                    self.toolbar.alpha = alpha
+                                    self.toolbar.frame = hidden ? self.frameForToolbarHideAtOrientation() : self.frameForToolbarAtOrientation()
+                                    if SKPhotoBrowserOptions.displayCloseButton {
+                                        self.closeButton.alpha = alpha
+                                        self.closeButton.frame = hidden ? self.closeButton.hideFrame : self.closeButton.showFrame
+                                    }
+                                    if SKPhotoBrowserOptions.displayDeleteButton {
+                                        self.deleteButton.alpha = alpha
+                                        self.deleteButton.frame = hidden ? self.deleteButton.hideFrame : self.deleteButton.showFrame
+                                    }
+                                    captionViews.forEach { $0.alpha = alpha }
+            },
+                                   completion: nil)
+        
+        if !permanent {
+            hideControlsAfterDelay()
+        }
+        setNeedsStatusBarAppearanceUpdate()
+    }
 }
 
 // MARK: -  UIScrollView Delegate
@@ -604,10 +613,6 @@ extension SKPhotoBrowser: UIScrollViewDelegate {
             delegate?.didShowPhotoAtIndex?(currentPageIndex)
             toolbar.updateToolbar(currentPageIndex)
         }
-    }
-    
-    public func scrollViewWillBeginDragging(scrollView: UIScrollView) {
-        setControlsHidden(true, animated: true, permanent: false)
     }
     
     public func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
