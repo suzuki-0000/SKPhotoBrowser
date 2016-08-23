@@ -47,9 +47,6 @@ public class SKPhotoBrowser: UIViewController {
     private let animator = SKAnimator()
     public weak var delegate: SKPhotoBrowserDelegate?
     
-    // helpers which often used
-    private let bundle = NSBundle(forClass: SKPhotoBrowser.self)
-    
     // photos
     var photos: [SKPhotoProtocol] = [SKPhotoProtocol]()
     var numberOfPhotos: Int {
@@ -77,7 +74,6 @@ public class SKPhotoBrowser: UIViewController {
     
     public convenience init(originImage: UIImage, photos: [SKPhotoProtocol], animatedFromView: UIView) {
         self.init(nibName: nil, bundle: nil)
-        
         animator.senderOriginImage = originImage
         animator.senderViewForAnimation = animatedFromView
         
@@ -456,7 +452,6 @@ internal extension SKPhotoBrowser {
             return
         }
         
-        let photo = photos[currentPageIndex]
         if let titles = SKPhotoBrowserOptions.actionButtonTitles {
             let actionSheetController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
             actionSheetController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: { (action) -> Void in
@@ -481,6 +476,7 @@ internal extension SKPhotoBrowser {
                 })
             }
         } else {
+            let photo = photos[currentPageIndex]
             guard let underlyingImage = photo.underlyingImage else {
                 return
             }
