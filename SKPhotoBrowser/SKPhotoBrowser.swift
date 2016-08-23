@@ -190,7 +190,7 @@ public class SKPhotoBrowser: UIViewController {
         pagingScrollView.reload()
         
         // reframe
-        pagingScrollView.contentOffset = contentOffsetForPageAtIndex(currentPageIndex)
+        pagingScrollView.updateContentOffset(currentPageIndex)
         pagingScrollView.tilePages()
         
         delegate?.didShowPhotoAtIndex?(currentPageIndex)
@@ -198,54 +198,10 @@ public class SKPhotoBrowser: UIViewController {
         isPerformingLayout = false
     }
     
-    func showButtons() {
-        if SKPhotoBrowserOptions.displayCloseButton {
-            closeButton.alpha = 1
-            closeButton.frame = closeButton.showFrame
-        }
-        if SKPhotoBrowserOptions.displayDeleteButton {
-            deleteButton.alpha = 1
-            deleteButton.frame = deleteButton.showFrame
-        }
-    }
-    
     public func prepareForClosePhotoBrowser() {
         cancelControlHiding()
         applicationWindow.removeGestureRecognizer(panGesture)
         NSObject.cancelPreviousPerformRequestsWithTarget(self)
-    }
-    
-    // MARK: - frame calculation
-    public func frameForToolbarAtOrientation() -> CGRect {
-        let currentOrientation = UIApplication.sharedApplication().statusBarOrientation
-        var height: CGFloat = navigationController?.navigationBar.frame.size.height ?? 44
-        if UIInterfaceOrientationIsLandscape(currentOrientation) {
-            height = 32
-        }
-        return CGRect(x: 0, y: view.bounds.size.height - height, width: view.bounds.size.width, height: height)
-    }
-    
-    public func frameForToolbarHideAtOrientation() -> CGRect {
-        let currentOrientation = UIApplication.sharedApplication().statusBarOrientation
-        var height: CGFloat = navigationController?.navigationBar.frame.size.height ?? 44
-        if UIInterfaceOrientationIsLandscape(currentOrientation) {
-            height = 32
-        }
-        return CGRect(x: 0, y: view.bounds.size.height + height, width: view.bounds.size.width, height: height)
-    }
-    
-    public func frameForPageAtIndex(index: Int) -> CGRect {
-        let bounds = pagingScrollView.bounds
-        var pageFrame = bounds
-        pageFrame.size.width -= (2 * 10)
-        pageFrame.origin.x = (bounds.size.width * CGFloat(index)) + 10
-        return pageFrame
-    }
-    
-    public func contentOffsetForPageAtIndex(index: Int) -> CGPoint {
-        let pageWidth = pagingScrollView.bounds.size.width
-        let newOffset = CGFloat(index) * pageWidth
-        return CGPoint(x: newOffset, y: 0)
     }
     
     public func dismissPhotoBrowser(animated animated: Bool, completion: (Void -> Void)? = nil) {
@@ -366,6 +322,17 @@ public extension SKPhotoBrowser {
 // MARK: - Internal Function
 
 internal extension SKPhotoBrowser {
+    func showButtons() {
+        if SKPhotoBrowserOptions.displayCloseButton {
+            closeButton.alpha = 1
+            closeButton.frame = closeButton.showFrame
+        }
+        if SKPhotoBrowserOptions.displayDeleteButton {
+            deleteButton.alpha = 1
+            deleteButton.frame = deleteButton.showFrame
+        }
+    }
+    
     func pageDisplayedAtIndex(index: Int) -> SKZoomingScrollView? {
         return pagingScrollView.pageDisplayedAtIndex(index)
     }
@@ -376,6 +343,36 @@ internal extension SKPhotoBrowser {
         let result = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         return result
+    }
+}
+
+// MARK: - Internal Function For Frame Calc
+
+internal extension SKPhotoBrowser {
+    func frameForToolbarAtOrientation() -> CGRect {
+        let currentOrientation = UIApplication.sharedApplication().statusBarOrientation
+        var height: CGFloat = navigationController?.navigationBar.frame.size.height ?? 44
+        if UIInterfaceOrientationIsLandscape(currentOrientation) {
+            height = 32
+        }
+        return CGRect(x: 0, y: view.bounds.size.height - height, width: view.bounds.size.width, height: height)
+    }
+    
+    func frameForToolbarHideAtOrientation() -> CGRect {
+        let currentOrientation = UIApplication.sharedApplication().statusBarOrientation
+        var height: CGFloat = navigationController?.navigationBar.frame.size.height ?? 44
+        if UIInterfaceOrientationIsLandscape(currentOrientation) {
+            height = 32
+        }
+        return CGRect(x: 0, y: view.bounds.size.height + height, width: view.bounds.size.width, height: height)
+    }
+    
+    func frameForPageAtIndex(index: Int) -> CGRect {
+        let bounds = pagingScrollView.bounds
+        var pageFrame = bounds
+        pageFrame.size.width -= (2 * 10)
+        pageFrame.origin.x = (bounds.size.width * CGFloat(index)) + 10
+        return pageFrame
     }
 }
 
