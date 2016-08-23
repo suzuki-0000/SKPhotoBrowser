@@ -7,12 +7,12 @@ SKPhotoBrowser
 Simple PhotoBrowser/Viewer inspired by facebook, twitter photo browsers written by swift, based on [IDMPhotoBrowser](https://github.com/ideaismobile/IDMPhotoBrowser), [MWPhotoBrowser](https://github.com/mwaterfall/MWPhotoBrowser).
 
 ## features
-- Can display one or more images by providing either `UIImage` objects, or string of URL array.
+- Display one or more images by providing either `UIImage` objects, or string of URL array.
 - Photos can be zoomed and panned, and optional captions can be displayed
 - Minimalistic Facebook-like interface, swipe up/down to dismiss
-- has simple ability to custom photobrowser. (hide/show statusbar, some toolbar for controls, swipe control)
-- Handling and caching photos from web
-- Landscape handling.
+- Ability to custom control. (hide/ show toolbar for controls, / swipe control)
+- Handling and caching photos from web 
+- Landscape handling
 - Delete photo support(by offbye). By set displayDelete=true show a delete icon in statusbar, deleted indexes can be obtain from delegate func didDeleted 
 
 ![sample](Screenshots/example02.gif)
@@ -42,43 +42,45 @@ github "suzuki-0000/SKPhotoBrowser"
 Add the code directly into your project.
 
 ##Usage
-See the code snippet below for an example of how to implement, or example project would be easy to understand.
+See the code snippet below for an example of how to implement, or see the example project.
 	
+from UIImages:
 ```swift
-// add SKPhoto Array from UIImage
+// 1. create SKPhoto Array from UIImage
 var images = [SKPhoto]()
 let photo = SKPhoto.photoWithImage(UIImage())// add some UIImage
 images.append(photo) 
 
-// create PhotoBrowser Instance, and present. 
+// 2. create PhotoBrowser Instance, and present from your viewController. 
 let browser = SKPhotoBrowser(photos: images)
 browser.initializePageIndex(0)
-browser.delegate = self
 presentViewController(browser, animated: true, completion: {})
 ```
 
-from web URLs:
+from URLs:
 ```swift
-// URL pattern snippet
+// 1. create URL Array 
 var images = [SKPhoto]()
 let photo = SKPhoto.photoWithImageURL("https://placehold.jp/150x150.png")
 photo.shouldCachePhotoURLImage = false // you can use image cache by true(NSCache)
 images.append(photo)
 
-// create PhotoBrowser Instance, and present. 
+// 2. create PhotoBrowser Instance, and present. 
 let browser = SKPhotoBrowser(photos: images)
+browser.initializePageIndex(0)
 presentViewController(browser, animated: true, completion: {})
 ```
 
 from local files:
 ```swift
-// images from local files
+// 1. create images from local files
 var images = [SKLocalPhoto]()
 let photo = SKLocalPhoto.photoWithImageURL("..some_local_path/150x150.png")
 images.append(photo)
 
-// create PhotoBrowser Instance, and present. 
+// 2. create PhotoBrowser Instance, and present. 
 let browser = SKPhotoBrowser(photos: images)
+browser.initializePageIndex(0)
 presentViewController(browser, animated: true, completion: {})
 ```
 
@@ -88,6 +90,7 @@ If you want to use zooming effect from an existing view, use another initializer
 func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
    let cell = collectionView.cellForItemAtIndexPath(indexPath) 
    let originImage = cell.exampleImageView.image // some image for baseImage 
+
    let browser = SKPhotoBrowser(originImage: originImage, photos: images, animatedFromView: cell) 
    browser.initializePageIndex(indexPath.row)
    presentViewController(browser, animated: true, completion: {})
@@ -97,20 +100,19 @@ func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath i
 ### Custom
 
 #### Toolbar
-You can customize the toolbar(back/forward, counter, some action) button. 
+You can customize Toolbar via SKPhotoBrowserOptions.
 - displayCounterLabel (default is true) 
 - displayBackAndForwardButton (default is true)
 - displayAction (default is true)
 
-If you dont want the toolbar at all, you can set displayToolbar = false (default is true)
 
 ```swift
+SKPhotoBrowserOptions.displayToolbar = false                // all tool bar will be hidden
+SKPhotoBrowserOptions.displayCounterLabel = false           // counter label will be hidden
+SKPhotoBrowserOptions.displayBackAndForwardButton = false   // back / forward button will be hidden
+SKPhotoBrowserOptions.displayAction = false                 // action button will be hidden
+SKPhotoBrowserOptions.displayDeleteButton = true            // delete button will be shown
 let browser = SKPhotoBrowser(originImage: originImage, photos: images, animatedFromView: cell)
-browser.displayToolbar = false                // all tool bar will be hidden
-browser.displayCounterLabel = false           // counter label will be hidden
-browser.displayBackAndForwardButton = false   // back / forward button will be hidden
-browser.displayAction = false                 // action button will be hidden
-browser.displayDeleteButton = true            // delete button will be shown
 ```
 
 #### CustomButton Image

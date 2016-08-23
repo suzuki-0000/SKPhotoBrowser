@@ -32,14 +32,42 @@ class SKToolbar: UIToolbar {
         self.init(frame: frame)
         self.browser = browser
         
-        setupToolbar()
+        setupApperance()
         setupPreviousButton()
         setupNextButton()
         setupCounterLabel()
         setupActionButton()
+        setupToolbar()
     }
     
-    func setup() {
+    func updateToolbar(currentPageIndex: Int) {
+        guard let browser = browser else { return }
+        
+        if browser.numberOfPhotos > 1 {
+            toolCounterLabel.text = "\(currentPageIndex + 1) / \(browser.numberOfPhotos)"
+        } else {
+            toolCounterLabel.text = nil
+        }
+        
+        toolPreviousButton.enabled = (currentPageIndex > 0)
+        toolNextButton.enabled = (currentPageIndex < browser.numberOfPhotos - 1)
+    }
+}
+
+private extension SKToolbar {
+    func setupApperance() {
+        backgroundColor = .clearColor()
+        clipsToBounds = true
+        translucent = true
+        setBackgroundImage(UIImage(), forToolbarPosition: .Any, barMetrics: .Default)
+        
+        // toolbar
+        if !SKPhotoBrowserOptions.displayToolbar {
+            hidden = true
+        }
+    }
+    
+    func setupToolbar() {
         guard let browser = browser else { return }
         
         let flexSpace = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: self, action: nil)
@@ -63,36 +91,6 @@ class SKToolbar: UIToolbar {
             items.append(toolActionButton)
         }
         setItems(items, animated: false)
-    }
-    
-    func updateToolbar(currentPageIndex: Int) {
-        guard let browser = browser else { return }
-        
-        if browser.numberOfPhotos > 1 {
-            toolCounterLabel.text = "\(currentPageIndex + 1) / \(browser.numberOfPhotos)"
-        } else {
-            toolCounterLabel.text = nil
-        }
-        
-        toolPreviousButton.enabled = (currentPageIndex > 0)
-        toolNextButton.enabled = (currentPageIndex < browser.numberOfPhotos - 1)
-    }
-}
-
-private extension SKToolbar {
-    func setupToolbar() {
-        guard let browser = browser else { return }
-        
-        backgroundColor = .clearColor()
-        clipsToBounds = true
-        translucent = true
-        setBackgroundImage(UIImage(), forToolbarPosition: .Any, barMetrics: .Default)
-        browser.view.addSubview(self)
-        
-        // toolbar
-        if !SKPhotoBrowserOptions.displayToolbar {
-            hidden = true
-        }
     }
     
     func setupPreviousButton() {

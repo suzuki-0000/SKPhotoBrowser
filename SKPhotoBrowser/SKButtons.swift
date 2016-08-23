@@ -11,62 +11,6 @@ import Foundation
 // helpers which often used
 private let bundle = NSBundle(forClass: SKPhotoBrowser.self)
 
-class SKButtons {
-    
-    var customCloseButtonImage: UIImage!
-    var customCloseButtonEdgeInsets: UIEdgeInsets!
-    var customDeleteButtonImage: UIImage!
-    var customDeleteButtonEdgeInsets: UIEdgeInsets!
-   
-    var closeButton: SKCloseButton!
-    var deleteButton: SKDeleteButton!
-    
-    private weak var browser: SKPhotoBrowser?
-    
-    init(browser: SKPhotoBrowser) {
-        self.browser = browser
-        
-        setSettingCloseButton()
-        setSettingDeleteButton()
-    }
-    
-    func setup() {}
-    
-    private func setSettingCloseButton() {
-        guard let browser = browser else { return }
-        
-        closeButton = SKCloseButton(frame: browser.view.frame)
-        closeButton.addTarget(browser, action: #selector(browser.closeButtonPressed(_:)), forControlEvents: .TouchUpInside)
-        closeButton.hidden = !SKPhotoBrowserOptions.displayCloseButton
-        browser.view.addSubview(closeButton)
-        
-        // If another developer has not set their values
-        if customCloseButtonImage != nil {
-            closeButton.setImage(customCloseButtonImage, forState: .Normal)
-        }
-        if customCloseButtonEdgeInsets != nil {
-            closeButton.imageEdgeInsets = customCloseButtonEdgeInsets
-        }
-    }
-    
-    private func setSettingDeleteButton() {
-        guard let browser = browser else { return }
-        
-        deleteButton = SKDeleteButton(frame: browser.view.frame)
-        deleteButton.addTarget(browser, action: #selector(browser.deleteButtonPressed(_:)), forControlEvents: .TouchUpInside)
-        deleteButton.hidden = !SKPhotoBrowserOptions.displayDeleteButton
-        browser.view.addSubview(deleteButton)
-        
-        // If another developer has not set their values
-        if customDeleteButtonImage != nil {
-            deleteButton.setImage(customCloseButtonImage, forState: .Normal)
-        }
-        if customDeleteButtonEdgeInsets != nil {
-            deleteButton.imageEdgeInsets = customCloseButtonEdgeInsets
-        }
-    }
-}
-
 class SKButton: UIButton {
     var showFrame: CGRect!
     var hideFrame: CGRect!
@@ -82,6 +26,7 @@ class SKButton: UIButton {
     func setup(imageName: String) {
         backgroundColor = .clearColor()
         imageEdgeInsets = insets
+//        clipsToBounds = true
         translatesAutoresizingMaskIntoConstraints = true
         autoresizingMask = [.FlexibleBottomMargin, .FlexibleLeftMargin, .FlexibleRightMargin, .FlexibleTopMargin]
         
@@ -126,9 +71,5 @@ class SKDeleteButton: SKButton {
     }
     
     override func updateFrame() {
-        showFrame = CGRect(x: SKMesurement.screenWidth - size.width, y: buttonTopOffset,
-                                       width: size.width, height: size.height)
-        hideFrame = CGRect(x: SKMesurement.screenWidth - size.width, y: -20,
-                                       width: size.width, height: size.height)
     }
 }

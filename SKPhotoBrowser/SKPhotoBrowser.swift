@@ -15,8 +15,9 @@ public class SKPhotoBrowser: UIViewController {
     
     let pageIndexTagOffset: Int = 1000
     
-    lazy var buttons: SKButtons = SKButtons(browser: self)
-    lazy var toolbar: SKToolbar = SKToolbar(frame: self.frameForToolbarAtOrientation(), browser: self)
+    private var closeButton: SKCloseButton!
+    private var deleteButton: SKDeleteButton!
+    private var toolbar: SKToolbar!
     
     // actions
     private var activityViewController: UIActivityViewController!
@@ -26,13 +27,6 @@ public class SKPhotoBrowser: UIViewController {
     private var applicationWindow: UIWindow!
     private var pagingScrollView: SKPagingScrollView!
     var backgroundView: UIView!
-    
-    private var closeButton: SKCloseButton {
-        return buttons.closeButton
-    }
-    private var deleteButton: SKDeleteButton {
-        return buttons.deleteButton
-    }
     
     var initialPageIndex: Int = 0
     var currentPageIndex: Int = 0
@@ -117,13 +111,13 @@ public class SKPhotoBrowser: UIViewController {
     override public func viewDidLoad() {
         super.viewDidLoad()
         
-        setupAppearance()
-        
-        toolbar.setup()
-        buttons.setup()
+        configureAppearance()
+        configureButtons()
+        configureToolbar()
         
         animator.willPresent(self)
     }
+
     
     override public func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
@@ -256,7 +250,7 @@ public class SKPhotoBrowser: UIViewController {
         return CGPoint(x: newOffset, y: 0)
     }
     
-    private func setupAppearance() {
+    private func configureAppearance() {
         view.backgroundColor = .blackColor()
         view.clipsToBounds = true
         view.opaque = false
@@ -277,6 +271,24 @@ public class SKPhotoBrowser: UIViewController {
             view.addGestureRecognizer(panGesture)
         }
     }
+    
+    private func configureButtons() {
+        closeButton = SKCloseButton(frame: .zero)
+        closeButton.addTarget(self, action: #selector(closeButtonPressed(_:)), forControlEvents: .TouchUpInside)
+        closeButton.hidden = !SKPhotoBrowserOptions.displayCloseButton
+        view.addSubview(closeButton)
+        
+        deleteButton = SKDeleteButton(frame: .zero)
+        deleteButton.addTarget(self, action: #selector(deleteButtonPressed(_:)), forControlEvents: .TouchUpInside)
+        deleteButton.hidden = !SKPhotoBrowserOptions.displayDeleteButton
+        view.addSubview(deleteButton)
+    }
+    
+    private func configureToolbar() {
+        toolbar = SKToolbar(frame: frameForToolbarAtOrientation(), browser: self)
+        view.addSubview(toolbar)
+    }
+    
     
     private func deleteImage() {
         defer {
@@ -502,7 +514,20 @@ public class SKPhotoBrowser: UIViewController {
     }
 }
 
+// MARK: - Public Function For Customizing Buttons
+
+public extension SKPhotoBrowser {
+    func updateCloseButton(image: UIImage, showFrame: CGRect, hideFrame: CGRect) {
+//        closeButton.setImage(image, forState: .Normal)
+//        buttons.closeButton.frame = showFrame
+//        buttons.closeButton.showFrame = showFrame
+//        buttons.closeButton.hideFrame = hideFrame
+//        buttons.closeButton.layoutIfNeeded()
+    }
+}
+
 // MARK: - Public Function For Toolbar Control
+
 public extension SKPhotoBrowser {
     func cancelControlHiding() {
         if controlVisibilityTimer != nil {

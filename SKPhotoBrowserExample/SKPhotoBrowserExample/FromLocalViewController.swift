@@ -63,12 +63,14 @@ extension FromLocalViewController {
             return
         }
         
-        SKPhotoBrowserOptions.displayDeleteButton = true
+//        SKPhotoBrowserOptions.displayToolbar = false
         
         let browser = SKPhotoBrowser(originImage: originImage, photos: images, animatedFromView: cell)
-//        let browser = SKPhotoBrowser(photos: images)
         browser.initializePageIndex(indexPath.row)
         browser.delegate = self
+        browser.updateCloseButton(UIImage(named: "image1.jpg")!,
+                               showFrame: CGRect(x: 10, y: 10, width: 30, height: 30),
+                               hideFrame: CGRect(x: 10, y: -10, width: 30, height: 30))
         
         presentViewController(browser, animated: true, completion: {})
     }
