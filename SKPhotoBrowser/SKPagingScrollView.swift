@@ -34,11 +34,9 @@ class SKPagingScrollView: UIScrollView {
     
     convenience init(frame: CGRect, browser: SKPhotoBrowser) {
         self.init(frame: frame)
-        
         self.browser = browser
         
-        updateFrame(bounds)
-        updateContentSize()
+        updateFrame(bounds, currentPageIndex: browser.currentPageIndex)
     }
     
     func reload() {
@@ -77,7 +75,11 @@ class SKPagingScrollView: UIScrollView {
         }
     }
     
-    func updateFrame(bounds: CGRect) {
+    func animate(frame: CGRect) {
+        setContentOffset(CGPoint(x: frame.origin.x - sideMargin, y: 0), animated: true)
+    }
+    
+    func updateFrame(bounds: CGRect, currentPageIndex: Int) {
         var frame = bounds
         frame.origin.x -= sideMargin
         frame.size.width += (2 * sideMargin)
@@ -94,14 +96,19 @@ class SKPagingScrollView: UIScrollView {
                 }
             }
         }
+        
+        updateContentSize()
+        updateContentOffset(currentPageIndex)
     }
     
     func updateContentSize() {
         contentSize = CGSize(width: bounds.size.width * CGFloat(numberOfPhotos), height: bounds.size.height)
     }
     
-    func updateContentOffset(frame: CGRect) {
-        setContentOffset(CGPoint(x: frame.origin.x - sideMargin, y: 0), animated: true)
+    func updateContentOffset(index: Int) {
+        let pageWidth = bounds.size.width
+        let newOffset = CGFloat(index) * pageWidth
+        contentOffset = CGPoint(x: newOffset, y: 0)
     }
     
     func tilePages() {
