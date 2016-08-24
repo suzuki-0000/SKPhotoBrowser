@@ -717,12 +717,12 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
     // MARK: - panGestureRecognized
     public func panGestureRecognized(sender: UIPanGestureRecognizer) {
         backgroundView.hidden = true
-        let scrollView = pageDisplayedAtIndex(currentPageIndex)
+        let scrollView: SKZoomingScrollView = pageDisplayedAtIndex(currentPageIndex)
         
-        let viewHeight = scrollView.frame.size.height
-        let viewHalfHeight = viewHeight/2
+        let viewHeight: CGFloat = scrollView.frame.size.height
+        let viewHalfHeight: CGFloat = viewHeight/2
         
-        var translatedPoint = sender.translationInView(self.view)
+        var translatedPoint: CGPoint = sender.translationInView(self.view)
         
         // gesture began
         if sender.state == .Began {
@@ -738,8 +738,8 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         translatedPoint = CGPoint(x: firstX, y: firstY + translatedPoint.y)
         scrollView.center = translatedPoint
         
-        let minOffset = viewHalfHeight / 4
-        let offset = 1 - (scrollView.center.y > viewHalfHeight ? scrollView.center.y - viewHalfHeight : -(scrollView.center.y - viewHalfHeight)) / viewHalfHeight
+        let minOffset: CGFloat = viewHalfHeight / 4
+        let offset: CGFloat = 1 - (scrollView.center.y > viewHalfHeight ? scrollView.center.y - viewHalfHeight : -(scrollView.center.y - viewHalfHeight)) / viewHalfHeight
         view.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(max(0.7, offset))
         
         // gesture end
@@ -757,10 +757,10 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
                 let finalX: CGFloat = firstX
                 let finalY: CGFloat = viewHalfHeight
                 
-                let animationDuration = Double(abs(velocityY) * 0.0002 + 0.2)
+                let animationDuration: CGFloat = abs(velocityY) * 0.0002 + 0.2
                 
                 UIView.beginAnimations(nil, context: nil)
-                UIView.setAnimationDuration(animationDuration)
+                UIView.setAnimationDuration(Double(animationDuration))
                 UIView.setAnimationCurve(UIViewAnimationCurve.EaseIn)
                 view.backgroundColor = UIColor.blackColor()
                 scrollView.center = CGPoint(x: finalX, y: finalY)
@@ -995,13 +995,18 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
     }
     
     public func tilePages() {
-        let visibleBounds = pagingScrollView.bounds
+        let visibleBounds: CGRect = pagingScrollView.bounds
         
-        var firstIndex = Int(floor((CGRectGetMinX(visibleBounds) + 10 * 2) / CGRectGetWidth(visibleBounds)))
-        var lastIndex  = Int(floor((CGRectGetMaxX(visibleBounds) - 10 * 2 - 1) / CGRectGetWidth(visibleBounds)))
+        let visibleWidth: CGFloat = CGRectGetWidth(visibleBounds)
+        let firstIndexFloat: CGFloat = (CGRectGetMinX(visibleBounds) + 10 * 2) / visibleWidth
+        let lastIndexFloat: CGFloat = (CGRectGetMaxX(visibleBounds) - 10 * 2 - 1) / visibleWidth
+        var firstIndex: Int = Int(floor(firstIndexFloat))
+        var lastIndex: Int = Int(floor(lastIndexFloat))
         if firstIndex < 0 {
             firstIndex = 0
         }
+        
+        let numberOfPhotos: Int = self.numberOfPhotos
         if firstIndex > numberOfPhotos - 1 {
             firstIndex = numberOfPhotos - 1
         }
@@ -1012,8 +1017,8 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
             lastIndex = numberOfPhotos - 1
         }
         
-        for page in visiblePages {
-            let newPageIndex = page.tag - pageIndexTagOffset
+        for page: SKZoomingScrollView in visiblePages {
+            let newPageIndex: Int = page.tag - pageIndexTagOffset
             if newPageIndex < firstIndex || newPageIndex > lastIndex {
                 recycledPages.append(page)
                 page.prepareForReuse()
@@ -1021,19 +1026,20 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
             }
         }
         
-        let visibleSet = Set(visiblePages)
-        visiblePages = Array(visibleSet.subtract(recycledPages))
+        let visibleSet: Set<SKZoomingScrollView> = Set(visiblePages)
+        let visibleSetWithoutRecycled: Set<SKZoomingScrollView> = visibleSet.subtract(recycledPages)
+        visiblePages = Array(visibleSetWithoutRecycled)
         
         while recycledPages.count > 2 {
             recycledPages.removeFirst()
         }
         
-        for index in firstIndex...lastIndex {
+        for index: Int in firstIndex...lastIndex {
             if isDisplayingPageForIndex(index) {
                 continue
             }
             
-            let page = SKZoomingScrollView(frame: view.frame, browser: self)
+            let page: SKZoomingScrollView = SKZoomingScrollView(frame: view.frame, browser: self)
             page.frame = frameForPageAtIndex(index)
             page.tag = index + pageIndexTagOffset
             page.photo = photoAtIndex(index)
@@ -1041,7 +1047,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
             visiblePages.append(page)
             pagingScrollView.addSubview(page)
             // if exists caption, insert
-            if let captionView = captionViewForPhotoAtIndex(index) {
+            if let captionView: SKCaptionView = captionViewForPhotoAtIndex(index) {
                 captionView.frame = frameForCaptionView(captionView, index: index)
                 pagingScrollView.addSubview(captionView)
                 // ref val for control
