@@ -71,6 +71,8 @@ import UIKit
      - Returns: the view to animate to
      */
     optional func viewForPhoto(browser: SKPhotoBrowser, index: Int) -> UIView?
+    
+    optional func viewForExtentionFooter() -> UIView?
 }
 
 public let SKPHOTO_LOADING_DID_END_NOTIFICATION = "photoLoadingDidEndNotification"
@@ -116,6 +118,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
     public var bounceAnimation = false
     public var enableZoomBlackArea = true
     public var enableSingleTapDismiss = false
+
     /// Set nil to force the statusbar to be hidden
     public var statusBarStyle: UIStatusBarStyle?
     
@@ -285,6 +288,11 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         
         if !displayToolbar {
             toolBar.hidden = true
+        }
+        
+        if let footer = self.delegate?.viewForExtentionFooter!() {
+            footer.frame = self.frameForFooterExtention(footer)
+            view.addSubview(footer)
         }
         
         // arrows:back
@@ -619,14 +627,24 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         return frame
     }
     
+    public func frameForFooterExtention(footer:UIView) -> CGRect {
+        let height = footer.bounds.size.height
+        return CGRect(x: 0, y: view.bounds.size.height - height, width: view.bounds.size.width, height: height)
+    }
+    
     public func frameForToolbarAtOrientation() -> CGRect {
         let currentOrientation = UIApplication.sharedApplication().statusBarOrientation
         var height: CGFloat = navigationController?.navigationBar.frame.size.height ?? 44
         if UIInterfaceOrientationIsLandscape(currentOrientation) {
             height = 32
         }
-        return CGRect(x: 0, y: view.bounds.size.height - height, width: view.bounds.size.width, height: height)
+        var shift:CGFloat = 0.0
+        if let del = self.delegate , view = del.viewForExtentionFooter!()   {
+            shift = view.bounds.size.height
+        }
+        return CGRect(x: 0, y: view.bounds.size.height - (height + shift), width: view.bounds.size.width, height: height)
     }
+
     
     public func frameForToolbarHideAtOrientation() -> CGRect {
         let currentOrientation = UIApplication.sharedApplication().statusBarOrientation
@@ -929,17 +947,19 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
 
     public func determineAndClose() {
         delegate?.willDismissAtPageIndex?(currentPageIndex)
-        
-        if let sender = delegate?.viewForPhoto?(self, index: currentPageIndex), image = photoAtIndex(currentPageIndex).underlyingImage {
-            senderViewForAnimation = sender
-            resizableImageView.image = image
-            
-            let scrollView = pageDisplayedAtIndex(currentPageIndex)
-            performCloseAnimationWithScrollView(scrollView)
-            
-        } else {
-            dismissPhotoBrowser()
-        }
+        dismissPhotoBrowser()
+//        no need
+//
+//        if let sender = delegate?.viewForPhoto?(self, index: currentPageIndex), image = photoAtIndex(currentPageIndex).underlyingImage {
+//            senderViewForAnimation = sender
+//            resizableImageView.image = image
+//            
+//            let scrollView = pageDisplayedAtIndex(currentPageIndex)
+//            performCloseAnimationWithScrollView(scrollView)
+//            
+//        } else {
+//            dismissPhotoBrowser()
+//        }
     }
     
     //MARK: - image
