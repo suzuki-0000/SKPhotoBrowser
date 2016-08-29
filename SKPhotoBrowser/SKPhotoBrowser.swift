@@ -948,7 +948,7 @@ public class SKPhotoBrowser: UIViewController, UIScrollViewDelegate {
         sender.layer.renderInContext(UIGraphicsGetCurrentContext()!)
         let result = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
-        return result
+        return result!
     }
     
     // MARK: - paging
