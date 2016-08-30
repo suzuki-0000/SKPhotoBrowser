@@ -1,7 +1,12 @@
 # Change Log
 
-## 2.1.x
+## 3.0.x
 Released on 2016-8
+
+#### Some Interface is removed, changed this version.
+- status bar handling is removed.
+- custom button handling interface is chagned.
+- custom option goes internal/private. use option via SKPhotoBrowserOptions.
 
 #### Add
 - Add changelog
