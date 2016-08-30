@@ -376,16 +376,15 @@ internal extension SKPhotoBrowser {
 
 internal extension SKPhotoBrowser {
     func panGestureRecognized(sender: UIPanGestureRecognizer) {
-        guard let zoomingScrollView = pagingScrollView.pageDisplayedAtIndex(currentPageIndex) else {
+        guard let zoomingScrollView: SKZoomingScrollView = pagingScrollView.pageDisplayedAtIndex(currentPageIndex) else {
             return
         }
         
         backgroundView.hidden = true
         
-        let viewHeight = zoomingScrollView.frame.size.height
-        let viewHalfHeight = viewHeight/2
-        
-        var translatedPoint = sender.translationInView(self.view)
+        let viewHeight: CGFloat = zoomingScrollView.frame.size.height
+        let viewHalfHeight: CGFloat = viewHeight/2
+        var translatedPoint: CGPoint = sender.translationInView(self.view)
         
         // gesture began
         if sender.state == .Began {
@@ -399,8 +398,8 @@ internal extension SKPhotoBrowser {
         translatedPoint = CGPoint(x: firstX, y: firstY + translatedPoint.y)
         zoomingScrollView.center = translatedPoint
         
-        let minOffset = viewHalfHeight / 4
-        let offset = 1 - (zoomingScrollView.center.y > viewHalfHeight
+        let minOffset: CGFloat = viewHalfHeight / 4
+        let offset: CGFloat = 1 - (zoomingScrollView.center.y > viewHalfHeight
             ? zoomingScrollView.center.y - viewHalfHeight
             : -(zoomingScrollView.center.y - viewHalfHeight)) / viewHalfHeight
         
@@ -423,7 +422,7 @@ internal extension SKPhotoBrowser {
                 let finalX: CGFloat = firstX
                 let finalY: CGFloat = viewHalfHeight
                 
-                let animationDuration = Double(abs(velocityY) * 0.0002 + 0.2)
+                let animationDuration: Double = Double(abs(velocityY) * 0.0002 + 0.2)
                 
                 UIView.beginAnimations(nil, context: nil)
                 UIView.setAnimationDuration(animationDuration)

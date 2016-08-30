@@ -114,8 +114,8 @@ class SKPagingScrollView: UIScrollView {
     func tilePages() {
         guard let browser = browser else { return }
         
-        let firstIndex = getFirstIndex()
-        let lastIndex = getLastIndex()
+        let firstIndex: Int = getFirstIndex()
+        let lastIndex: Int = getLastIndex()
         
         visiblePages
             .filter({ $0.tag - pageIndexTagOffset < firstIndex ||  $0.tag - pageIndexTagOffset < lastIndex })
@@ -125,19 +125,20 @@ class SKPagingScrollView: UIScrollView {
                 page.removeFromSuperview()
             }
         
-        let visibleSet = Set(visiblePages)
-        visiblePages = Array(visibleSet.subtract(recycledPages))
+        let visibleSet: Set<SKZoomingScrollView> = Set(visiblePages)
+        let visibleSetWithoutRecycled: Set<SKZoomingScrollView> = visibleSet.subtract(recycledPages)
+        visiblePages = Array(visibleSetWithoutRecycled)
         
         while recycledPages.count > 2 {
             recycledPages.removeFirst()
         }
         
-        for index in firstIndex...lastIndex {
+        for index: Int in firstIndex...lastIndex {
             if visiblePages.filter({ $0.tag - pageIndexTagOffset == index }).count > 0 {
                 continue
             }
             
-            let page = SKZoomingScrollView(frame: frame, browser: browser)
+            let page: SKZoomingScrollView = SKZoomingScrollView(frame: frame, browser: browser)
             page.frame = frameForPageAtIndex(index)
             page.tag = index + pageIndexTagOffset
             page.photo = browser.photos[index]
@@ -146,7 +147,7 @@ class SKPagingScrollView: UIScrollView {
             addSubview(page)
             
             // if exists caption, insert
-            if let captionView = createCaptionView(index) {
+            if let captionView: SKCaptionView = createCaptionView(index) {
                 captionView.frame = frameForCaptionView(captionView, index: index)
                 captionView.alpha = browser.areControlsHidden() ? 0 : 1
                 addSubview(captionView)
@@ -201,7 +202,7 @@ private extension SKPagingScrollView {
         return pageFrame
     }
     
-    private func createCaptionView(index: Int) -> SKCaptionView? {
+    func createCaptionView(index: Int) -> SKCaptionView? {
         guard let photo = browser?.photoAtIndex(index) where photo.caption != nil else {
             return nil
         }
