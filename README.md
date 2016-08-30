@@ -6,7 +6,7 @@ SKPhotoBrowser
 
 Simple PhotoBrowser/Viewer inspired by facebook, twitter photo browsers written by swift, based on [IDMPhotoBrowser](https://github.com/ideaismobile/IDMPhotoBrowser), [MWPhotoBrowser](https://github.com/mwaterfall/MWPhotoBrowser).
 
-## Attention
+## Note
 - released v3.0.x and this version goes some breaking changes. please check [CHANGELOG](https://github.com/suzuki-0000/SKPhotoBrowser/blob/master/CHANGELOG.md).
 
 ## features
