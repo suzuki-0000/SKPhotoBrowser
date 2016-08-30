@@ -56,7 +56,7 @@ public class SKZoomingScrollView: UIScrollView, UIScrollViewDelegate, SKDetectin
         // image
         photoImageView = SKDetectingImageView(frame: frame)
         photoImageView.delegate = self
-        photoImageView.contentMode = .ScaleAspectFill
+        photoImageView.contentMode = .Bottom
         photoImageView.backgroundColor = .clearColor()
         addSubview(photoImageView)
         
@@ -203,6 +203,7 @@ public class SKZoomingScrollView: UIScrollView, UIScrollViewDelegate, SKDetectin
 
             // image
             photoImageView.image = image
+            photoImageView.contentMode = photo.contentMode
             
             var photoImageViewFrame = CGRect.zero
             photoImageViewFrame.origin = CGPoint.zero
@@ -271,16 +272,22 @@ public class SKZoomingScrollView: UIScrollView, UIScrollViewDelegate, SKDetectin
     
     // MARK: - SKDetectingViewDelegate
     func handleSingleTap(view: UIView, touch: UITouch) {
-        if photoBrowser?.enableZoomBlackArea == true {
-            if photoBrowser?.areControlsHidden() == false && photoBrowser?.enableSingleTapDismiss == true {
-                photoBrowser?.determineAndClose()
-            }
-            photoBrowser?.toggleControls()
+        guard let browser = photoBrowser else {
+            return
+        }
+        guard SKPhotoBrowserOptions.enableZoomBlackArea == true else {
+            return
+        }
+        
+        if browser.areControlsHidden() == false && SKPhotoBrowserOptions.enableSingleTapDismiss == true {
+            browser.determineAndClose()
+        } else {
+            browser.toggleControls()
         }
     }
     
     func handleDoubleTap(view: UIView, touch: UITouch) {
-        if photoBrowser?.enableZoomBlackArea == true {
+        if SKPhotoBrowserOptions.enableZoomBlackArea == true {
             let needPoint = getViewFramePercent(view, touch: touch)
             handleDoubleTap(needPoint)
         }
@@ -309,10 +316,13 @@ public class SKZoomingScrollView: UIScrollView, UIScrollViewDelegate, SKDetectin
     
     // MARK: - SKDetectingImageViewDelegate
     func handleImageViewSingleTap(touchPoint: CGPoint) {
-        if photoBrowser!.enableSingleTapDismiss {
-            photoBrowser?.determineAndClose()
+        guard let browser = photoBrowser else {
+            return
+        }
+        if SKPhotoBrowserOptions.enableSingleTapDismiss {
+            browser.determineAndClose()
         } else {
-            photoBrowser?.toggleControls()
+            browser.toggleControls()
         }
     }
     

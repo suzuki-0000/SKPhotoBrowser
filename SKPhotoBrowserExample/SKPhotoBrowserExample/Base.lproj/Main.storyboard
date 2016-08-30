@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="qgG-zu-Htx">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="qgG-zu-Htx">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
@@ -88,14 +88,26 @@
                                     <action selector="pushButton:" destination="wTD-ba-cWw" eventType="touchUpInside" id="xIc-2O-Gmb"/>
                                 </connections>
                             </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yxe-Wd-8iE">
+                                <rect key="frame" x="180" y="78" width="240" height="128"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="128" id="a4K-nx-MJW"/>
+                                    <constraint firstAttribute="width" constant="240" id="tzG-IV-N9z"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="ZK0-HE-9Bs" firstAttribute="top" secondItem="yxe-Wd-8iE" secondAttribute="bottom" constant="50" id="8Aq-op-KMh"/>
                             <constraint firstItem="ZK0-HE-9Bs" firstAttribute="centerY" secondItem="pNX-nL-SLw" secondAttribute="centerY" id="9jd-Un-cAK"/>
                             <constraint firstItem="ZK0-HE-9Bs" firstAttribute="centerX" secondItem="pNX-nL-SLw" secondAttribute="centerX" id="h6U-H1-RV4"/>
+                            <constraint firstItem="yxe-Wd-8iE" firstAttribute="centerX" secondItem="pNX-nL-SLw" secondAttribute="centerX" id="xA1-uS-dJw"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="FromWeb" id="2lE-np-9H3"/>
+                    <connections>
+                        <outlet property="imageView" destination="yxe-Wd-8iE" id="aMH-Df-3r0"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jdP-ty-Ygs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

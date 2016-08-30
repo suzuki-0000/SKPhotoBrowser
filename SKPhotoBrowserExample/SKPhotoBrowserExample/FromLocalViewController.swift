@@ -47,6 +47,7 @@ extension FromLocalViewController {
         }
         
         cell.exampleImageView.image = UIImage(named: "image\(indexPath.row % 10).jpg")
+//        cell.exampleImageView.contentMode = .ScaleAspectFill
         return cell
     }
 }
@@ -61,11 +62,13 @@ extension FromLocalViewController {
         guard let originImage = cell.exampleImageView.image else {
             return
         }
+        
+//        SKPhotoBrowserOptions.displayToolbar = false
+        
         let browser = SKPhotoBrowser(originImage: originImage, photos: images, animatedFromView: cell)
-//        let browser = SKPhotoBrowser(photos: images)
         browser.initializePageIndex(indexPath.row)
         browser.delegate = self
-        browser.statusBarStyle = .LightContent
+//        browser.updateCloseButton(UIImage(named: "image1.jpg")!)
         
         presentViewController(browser, animated: true, completion: {})
     }
@@ -130,6 +133,7 @@ private extension FromLocalViewController {
         return (0..<10).map { (i: Int) -> SKPhotoProtocol in
             let photo = SKPhoto.photoWithImage(UIImage(named: "image\(i%10).jpg")!)
             photo.caption = caption[i%10]
+//            photo.contentMode = .ScaleAspectFill
             return photo
         }
     }

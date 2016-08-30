@@ -12,6 +12,7 @@ import UIKit
     var underlyingImage: UIImage! { get }
     var caption: String! { get }
     var index: Int { get set}
+    var contentMode: UIViewContentMode { get set }
     func loadUnderlyingImageAndNotify()
     func checkCache()
 }
@@ -21,6 +22,7 @@ public class SKPhoto: NSObject, SKPhotoProtocol {
     
     public var underlyingImage: UIImage!
     public var photoURL: String!
+    public var contentMode: UIViewContentMode = .ScaleAspectFill
     public var shouldCachePhotoURLImage: Bool = false
     public var caption: String!
     public var index: Int = 0
@@ -46,16 +48,21 @@ public class SKPhoto: NSObject, SKPhotoProtocol {
     }
     
     public func checkCache() {
-        if photoURL != nil && shouldCachePhotoURLImage {
-            if SKCache.sharedCache.imageCache is SKRequestResponseCacheable {
-                let request = NSURLRequest(URL: NSURL(string: photoURL)!)
-                if let img = SKCache.sharedCache.imageForRequest(request) {
-                    underlyingImage = img
-                }
-            } else {
-                if let img = SKCache.sharedCache.imageForKey(photoURL) {
-                    underlyingImage = img
-                }
+        guard let photoURL = photoURL else {
+            return
+        }
+        guard shouldCachePhotoURLImage else {
+            return
+        }
+        
+        if SKCache.sharedCache.imageCache is SKRequestResponseCacheable {
+            let request = NSURLRequest(URL: NSURL(string: photoURL)!)
+            if let img = SKCache.sharedCache.imageForRequest(request) {
+                underlyingImage = img
+            }
+        } else {
+            if let img = SKCache.sharedCache.imageForKey(photoURL) {
+                underlyingImage = img
             }
         }
     }
