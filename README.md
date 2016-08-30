@@ -101,10 +101,6 @@ func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath i
 
 #### Toolbar
 You can customize Toolbar via SKPhotoBrowserOptions.
-- displayCounterLabel (default is true) 
-- displayBackAndForwardButton (default is true)
-- displayAction (default is true)
-
 
 ```swift
 SKPhotoBrowserOptions.displayToolbar = false                // all tool bar will be hidden
@@ -115,24 +111,29 @@ SKPhotoBrowserOptions.displayDeleteButton = true            // delete button wil
 let browser = SKPhotoBrowser(originImage: originImage, photos: images, animatedFromView: cell)
 ```
 
-#### CustomButton Image
-Close button is able to change image and frame.
-``` swift
-browser.displayCustomCloseButton = true // custom close button will be enable
-browser.customCloseButtonImage = UIImage(named: "some.png")
-browser.customCloseButtonShowFrame = CGRect()
-browser.customCloseButtonHideFrame = CGRect()
-```
-Delete button is able to change image and frame.
-``` swift
-browser.displayCustomDeleteButton = true // custom delete button will be enable
-browser.customDeleteButtonImage = UIImage(named: "some.png")
-browser.customDeleteButtonShowFrame = CGRect()
-browser.customDeleteButtonHideFrame = CGRect()
+#### Custom Cache From Web URL
+You can use SKCacheable protocol if others are adaptable. (SKImageCacheable or SKRequestResponseCacheable)
+
+```swift
+e.g. SDWebImage
+
+// 1. create custon cache. implement function for protocol
+class CustomImageCache: SKImageCacheable { var cache: SDImageCache }
+
+// 2. replace SKCache instance with custom cache
+SKCache.sharedCache.imageCache = CustomImageCache()
 ```
 
-#### Delete 
-You can delete your photo for your own hanlding.
+#### CustomButton Image
+Close, Delete buttons are able to change image and frame.
+``` swift
+browser.browser.updateCloseButton(UIImage())
+browser.browser.updateUpdateButton(UIImage())
+```
+
+#### Delete Photo
+You can delete your photo for your own handling. detect button tap from `removePhoto` delegate function.
+
 
 #### Photo Captions
 Photo captions can be displayed simply bottom of PhotoBrowser. by setting the `caption` property on specific photos:
@@ -184,9 +185,9 @@ func didDismissAtPageIndex(index: Int) {
 - single tap handling, dismiss/noaction
 - bounce animation when appearing/dismissing
 ``` swift
-enableZoomBlackArea    = true  // default true
-enableSingleTapDismiss = true  // default false
-bounceAnimation        = true  // default false
+SKPhotoBrowserOptions.enableZoomBlackArea    = true  // default true
+SKPhotoBrowserOptions.enableSingleTapDismiss = true  // default false
+SKPhotoBrowserOptions.bounceAnimation        = true  // default false
 ``` 
 
 ## Photos from
