@@ -1,5 +1,22 @@
 # Change Log
 
+## 2.1.x
+Released on 2016-8
+
+#### Add
+- Add changelog
+
+#### Fixed
+- prepare for swift3.0. 
+- refactoring code for new implement.
+- Parent View disappears when dismissed. #120
+- Glitch when origin imageview is not correct size #108 
+- Problems with the "long" photo #116 
+
+#### Remove
+- Statusbar handling. 
+- Some public property to internal for improving
+
 ## 2.0.x
 Released on 2016-8
 
@@ -10,6 +27,7 @@ Released on 2016-8
 - Make cached response data return optional
 - Fixed issue when animatedFromView not has a superview but has superlayer
 - Fixed when image downloaded then not show activityindicator
+- Update for Swift2.3
 
 --- 
 
