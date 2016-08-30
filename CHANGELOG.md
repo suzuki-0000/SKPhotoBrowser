@@ -140,21 +140,3 @@ Released on 2015-10-09.
 ## 1.0.0
 Released on 2015-10-09.
 
-#### Added
-- Tests for upload and download with progress.
-  - Added by [Mattt Thompson](https://github.com/mattt).
-- Test for question marks in url encoded query.
-  - Added by [Mattt Thompson](https://github.com/mattt).
-- The `NSURLSessionConfiguration` headers to `cURL` representation.
-  - Added by [Matthias Ryne Cheow](https://github.com/rynecheow) in Pull Request
-  [#140](https://github.com/Alamofire/Alamofire/pull/140).
-- Parameter encoding tests for key/value pairs containing spaces.
-  - Added by [Mattt Thompson](https://github.com/mattt).
-- Percent character encoding for the `+` character.
-  - Added by [Niels van Hoorn](https://github.com/nvh) in Pull Request
-  [#167](https://github.com/Alamofire/Alamofire/pull/167).
-- Escaping for quotes to support JSON in `cURL` commands.
-  - Added by [John Gibb](https://github.com/johngibb) in Pull Request
-  [#178](https://github.com/Alamofire/Alamofire/pull/178).
-- The `request` method to the `Manager` bringing it more inline with the top-level methods.
-  - Added by Brian Smith.
