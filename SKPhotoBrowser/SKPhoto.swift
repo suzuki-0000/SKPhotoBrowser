@@ -69,8 +69,9 @@ public class SKPhoto: NSObject, SKPhotoProtocol {
     
     public func loadUnderlyingImageAndNotify() {
         
-        if underlyingImage != nil && photoURL == nil {
+        if underlyingImage != nil {
             loadUnderlyingImageComplete()
+            return
         }
         
         if photoURL != nil {
