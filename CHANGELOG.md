@@ -1,6 +1,10 @@
 # Change Log
 
-## 3.0.x
+## 3.0.1 2016-9
+
+#### Fixed
+- Skip loading image if already loaded #135
+
 Released on 2016-8
 
 #### Some Interface is removed, changed this version.
