@@ -10,6 +10,8 @@ import Foundation
 import UIKit
 
 struct SKMesurement {
+    static let isPhone: Bool = UIDevice.currentDevice().userInterfaceIdiom == .Phone
+    static let isPad: Bool = UIDevice.currentDevice().userInterfaceIdiom == .Pad
     static var statusBarH: CGFloat {
         return UIApplication.sharedApplication().statusBarFrame.height
     }
