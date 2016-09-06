@@ -1,5 +1,14 @@
 # Change Log
 
+## 3.0.2
+
+Released on 9-2016
+
+#### Fixed
+- Issue with multiple actionButtonTitles #137
+- Impossible to zoom when resolution is 1024x768 #134
+- unexpectedly found nil while unwrapping an Optional value #133
+
 ## 3.0.1 
 
 Released on 9-2016

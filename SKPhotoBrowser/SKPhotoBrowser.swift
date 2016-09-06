@@ -25,7 +25,7 @@ public class SKPhotoBrowser: UIViewController {
     
     // tool for controls
     private var applicationWindow: UIWindow!
-    private var pagingScrollView: SKPagingScrollView!
+    private lazy var pagingScrollView: SKPagingScrollView = SKPagingScrollView(frame: self.view.frame, browser: self)
     var backgroundView: UIView!
     
     var initialPageIndex: Int = 0
@@ -85,7 +85,6 @@ public class SKPhotoBrowser: UIViewController {
     }
     
     deinit {
-        pagingScrollView = nil
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
@@ -531,7 +530,6 @@ private extension SKPhotoBrowser {
         backgroundView.alpha = 0.0
         applicationWindow.addSubview(backgroundView)
         
-        pagingScrollView = SKPagingScrollView(frame: view.frame, browser: self)
         pagingScrollView.delegate = self
         view.addSubview(pagingScrollView)
         
