@@ -14,41 +14,9 @@ extension UIImage {
         guard self.imageOrientation != .Up else {
             return self
         }
-        
-        // We need to calculate the proper transformation to make the image upright.
-        // We do it in 2 steps: Rotate if Left/Right/Down, and then flip if Mirrored.
-        var transform = CGAffineTransformIdentity
-        
-        switch self.imageOrientation {
-        case .Down, .DownMirrored:
-            transform = CGAffineTransformTranslate(transform, self.size.width, self.size.height)
-            transform = CGAffineTransformRotate(transform, CGFloat(M_PI))
-            
-        case .Left, .LeftMirrored:
-            transform = CGAffineTransformTranslate(transform, self.size.width, 0)
-            transform = CGAffineTransformRotate(transform, CGFloat(M_PI_2))
-            
-        case .Right, .RightMirrored:
-            transform = CGAffineTransformTranslate(transform, 0, self.size.height)
-            transform = CGAffineTransformRotate(transform, CGFloat(-M_PI_2))
-            
-        default:
-            break
-        }
-        
-        switch self.imageOrientation {
-        case .UpMirrored, .DownMirrored:
-            transform = CGAffineTransformTranslate(transform, self.size.width, 0)
-            transform = CGAffineTransformScale(transform, -1, 1)
-            
-        case .LeftMirrored, .RightMirrored:
-            transform = CGAffineTransformTranslate(transform, self.size.height, 0)
-            transform = CGAffineTransformScale(transform, -1, 1)
-            
-        default:
-            break
-        }
-        
+
+        let transform = calculateAffineTransform()
+
         // Now we draw the underlying CGImage into a new context, applying the transform
         // calculated above.
         let ctx = CGBitmapContextCreate(nil, Int(self.size.width), Int(self.size.height),
@@ -71,6 +39,44 @@ extension UIImage {
         } else {
             return self
         }
+    }
+
+    private func calculateAffineTransform() -> CGAffineTransform {
+        // We need to calculate the proper transformation to make the image upright.
+        // We do it in 2 steps: Rotate if Left/Right/Down, and then flip if Mirrored.
+        var transform = CGAffineTransformIdentity
+
+        switch self.imageOrientation {
+        case .Down, .DownMirrored:
+            transform = CGAffineTransformTranslate(transform, self.size.width, self.size.height)
+            transform = CGAffineTransformRotate(transform, CGFloat(M_PI))
+
+        case .Left, .LeftMirrored:
+            transform = CGAffineTransformTranslate(transform, self.size.width, 0)
+            transform = CGAffineTransformRotate(transform, CGFloat(M_PI_2))
+
+        case .Right, .RightMirrored:
+            transform = CGAffineTransformTranslate(transform, 0, self.size.height)
+            transform = CGAffineTransformRotate(transform, CGFloat(-M_PI_2))
+
+        default:
+            break
+        }
+
+        switch self.imageOrientation {
+        case .UpMirrored, .DownMirrored:
+            transform = CGAffineTransformTranslate(transform, self.size.width, 0)
+            transform = CGAffineTransformScale(transform, -1, 1)
+
+        case .LeftMirrored, .RightMirrored:
+            transform = CGAffineTransformTranslate(transform, self.size.height, 0)
+            transform = CGAffineTransformScale(transform, -1, 1)
+
+        default:
+            break
+        }
+
+        return transform
     }
 }
 

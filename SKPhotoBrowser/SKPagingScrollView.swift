@@ -210,7 +210,7 @@ private extension SKPagingScrollView {
     }
     
     func getFirstIndex() -> Int {
-        let firstIndex = Int(floor((CGRectGetMinX(bounds) + sideMargin * 2) / CGRectGetWidth(bounds)))
+        let firstIndex = Int(floor((bounds.minX + sideMargin * 2) / bounds.width))
         if firstIndex < 0 {
             return 0
         }
@@ -221,7 +221,7 @@ private extension SKPagingScrollView {
     }
     
     func getLastIndex() -> Int {
-        let lastIndex  = Int(floor((CGRectGetMaxX(bounds) - sideMargin * 2 - 1) / CGRectGetWidth(bounds)))
+        let lastIndex  = Int(floor((bounds.maxX - sideMargin * 2 - 1) / bounds.width))
         if lastIndex < 0 {
             return 0
         }
