@@ -1,11 +1,13 @@
 # Change Log
 
-## 3.0.1 2016-9
+## 3.0.1 
+
+Released on 9-2016
 
 #### Fixed
 - Skip loading image if already loaded #135
 
-Released on 2016-8
+Released on 8-2016
 
 #### Some Interface is removed, changed this version.
 - status bar handling is removed.
@@ -27,7 +29,7 @@ Released on 2016-8
 - Some public property to internal for improving
 
 ## 2.0.x
-Released on 2016-8
+Released on 8-2016
 
 #### Added
 - Migrate UIImage cache category to new SKCache
@@ -41,7 +43,7 @@ Released on 2016-8
 --- 
 
 ## 1.9.x
-Released on 2016-6
+Released on 6-2016
 
 #### Added
 - Delegate to notify when the user scroll to an index
@@ -54,7 +56,7 @@ Released on 2016-6
 ---
 
 ## 1.8.x
-Released on 2016-4
+Released on 4-2016
 
 #### Added
 - Using SKPhotoProtocol to enable usage from SKLocalPhoto 
@@ -69,7 +71,7 @@ Released on 2016-4
 ---
 
 ## 1.7.x
-Released on 2016-3
+Released on 3-2016
 
 #### Added
 - Enable ability to override statusBar style
@@ -104,7 +106,7 @@ Released on 2016-3
 ---
 
 ## 1.4.x
-Released on 2016-2
+Released on 2-2016
 
 #### Added
 - Delegate add for actionbutton.
@@ -116,7 +118,7 @@ Released on 2016-2
 ---
 
 ## 1.3.x
-Released on 2016-1
+Released on 1-2016
 
 #### Added
 - Added action functionality similar to IDMPhotoBrowser.
@@ -129,7 +131,7 @@ Released on 2016-1
 --- 
 
 ## 1.2.x
-Released on 2015-10
+Released on 10-2015
 
 #### Added
 - SKPhotoProtocol is implemented.
@@ -140,12 +142,12 @@ Released on 2015-10
 ---
 
 ## 1.1.x
-Released on 2015-10-09.
+Released on 10-2015
 
 #### Fixed
 - some property make private.
 - layout bug fixed when zoom.
 
 ## 1.0.0
-Released on 2015-10-09.
+Released on 10-2015
 
