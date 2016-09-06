@@ -8,8 +8,7 @@
 
 import UIKit
 
-public class SKZoomingScrollView: UIScrollView, UIScrollViewDelegate, SKDetectingViewDelegate, SKDetectingImageViewDelegate {
-    
+public class SKZoomingScrollView: UIScrollView {
     var captionView: SKCaptionView!
     var photo: SKPhotoProtocol! {
         didSet {
@@ -104,7 +103,6 @@ public class SKZoomingScrollView: UIScrollView, UIScrollViewDelegate, SKDetectin
     }
     
     public func setMaxMinZoomScalesForCurrentBounds() {
-        
         maximumZoomScale = 1
         minimumZoomScale = 1
         zoomScale = 1
@@ -119,27 +117,11 @@ public class SKZoomingScrollView: UIScrollView, UIScrollViewDelegate, SKDetectin
         let xScale = boundsSize.width / imageSize.width
         let yScale = boundsSize.height / imageSize.height
         let minScale: CGFloat = min(xScale, yScale)
-        var maxScale: CGFloat!
+        var maxScale: CGFloat = 1.0
         
-        
-        let scale = UIScreen.mainScreen().scale
+        let scale = max(UIScreen.mainScreen().scale, 2.0)
         let deviceScreenWidth = UIScreen.mainScreen().bounds.width * scale // width in pixels. scale needs to remove if to use the old algorithm
         let deviceScreenHeight = UIScreen.mainScreen().bounds.height * scale // height in pixels. scale needs to remove if to use the old algorithm
-        
-        // it is the old algorithm
-       /* if photoImageView.frame.width < deviceScreenWidth {
-            // I think that we should to get coefficient between device screen width and image width and assign it to maxScale. I made two mode that we will get the same result for different device orientations.
-            if UIApplication.sharedApplication().statusBarOrientation.isPortrait {
-                maxScale = deviceScreenHeight / photoImageView.frame.width
-            } else {
-                maxScale = deviceScreenWidth / photoImageView.frame.width
-            }
-        } else if photoImageView.frame.width > deviceScreenWidth {
-            maxScale = 1.0
-        } else {
-            // here if photoImageView.frame.width == deviceScreenWidth
-            maxScale = 2.5
-        } */
         
         if photoImageView.frame.width < deviceScreenWidth {
             // I think that we should to get coefficient between device screen width and image width and assign it to maxScale. I made two mode that we will get the same result for different device orientations.
@@ -154,7 +136,7 @@ public class SKZoomingScrollView: UIScrollView, UIScrollViewDelegate, SKDetectin
             // here if photoImageView.frame.width == deviceScreenWidth
             maxScale = 2.5
         }
-        
+    
         maximumZoomScale = maxScale
         minimumZoomScale = minScale
         zoomScale = minScale
@@ -239,23 +221,18 @@ public class SKZoomingScrollView: UIScrollView, UIScrollViewDelegate, SKDetectin
                 newZoom = maximumZoomScale
             }
             */
-            zoomToRect(zoomRectForScrollViewWith(maximumZoomScale, touchPoint: touchPoint), animated: true)
+            let zoomRect = zoomRectForScrollViewWith(maximumZoomScale, touchPoint: touchPoint)
+            zoomToRect(zoomRect, animated: true)
         }
         
         // delay control
         photoBrowser?.hideControlsAfterDelay()
     }
-    
-    public func zoomRectForScrollViewWith(scale: CGFloat, touchPoint: CGPoint) -> CGRect {
-        let w = frame.size.width / scale
-        let h = frame.size.height / scale
-        let x = touchPoint.x - (w / 2.0)
-        let y = touchPoint.y - (h / 2.0)
-        
-        return CGRect(x: x, y: y, width: w, height: h)
-    }
-    
-    // MARK: - UIScrollViewDelegate
+}
+
+// MARK: - UIScrollViewDelegate
+
+extension SKZoomingScrollView: UIScrollViewDelegate {
     public func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView? {
         return photoImageView
     }
@@ -268,9 +245,11 @@ public class SKZoomingScrollView: UIScrollView, UIScrollViewDelegate, SKDetectin
         setNeedsLayout()
         layoutIfNeeded()
     }
-    
-    
-    // MARK: - SKDetectingViewDelegate
+}
+
+// MARK: - SKDetectingImageViewDelegate
+
+extension SKZoomingScrollView: SKDetectingViewDelegate {
     func handleSingleTap(view: UIView, touch: UITouch) {
         guard let browser = photoBrowser else {
             return
@@ -292,8 +271,30 @@ public class SKZoomingScrollView: UIScrollView, UIScrollViewDelegate, SKDetectin
             handleDoubleTap(needPoint)
         }
     }
+}
+
+
+// MARK: - SKDetectingImageViewDelegate
+
+extension SKZoomingScrollView: SKDetectingImageViewDelegate {
+    func handleImageViewSingleTap(touchPoint: CGPoint) {
+        guard let browser = photoBrowser else {
+            return
+        }
+        if SKPhotoBrowserOptions.enableSingleTapDismiss {
+            browser.determineAndClose()
+        } else {
+            browser.toggleControls()
+        }
+    }
     
-    private func getViewFramePercent(view: UIView, touch: UITouch) -> CGPoint {
+    func handleImageViewDoubleTap(touchPoint: CGPoint) {
+        handleDoubleTap(touchPoint)
+    }
+}
+
+private extension SKZoomingScrollView {
+    func getViewFramePercent(view: UIView, touch: UITouch) -> CGPoint {
         let oneWidthViewPercent = view.bounds.width / 100
         let viewTouchPoint = touch.locationInView(view)
         let viewWidthTouch = viewTouchPoint.x
@@ -314,19 +315,12 @@ public class SKZoomingScrollView: UIScrollView, UIScrollViewDelegate, SKDetectin
         return allPoint
     }
     
-    // MARK: - SKDetectingImageViewDelegate
-    func handleImageViewSingleTap(touchPoint: CGPoint) {
-        guard let browser = photoBrowser else {
-            return
-        }
-        if SKPhotoBrowserOptions.enableSingleTapDismiss {
-            browser.determineAndClose()
-        } else {
-            browser.toggleControls()
-        }
-    }
-    
-    func handleImageViewDoubleTap(touchPoint: CGPoint) {
-        handleDoubleTap(touchPoint)
+    func zoomRectForScrollViewWith(scale: CGFloat, touchPoint: CGPoint) -> CGRect {
+        let w = frame.size.width / scale
+        let h = frame.size.height / scale
+        let x = touchPoint.x - (h / max(UIScreen.mainScreen().scale, 2.0))
+        let y = touchPoint.y - (w / max(UIScreen.mainScreen().scale, 2.0))
+        
+        return CGRect(x: x, y: y, width: w, height: h)
     }
 }

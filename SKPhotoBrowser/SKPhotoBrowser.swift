@@ -25,7 +25,7 @@ public class SKPhotoBrowser: UIViewController {
     
     // tool for controls
     private var applicationWindow: UIWindow!
-    private var pagingScrollView: SKPagingScrollView!
+    private lazy var pagingScrollView: SKPagingScrollView = SKPagingScrollView(frame: self.view.frame, browser: self)
     var backgroundView: UIView!
     
     var initialPageIndex: Int = 0
@@ -85,7 +85,6 @@ public class SKPhotoBrowser: UIViewController {
     }
     
     deinit {
-        pagingScrollView = nil
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
@@ -320,6 +319,36 @@ public extension SKPhotoBrowser {
     func areControlsHidden() -> Bool {
         return toolbar.alpha == 0.0
     }
+    
+    func popupShare() {
+        let photo = photos[currentPageIndex]
+        guard let underlyingImage = photo.underlyingImage else {
+            return
+        }
+        
+        var activityItems: [AnyObject] = [underlyingImage]
+        if photo.caption != nil {
+            if let shareExtraCaption = SKPhotoBrowserOptions.shareExtraCaption {
+                activityItems.append(photo.caption + shareExtraCaption)
+            } else {
+                activityItems.append(photo.caption)
+            }
+        }
+        activityViewController = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
+        activityViewController.completionWithItemsHandler = {
+            (activity, success, items, error) in
+            self.hideControlsAfterDelay()
+            self.activityViewController = nil
+        }
+        if UI_USER_INTERFACE_IDIOM() == .Phone {
+            presentViewController(activityViewController, animated: true, completion: nil)
+        } else {
+            activityViewController.modalPresentationStyle = .Popover
+            let popover: UIPopoverPresentationController! = activityViewController.popoverPresentationController
+            popover.barButtonItem = toolbar.toolActionButton
+            presentViewController(activityViewController, animated: true, completion: nil)
+        }
+    }
 }
 
 
@@ -452,7 +481,7 @@ internal extension SKPhotoBrowser {
         determineAndClose()
     }
     
-    func actionButtonPressed() {
+    func actionButtonPressed(ignoreAndShare ignoreAndShare: Bool) {
         delegate?.willShowActionSheet?(currentPageIndex)
         
         guard numberOfPhotos > 0 else {
@@ -482,34 +511,9 @@ internal extension SKPhotoBrowser {
                 presentViewController(actionSheetController, animated: true, completion: { () -> Void in
                 })
             }
-        } else {
-            let photo = photos[currentPageIndex]
-            guard let underlyingImage = photo.underlyingImage else {
-                return
-            }
             
-            var activityItems: [AnyObject] = [underlyingImage]
-            if photo.caption != nil {
-                if let shareExtraCaption = SKPhotoBrowserOptions.shareExtraCaption {
-                    activityItems.append(photo.caption + shareExtraCaption)
-                } else {
-                    activityItems.append(photo.caption)
-                }
-            }
-            activityViewController = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
-            activityViewController.completionWithItemsHandler = {
-                (activity, success, items, error) in
-                self.hideControlsAfterDelay()
-                self.activityViewController = nil
-            }
-            if UI_USER_INTERFACE_IDIOM() == .Phone {
-                presentViewController(activityViewController, animated: true, completion: nil)
-            } else {
-                activityViewController.modalPresentationStyle = .Popover
-                let popover: UIPopoverPresentationController! = activityViewController.popoverPresentationController
-                popover.barButtonItem = toolbar.toolActionButton
-                presentViewController(activityViewController, animated: true, completion: nil)
-            }
+        } else {
+            popupShare()
         }
     }
 }
@@ -526,7 +530,6 @@ private extension SKPhotoBrowser {
         backgroundView.alpha = 0.0
         applicationWindow.addSubview(backgroundView)
         
-        pagingScrollView = SKPagingScrollView(frame: view.frame, browser: self)
         pagingScrollView.delegate = self
         view.addSubview(pagingScrollView)
         
