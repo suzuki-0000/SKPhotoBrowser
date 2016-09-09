@@ -79,7 +79,7 @@ open class SKPhoto: NSObject, SKPhotoProtocol {
             let session = URLSession(configuration: URLSessionConfiguration.default)
             if let nsURL = URL(string: photoURL) {
                 var task: URLSessionDataTask!
-                task = session.dataTask(with: nsURL, completionHandler: { [weak self](response: Data?, data: URLResponse?, error: NSError?) in
+                task = session.dataTask(with: nsURL, completionHandler: { [weak self] (data, response, error) in
                     if let _self = self {
                         
                         if error != nil {
@@ -88,10 +88,10 @@ open class SKPhoto: NSObject, SKPhotoProtocol {
                             }
                         }
                         
-                        if let res = response, let image = UIImage(data: res) {
+                        if let data = data, let response = response, let image = UIImage(data: data) {
                             if _self.shouldCachePhotoURLImage {
                                 if SKCache.sharedCache.imageCache is SKRequestResponseCacheable {
-                                    SKCache.sharedCache.setImageData(response!, response: data!, request: task.originalRequest!)
+                                    SKCache.sharedCache.setImageData(data, response: response, request: task.originalRequest!)
                                 } else {
                                     SKCache.sharedCache.setImage(image, forKey: _self.photoURL)
                                 }
@@ -103,7 +103,7 @@ open class SKPhoto: NSObject, SKPhotoProtocol {
                         }
                         session.finishTasksAndInvalidate()
                     }
-                } as! (Data?, URLResponse?, Error?) -> Void)
+                })
                 task.resume()
             }
         }
