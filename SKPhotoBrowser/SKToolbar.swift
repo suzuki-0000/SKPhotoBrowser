@@ -124,7 +124,7 @@ private extension SKToolbar {
 
 
 class SKToolbarButton: UIButton {
-    let insets: UIEdgeInsets = UIEdgeInsetsMake(13.25, 17.25, 13.25, 17.25)
+    let insets: UIEdgeInsets = UIEdgeInsets(top: 13.25, left: 17.25, bottom: 13.25, right: 17.25)
     
     func setup(imageName: String) {
         backgroundColor = .clearColor()

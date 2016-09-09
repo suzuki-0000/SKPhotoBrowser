@@ -153,7 +153,7 @@ public class SKPhotoBrowser: UIViewController {
         }
         
         dispatch_async(dispatch_get_main_queue(), {
-            guard let page = self.pagingScrollView.pageDisplayingAtPhoto(photo), let photo = page.photo else {
+            guard let page = self.pagingScrollView.pageDisplayingAtPhoto(photo), photo = page.photo else {
                 return
             }
             
@@ -626,7 +626,7 @@ extension SKPhotoBrowser: UIScrollViewDelegate {
         // Calculate current page
         let previousCurrentPage = currentPageIndex
         let visibleBounds = pagingScrollView.bounds
-        currentPageIndex = min(max(Int(floor(CGRectGetMidX(visibleBounds) / CGRectGetWidth(visibleBounds))), 0), numberOfPhotos - 1)
+        currentPageIndex = min(max(Int(floor(visibleBounds.midX / visibleBounds.width)), 0), numberOfPhotos - 1)
         
         if currentPageIndex != previousCurrentPage {
             delegate?.didShowPhotoAtIndex?(currentPageIndex)
