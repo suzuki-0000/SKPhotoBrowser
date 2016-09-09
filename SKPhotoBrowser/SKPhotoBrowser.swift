@@ -522,7 +522,7 @@ internal extension SKPhotoBrowser {
 // MARK: - Private Function 
 private extension SKPhotoBrowser {
     func configureAppearance() {
-        view.backgroundColor = UIColor.clear
+        view.backgroundColor = UIColor.black
         view.clipsToBounds = true
         view.isOpaque = false
         
