@@ -329,7 +329,8 @@ public extension SKPhotoBrowser {
         var activityItems: [AnyObject] = [underlyingImage]
         if photo.caption != nil && includeCaption {
             if let shareExtraCaption = SKPhotoBrowserOptions.shareExtraCaption {
-                activityItems.append(photo.caption + shareExtraCaption)
+                let caption = photo.caption + shareExtraCaption
+                activityItems.append(caption as AnyObject)
             } else {
                 activityItems.append(photo.caption as AnyObject)
             }
@@ -521,12 +522,12 @@ internal extension SKPhotoBrowser {
 // MARK: - Private Function 
 private extension SKPhotoBrowser {
     func configureAppearance() {
-        view.backgroundColor = .black()
+        view.backgroundColor = UIColor.clear
         view.clipsToBounds = true
         view.isOpaque = false
         
         backgroundView = UIView(frame: CGRect(x: 0, y: 0, width: SKMesurement.screenWidth, height: SKMesurement.screenHeight))
-        backgroundView.backgroundColor = .black()
+        backgroundView.backgroundColor = UIColor.black
         backgroundView.alpha = 0.0
         applicationWindow.addSubview(backgroundView)
         

@@ -56,7 +56,7 @@ class SKToolbar: UIToolbar {
 
 private extension SKToolbar {
     func setupApperance() {
-        backgroundColor = .clear()
+        backgroundColor = UIColor.clear
         clipsToBounds = true
         isTranslucent = true
         setBackgroundImage(UIImage(), forToolbarPosition: .any, barMetrics: .default)
@@ -108,17 +108,17 @@ private extension SKToolbar {
     func setupCounterLabel() {
         toolCounterLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 95, height: 40))
         toolCounterLabel.textAlignment = .center
-        toolCounterLabel.backgroundColor = .clear()
+        toolCounterLabel.backgroundColor = UIColor.clear
         toolCounterLabel.font  = UIFont(name: "Helvetica", size: 16.0)
-        toolCounterLabel.textColor = .white()
-        toolCounterLabel.shadowColor = .darkText()
+        toolCounterLabel.textColor = UIColor.white
+        toolCounterLabel.shadowColor = UIColor.black
         toolCounterLabel.shadowOffset = CGSize(width: 0.0, height: 1.0)
         toolCounterButton = UIBarButtonItem(customView: toolCounterLabel)
     }
     
     func setupActionButton() {
         toolActionButton = UIBarButtonItem(barButtonSystemItem: .action, target: browser, action: #selector(SKPhotoBrowser.actionButtonPressed))
-        toolActionButton.tintColor = .white()
+        toolActionButton.tintColor = UIColor.white
     }
 }
 
@@ -127,7 +127,7 @@ class SKToolbarButton: UIButton {
     let insets: UIEdgeInsets = UIEdgeInsets(top: 13.25, left: 17.25, bottom: 13.25, right: 17.25)
     
     func setup(_ imageName: String) {
-        backgroundColor = .clear()
+        backgroundColor = UIColor.clear
         imageEdgeInsets = insets
         translatesAutoresizingMaskIntoConstraints = true
         autoresizingMask = [.flexibleBottomMargin, .flexibleLeftMargin, .flexibleRightMargin, .flexibleTopMargin]

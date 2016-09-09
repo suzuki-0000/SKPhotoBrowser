@@ -26,7 +26,7 @@ class SKButton: UIButton {
     var buttonTopOffset: CGFloat { return 5 }
     
     func setup(_ imageName: String) {
-        backgroundColor = .clear()
+        backgroundColor = UIColor.clear
         imageEdgeInsets = insets
 //        clipsToBounds = true
         translatesAutoresizingMaskIntoConstraints = true
