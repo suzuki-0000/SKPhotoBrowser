@@ -65,8 +65,8 @@ open class SKPhotoBrowser: UIViewController {
     
     public convenience init(photos: [SKPhotoProtocol]) {
         self.init(nibName: nil, bundle: nil)
-        let picutres = photos.flatMap { $0 }
-        for photo in picutres {
+        let pictures = photos.flatMap { $0 }
+        for photo in pictures {
             photo.checkCache()
             self.photos.append(photo)
         }
@@ -77,8 +77,8 @@ open class SKPhotoBrowser: UIViewController {
         animator.senderOriginImage = originImage
         animator.senderViewForAnimation = animatedFromView
         
-        let picutres = photos.flatMap { $0 }
-        for photo in picutres {
+        let pictures = photos.flatMap { $0 }
+        for photo in pictures {
             photo.checkCache()
             self.photos.append(photo)
         }
