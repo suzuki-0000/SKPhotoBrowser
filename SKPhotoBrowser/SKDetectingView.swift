@@ -19,7 +19,7 @@ class SKDetectingView: UIView {
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesEnded(touches, with: event)
         defer {
-            next
+            _ = next
         }
         
         guard let touch = touches.first else {
