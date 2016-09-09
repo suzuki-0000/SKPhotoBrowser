@@ -320,14 +320,14 @@ public extension SKPhotoBrowser {
         return toolbar.alpha == 0.0
     }
     
-    func popupShare() {
+    func popupShare(includeCaption includeCaption: Bool = true) {
         let photo = photos[currentPageIndex]
         guard let underlyingImage = photo.underlyingImage else {
             return
         }
         
         var activityItems: [AnyObject] = [underlyingImage]
-        if photo.caption != nil {
+        if photo.caption != nil && includeCaption {
             if let shareExtraCaption = SKPhotoBrowserOptions.shareExtraCaption {
                 activityItems.append(photo.caption + shareExtraCaption)
             } else {
