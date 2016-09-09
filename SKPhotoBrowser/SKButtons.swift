@@ -15,8 +15,10 @@ class SKButton: UIButton {
     var showFrame: CGRect!
     var hideFrame: CGRect!
     var insets: UIEdgeInsets {
+
+
         return UI_USER_INTERFACE_IDIOM() == .Phone
-            ?  UIEdgeInsetsMake(15.25, 15.25, 15.25, 15.25) : UIEdgeInsetsMake(12, 12, 12, 12)
+            ?  UIEdgeInsets(top: 15.25, left: 15.25, bottom: 15.25, right: 15.25) : UIEdgeInsets(top: 12, left: 12, bottom: 12, right: 12)
     }
     var size: CGSize = CGSize(width: 44, height: 44)
     var margin: CGFloat = 5
