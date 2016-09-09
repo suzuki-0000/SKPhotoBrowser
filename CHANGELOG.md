@@ -1,5 +1,14 @@
 # Change Log
 
+## 3.1.0
+
+Released on 9-2016
+
+#### Fixed
+- Issue with multiple actionButtonTitles #137
+- fix swiftlint warnings #140
+- Update for Xcode GM. #141
+
 ## 3.0.2
 
 Released on 9-2016
