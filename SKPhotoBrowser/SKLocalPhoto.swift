@@ -9,14 +9,14 @@
 import UIKit
 
 // MARK: - SKLocalPhoto
-public class SKLocalPhoto: NSObject, SKPhotoProtocol {
+open class SKLocalPhoto: NSObject, SKPhotoProtocol {
     
-    public var underlyingImage: UIImage!
-    public var photoURL: String!
-    public var contentMode: UIViewContentMode = .ScaleToFill
-    public var shouldCachePhotoURLImage: Bool = false
-    public var caption: String!
-    public var index: Int = 0
+    open var underlyingImage: UIImage!
+    open var photoURL: String!
+    open var contentMode: UIViewContentMode = .scaleToFill
+    open var shouldCachePhotoURLImage: Bool = false
+    open var caption: String!
+    open var index: Int = 0
     
     override init() {
         super.init()
@@ -33,9 +33,9 @@ public class SKLocalPhoto: NSObject, SKPhotoProtocol {
         underlyingImage = holder
     }
     
-    public func checkCache() {}
+    open func checkCache() {}
     
-    public func loadUnderlyingImageAndNotify() {
+    open func loadUnderlyingImageAndNotify() {
         
         if underlyingImage != nil && photoURL == nil {
             loadUnderlyingImageComplete()
@@ -43,8 +43,8 @@ public class SKLocalPhoto: NSObject, SKPhotoProtocol {
         
         if photoURL != nil {
             // Fetch Image
-            if NSFileManager.defaultManager().fileExistsAtPath(photoURL) {
-                if let data = NSFileManager.defaultManager().contentsAtPath(photoURL) {
+            if FileManager.default.fileExists(atPath: photoURL) {
+                if let data = FileManager.default.contents(atPath: photoURL) {
                     self.loadUnderlyingImageComplete()
                     if let image = UIImage(data: data) {
                         self.underlyingImage = image
@@ -55,16 +55,16 @@ public class SKLocalPhoto: NSObject, SKPhotoProtocol {
         }
     }
     
-    public func loadUnderlyingImageComplete() {
-        NSNotificationCenter.defaultCenter().postNotificationName(SKPHOTO_LOADING_DID_END_NOTIFICATION, object: self)
+    open func loadUnderlyingImageComplete() {
+        NotificationCenter.default.post(name: Notification.Name(rawValue: SKPHOTO_LOADING_DID_END_NOTIFICATION), object: self)
     }
     
     // MARK: - class func
-    public class func photoWithImageURL(url: String) -> SKLocalPhoto {
+    open class func photoWithImageURL(_ url: String) -> SKLocalPhoto {
         return SKLocalPhoto(url: url)
     }
     
-    public class func photoWithImageURL(url: String, holder: UIImage?) -> SKLocalPhoto {
+    open class func photoWithImageURL(_ url: String, holder: UIImage?) -> SKLocalPhoto {
         return SKLocalPhoto(url: url, holder: holder)
     }
 }
