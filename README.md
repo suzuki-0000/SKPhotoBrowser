@@ -130,8 +130,8 @@ SKCache.sharedCache.imageCache = CustomImageCache()
 #### CustomButton Image
 Close, Delete buttons are able to change image and frame.
 ``` swift
-browser.browser.updateCloseButton(UIImage())
-browser.browser.updateUpdateButton(UIImage())
+browser.updateCloseButton(UIImage())
+browser.updateUpdateButton(UIImage())
 ```
 
 #### Delete Photo
@@ -149,8 +149,7 @@ images.append(photo)
 #### SwipeGesture 
 vertical swipe can enable/disable:
 ``` swift
-let browser = SKPhotoBrowser(originImage: originImage, photos: images, animatedFromView: cell)
-browser.disableVerticalSwipe = true 
+SKPhotoBrowserOptions.disableVerticalSwipe = true 
 ``` 
 
 #### Delegate
