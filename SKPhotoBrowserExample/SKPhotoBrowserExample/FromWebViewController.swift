@@ -18,31 +18,31 @@ class FromWebViewController: UIViewController, SKPhotoBrowserDelegate {
         super.viewDidLoad()
         
         SKCache.sharedCache.imageCache = CustomImageCache()
-        imageView.sd_setImageWithURL(NSURL(string: "https://placehold.jp/1500x1500.png")) {
-            guard let url = $0.3.absoluteString else { return }
-            SKCache.sharedCache.setImage($0.0, forKey: url)
+        imageView.sd_setImage(with: URL(string: "https://placehold.jp/1500x1500.png")) {
+            guard let url = $0.3?.absoluteString else { return }
+            SKCache.sharedCache.setImage($0.0!, forKey: url)
         }
     }
     
-    @IBAction func pushButton(sender: AnyObject) {
+    @IBAction func pushButton(_ sender: AnyObject) {
         let browser = SKPhotoBrowser(photos: createWebPhotos())
         browser.initializePageIndex(0)
         browser.delegate = self
         
-        presentViewController(browser, animated: true, completion: nil)
+        present(browser, animated: true, completion: nil)
     }
 }
 
 // MARK: - SKPhotoBrowserDelegate
 
 extension FromWebViewController {
-    func didDismissAtPageIndex(index: Int) {
+    func didDismissAtPageIndex(_ index: Int) {
     }
     
-    func didDismissActionSheetWithButtonIndex(buttonIndex: Int, photoIndex: Int) {
+    func didDismissActionSheetWithButtonIndex(_ buttonIndex: Int, photoIndex: Int) {
     }
     
-    func removePhoto(browser: SKPhotoBrowser, index: Int, reload: (() -> Void)) {
+    func removePhoto(_ browser: SKPhotoBrowser, index: Int, reload: (() -> Void)) {
         SKCache.sharedCache.removeImageForKey("somekey")
         reload()
     }
@@ -66,19 +66,19 @@ class CustomImageCache: SKImageCacheable {
     
     init() {
         let cache = SDImageCache(namespace: "com.suzuki.custom.cache")
-        self.cache = cache
+        self.cache = cache!
     }
 
-    func imageForKey(key: String) -> UIImage? {
-        guard let image = cache.imageFromDiskCacheForKey(key) else { return nil }
+    func imageForKey(_ key: String) -> UIImage? {
+        guard let image = cache.imageFromDiskCache(forKey: key) else { return nil }
         
         return image
     }
 
-    func setImage(image: UIImage, forKey key: String) {
-        cache.storeImage(image, forKey: key)
+    func setImage(_ image: UIImage, forKey key: String) {
+        cache.store(image, forKey: key)
     }
 
-    func removeImageForKey(key: String) {
+    func removeImageForKey(_ key: String) {
     }
 }
