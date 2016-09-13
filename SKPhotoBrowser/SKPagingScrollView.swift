@@ -28,8 +28,8 @@ class SKPagingScrollView: UIScrollView {
         super.init(frame: frame)
         
         pagingEnabled = true
-        showsHorizontalScrollIndicator = true
-        showsVerticalScrollIndicator = true
+        showsHorizontalScrollIndicator = SKPhotoBrowserOptions.displayHorizontalScrollIndicator
+        showsVerticalScrollIndicator = SKPhotoBrowserOptions.displayHorizontalScrollIndicator
     }
     
     convenience init(frame: CGRect, browser: SKPhotoBrowser) {

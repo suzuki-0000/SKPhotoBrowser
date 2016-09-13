@@ -48,7 +48,7 @@ public class SKZoomingScrollView: UIScrollView {
         // tap
         tapView = SKDetectingView(frame: bounds)
         tapView.delegate = self
-        tapView.backgroundColor = UIColor.clearColor()
+        tapView.backgroundColor = .clearColor()
         tapView.autoresizingMask = [.FlexibleHeight, .FlexibleWidth]
         addSubview(tapView)
         
@@ -182,10 +182,23 @@ public class SKZoomingScrollView: UIScrollView {
         }
         
         if let image = photo.underlyingImage {
+            
+            // create padding
+            let width: CGFloat = image.size.width + SKPhotoBrowserOptions.imagePaddingX
+            let height: CGFloat = image.size.height + SKPhotoBrowserOptions.imagePaddingY;
+            UIGraphicsBeginImageContextWithOptions(CGSizeMake(width, height), false, 0.0);
+            let context: CGContextRef = UIGraphicsGetCurrentContext()!;
+            UIGraphicsPushContext(context);
+            let origin: CGPoint = CGPointMake((width - image.size.width) / 2, (height - image.size.height) / 2);
+            image.drawAtPoint(origin)
+            UIGraphicsPopContext();
+            let imageWithPadding = UIGraphicsGetImageFromCurrentImageContext();
+            UIGraphicsEndImageContext();
 
             // image
-            photoImageView.image = image
+            photoImageView.image = imageWithPadding
             photoImageView.contentMode = photo.contentMode
+            photoImageView.backgroundColor = SKPhotoBrowserOptions.backgroundColor
             
             var photoImageViewFrame = CGRect.zero
             photoImageViewFrame.origin = CGPoint.zero

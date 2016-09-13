@@ -109,16 +109,16 @@ private extension SKToolbar {
         toolCounterLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 95, height: 40))
         toolCounterLabel.textAlignment = .Center
         toolCounterLabel.backgroundColor = .clearColor()
-        toolCounterLabel.font  = UIFont(name: "Helvetica", size: 16.0)
-        toolCounterLabel.textColor = .whiteColor()
-        toolCounterLabel.shadowColor = .darkTextColor()
+        toolCounterLabel.font = SKPhotoBrowserOptions.toolbarFont
+        toolCounterLabel.textColor = SKPhotoBrowserOptions.textAndIconColor
+        toolCounterLabel.shadowColor = SKPhotoBrowserOptions.toolbarTextShadowColor
         toolCounterLabel.shadowOffset = CGSize(width: 0.0, height: 1.0)
         toolCounterButton = UIBarButtonItem(customView: toolCounterLabel)
     }
     
     func setupActionButton() {
         toolActionButton = UIBarButtonItem(barButtonSystemItem: .Action, target: browser, action: #selector(SKPhotoBrowser.actionButtonPressed))
-        toolActionButton.tintColor = .whiteColor()
+        toolActionButton.tintColor = SKPhotoBrowserOptions.textAndIconColor
     }
 }
 
@@ -128,13 +128,14 @@ class SKToolbarButton: UIButton {
     
     func setup(imageName: String) {
         backgroundColor = .clearColor()
+        tintColor = SKPhotoBrowserOptions.textAndIconColor
         imageEdgeInsets = insets
         translatesAutoresizingMaskIntoConstraints = true
         autoresizingMask = [.FlexibleBottomMargin, .FlexibleLeftMargin, .FlexibleRightMargin, .FlexibleTopMargin]
         contentMode = .Center
         
         let image = UIImage(named: "SKPhotoBrowser.bundle/images/\(imageName)",
-                            inBundle: bundle, compatibleWithTraitCollection: nil) ?? UIImage()
+                            inBundle: bundle, compatibleWithTraitCollection: nil)?.imageWithRenderingMode(.AlwaysTemplate) ?? UIImage()
         setImage(image, forState: .Normal)
     }
 }

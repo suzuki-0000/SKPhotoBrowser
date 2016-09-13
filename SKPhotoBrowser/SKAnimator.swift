@@ -157,6 +157,8 @@ private extension SKAnimator {
                 self.resizableImageView?.frame = self.finalImageViewFrame
             },
             completion: { (Bool) -> Void in
+                UIApplication.sharedApplication().setStatusBarHidden(!SKPhotoBrowserOptions.displayStatusbar, withAnimation: .Fade)
+                
                 browser.view.hidden = false
                 browser.view.alpha = 1.0
                 browser.backgroundView.hidden = true
