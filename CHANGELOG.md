@@ -1,5 +1,13 @@
 # Change Log
 
+## 3.1.1
+
+Released on 15-9-2016
+
+#### Fixed
+- Example crash in xcode8 fixed
+- Provides various UI configuration options via SKPhotoBrowserOptions. #144
+
 ## 3.1.0
 
 Released on 9-2016
