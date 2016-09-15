@@ -207,10 +207,12 @@ func didDismissAtPageIndex(index: Int) {
 
 ```
 
-#### Minor Option
-- blackArea handling which is appearing outside of photo
+#### Options
+You can access via `SKPhotoBrowserOptions`, which can use for browser control.
 - single tap handling, dismiss/noaction
+- blackArea handling which is appearing outside of photo
 - bounce animation when appearing/dismissing
+- text color, font, or more
 ``` swift
 SKPhotoBrowserOptions.enableZoomBlackArea    = true  // default true
 SKPhotoBrowserOptions.enableSingleTapDismiss = true  // default false
