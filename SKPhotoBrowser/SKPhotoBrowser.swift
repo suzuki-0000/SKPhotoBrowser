@@ -52,6 +52,10 @@ public class SKPhotoBrowser: UIViewController {
     var numberOfPhotos: Int {
         return photos.count
     }
+    
+    // statusbar initial state
+    private var statusbarHidden: Bool = UIApplication.sharedApplication().statusBarHidden
+    
     // MARK - Initializer
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -194,6 +198,7 @@ public class SKPhotoBrowser: UIViewController {
     }
     
     public func prepareForClosePhotoBrowser() {
+        UIApplication.sharedApplication().setStatusBarHidden(statusbarHidden, withAnimation: .None)
         cancelControlHiding()
         applicationWindow.removeGestureRecognizer(panGesture)
         NSObject.cancelPreviousPerformRequestsWithTarget(self)
@@ -440,7 +445,7 @@ internal extension SKPhotoBrowser {
             ? zoomingScrollView.center.y - viewHalfHeight
             : -(zoomingScrollView.center.y - viewHalfHeight)) / viewHalfHeight
         
-        view.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(max(0.7, offset))
+        view.backgroundColor = SKPhotoBrowserOptions.backgroundColor.colorWithAlphaComponent(max(0.7, offset))
         
         // gesture end
         if sender.state == .Ended {
@@ -464,7 +469,7 @@ internal extension SKPhotoBrowser {
                 UIView.beginAnimations(nil, context: nil)
                 UIView.setAnimationDuration(animationDuration)
                 UIView.setAnimationCurve(UIViewAnimationCurve.EaseIn)
-                view.backgroundColor = UIColor.blackColor()
+                view.backgroundColor = SKPhotoBrowserOptions.backgroundColor
                 zoomingScrollView.center = CGPoint(x: finalX, y: finalY)
                 UIView.commitAnimations()
             }
@@ -521,12 +526,12 @@ internal extension SKPhotoBrowser {
 // MARK: - Private Function 
 private extension SKPhotoBrowser {
     func configureAppearance() {
-        view.backgroundColor = .blackColor()
+        view.backgroundColor = SKPhotoBrowserOptions.backgroundColor
         view.clipsToBounds = true
         view.opaque = false
         
         backgroundView = UIView(frame: CGRect(x: 0, y: 0, width: SKMesurement.screenWidth, height: SKMesurement.screenHeight))
-        backgroundView.backgroundColor = .blackColor()
+        backgroundView.backgroundColor = SKPhotoBrowserOptions.backgroundColor
         backgroundView.alpha = 0.0
         applicationWindow.addSubview(backgroundView)
         

@@ -61,13 +61,13 @@ private extension SKCaptionView {
         photoLabel.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
         photoLabel.opaque = false
         photoLabel.backgroundColor = .clearColor()
-        photoLabel.textColor = .whiteColor()
+        photoLabel.textColor = SKPhotoBrowserOptions.textAndIconColor
         photoLabel.textAlignment = .Center
         photoLabel.lineBreakMode = .ByTruncatingTail
         photoLabel.numberOfLines = 3
         photoLabel.shadowColor = UIColor(white: 0.0, alpha: 0.5)
         photoLabel.shadowOffset = CGSize(width: 0.0, height: 1.0)
-        photoLabel.font = UIFont.systemFontOfSize(17.0)
+        photoLabel.font = SKPhotoBrowserOptions.captionFont
         photoLabel.text = photo?.caption
         addSubview(photoLabel)
     }

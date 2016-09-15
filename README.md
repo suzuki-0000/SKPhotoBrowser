@@ -107,12 +107,37 @@ func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath i
 You can customize Toolbar via SKPhotoBrowserOptions.
 
 ```swift
-SKPhotoBrowserOptions.displayToolbar = false                // all tool bar will be hidden
-SKPhotoBrowserOptions.displayCounterLabel = false           // counter label will be hidden
-SKPhotoBrowserOptions.displayBackAndForwardButton = false   // back / forward button will be hidden
-SKPhotoBrowserOptions.displayAction = false                 // action button will be hidden
-SKPhotoBrowserOptions.displayDeleteButton = true            // delete button will be shown
+SKPhotoBrowserOptions.displayToolbar = false                              // all tool bar will be hidden
+SKPhotoBrowserOptions.displayCounterLabel = false                         // counter label will be hidden
+SKPhotoBrowserOptions.displayBackAndForwardButton = false                 // back / forward button will be hidden
+SKPhotoBrowserOptions.displayAction = false                               // action button will be hidden
+SKPhotoBrowserOptions.displayDeleteButton = true                          // delete button will be shown
+SKPhotoBrowserOptions.displayHorizontalScrollIndicator = false            // horizontal scroll bar will be hidden
+SKPhotoBrowserOptions.displayVerticalScrollIndicator = false              // vertical scroll bar will be hidden
 let browser = SKPhotoBrowser(originImage: originImage, photos: images, animatedFromView: cell)
+```
+
+#### Colors
+You can customize text, icon and background colors via SKPhotoBrowserOptions
+```swift
+SKPhotoBrowserOptions.backgroundColor = UIColor.whiteColor()               // browser view will be white
+SKPhotoBrowserOptions.textAndIconColor = UIColor.blackColor()              // text and icons will be black
+SKPhotoBrowserOptions.toolbarTextShadowColor = UIColor.clearColor()        // shadow of toolbar text will be removed
+SKPhotoBrowserOptions.toolbarFont = UIFont(name: "Futura", size: 16.0)     // font of toolbar will be 'Futura'
+SKPhotoBrowserOptions.captionFont = UIFont(name: "Helvetica", size: 18.0)  // font of toolbar will be 'Helvetica'
+```
+
+#### Images
+You can customize the padding of displayed images via SKPhotoBrowserOptions
+```swift
+SKPhotoBrowserOptions.imagePaddingX = 50                                   // image padding left and right will be 25
+SKPhotoBrowserOptions.imagePaddingY = 50                                   // image padding top and bottom will be 25
+```
+
+#### Statusbar
+You can customize the visibility of the Statusbar in browser view via SKPhotoBrowserOptions
+```swift
+SKPhotoBrowserOptions.displayStatusbar = false                             // status bar will be hidden
 ```
 
 #### Custom Cache From Web URL

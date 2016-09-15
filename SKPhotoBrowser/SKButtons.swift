@@ -27,13 +27,14 @@ class SKButton: UIButton {
     
     func setup(imageName: String) {
         backgroundColor = .clearColor()
+        tintColor = SKPhotoBrowserOptions.textAndIconColor
         imageEdgeInsets = insets
 //        clipsToBounds = true
         translatesAutoresizingMaskIntoConstraints = true
         autoresizingMask = [.FlexibleBottomMargin, .FlexibleLeftMargin, .FlexibleRightMargin, .FlexibleTopMargin]
         
         let image = UIImage(named: "SKPhotoBrowser.bundle/images/\(imageName)",
-                            inBundle: bundle, compatibleWithTraitCollection: nil) ?? UIImage()
+                            inBundle: bundle, compatibleWithTraitCollection: nil)?.imageWithRenderingMode(.AlwaysTemplate) ?? UIImage()
         setImage(image, forState: .Normal)
     }
   
