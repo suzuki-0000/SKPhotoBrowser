@@ -30,13 +30,14 @@ public struct SKPhotoBrowserOptions {
     public static var enableZoomBlackArea: Bool = true
     public static var enableSingleTapDismiss: Bool = false
     
-    public static var imagePaddingX: CGFloat = 0
-    public static var imagePaddingY: CGFloat = 0
-    
     public static var backgroundColor = UIColor.blackColor()
     public static var textAndIconColor = UIColor.whiteColor()
     public static var toolbarTextShadowColor = UIColor.darkTextColor()
     
     public static var toolbarFont = UIFont(name: "Helvetica", size: 16.0)
     public static var captionFont = UIFont.systemFontOfSize(17.0)
+    
+    // FIXED: Scrolling performance slowed #145
+    // public static var imagePaddingX: CGFloat = 0
+    // public static var imagePaddingY: CGFloat = 0
 }

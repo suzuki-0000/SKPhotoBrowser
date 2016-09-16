@@ -183,20 +183,22 @@ public class SKZoomingScrollView: UIScrollView {
         
         if let image = photo.underlyingImage {
             
+            // FIXED: Scrolling performance slowed #145
+ 
             // create padding
-            let width: CGFloat = image.size.width + SKPhotoBrowserOptions.imagePaddingX
-            let height: CGFloat = image.size.height + SKPhotoBrowserOptions.imagePaddingY;
-            UIGraphicsBeginImageContextWithOptions(CGSizeMake(width, height), false, 0.0);
-            let context: CGContextRef = UIGraphicsGetCurrentContext()!;
-            UIGraphicsPushContext(context);
-            let origin: CGPoint = CGPointMake((width - image.size.width) / 2, (height - image.size.height) / 2);
-            image.drawAtPoint(origin)
-            UIGraphicsPopContext();
-            let imageWithPadding = UIGraphicsGetImageFromCurrentImageContext();
-            UIGraphicsEndImageContext();
+            // let width: CGFloat = image.size.width + SKPhotoBrowserOptions.imagePaddingX
+            // let height: CGFloat = image.size.height + SKPhotoBrowserOptions.imagePaddingY;
+            // UIGraphicsBeginImageContextWithOptions(CGSizeMake(width, height), false, 0.0);
+            // let context: CGContextRef = UIGraphicsGetCurrentContext()!;
+            // UIGraphicsPushContext(context);
+            // let origin: CGPoint = CGPointMake((width - image.size.width) / 2, (height - image.size.height) / 2);
+            // image.drawAtPoint(origin)
+            // UIGraphicsPopContext();
+            // let imageWithPadding = UIGraphicsGetImageFromCurrentImageContext();
+            // UIGraphicsEndImageContext();
 
             // image
-            photoImageView.image = imageWithPadding
+            photoImageView.image = image
             photoImageView.contentMode = photo.contentMode
             photoImageView.backgroundColor = SKPhotoBrowserOptions.backgroundColor
             
