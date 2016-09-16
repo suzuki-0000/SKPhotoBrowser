@@ -1,5 +1,12 @@
 # Change Log
 
+## 3.1.2
+
+Released on 16-9-2016
+
+#### Fixed
+- Scrolling performance slowed #145
+
 ## 3.1.1
 
 Released on 15-9-2016
