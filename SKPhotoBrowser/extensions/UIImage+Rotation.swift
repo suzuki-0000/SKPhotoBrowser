@@ -11,7 +11,7 @@ import UIKit
 extension UIImage {
     func rotateImageByOrientation() -> UIImage {
         // No-op if the orientation is already correct
-        guard self.imageOrientation != .Up else {
+        guard self.imageOrientation != .up else {
             return self
         }
 
@@ -19,58 +19,58 @@ extension UIImage {
 
         // Now we draw the underlying CGImage into a new context, applying the transform
         // calculated above.
-        let ctx = CGBitmapContextCreate(nil, Int(self.size.width), Int(self.size.height),
-            CGImageGetBitsPerComponent(self.CGImage!), 0,
-            CGImageGetColorSpace(self.CGImage!)!,
-            CGImageGetBitmapInfo(self.CGImage!).rawValue)
-        CGContextConcatCTM(ctx!, transform)
+        let ctx = CGContext(data: nil, width: Int(self.size.width), height: Int(self.size.height),
+            bitsPerComponent: self.cgImage!.bitsPerComponent, bytesPerRow: 0,
+            space: self.cgImage!.colorSpace!,
+            bitmapInfo: self.cgImage!.bitmapInfo.rawValue)
+        ctx!.concatenate(transform)
         
         switch self.imageOrientation {
-        case .Left, .LeftMirrored, .Right, .RightMirrored:
-            CGContextDrawImage(ctx!, CGRect(x: 0, y: 0, width: size.height, height: size.width), self.CGImage!)
+        case .left, .leftMirrored, .right, .rightMirrored:
+            ctx!.draw(self.cgImage!, in: CGRect(x: 0, y: 0, width: size.height, height: size.width))
             
         default:
-            CGContextDrawImage(ctx!, CGRect(x: 0, y: 0, width: size.width, height: size.height), self.CGImage!)
+            ctx!.draw(self.cgImage!, in: CGRect(x: 0, y: 0, width: size.width, height: size.height))
         }
         
         // And now we just create a new UIImage from the drawing context
-        if let cgImage = CGBitmapContextCreateImage(ctx!) {
-            return UIImage(CGImage: cgImage)
+        if let cgImage = ctx!.makeImage() {
+            return UIImage(cgImage: cgImage)
         } else {
             return self
         }
     }
 
-    private func calculateAffineTransform() -> CGAffineTransform {
+    fileprivate func calculateAffineTransform() -> CGAffineTransform {
         // We need to calculate the proper transformation to make the image upright.
         // We do it in 2 steps: Rotate if Left/Right/Down, and then flip if Mirrored.
-        var transform = CGAffineTransformIdentity
+        var transform = CGAffineTransform.identity
 
         switch self.imageOrientation {
-        case .Down, .DownMirrored:
-            transform = CGAffineTransformTranslate(transform, self.size.width, self.size.height)
-            transform = CGAffineTransformRotate(transform, CGFloat(M_PI))
+        case .down, .downMirrored:
+            transform = transform.translatedBy(x: self.size.width, y: self.size.height)
+            transform = transform.rotated(by: CGFloat(M_PI))
 
-        case .Left, .LeftMirrored:
-            transform = CGAffineTransformTranslate(transform, self.size.width, 0)
-            transform = CGAffineTransformRotate(transform, CGFloat(M_PI_2))
+        case .left, .leftMirrored:
+            transform = transform.translatedBy(x: self.size.width, y: 0)
+            transform = transform.rotated(by: CGFloat(M_PI_2))
 
-        case .Right, .RightMirrored:
-            transform = CGAffineTransformTranslate(transform, 0, self.size.height)
-            transform = CGAffineTransformRotate(transform, CGFloat(-M_PI_2))
+        case .right, .rightMirrored:
+            transform = transform.translatedBy(x: 0, y: self.size.height)
+            transform = transform.rotated(by: CGFloat(-M_PI_2))
 
         default:
             break
         }
 
         switch self.imageOrientation {
-        case .UpMirrored, .DownMirrored:
-            transform = CGAffineTransformTranslate(transform, self.size.width, 0)
-            transform = CGAffineTransformScale(transform, -1, 1)
+        case .upMirrored, .downMirrored:
+            transform = transform.translatedBy(x: self.size.width, y: 0)
+            transform = transform.scaledBy(x: -1, y: 1)
 
-        case .LeftMirrored, .RightMirrored:
-            transform = CGAffineTransformTranslate(transform, self.size.height, 0)
-            transform = CGAffineTransformScale(transform, -1, 1)
+        case .leftMirrored, .rightMirrored:
+            transform = transform.translatedBy(x: self.size.height, y: 0)
+            transform = transform.scaledBy(x: -1, y: 1)
 
         default:
             break
