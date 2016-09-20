@@ -207,11 +207,11 @@ public class SKPhotoBrowser: UIViewController {
     public func dismissPhotoBrowser(animated animated: Bool, completion: (Void -> Void)? = nil) {
         prepareForClosePhotoBrowser()
 
-        if !animated {
+        if animated {
             modalTransitionStyle = .CrossDissolve
         }
         
-        dismissViewControllerAnimated(!animated) {
+        dismissViewControllerAnimated(animated) {
             completion?()
             self.delegate?.didDismissAtPageIndex?(self.currentPageIndex)
         }
