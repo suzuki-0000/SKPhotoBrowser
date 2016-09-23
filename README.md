@@ -35,6 +35,13 @@ pod 'SKPhotoBrowser'
 use_frameworks!
 ```
 
+if you want to use in swift3, use swift3 branch 
+```
+## Swift3.0
+pod 'SKPhotoBrowser', :git => 'https://github.com/suzuki-0000/SKPhotoBrowser.git', :branch => 'swift3'
+use_frameworks!
+```
+
 ####Carthage
 To integrate into your Xcode project using Carthage, specify it in your Cartfile:
 
