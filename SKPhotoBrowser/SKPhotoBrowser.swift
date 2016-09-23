@@ -207,10 +207,7 @@ public class SKPhotoBrowser: UIViewController {
     public func dismissPhotoBrowser(animated animated: Bool, completion: (Void -> Void)? = nil) {
         prepareForClosePhotoBrowser()
 
-        if animated {
-            modalTransitionStyle = .CrossDissolve
-        }
-        
+        modalTransitionStyle = .CrossDissolve
         dismissViewControllerAnimated(animated) {
             completion?()
             self.delegate?.didDismissAtPageIndex?(self.currentPageIndex)
@@ -609,7 +606,7 @@ private extension SKPhotoBrowser {
             toolbar.updateToolbar(currentPageIndex)
             
         } else if photos.count == 1 {
-            dismissPhotoBrowser(animated: false)
+            dismissPhotoBrowser(animated: true)
         }
     }
 }

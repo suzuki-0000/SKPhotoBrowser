@@ -76,7 +76,7 @@ class SKAnimator: NSObject, SKPhotoBrowserAnimatorDelegate {
             scrollView = browser.pageDisplayedAtIndex(browser.currentPageIndex) else {
                 
             senderViewForAnimation?.hidden = false
-            browser.dismissPhotoBrowser(animated: false)
+            browser.dismissPhotoBrowser(animated: true)
             return
         }
         
