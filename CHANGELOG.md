@@ -1,7 +1,7 @@
 # Change Log
 
 ## 3.1.3
-Released on 16-9-2016
+Released on 23-9-2016
 
 #### Fixed
 - The method dismissPhotoBrowser should only animate if the parameter animated is true.
