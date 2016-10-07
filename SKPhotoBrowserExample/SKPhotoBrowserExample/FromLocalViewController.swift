@@ -25,28 +25,28 @@ class FromLocalViewController: UIViewController, UICollectionViewDataSource, UIC
         super.didReceiveMemoryWarning()
     }
     
-    override func prefersStatusBarHidden() -> Bool {
+    override var prefersStatusBarHidden : Bool {
         return false
     }
     
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return .LightContent
+    override var preferredStatusBarStyle : UIStatusBarStyle {
+        return .lightContent
     }
 }
 
 
  // MARK: - UICollectionViewDataSource
 extension FromLocalViewController {
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return images.count
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCellWithReuseIdentifier("exampleCollectionViewCell", forIndexPath: indexPath) as? ExampleCollectionViewCell else {
+    @objc(collectionView:cellForItemAtIndexPath:) func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "exampleCollectionViewCell", for: indexPath) as? ExampleCollectionViewCell else {
             return UICollectionViewCell()
         }
         
-        cell.exampleImageView.image = UIImage(named: "image\(indexPath.row % 10).jpg")
+        cell.exampleImageView.image = UIImage(named: "image\((indexPath as NSIndexPath).row % 10).jpg")
 //        cell.exampleImageView.contentMode = .ScaleAspectFill
         return cell
     }
@@ -55,8 +55,8 @@ extension FromLocalViewController {
 // MARK: - UICollectionViewDelegate
 
 extension FromLocalViewController {
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        guard let cell = collectionView.cellForItemAtIndexPath(indexPath) as? ExampleCollectionViewCell else {
+    @objc(collectionView:didSelectItemAtIndexPath:) func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let cell = collectionView.cellForItem(at: indexPath) as? ExampleCollectionViewCell else {
             return
         }
         guard let originImage = cell.exampleImageView.image else {
@@ -70,14 +70,14 @@ extension FromLocalViewController {
         browser.delegate = self
 //        browser.updateCloseButton(UIImage(named: "image1.jpg")!)
         
-        presentViewController(browser, animated: true, completion: {})
+        present(browser, animated: true, completion: {})
     }
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        if UIDevice.currentDevice().userInterfaceIdiom == .Pad {
-            return CGSize(width: UIScreen.mainScreen().bounds.size.width / 2 - 5, height: 300)
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: IndexPath) -> CGSize {
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            return CGSize(width: UIScreen.main.bounds.size.width / 2 - 5, height: 300)
         } else {
-            return CGSize(width: UIScreen.mainScreen().bounds.size.width / 2 - 5, height: 200)
+            return CGSize(width: UIScreen.main.bounds.size.width / 2 - 5, height: 200)
         }
     }
 }
@@ -86,45 +86,45 @@ extension FromLocalViewController {
 // MARK: - SKPhotoBrowserDelegate
 
 extension FromLocalViewController {
-    func didShowPhotoAtIndex(index: Int) {
-        collectionView.visibleCells().forEach({$0.hidden = false})
-        collectionView.cellForItemAtIndexPath(NSIndexPath(forItem: index, inSection: 0))?.hidden = true
+    func didShowPhotoAtIndex(_ index: Int) {
+        collectionView.visibleCells.forEach({$0.isHidden = false})
+        collectionView.cellForItem(at: IndexPath(item: index, section: 0))?.isHidden = true
     }
     
-    func willDismissAtPageIndex(index: Int) {
-        collectionView.visibleCells().forEach({$0.hidden = false})
-        collectionView.cellForItemAtIndexPath(NSIndexPath(forItem: index, inSection: 0))?.hidden = true
+    func willDismissAtPageIndex(_ index: Int) {
+        collectionView.visibleCells.forEach({$0.isHidden = false})
+        collectionView.cellForItem(at: IndexPath(item: index, section: 0))?.isHidden = true
     }
     
-    func willShowActionSheet(photoIndex: Int) {
+    func willShowActionSheet(_ photoIndex: Int) {
         // do some handle if you need
     }
     
-    func didDismissAtPageIndex(index: Int) {
-        collectionView.cellForItemAtIndexPath(NSIndexPath(forItem: index, inSection: 0))?.hidden = false
+    func didDismissAtPageIndex(_ index: Int) {
+        collectionView.cellForItem(at: IndexPath(item: index, section: 0))?.isHidden = false
     }
     
-    func didDismissActionSheetWithButtonIndex(buttonIndex: Int, photoIndex: Int) {
+    func didDismissActionSheetWithButtonIndex(_ buttonIndex: Int, photoIndex: Int) {
         // handle dismissing custom actions
     }
     
-    func removePhoto(browser: SKPhotoBrowser, index: Int, reload: (() -> Void)) {
+    func removePhoto(_ browser: SKPhotoBrowser, index: Int, reload: (() -> Void)) {
         reload()
     }
     
-    func viewForPhoto(browser: SKPhotoBrowser, index: Int) -> UIView? {
-        return collectionView.cellForItemAtIndexPath(NSIndexPath(forItem: index, inSection: 0))
+    func viewForPhoto(_ browser: SKPhotoBrowser, index: Int) -> UIView? {
+        return collectionView.cellForItem(at: IndexPath(item: index, section: 0))
     }
 }
 
 // MARK: - private
 
 private extension FromLocalViewController {
-    private func setupTestData() {
+    func setupTestData() {
         images = createLocalPhotos()
     }
     
-    private func setupCollectionView() {
+    func setupCollectionView() {
         collectionView.delegate = self
         collectionView.dataSource = self
     }
