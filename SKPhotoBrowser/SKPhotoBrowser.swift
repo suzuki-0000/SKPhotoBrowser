@@ -21,8 +21,9 @@ open class SKPhotoBrowser: UIViewController {
     
     // actions
     fileprivate var activityViewController: UIActivityViewController!
+    open var activityItemProvider: UIActivityItemProvider? = nil
     fileprivate var panGesture: UIPanGestureRecognizer!
-    
+
     // tool for controls
     fileprivate var applicationWindow: UIWindow!
     fileprivate lazy var pagingScrollView: SKPagingScrollView = SKPagingScrollView(frame: self.view.frame, browser: self)
@@ -339,6 +340,11 @@ public extension SKPhotoBrowser {
                 activityItems.append(photo.caption as AnyObject)
             }
         }
+        
+        if let activityItemProvider = activityItemProvider {
+            activityItems.append(activityItemProvider)
+        }
+        
         activityViewController = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
         activityViewController.completionWithItemsHandler = {
             (activity, success, items, error) in
