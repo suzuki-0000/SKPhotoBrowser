@@ -8,9 +8,6 @@ SKPhotoBrowser
 
 Simple PhotoBrowser/Viewer inspired by facebook, twitter photo browsers written by swift, based on [IDMPhotoBrowser](https://github.com/ideaismobile/IDMPhotoBrowser), [MWPhotoBrowser](https://github.com/mwaterfall/MWPhotoBrowser).
 
-## Note
-- released v3.0.x and this version goes some breaking changes. please check [CHANGELOG](https://github.com/suzuki-0000/SKPhotoBrowser/blob/master/CHANGELOG.md).
-
 ## features
 - Display one or more images by providing either `UIImage` objects, or string of URL array.
 - Photos can be zoomed and panned, and optional captions can be displayed
@@ -26,6 +23,16 @@ Simple PhotoBrowser/Viewer inspired by facebook, twitter photo browsers written 
 - iOS 8.0+
 - Swift 2.0+
 - ARC
+
+### Version vs Swift version.
+
+Below is a table that shows which version of SKPhotoBrowser you should use for your Swift version.
+
+| Swift version | Moya version    |
+| ------------- | --------------- |
+| 3.X           | >= 4.0.0-beta.1 |
+| 2.3           | 2.0.4 - 3.x.x   |
+| 2.2           | <= 2.0.3        |
 
 ##Installation
 

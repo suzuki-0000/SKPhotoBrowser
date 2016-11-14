@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
   s.name         = "SKPhotoBrowser"
-  s.version      = "3.1.3"
-  s.summary      = "Simple PhotoBrowser/Viewer inspired by facebook, twitter photo browsers written by swift2.0."
+  s.version      = "3.1.4"
+  s.summary      = "Simple PhotoBrowser/Viewer inspired by facebook, twitter photo browsers written by swift."
   s.homepage     = "https://github.com/suzuki-0000/SKPhotoBrowser"
   s.license      = { :type => "MIT", :file => "LICENSE" }
   s.author       = { "suzuki_keishi" => "keishi.1983@gmail.com" }

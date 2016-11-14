@@ -1,5 +1,9 @@
 # Change Log
 
+## 3.1.4
+Released on 11-14-2016
+- add delegate that get notified when controls view visibility toggled
+
 ## 3.1.3
 Released on 23-9-2016
 
