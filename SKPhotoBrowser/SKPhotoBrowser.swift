@@ -360,6 +360,10 @@ public extension SKPhotoBrowser {
             present(activityViewController, animated: true, completion: nil)
         }
     }
+    
+    func getCurrentPageIndex() -> Int {
+        return currentPageIndex
+    }
 }
 
 
