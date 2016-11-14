@@ -312,10 +312,13 @@ public extension SKPhotoBrowser {
     
     func hideControls(timer: NSTimer) {
         hideControls()
+        delegate?.controlsVisibilityToggled?(true)
     }
     
     func toggleControls() {
-        setControlsHidden(!areControlsHidden(), animated: true, permanent: false)
+        let hidden = !areControlsHidden()
+        setControlsHidden(hidden, animated: true, permanent: false)
+        delegate?.controlsVisibilityToggled?(areControlsHidden())
     }
     
     func areControlsHidden() -> Bool {

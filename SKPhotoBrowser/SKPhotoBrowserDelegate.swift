@@ -71,5 +71,10 @@ import Foundation
      - Returns: the view to animate to
      */
     optional func viewForPhoto(browser: SKPhotoBrowser, index: Int) -> UIView?
+    
+    /**
+     Tells the delegate that the controls view toggled visibility
+     */
+    optional func controlsVisibilityToggled(hidden: Bool) -> Void
 }
 
