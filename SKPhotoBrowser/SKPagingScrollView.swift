@@ -197,7 +197,7 @@ class SKPagingScrollView: UIScrollView {
 private extension SKPagingScrollView {
     func frameForPageAtIndex(index: Int) -> CGRect {
         var pageFrame = bounds
-        pageFrame.size.width -= (2 * 10)
+        pageFrame.size.width -= (2 * sideMargin)
         pageFrame.origin.x = (bounds.size.width * CGFloat(index)) + sideMargin
         return pageFrame
     }
