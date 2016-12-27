@@ -150,6 +150,10 @@ public class SKPhotoBrowser: UIViewController {
         isViewActive = true
     }
     
+    override public func prefersStatusBarHidden() -> Bool {
+        return !SKPhotoBrowserOptions.displayStatusbar
+    }
+    
     // MARK: - Notification
     public func handleSKPhotoLoadingDidEndNotification(notification: NSNotification) {
         guard let photo = notification.object as? SKPhotoProtocol else {
