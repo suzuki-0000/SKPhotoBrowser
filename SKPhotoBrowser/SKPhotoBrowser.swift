@@ -154,6 +154,10 @@ open class SKPhotoBrowser: UIViewController {
         isViewActive = true
     }
     
+    override open var prefersStatusBarHidden: Bool {
+        return !SKPhotoBrowserOptions.displayStatusbar
+    }
+    
     // MARK: - Notification
     open func handleSKPhotoLoadingDidEndNotification(_ notification: Notification) {
         guard let photo = notification.object as? SKPhotoProtocol else {
@@ -564,6 +568,7 @@ private extension SKPhotoBrowser {
     
     func configureCloseButton() {
         closeButton = SKCloseButton(frame: .zero)
+        closeButton.position = SKPhotoBrowserOptions.exchangeButtonPositions ? .TopRight : .TopLeft
         closeButton.addTarget(self, action: #selector(closeButtonPressed(_:)), for: .touchUpInside)
         closeButton.isHidden = !SKPhotoBrowserOptions.displayCloseButton
         view.addSubview(closeButton)
@@ -571,6 +576,7 @@ private extension SKPhotoBrowser {
     
     func configureDeleteButton() {
         deleteButton = SKDeleteButton(frame: .zero)
+        deleteButton.position = SKPhotoBrowserOptions.exchangeButtonPositions ? .TopLeft : .TopRight
         deleteButton.addTarget(self, action: #selector(deleteButtonPressed(_:)), for: .touchUpInside)
         deleteButton.isHidden = !SKPhotoBrowserOptions.displayDeleteButton
         view.addSubview(deleteButton)

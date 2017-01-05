@@ -22,6 +22,7 @@ public struct SKPhotoBrowserOptions {
     
     public static var displayCloseButton: Bool = true
     public static var displayDeleteButton: Bool = false
+    public static var exchangeButtonPositions: Bool = false
     
     public static var displayHorizontalScrollIndicator: Bool = true
     public static var displayVerticalScrollIndicator: Bool = true
