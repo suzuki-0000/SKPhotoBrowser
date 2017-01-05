@@ -96,9 +96,9 @@ open class SKPhotoBrowser: UIViewController {
     func setup() {
         if let window = UIApplication.shared.delegate?.window {
             applicationWindow = window
-        }else if let window = UIApplication.shared.keyWindow {
+        } else if let window = UIApplication.shared.keyWindow {
             applicationWindow = window
-        }else {
+        } else {
             return
         }
         
@@ -106,7 +106,10 @@ open class SKPhotoBrowser: UIViewController {
         modalPresentationStyle = .custom
         modalTransitionStyle = .crossDissolve
         
-        NotificationCenter.default.addObserver(self, selector: #selector(self.handleSKPhotoLoadingDidEndNotification(_:)), name: NSNotification.Name(rawValue: SKPHOTO_LOADING_DID_END_NOTIFICATION), object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(self.handleSKPhotoLoadingDidEndNotification(_:)),
+                                               name: NSNotification.Name(rawValue: SKPHOTO_LOADING_DID_END_NOTIFICATION),
+                                               object: nil)
     }
     
     // MARK: - override
