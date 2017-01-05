@@ -495,7 +495,7 @@ internal extension SKPhotoBrowser {
                 UIView.beginAnimations(nil, context: nil)
                 UIView.setAnimationDuration(animationDuration)
                 UIView.setAnimationCurve(UIViewAnimationCurve.easeIn)
-                view.backgroundColor = UIColor.black
+                view.backgroundColor = .black
                 zoomingScrollView.center = CGPoint(x: finalX, y: finalY)
                 UIView.commitAnimations()
             }
@@ -552,12 +552,12 @@ internal extension SKPhotoBrowser {
 // MARK: - Private Function 
 private extension SKPhotoBrowser {
     func configureAppearance() {
-        view.backgroundColor = UIColor.black
+        view.backgroundColor = .black
         view.clipsToBounds = true
         view.isOpaque = false
         
         backgroundView = UIView(frame: CGRect(x: 0, y: 0, width: SKMesurement.screenWidth, height: SKMesurement.screenHeight))
-        backgroundView.backgroundColor = UIColor.black
+        backgroundView.backgroundColor = .black
         backgroundView.alpha = 0.0
         applicationWindow.addSubview(backgroundView)
         

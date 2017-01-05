@@ -48,7 +48,7 @@ open class SKZoomingScrollView: UIScrollView {
         // tap
         tapView = SKDetectingView(frame: bounds)
         tapView.delegate = self
-        tapView.backgroundColor = UIColor.clear
+        tapView.backgroundColor = .clear
         tapView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         addSubview(tapView)
         
@@ -56,7 +56,7 @@ open class SKZoomingScrollView: UIScrollView {
         photoImageView = SKDetectingImageView(frame: frame)
         photoImageView.delegate = self
         photoImageView.contentMode = .bottom
-        photoImageView.backgroundColor = UIColor.clear
+        photoImageView.backgroundColor = .clear
         addSubview(photoImageView)
         
         // indicator
@@ -64,7 +64,7 @@ open class SKZoomingScrollView: UIScrollView {
         addSubview(indicatorView)
         
         // self
-        backgroundColor = UIColor.clear
+        backgroundColor = .clear
         delegate = self
         showsHorizontalScrollIndicator = SKPhotoBrowserOptions.displayHorizontalScrollIndicator
         showsVerticalScrollIndicator = SKPhotoBrowserOptions.displayVerticalScrollIndicator
