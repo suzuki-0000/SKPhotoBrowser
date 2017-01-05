@@ -30,7 +30,7 @@ Below is a table that shows which version of SKPhotoBrowser you should use for y
 
 | Swift version | Moya version    |
 | ------------- | --------------- |
-| 3.X           | >= 4.0.0-beta.1 |
+| 3.X           | >= 4.0.0 |
 | 2.3           | 2.0.4 - 3.x.x   |
 | 2.2           | <= 2.0.3        |
 
@@ -43,22 +43,12 @@ pod 'SKPhotoBrowser'
 use_frameworks!
 ```
 
-if you want to use in swift3, use swift3 branch 
-```
-## Swift3.0
-pod 'SKPhotoBrowser', :git => 'https://github.com/suzuki-0000/SKPhotoBrowser.git', :branch => 'swift3'
-use_frameworks!
-```
-
 ####Carthage
 To integrate into your Xcode project using Carthage, specify it in your Cartfile:
 
 ```ogdl
 github "suzuki-0000/SKPhotoBrowser"
 ```
-
-####Manually
-Add the code directly into your project.
 
 ##Usage
 See the code snippet below for an example of how to implement, or see the example project.
@@ -161,7 +151,7 @@ You can use SKCacheable protocol if others are adaptable. (SKImageCacheable or S
 ```swift
 e.g. SDWebImage
 
-// 1. create custon cache. implement function for protocol
+// 1. create custom cache, implement in accordance with the protocol 
 class CustomImageCache: SKImageCacheable { var cache: SDImageCache }
 
 // 2. replace SKCache instance with custom cache
@@ -184,7 +174,6 @@ Photo captions can be displayed simply bottom of PhotoBrowser. by setting the `c
 ``` swift
 let photo = SKPhoto.photoWithImage(UIImage())
 photo.caption = "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
-images.append(photo)
 ```
 
 #### SwipeGesture 
@@ -203,6 +192,7 @@ There's some trigger point you can handle using delegate. those are optional.
 - didScrollToIndex(index: Int)
 - removePhoto(browser: SKPhotoBrowser, index: Int, reload: (() -> Void))
 - viewForPhoto(browser: SKPhotoBrowser, index: Int) -> UIView?
+- controlsVisibilityToggled(hidden: Bool)
 
 ```swift
 let browser = SKPhotoBrowser(originImage: originImage, photos: images, animatedFromView: cell)
