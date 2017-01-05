@@ -41,3 +41,9 @@ public struct SKPhotoBrowserOptions {
     // public static var imagePaddingX: CGFloat = 0
     // public static var imagePaddingY: CGFloat = 0
 }
+
+public struct SKCaptionOptions {
+    public static var textAlignment: NSTextAlignment = .Center
+    public static var numberOfLine: Int = 3
+    public static var lineBreakMode: NSLineBreakMode = .ByTruncatingTail
+}

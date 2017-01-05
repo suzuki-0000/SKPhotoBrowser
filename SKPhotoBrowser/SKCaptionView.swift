@@ -62,9 +62,9 @@ private extension SKCaptionView {
         photoLabel.opaque = false
         photoLabel.backgroundColor = .clearColor()
         photoLabel.textColor = SKPhotoBrowserOptions.textAndIconColor
-        photoLabel.textAlignment = .Center
-        photoLabel.lineBreakMode = .ByTruncatingTail
-        photoLabel.numberOfLines = 3
+        photoLabel.textAlignment = SKCaptionOptions.textAlignment
+        photoLabel.lineBreakMode = SKCaptionOptions.lineBreakMode
+        photoLabel.numberOfLines = SKCaptionOptions.numberOfLine
         photoLabel.shadowColor = UIColor(white: 0.0, alpha: 0.5)
         photoLabel.shadowOffset = CGSize(width: 0.0, height: 1.0)
         photoLabel.font = SKPhotoBrowserOptions.captionFont
