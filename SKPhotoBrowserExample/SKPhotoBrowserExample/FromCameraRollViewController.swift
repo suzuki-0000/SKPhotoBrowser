@@ -14,22 +14,22 @@ class FromCameraRollViewController: UIViewController, SKPhotoBrowserDelegate, UI
 
     @IBOutlet weak var collectionView: UICollectionView!
     
-    private let imageManager = PHCachingImageManager.defaultManager()
+    fileprivate let imageManager = PHCachingImageManager.default()
     
-    private var assets: [PHAsset] = []
+    fileprivate var assets: [PHAsset] = []
     
-    private lazy var requestOptions: PHImageRequestOptions = {
+    fileprivate lazy var requestOptions: PHImageRequestOptions = {
         let options = PHImageRequestOptions()
-        options.deliveryMode = .Opportunistic
-        options.resizeMode = .Fast
+        options.deliveryMode = .opportunistic
+        options.resizeMode = .fast
         
         return options
     }()
     
-    private lazy var bigRequestOptions: PHImageRequestOptions = {
+    fileprivate lazy var bigRequestOptions: PHImageRequestOptions = {
         let options = PHImageRequestOptions()
-        options.deliveryMode = .HighQualityFormat
-        options.resizeMode = .Fast
+        options.deliveryMode = .highQualityFormat
+        options.resizeMode = .fast
         
         return options
     }()
@@ -57,22 +57,21 @@ class FromCameraRollViewController: UIViewController, SKPhotoBrowserDelegate, UI
     */
 
     // MARK: UICollectionViewDataSource
-
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
 
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
         return assets.count
     }
 
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("exampleCollectionViewCell", forIndexPath: indexPath)
-        let asset = assets[indexPath.row]
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "exampleCollectionViewCell", for: indexPath)
+        let asset = assets[(indexPath as NSIndexPath).row]
         
         if let cell = cell as? AssetExampleCollectionViewCell {
             if let id = cell.requestId {
@@ -91,16 +90,16 @@ class FromCameraRollViewController: UIViewController, SKPhotoBrowserDelegate, UI
         return cell
     }
     
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        guard let cell = collectionView.cellForItemAtIndexPath(indexPath) as? ExampleCollectionViewCell else {
+        guard let cell = collectionView.cellForItem(at: indexPath) as? ExampleCollectionViewCell else {
             return
         }
         guard let originImage = cell.exampleImageView.image else {
             return
         }
         
-        func open(images: [UIImage]) {
+        func open(_ images: [UIImage]) {
             
             let photoImages: [SKPhotoProtocol] = images.map({ return SKPhoto.photoWithImage($0) })
             let browser = SKPhotoBrowser(originImage: cell.exampleImageView.image!, photos: photoImages, animatedFromView: cell)
@@ -110,17 +109,17 @@ class FromCameraRollViewController: UIViewController, SKPhotoBrowserDelegate, UI
 //            browser.bounceAnimation = true
 //            browser.displayDeleteButton = true
 //            browser.displayAction = false
-            self.presentViewController(browser, animated: true, completion: {})
+            self.present(browser, animated: true, completion: {})
         }
         
-        var fetchedImages: [UIImage] = Array<UIImage>(count: assets.count, repeatedValue: UIImage())
+        var fetchedImages: [UIImage] = Array<UIImage>(repeating: UIImage(), count: assets.count)
         var fetched = 0
         
         assets.forEach { (asset) -> () in
             
-            requestImageForAsset(asset, options:bigRequestOptions, completion: { [weak self] (image, requestId) -> () in
+            _ = requestImageForAsset(asset, options:bigRequestOptions, completion: { [weak self] (image, requestId) -> () in
                 
-                if let image = image, index = self?.assets.indexOf(asset) {
+                if let image = image, let index = self?.assets.index(of: asset) {
                     fetchedImages[index] = image
                 }
                 fetched += 1
@@ -132,55 +131,55 @@ class FromCameraRollViewController: UIViewController, SKPhotoBrowserDelegate, UI
         }
     }
     
-    private func fetchAssets() {
+    fileprivate func fetchAssets() {
         
         let options = PHFetchOptions()
         let limit = 8
         
         options.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
-        options.predicate = NSPredicate(format: "mediaType = %d", PHAssetMediaType.Image.rawValue)
+        options.predicate = NSPredicate(format: "mediaType = %d", PHAssetMediaType.image.rawValue)
 
         options.fetchLimit = limit
         
-        let result = PHAsset.fetchAssetsWithOptions(options)
+        let result = PHAsset.fetchAssets(with: options)
         let amount = min(result.count, limit)
-        self.assets = result.objectsAtIndexes(NSIndexSet(indexesInRange: NSRange(location: 0, length: amount))) as? [PHAsset] ?? []
+        self.assets = result.objects(at: IndexSet(integersIn: NSRange(location: 0, length: amount).toRange() ?? 0..<0))
     }
     
-    private func requestImageForAsset(asset: PHAsset, options: PHImageRequestOptions, completion: (image: UIImage?, requestId: PHImageRequestID?) -> ()) -> PHImageRequestID {
+    fileprivate func requestImageForAsset(_ asset: PHAsset, options: PHImageRequestOptions, completion: @escaping (_ image: UIImage?, _ requestId: PHImageRequestID?) -> ()) -> PHImageRequestID {
         
-        let scale = UIScreen.mainScreen().scale
+        let scale = UIScreen.main.scale
         let targetSize: CGSize
         
-        if options.deliveryMode == .HighQualityFormat {
+        if options.deliveryMode == .highQualityFormat {
             targetSize = CGSize(width: 600 * scale, height: 600 * scale)
         } else {
             targetSize = CGSize(width: 182 * scale, height: 182 * scale)
         }
         
-        requestOptions.synchronous = false
+        requestOptions.isSynchronous = false
         
         // Workaround because PHImageManager.requestImageForAsset doesn't work for burst images
         if asset.representsBurst {
-            return imageManager.requestImageDataForAsset(asset, options: options) { data, _, _, dict in
+            return imageManager.requestImageData(for: asset, options: options) { data, _, _, dict in
                 let image = data.flatMap { UIImage(data: $0) }
                 let requestId = dict?[PHImageResultRequestIDKey] as? NSNumber
-                completion(image: image, requestId: requestId?.intValue)
+                completion(image, requestId?.int32Value)
             }
         } else {
-            return imageManager.requestImageForAsset(asset, targetSize: targetSize, contentMode: .AspectFill, options: options) { image, dict in
+            return imageManager.requestImage(for: asset, targetSize: targetSize, contentMode: .aspectFill, options: options) { image, dict in
                 let requestId = dict?[PHImageResultRequestIDKey] as? NSNumber
-                completion(image: image, requestId: requestId?.intValue)
+                completion(image, requestId?.int32Value)
             }
         }
     }
     
-    override func prefersStatusBarHidden() -> Bool {
+    override var prefersStatusBarHidden : Bool {
         return false
     }
     
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return .LightContent
+    override var preferredStatusBarStyle : UIStatusBarStyle {
+        return .lightContent
     }
 }
 

@@ -1,5 +1,22 @@
 # Change Log
 
+## 4.0.0
+Released on 5-1-2017
+
+#### Breaking Change
+- go to swift3
+
+#### Fixed
+- #171 Add @escaping to delegate method's reload closure parameter.
+- #172 Fix caption font bug
+- #177 Fix a fatal error when app's window is customized.
+- #178 SKPagingScrollView fixes / swift3 branch
+- #179 SKPagingScrollView fixes
+- #182 Always load from the URL even if a placeholder image exists
+- #186 fix setStatusBarHidden is deprecated in iOS 9.0 and demo cannot run
+- #188 Added options for custom photo's caption.
+- #180 SKPhotoBrowserOptions not working Swift 3
+
 ## 3.1.4
 Released on 11-14-2016
 - add delegate that get notified when controls view visibility toggled
