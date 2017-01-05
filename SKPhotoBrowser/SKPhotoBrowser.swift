@@ -94,10 +94,13 @@ open class SKPhotoBrowser: UIViewController {
     }
     
     func setup() {
-        guard let window = UIApplication.shared.delegate?.window else {
+        if let window = UIApplication.shared.delegate?.window {
+            applicationWindow = window
+        }else if let window = UIApplication.shared.keyWindow {
+            applicationWindow = window
+        }else {
             return
         }
-        applicationWindow = window
         
         modalPresentationCapturesStatusBarAppearance = true
         modalPresentationStyle = .custom
