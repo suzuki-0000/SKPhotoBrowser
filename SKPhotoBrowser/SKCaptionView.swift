@@ -87,7 +87,7 @@ private extension SKCaptionView {
         photoLabel.numberOfLines = 3
         photoLabel.shadowColor = UIColor(white: 0.0, alpha: 0.5)
         photoLabel.shadowOffset = CGSize(width: 0.0, height: 1.0)
-        photoLabel.font = UIFont.systemFont(ofSize: 17.0)
+        photoLabel.font = SKPhotoBrowserOptions.captionFont
         photoLabel.text = photo?.caption
         addSubview(photoLabel)
     }
