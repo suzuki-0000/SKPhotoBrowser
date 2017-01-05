@@ -203,7 +203,7 @@ private extension SKPagingScrollView {
     }
     
     func createCaptionView(_ index: Int) -> SKCaptionView? {
-        guard let photo = browser?.photoAtIndex(index) , photo.caption != nil else {
+        guard let photo = browser?.photoAtIndex(index), photo.caption != nil else {
             return nil
         }
         return SKCaptionView(photo: photo)
@@ -231,8 +231,3 @@ private extension SKPagingScrollView {
         return lastIndex
     }
 }
-
-
-
-
-

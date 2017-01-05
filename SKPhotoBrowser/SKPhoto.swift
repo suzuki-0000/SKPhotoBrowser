@@ -68,12 +68,6 @@ open class SKPhoto: NSObject, SKPhotoProtocol {
     }
     
     open func loadUnderlyingImageAndNotify() {
-        
-        if underlyingImage != nil {
-            loadUnderlyingImageComplete()
-            return
-        }
-        
         if photoURL != nil {
             // Fetch Image
             let session = URLSession(configuration: URLSessionConfiguration.default)
