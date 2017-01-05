@@ -118,7 +118,7 @@ class SKPagingScrollView: UIScrollView {
         let lastIndex: Int = getLastIndex()
         
         visiblePages
-            .filter({ $0.tag - pageIndexTagOffset < firstIndex ||  $0.tag - pageIndexTagOffset < lastIndex })
+            .filter({ $0.tag - pageIndexTagOffset < firstIndex ||  $0.tag - pageIndexTagOffset > lastIndex })
             .forEach { page in
                 recycledPages.append(page)
                 page.prepareForReuse()
@@ -197,7 +197,7 @@ class SKPagingScrollView: UIScrollView {
 private extension SKPagingScrollView {
     func frameForPageAtIndex(_ index: Int) -> CGRect {
         var pageFrame = bounds
-        pageFrame.size.width -= (2 * 10)
+        pageFrame.size.width -= (2 * sideMargin)
         pageFrame.origin.x = (bounds.size.width * CGFloat(index)) + sideMargin
         return pageFrame
     }
