@@ -1,7 +1,6 @@
 SKPhotoBrowser
 ========================
 
-![Language](https://img.shields.io/badge/language-Swift%202.3-orange.svg)
 ![Swift](http://img.shields.io/badge/swift-3.0-brightgreen.svg)
 [![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![Cocoapods Compatible](https://img.shields.io/cocoapods/v/SKPhotoBrowser.svg?style=flat)](http://cocoadocs.org/docsets/SKPhotoBrowser)
@@ -28,10 +27,10 @@ Simple PhotoBrowser/Viewer inspired by facebook, twitter photo browsers written 
 
 Below is a table that shows which version of SKPhotoBrowser you should use for your Swift version.
 
-| Swift version | Moya version    |
+| Swift version | SKPhotoBrowser version    |
 | ------------- | --------------- |
 | 3.X           | >= 4.0.0 |
-| 2.3           | 2.0.4 - 3.x.x   |
+| 2.3           | 2.0.4 - 3.1.4  |
 | 2.2           | <= 2.0.3        |
 
 ##Installation
