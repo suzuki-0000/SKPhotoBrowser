@@ -1,11 +1,20 @@
 # Change Log
 
+## 4.0.1
+Released on 18-1-2017
+
+#### Fixed
+- Update README.md
+- #158 Button Position wrong with changed StatusBar handling
+- #162 Fix SKPhotoBrowserOptions background color
+- #181 Unclear how placeholder image is supposed to work
+
 ## 4.0.0
 Released on 5-1-2017
 
 #### Breaking Change
-- go to swift3
-
+- default swift version change. swift2.2 -> swift3
+  
 #### Fixed
 - #171 Add @escaping to delegate method's reload closure parameter.
 - #172 Fix caption font bug
