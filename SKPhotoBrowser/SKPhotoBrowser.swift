@@ -54,9 +54,6 @@ open class SKPhotoBrowser: UIViewController {
         return photos.count
     }
     
-    // statusbar initial state
-    private var statusbarHidden: Bool = UIApplication.shared.isStatusBarHidden
-    
     // MARK - Initializer
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -107,7 +104,7 @@ open class SKPhotoBrowser: UIViewController {
         modalTransitionStyle = .crossDissolve
         
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(self.handleSKPhotoLoadingDidEndNotification(_:)),
+                                               selector: #selector(handleSKPhotoLoadingDidEndNotification(_:)),
                                                name: NSNotification.Name(rawValue: SKPHOTO_LOADING_DID_END_NOTIFICATION),
                                                object: nil)
     }
@@ -140,8 +137,6 @@ open class SKPhotoBrowser: UIViewController {
         super.viewWillLayoutSubviews()
         isPerformingLayout = true
         
-        closeButton.updateFrame()
-        deleteButton.updateFrame()
         pagingScrollView.updateFrame(view.bounds, currentPageIndex: currentPageIndex)
         
         toolbar.frame = frameForToolbarAtOrientation()

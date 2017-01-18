@@ -51,8 +51,8 @@ open class SKCache {
         return nil
     }
 
-    open func setImageData(_ data: Data, response: URLResponse, request: URLRequest) {
-        guard let cache = imageCache as? SKRequestResponseCacheable else {
+    open func setImageData(_ data: Data, response: URLResponse, request: URLRequest?) {
+        guard let cache = imageCache as? SKRequestResponseCacheable, let request = request else {
             return
         }
         let cachedResponse = CachedURLResponse(response: response, data: data)
