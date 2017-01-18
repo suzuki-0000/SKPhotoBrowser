@@ -13,6 +13,9 @@ open class SKZoomingScrollView: UIScrollView {
     var photo: SKPhotoProtocol! {
         didSet {
             photoImageView.image = nil
+            if photo != nil && photo.underlyingImage != nil {
+                displayImage(complete: true)
+            }
             if photo != nil {
                 displayImage(complete: false)
             }
@@ -48,7 +51,7 @@ open class SKZoomingScrollView: UIScrollView {
         // tap
         tapView = SKDetectingView(frame: bounds)
         tapView.delegate = self
-        tapView.backgroundColor = UIColor.clear
+        tapView.backgroundColor = .clear
         tapView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         addSubview(tapView)
         
@@ -56,7 +59,7 @@ open class SKZoomingScrollView: UIScrollView {
         photoImageView = SKDetectingImageView(frame: frame)
         photoImageView.delegate = self
         photoImageView.contentMode = .bottom
-        photoImageView.backgroundColor = UIColor.clear
+        photoImageView.backgroundColor = .clear
         addSubview(photoImageView)
         
         // indicator
@@ -64,7 +67,7 @@ open class SKZoomingScrollView: UIScrollView {
         addSubview(indicatorView)
         
         // self
-        backgroundColor = UIColor.clear
+        backgroundColor = .clear
         delegate = self
         showsHorizontalScrollIndicator = SKPhotoBrowserOptions.displayHorizontalScrollIndicator
         showsVerticalScrollIndicator = SKPhotoBrowserOptions.displayVerticalScrollIndicator
@@ -182,21 +185,6 @@ open class SKZoomingScrollView: UIScrollView {
         }
         
         if let image = photo.underlyingImage {
-            
-            // performance slowed #145
- 
-            // create padding
-            // let width: CGFloat = image.size.width + SKPhotoBrowserOptions.imagePaddingX
-            // let height: CGFloat = image.size.height + SKPhotoBrowserOptions.imagePaddingY;
-            // UIGraphicsBeginImageContextWithOptions(CGSizeMake(width, height), false, 0.0);
-            // let context: CGContextRef = UIGraphicsGetCurrentContext()!;
-            // UIGraphicsPushContext(context);
-            // let origin: CGPoint = CGPointMake((width - image.size.width) / 2, (height - image.size.height) / 2);
-            // image.drawAtPoint(origin)
-            // UIGraphicsPopContext();
-            // let imageWithPadding = UIGraphicsGetImageFromCurrentImageContext();
-            // UIGraphicsEndImageContext();
-
             // image
             photoImageView.image = image
             photoImageView.contentMode = photo.contentMode
