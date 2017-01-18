@@ -100,7 +100,7 @@ func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath i
    let cell = collectionView.cellForItemAtIndexPath(indexPath) 
    let originImage = cell.exampleImageView.image // some image for baseImage 
 
-   let browser = SKPhotoBrowser(originImage: originImage, photos: images, animatedFromView: cell) 
+   let browser = SKPhotoBrowser(originImage: originImage ?? UIImage(), photos: images, animatedFromView: cell) 
    browser.initializePageIndex(indexPath.row)
    presentViewController(browser, animated: true, completion: {})
 }
