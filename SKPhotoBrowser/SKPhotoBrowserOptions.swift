@@ -31,6 +31,22 @@ public struct SKPhotoBrowserOptions {
     public static var enableSingleTapDismiss: Bool = false
     
     public static var backgroundColor: UIColor = .black
+    
+    public static var toolbarTextShadowColor: UIColor = .darkText
+    
+    
+    /// By default close button is on left side and delete button is on right.
+    ///
+    /// Set this property to **true** for swap they.
+    ///
+    /// Default: false
+    public static var swapCloseAndDeleteButtons = false
+    
+    
+    /// Offset from top and from nearest screen edge of close button and delete button.
+    ///
+    /// - Default: 5
+    public static var closeAndDeleteButtonPadding: CGFloat = 5
 }
 
 public struct SKCaptionOptions {
@@ -44,4 +60,5 @@ public struct SKCaptionOptions {
 public struct SKToolbarOptions {
     public static var textColor: UIColor = .white
     public static var font: UIFont = .systemFont(ofSize: 17.0)
+    public static var textShadowColor: UIColor = .black
 }
