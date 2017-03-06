@@ -31,6 +31,9 @@ public struct SKPhotoBrowserOptions {
     public static var enableSingleTapDismiss: Bool = false
     
     public static var backgroundColor: UIColor = .black
+    
+    public static var indicatorColor: UIColor = UIColor.white
+    public static var indicatorStyle: UIActivityIndicatorViewStyle = .whiteLarge
 }
 
 public struct SKCaptionOptions {
