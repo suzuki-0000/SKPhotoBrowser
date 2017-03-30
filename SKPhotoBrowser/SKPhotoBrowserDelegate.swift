@@ -15,7 +15,7 @@ import Foundation
      
      - Parameter index: the index of the new photo
      */
-    optional func didShowPhotoAtIndex(index: Int)
+    optional func didShowPhotoAtIndex(browser: SKPhotoBrowser, index: Int)
     
     /**
      Tells the delegate the browser will start to dismiss

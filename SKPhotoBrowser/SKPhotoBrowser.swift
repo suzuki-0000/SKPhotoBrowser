@@ -140,7 +140,7 @@ public class SKPhotoBrowser: UIViewController {
         toolbar.frame = frameForToolbarAtOrientation()
         
         // where did start
-        delegate?.didShowPhotoAtIndex?(currentPageIndex)
+        delegate?.didShowPhotoAtIndex?(self, index: currentPageIndex)
         
         isPerformingLayout = false
     }
@@ -196,7 +196,7 @@ public class SKPhotoBrowser: UIViewController {
         pagingScrollView.updateContentOffset(currentPageIndex)
         pagingScrollView.tilePages()
         
-        delegate?.didShowPhotoAtIndex?(currentPageIndex)
+        delegate?.didShowPhotoAtIndex?(self, index: currentPageIndex)
         
         isPerformingLayout = false
     }
@@ -638,7 +638,7 @@ extension SKPhotoBrowser: UIScrollViewDelegate {
         currentPageIndex = min(max(Int(floor(visibleBounds.midX / visibleBounds.width)), 0), numberOfPhotos - 1)
         
         if currentPageIndex != previousCurrentPage {
-            delegate?.didShowPhotoAtIndex?(currentPageIndex)
+            delegate?.didShowPhotoAtIndex?(self, index: currentPageIndex)
             toolbar.updateToolbar(currentPageIndex)
         }
     }
