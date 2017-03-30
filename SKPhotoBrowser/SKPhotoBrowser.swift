@@ -29,7 +29,7 @@ public class SKPhotoBrowser: UIViewController {
     var backgroundView: UIView!
     
     var initialPageIndex: Int = 0
-    var currentPageIndex: Int = 0
+    public var currentPageIndex: Int = 0
     
     // for status check property
     private var isEndAnimationByToolBar: Bool = true
@@ -116,7 +116,7 @@ public class SKPhotoBrowser: UIViewController {
         
         animator.willPresent(self)
     }
-
+    
     
     override public func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
@@ -210,14 +210,14 @@ public class SKPhotoBrowser: UIViewController {
     
     public func dismissPhotoBrowser(animated animated: Bool, completion: (Void -> Void)? = nil) {
         prepareForClosePhotoBrowser()
-
+        
         modalTransitionStyle = .CrossDissolve
         dismissViewControllerAnimated(animated) {
             completion?()
             self.delegate?.didDismissAtPageIndex?(self.currentPageIndex)
         }
     }
-
+    
     public func determineAndClose() {
         delegate?.willDismissAtPageIndex?(currentPageIndex)
         animator.willDismiss(self)
@@ -227,25 +227,31 @@ public class SKPhotoBrowser: UIViewController {
 // MARK: - Public Function For Customizing Buttons
 
 public extension SKPhotoBrowser {
-  func updateCloseButton(image: UIImage, size: CGSize? = nil) {
+    func updateCloseButton(image: UIImage, size: CGSize? = nil) {
         if closeButton == nil {
             configureCloseButton()
         }
         closeButton.setImage(image, forState: .Normal)
-    
+        
         if let size = size {
             closeButton.setFrameSize(size)
         }
     }
-  
-  func updateDeleteButton(image: UIImage, size: CGSize? = nil) {
+    
+    func updateDeleteButton(image: UIImage, size: CGSize? = nil) {
         if deleteButton == nil {
             configureDeleteButton()
         }
         deleteButton.setImage(image, forState: .Normal)
-    
+        
         if let size = size {
             deleteButton.setFrameSize(size)
+        }
+    }
+    
+    func deleteButtonPressed(sender: UIButton) {
+        delegate?.removePhoto?(self, index: currentPageIndex) { [weak self] in
+            self?.deleteImage()
         }
     }
 }
@@ -480,12 +486,6 @@ internal extension SKPhotoBrowser {
         }
     }
     
-    func deleteButtonPressed(sender: UIButton) {
-        delegate?.removePhoto?(self, index: currentPageIndex) { [weak self] in
-            self?.deleteImage()
-        }
-    }
-    
     func closeButtonPressed(sender: UIButton) {
         determineAndClose()
     }
@@ -527,7 +527,7 @@ internal extension SKPhotoBrowser {
     }
 }
 
-// MARK: - Private Function 
+// MARK: - Private Function
 private extension SKPhotoBrowser {
     func configureAppearance() {
         view.backgroundColor = SKPhotoBrowserOptions.backgroundColor
@@ -575,22 +575,22 @@ private extension SKPhotoBrowser {
         let captionViews = pagingScrollView.getCaptionViews()
         
         UIView.animateWithDuration(0.35,
-            animations: { () -> Void in
-                let alpha: CGFloat = hidden ? 0.0 : 1.0
-                self.toolbar.alpha = alpha
-                self.toolbar.frame = hidden ? self.frameForToolbarHideAtOrientation() : self.frameForToolbarAtOrientation()
-                
-                if SKPhotoBrowserOptions.displayCloseButton {
-                    self.closeButton.alpha = alpha
-                    self.closeButton.frame = hidden ? self.closeButton.hideFrame : self.closeButton.showFrame
-                }
-                if SKPhotoBrowserOptions.displayDeleteButton {
-                    self.deleteButton.alpha = alpha
-                    self.deleteButton.frame = hidden ? self.deleteButton.hideFrame : self.deleteButton.showFrame
-                }
-                captionViews.forEach { $0.alpha = alpha }
+                                   animations: { () -> Void in
+                                    let alpha: CGFloat = hidden ? 0.0 : 1.0
+                                    self.toolbar.alpha = alpha
+                                    self.toolbar.frame = hidden ? self.frameForToolbarHideAtOrientation() : self.frameForToolbarAtOrientation()
+                                    
+                                    if SKPhotoBrowserOptions.displayCloseButton {
+                                        self.closeButton.alpha = alpha
+                                        self.closeButton.frame = hidden ? self.closeButton.hideFrame : self.closeButton.showFrame
+                                    }
+                                    if SKPhotoBrowserOptions.displayDeleteButton {
+                                        self.deleteButton.alpha = alpha
+                                        self.deleteButton.frame = hidden ? self.deleteButton.hideFrame : self.deleteButton.showFrame
+                                    }
+                                    captionViews.forEach { $0.alpha = alpha }
             },
-            completion: nil)
+                                   completion: nil)
         
         if !permanent {
             hideControlsAfterDelay()
