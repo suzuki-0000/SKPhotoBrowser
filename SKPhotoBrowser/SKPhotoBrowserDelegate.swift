@@ -51,7 +51,7 @@ import Foundation
      
      - Parameter index: the index of the photo where the user had scroll
      */
-    optional func didScrollToIndex(index: Int)
+    optional func didScrollToIndex(browser: SKPhotoBrowser, index: Int)
     
     /**
      Tells the delegate the user removed a photo, when implementing this call, be sure to call reload to finish the deletion process

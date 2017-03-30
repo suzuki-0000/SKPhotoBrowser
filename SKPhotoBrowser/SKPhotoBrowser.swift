@@ -647,7 +647,7 @@ extension SKPhotoBrowser: UIScrollViewDelegate {
         hideControlsAfterDelay()
         
         let currentIndex = pagingScrollView.contentOffset.x / pagingScrollView.frame.size.width
-        delegate?.didScrollToIndex?(Int(currentIndex))
+        delegate?.didScrollToIndex?(self, index: Int(currentIndex))
     }
     
     public func scrollViewDidEndScrollingAnimation(scrollView: UIScrollView) {
