@@ -75,6 +75,6 @@ import Foundation
     /**
      Tells the delegate that the controls view toggled visibility
      */
-    optional func controlsVisibilityToggled(hidden: Bool) -> Void
+    optional func controlsVisibilityToggled(browser: SKPhotoBrowser, hidden: Bool) -> Void
 }
 
