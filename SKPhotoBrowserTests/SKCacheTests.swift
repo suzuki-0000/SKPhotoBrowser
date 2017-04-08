@@ -36,7 +36,7 @@ class SKCacheTests: XCTestCase {
     func testDefaultCacheImageForKey() {
         // given
         let cache = (self.cache.imageCache as? SKDefaultImageCache)!.cache
-        cache.setObject(self.image, forKey: self.key)
+        cache.setObject(self.image, forKey: self.key as AnyObject)
 
         // when
         let cachedImage = self.cache.imageForKey(self.key)
@@ -51,14 +51,14 @@ class SKCacheTests: XCTestCase {
 
         // then
         let cache = (self.cache.imageCache as? SKDefaultImageCache)!.cache
-        let cachedImage = cache.objectForKey(self.key) as? UIImage
+        let cachedImage = cache.object(forKey: self.key as AnyObject) as? UIImage
         XCTAssertNotNil(cachedImage)
     }
 
     func testDefaultCacheRemoveImageForKey() {
         // given
         let cache = (self.cache.imageCache as? SKDefaultImageCache)!.cache
-        cache.setObject(self.image, forKey: self.key)
+        cache.setObject(self.image, forKey: self.key as AnyObject)
 
         // when
         self.cache.removeImageForKey(self.key)

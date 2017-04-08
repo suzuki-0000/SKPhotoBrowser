@@ -15,28 +15,28 @@ import Foundation
      
      - Parameter index: the index of the new photo
      */
-    optional func didShowPhotoAtIndex(browser: SKPhotoBrowser, index: Int)
+    @objc optional func didShowPhotoAtIndex(_ browser: SKPhotoBrowser, index: Int)
     
     /**
      Tells the delegate the browser will start to dismiss
      
      - Parameter index: the index of the current photo
      */
-    optional func willDismissAtPageIndex(index: Int)
+    @objc optional func willDismissAtPageIndex(_ index: Int)
     
     /**
      Tells the delegate that the browser will start showing the `UIActionSheet`
      
      - Parameter photoIndex: the index of the current photo
      */
-    optional func willShowActionSheet(photoIndex: Int)
+    @objc optional func willShowActionSheet(_ photoIndex: Int)
     
     /**
      Tells the delegate that the browser has been dismissed
      
      - Parameter index: the index of the current photo
      */
-    optional func didDismissAtPageIndex(index: Int)
+    @objc optional func didDismissAtPageIndex(_ index: Int)
     
     /**
      Tells the delegate that the browser did dismiss the UIActionSheet
@@ -44,14 +44,14 @@ import Foundation
      - Parameter buttonIndex: the index of the pressed button
      - Parameter photoIndex: the index of the current photo
      */
-    optional func didDismissActionSheetWithButtonIndex(buttonIndex: Int, photoIndex: Int)
+    @objc optional func didDismissActionSheetWithButtonIndex(_ buttonIndex: Int, photoIndex: Int)
     
     /**
      Tells the delegate that the browser did scroll to index
      
      - Parameter index: the index of the photo where the user had scroll
      */
-    optional func didScrollToIndex(browser: SKPhotoBrowser, index: Int)
+    @objc optional func didScrollToIndex(_ browser: SKPhotoBrowser, index: Int)
     
     /**
      Tells the delegate the user removed a photo, when implementing this call, be sure to call reload to finish the deletion process
@@ -60,7 +60,7 @@ import Foundation
      - Parameter index: the index of the removed photo
      - Parameter reload: function that needs to be called after finishing syncing up
      */
-    optional func removePhoto(browser: SKPhotoBrowser, index: Int, reload: (() -> Void))
+    @objc optional func removePhoto(_ browser: SKPhotoBrowser, index: Int, reload: @escaping (() -> Void))
     
     /**
      Asks the delegate for the view for a certain photo. Needed to detemine the animation when presenting/closing the browser.
@@ -70,11 +70,11 @@ import Foundation
      
      - Returns: the view to animate to
      */
-    optional func viewForPhoto(browser: SKPhotoBrowser, index: Int) -> UIView?
+    @objc optional func viewForPhoto(_ browser: SKPhotoBrowser, index: Int) -> UIView?
     
     /**
      Tells the delegate that the controls view toggled visibility
      */
-    optional func controlsVisibilityToggled(browser: SKPhotoBrowser, hidden: Bool) -> Void
+    @objc optional func controlsVisibilityToggled(_ browser: SKPhotoBrowser, hidden: Bool) -> Void
 }
 
