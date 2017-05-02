@@ -122,7 +122,6 @@ private extension SKToolbar {
     }
 }
 
-
 class SKToolbarButton: UIButton {
     let insets: UIEdgeInsets = UIEdgeInsets(top: 13.25, left: 17.25, bottom: 13.25, right: 17.25)
     

@@ -9,7 +9,6 @@
 import XCTest
 @testable import SKPhotoBrowser
 
-
 class SKCacheTests: XCTestCase {
 
     var cache: SKCache!
