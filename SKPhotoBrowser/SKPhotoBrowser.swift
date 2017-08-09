@@ -55,7 +55,7 @@ open class SKPhotoBrowser: UIViewController {
     }
     
     // strings
-    var cancelTitle = "Cancel"
+    open var cancelTitle = "Cancel"
     
     // MARK - Initializer
     required public init?(coder aDecoder: NSCoder) {
