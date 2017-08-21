@@ -1,5 +1,10 @@
 # Change Log
 
+## 4.0.x
+
+#### Updated
+- #173 Move the willDismiss delegate call closer to the dismissal
+
 ## 4.0.1
 Released on 18-1-2017
 
