@@ -214,6 +214,7 @@ open class SKPhotoBrowser: UIViewController {
     
     open func dismissPhotoBrowser(animated: Bool, completion: ((Void) -> Void)? = nil) {
         prepareForClosePhotoBrowser()
+        delegate?.willDismissAtPageIndex?(currentPageIndex)
 
         if !animated {
             modalTransitionStyle = .crossDissolve
@@ -226,7 +227,6 @@ open class SKPhotoBrowser: UIViewController {
     }
 
     open func determineAndClose() {
-        delegate?.willDismissAtPageIndex?(currentPageIndex)
         animator.willDismiss(self)
     }
 }
