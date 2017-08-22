@@ -4,6 +4,7 @@
 
 #### Updated
 - #173 Move the willDismiss delegate call closer to the dismissal
+- #196 Improved SKCaptionView
 
 ## 4.0.1
 Released on 18-1-2017
