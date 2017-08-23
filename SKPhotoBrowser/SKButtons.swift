@@ -42,6 +42,8 @@ class SKButton: UIButton {
         showFrame = newRect
         hideFrame = CGRect(x: margin, y: -20, width: size.width, height: size.height)
     }
+    
+    func updateFrame(_ frameSize: CGSize) { }
 }
 
 class SKCloseButton: SKButton {
@@ -76,5 +78,10 @@ class SKDeleteButton: SKButton {
         self.frame = newRect
         showFrame = newRect
         hideFrame = CGRect(x: SKMesurement.screenWidth - size.width, y: -20, width: size.width, height: size.height)
+    }
+    
+    override func updateFrame(_ newScreenSize: CGSize) {
+        showFrame = CGRect(x: newScreenSize.width - size.width, y: buttonTopOffset, width: size.width, height: size.height)
+        hideFrame = CGRect(x: newScreenSize.width - size.width, y: -20, width: size.width, height: size.height)
     }
 }
