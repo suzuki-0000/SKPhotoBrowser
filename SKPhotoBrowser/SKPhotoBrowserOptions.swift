@@ -32,8 +32,10 @@ public struct SKPhotoBrowserOptions {
     
     public static var backgroundColor: UIColor = .black
     
-    public static var toolbarTextShadowColor: UIColor = .darkText
-    
+    public static var indicatorColor: UIColor = UIColor.white
+    public static var indicatorStyle: UIActivityIndicatorViewStyle = .whiteLarge
+
+    public static var toolbarTextShadowColor: UIColor = .darkText    
     
     /// By default close button is on left side and delete button is on right.
     ///
