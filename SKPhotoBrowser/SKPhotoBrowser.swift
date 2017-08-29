@@ -400,7 +400,7 @@ internal extension SKPhotoBrowser {
             closeButton.alpha = 1
             closeButton.frame = closeButton.showFrame
         }
-        if SKPhotoBrowserOptions.displayDeleteButton {
+        if showDeleteButton {
             deleteButton.alpha = 1
             deleteButton.frame = deleteButton.showFrame
         }
@@ -591,7 +591,7 @@ private extension SKPhotoBrowser {
     func configureDeleteButton() {
         deleteButton = SKDeleteButton(frame: .zero)
         deleteButton.addTarget(self, action: #selector(deleteButtonPressed(_:)), for: .touchUpInside)
-        deleteButton.isHidden = !SKPhotoBrowserOptions.displayDeleteButton
+        deleteButton.isHidden = !showDeleteButton
         view.addSubview(deleteButton)
     }
     
@@ -615,7 +615,7 @@ private extension SKPhotoBrowser {
                     self.closeButton.alpha = alpha
                     self.closeButton.frame = hidden ? self.closeButton.hideFrame : self.closeButton.showFrame
                 }
-                if SKPhotoBrowserOptions.displayDeleteButton {
+                if self.showDeleteButton {
                     self.deleteButton.alpha = alpha
                     self.deleteButton.frame = hidden ? self.deleteButton.hideFrame : self.deleteButton.showFrame
                 }
