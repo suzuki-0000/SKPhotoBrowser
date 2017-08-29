@@ -1,5 +1,15 @@
 # Change Log
 
+## 4.0.x
+
+#### Updated
+- #173 Move the willDismiss delegate call closer to the dismissal
+- #196 Improved SKCaptionView
+- #197 fix: deleteButton frame does not update if screen has rotated 
+- #199 Add SKPhotoBrowserOptions to customize indicator color & style 
+- #200 Swap and custom padding for delete and close buttons 
+- #205 Replaced deprecated Pi constants
+
 ## 4.0.1
 Released on 18-1-2017
 
