@@ -10,6 +10,7 @@
 - #200 Swap and custom padding for delete and close buttons 
 - #205 Replaced deprecated Pi constants
 - #207 Update code style: to Swift3.1
+- #231 Update SKZoomingScrollView.swift
 
 ## 4.0.1
 Released on 18-1-2017
