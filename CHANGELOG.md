@@ -1,5 +1,10 @@
 # Change Log
 
+## 4.1.1
+
+#### Updated
+- #208 improve: change deleteButtonPressed(), currentPageIndex access level
+
 ## 4.1.0
 Released on 30-8-2017
 
