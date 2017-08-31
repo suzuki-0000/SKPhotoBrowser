@@ -159,6 +159,11 @@ open class SKPhotoBrowser: UIViewController {
         }
     }
     
+    override open func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        deleteButton.updateFrame(size)
+    }
+    
     // MARK: - Notification
     open func handleSKPhotoLoadingDidEndNotification(_ notification: Notification) {
         guard let photo = notification.object as? SKPhotoProtocol else {
@@ -214,7 +219,6 @@ open class SKPhotoBrowser: UIViewController {
     
     open func dismissPhotoBrowser(animated: Bool, completion: ((Void) -> Void)? = nil) {
         prepareForClosePhotoBrowser()
-        
         if !animated {
             modalTransitionStyle = .crossDissolve
         }
@@ -226,7 +230,6 @@ open class SKPhotoBrowser: UIViewController {
     }
     
     open func determineAndClose() {
-        delegate?.willDismissAtPageIndex?(currentPageIndex)
         animator.willDismiss(self)
     }
 }
