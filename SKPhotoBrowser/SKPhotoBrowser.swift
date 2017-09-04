@@ -129,7 +129,7 @@ open class SKPhotoBrowser: UIViewController {
         var i = 0
         for photo: SKPhotoProtocol in photos {
             photo.index = i
-            i = i + 1
+            i += 1
         }
     }
     
