@@ -4,6 +4,7 @@
 
 #### Updated
 - #208 improve: change deleteButtonPressed(), currentPageIndex access level
+- #210 Fix Shorthand Operator Violation of Swiftlint 
 
 ## 4.1.0
 Released on 30-8-2017
