@@ -276,7 +276,6 @@ extension SKZoomingScrollView: SKDetectingViewDelegate {
     }
 }
 
-
 // MARK: - SKDetectingImageViewDelegate
 
 extension SKZoomingScrollView: SKDetectingImageViewDelegate {

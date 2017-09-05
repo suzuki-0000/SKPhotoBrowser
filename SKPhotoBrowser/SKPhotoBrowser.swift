@@ -21,7 +21,7 @@ open class SKPhotoBrowser: UIViewController {
     
     // actions
     fileprivate var activityViewController: UIActivityViewController!
-    open var activityItemProvider: UIActivityItemProvider? = nil
+    open var activityItemProvider: UIActivityItemProvider?
     fileprivate var panGesture: UIPanGestureRecognizer!
     
     // tool for controls
@@ -121,7 +121,6 @@ open class SKPhotoBrowser: UIViewController {
         animator.willPresent(self)
     }
     
-    
     override open func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         reloadData()
@@ -154,9 +153,7 @@ open class SKPhotoBrowser: UIViewController {
     }
     
     override open var prefersStatusBarHidden: Bool {
-        get {
-            return !SKPhotoBrowserOptions.displayStatusbar
-        }
+        return !SKPhotoBrowserOptions.displayStatusbar
     }
     
     override open func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -386,7 +383,6 @@ public extension SKPhotoBrowser {
     }
 }
 
-
 // MARK: - Internal Function
 
 internal extension SKPhotoBrowser {
@@ -519,10 +515,10 @@ internal extension SKPhotoBrowser {
         
         if let titles = SKPhotoBrowserOptions.actionButtonTitles {
             let actionSheetController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-            actionSheetController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) -> Void in
+            actionSheetController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (_) -> Void in
             }))
             for idx in titles.indices {
-                actionSheetController.addAction(UIAlertAction(title: titles[idx], style: .default, handler: { (action) -> Void in
+                actionSheetController.addAction(UIAlertAction(title: titles[idx], style: .default, handler: { (_) -> Void in
                     self.delegate?.didDismissActionSheetWithButtonIndex?(idx, photoIndex: self.currentPageIndex)
                 }))
             }
@@ -638,7 +634,7 @@ private extension SKPhotoBrowser {
     }
 }
 
-// MARK: -  UIScrollView Delegate
+// MARK: - UIScrollView Delegate
 
 extension SKPhotoBrowser: UIScrollViewDelegate {
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
