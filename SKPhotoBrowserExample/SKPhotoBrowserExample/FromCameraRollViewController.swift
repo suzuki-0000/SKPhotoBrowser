@@ -111,7 +111,7 @@ class FromCameraRollViewController: UIViewController, SKPhotoBrowserDelegate, UI
             self.present(browser, animated: true, completion: {})
         }
         
-        var fetchedImages: [UIImage] = [(repeating: UIImage(), count: assets.count)]
+        var fetchedImages: [UIImage] = Array<UIImage>(repeating: UIImage(), count: assets.count)
         var fetched = 0
         
         assets.forEach { (asset) -> Void in
