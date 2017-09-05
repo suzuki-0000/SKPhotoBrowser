@@ -109,7 +109,7 @@ private extension SKToolbar {
         toolCounterLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 95, height: 40))
         toolCounterLabel.textAlignment = .center
         toolCounterLabel.backgroundColor = .clear
-        toolCounterLabel.shadowColor = .black
+        toolCounterLabel.shadowColor = SKToolbarOptions.textShadowColor
         toolCounterLabel.shadowOffset = CGSize(width: 0.0, height: 1.0)
         toolCounterLabel.font = SKToolbarOptions.font
         toolCounterLabel.textColor = SKToolbarOptions.textColor
