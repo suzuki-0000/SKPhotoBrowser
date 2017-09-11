@@ -6,7 +6,8 @@
 - #208 improve: change deleteButtonPressed(), currentPageIndex access level
 - #210 Fix Shorthand Operator Violation of Swiftlint 
 - #215 swiftLint
-- #21 update code to Swift 3.1 
+- #216 update code to Swift 3.1 
+- #223 Removed deprecated constants
 
 ## 4.1.0
 Released on 30-8-2017
