@@ -53,11 +53,11 @@ extension UIImage {
 
         case .left, .leftMirrored:
             transform = transform.translatedBy(x: self.size.width, y: 0)
-            transform = transform.rotated(by: (.pi / 2))
+            transform = transform.rotated(by: .pi / 2)
 
         case .right, .rightMirrored:
             transform = transform.translatedBy(x: 0, y: self.size.height)
-            transform = transform.rotated(by: -(.pi / 2))
+            transform = transform.rotated(by: -.pi / 2)
 
         default:
             break
