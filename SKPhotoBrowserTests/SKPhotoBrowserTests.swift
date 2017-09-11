@@ -9,7 +9,6 @@
 import XCTest
 @testable import SKPhotoBrowser
 
-
 class FakeSKPhotoBrowser: SKPhotoBrowser {
     override func setup () {
     }
@@ -26,20 +25,19 @@ class SKPhotoBrowserTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
     }
-
     
     func testSKPhotoArray() {
         var images = [SKPhoto]()
         let photo = SKPhoto.photoWithImage(UIImage())// add some UIImage
         images.append(photo)
-        let _ = FakeSKPhotoBrowser(photos: images)
+        _ = FakeSKPhotoBrowser(photos: images)
     }
     
     func testSKLocalPhotoArray() {
         var images = [SKLocalPhoto]()
         let photo = SKLocalPhoto.photoWithImageURL("")
         images.append(photo)
-        let _ = FakeSKPhotoBrowser(photos: images)
+        _ = FakeSKPhotoBrowser(photos: images)
     }
 
     func testPerformanceExample() {
