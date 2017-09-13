@@ -75,6 +75,6 @@ import Foundation
     /**
      Tells the delegate that the controls view toggled visibility
      */
-    @objc optional func controlsVisibilityToggled(hidden: Bool) -> Void
+    @objc optional func controlsVisibilityToggled(hidden: Bool)
 }
 
