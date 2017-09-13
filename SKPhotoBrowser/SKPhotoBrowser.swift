@@ -54,6 +54,9 @@ open class SKPhotoBrowser: UIViewController {
         return photos.count
     }
     
+    // strings
+    open var cancelTitle = "Cancel"
+    
     // MARK - Initializer
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -515,7 +518,7 @@ internal extension SKPhotoBrowser {
         
         if let titles = SKPhotoBrowserOptions.actionButtonTitles {
             let actionSheetController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-            actionSheetController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (_) -> Void in
+            actionSheetController.addAction(UIAlertAction(title: cancelTitle, style: .cancel, handler: { (action) -> Void in
             }))
             for idx in titles.indices {
                 actionSheetController.addAction(UIAlertAction(title: titles[idx], style: .default, handler: { (_) -> Void in
