@@ -1,5 +1,28 @@
 # Change Log
 
+## 4.1.1
+
+#### Updated
+- #208 improve: change deleteButtonPressed(), currentPageIndex access level
+- #210 Fix Shorthand Operator Violation of Swiftlint 
+- #215 swiftLint
+- #216 update code to Swift 3.1 
+- #223 Removed deprecated constants
+- #225 Custom Cancel button title 
+
+## 4.1.0
+Released on 30-8-2017
+
+#### Updated
+- #173 Move the willDismiss delegate call closer to the dismissal
+- #196 Improved SKCaptionView
+- #197 fix: deleteButton frame does not update if screen has rotated 
+- #199 Add SKPhotoBrowserOptions to customize indicator color & style 
+- #200 Swap and custom padding for delete and close buttons 
+- #205 Replaced deprecated Pi constants
+- #207 Update code style: to Swift3.1
+- #231 Update SKZoomingScrollView.swift
+
 ## 4.0.1
 Released on 18-1-2017
 
