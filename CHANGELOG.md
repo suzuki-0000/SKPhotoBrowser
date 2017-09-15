@@ -10,6 +10,7 @@
 - #223 Removed deprecated constants
 - #225 Custom Cancel button title 
 - #227 Attach toolbar and delete button to single browser instance 
+- #236 improve SKPhotoBrowserDelegate 
 
 ## 4.1.0
 Released on 30-8-2017
