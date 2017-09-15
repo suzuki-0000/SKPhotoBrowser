@@ -149,7 +149,7 @@ open class SKPhotoBrowser: UIViewController {
         toolbar.frame = frameForToolbarAtOrientation()
         
         // where did start
-        delegate?.didShowPhotoAtIndex?(currentPageIndex)
+        delegate?.didShowPhotoAtIndex?(self, index: currentPageIndex)
         
         isPerformingLayout = false
     }
@@ -211,7 +211,7 @@ open class SKPhotoBrowser: UIViewController {
         pagingScrollView.updateContentOffset(currentPageIndex)
         pagingScrollView.tilePages()
         
-        delegate?.didShowPhotoAtIndex?(currentPageIndex)
+        delegate?.didShowPhotoAtIndex?(self, index: currentPageIndex)
         
         isPerformingLayout = false
     }
@@ -345,13 +345,13 @@ public extension SKPhotoBrowser {
     
     func hideControls(_ timer: Timer) {
         hideControls()
-        delegate?.controlsVisibilityToggled?(hidden: true)
+        delegate?.controlsVisibilityToggled?(self, hidden: true)
     }
     
     func toggleControls() {
         let hidden = !areControlsHidden()
         setControlsHidden(hidden, animated: true, permanent: false)
-        delegate?.controlsVisibilityToggled?(hidden: areControlsHidden())
+        delegate?.controlsVisibilityToggled?(self, hidden: areControlsHidden())
     }
     
     func areControlsHidden() -> Bool {
@@ -669,7 +669,7 @@ extension SKPhotoBrowser: UIScrollViewDelegate {
         currentPageIndex = min(max(Int(floor(visibleBounds.midX / visibleBounds.width)), 0), numberOfPhotos - 1)
         
         if currentPageIndex != previousCurrentPage {
-            delegate?.didShowPhotoAtIndex?(currentPageIndex)
+            delegate?.didShowPhotoAtIndex?(self, index: currentPageIndex)
             toolbar.updateToolbar(currentPageIndex)
         }
     }
@@ -678,7 +678,7 @@ extension SKPhotoBrowser: UIScrollViewDelegate {
         hideControlsAfterDelay()
         
         let currentIndex = pagingScrollView.contentOffset.x / pagingScrollView.frame.size.width
-        delegate?.didScrollToIndex?(Int(currentIndex))
+        delegate?.didScrollToIndex?(self, index: Int(currentIndex))
     }
     
     public func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
