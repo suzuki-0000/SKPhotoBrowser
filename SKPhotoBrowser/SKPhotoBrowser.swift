@@ -304,11 +304,11 @@ public extension SKPhotoBrowser {
         return photos[index]
     }
     
-    func gotoPreviousPage() {
+    @objc func gotoPreviousPage() {
         jumpToPageAtIndex(currentPageIndex - 1)
     }
     
-    func gotoNextPage() {
+    @objc func gotoNextPage() {
         jumpToPageAtIndex(currentPageIndex + 1)
     }
     
@@ -509,7 +509,7 @@ internal extension SKPhotoBrowser {
         determineAndClose()
     }
     
-    func actionButtonPressed(ignoreAndShare: Bool) {
+    @objc func actionButtonPressed(ignoreAndShare: Bool) {
         delegate?.willShowActionSheet?(currentPageIndex)
         
         guard numberOfPhotos > 0 else {
