@@ -26,11 +26,11 @@ class SKDetectingImageView: UIImageView {
         setup()
     }
     
-    func handleDoubleTap(_ recognizer: UITapGestureRecognizer) {
+    @objc func handleDoubleTap(_ recognizer: UITapGestureRecognizer) {
         delegate?.handleImageViewDoubleTap(recognizer.location(in: self))
     }
     
-    func handleSingleTap(_ recognizer: UITapGestureRecognizer) {
+    @objc func handleSingleTap(_ recognizer: UITapGestureRecognizer) {
         delegate?.handleImageViewSingleTap(recognizer.location(in: self))
     }
 }
