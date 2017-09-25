@@ -33,23 +33,23 @@ Below is a table that shows which version of SKPhotoBrowser you should use for y
 | 2.3           | 2.0.4 - 3.1.4  |
 | 2.2           | <= 2.0.3        |
 
-##Installation
+## Installation
 
-####CocoaPods
+#### CocoaPods
 available on CocoaPods. Just add the following to your project Podfile:
 ```
 pod 'SKPhotoBrowser'
 use_frameworks!
 ```
 
-####Carthage
+#### Carthage
 To integrate into your Xcode project using Carthage, specify it in your Cartfile:
 
 ```ogdl
 github "suzuki-0000/SKPhotoBrowser"
 ```
 
-##Usage
+## Usage
 See the code snippet below for an example of how to implement, or see the example project.
 	
 from UIImages:
