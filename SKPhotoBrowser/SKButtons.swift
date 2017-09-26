@@ -93,7 +93,6 @@ class SKCloseButton: SKImageButton {
 class SKDeleteButton: SKImageButton {
     override var imageName: String { return "btn_common_delete_wh" }
     
-    
     override var margin: CGFloat {
         get { return SKPhotoBrowserOptions.swapCloseAndDeleteButtons
             ? leftSidePositionMargin
