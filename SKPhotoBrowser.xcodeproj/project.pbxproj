@@ -220,7 +220,7 @@
 				TargetAttributes = {
 					8909B52F1BC791280060A053 = {
 						CreatedOnToolsVersion = 7.0;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0900;
 					};
 					A64B89321CB04222000071B9 = {
 						CreatedOnToolsVersion = 7.3;
@@ -438,7 +438,8 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -458,7 +459,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.keishi.suzuki.SKPhotoBrowser;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};
