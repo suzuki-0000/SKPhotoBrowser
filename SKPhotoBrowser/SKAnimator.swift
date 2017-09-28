@@ -139,7 +139,7 @@ private extension SKAnimator {
 }
 
 private extension SKAnimator {
-    func presentAnimation(_ browser: SKPhotoBrowser, completion: ((Void) -> Void)? = nil) {
+    func presentAnimation(_ browser: SKPhotoBrowser, completion: (() -> Void)? = nil) {
         browser.view.isHidden = true
         browser.view.alpha = 0.0
         
@@ -164,7 +164,7 @@ private extension SKAnimator {
             })
     }
     
-    func dismissAnimation(_ browser: SKPhotoBrowser, completion: ((Void) -> Void)? = nil) {
+    func dismissAnimation(_ browser: SKPhotoBrowser, completion: (() -> Void)? = nil) {
         UIView.animate(
             withDuration: animationDuration,
             delay:0,
