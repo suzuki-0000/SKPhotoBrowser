@@ -25,7 +25,7 @@ class SKButton: UIButton {
     var margin: CGFloat = SKPhotoBrowserOptions.closeAndDeleteButtonPadding
     
     var buttonTopOffset: CGFloat {
-        return SKPhotoBrowserOptions.closeAndDeleteButtonPadding
+        return 30
     }
     
     func setup(_ imageName: String) {
