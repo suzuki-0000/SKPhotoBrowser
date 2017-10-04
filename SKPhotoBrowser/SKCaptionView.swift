@@ -7,26 +7,6 @@
 //
 
 import UIKit
-fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
-  switch (lhs, rhs) {
-  case let (l?, r?):
-    return l < r
-  case (nil, _?):
-    return true
-  default:
-    return false
-  }
-}
-
-fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
-  switch (lhs, rhs) {
-  case let (l?, r?):
-    return l > r
-  default:
-    return rhs < lhs
-  }
-}
-
 
 open class SKCaptionView: UIView {
     fileprivate var photo: SKPhotoProtocol?
@@ -49,10 +29,7 @@ open class SKCaptionView: UIView {
     }
     
     open override func sizeThatFits(_ size: CGSize) -> CGSize {
-        guard let text = photoLabel.text else {
-            return CGSize.zero
-        }
-        guard photoLabel.text?.characters.count > 0 else {
+        guard let text = photoLabel.text, text.characters.count > 0 else {
             return CGSize.zero
         }
         
