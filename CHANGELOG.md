@@ -1,5 +1,14 @@
 # Change Log
 
+## 5.0.0
+
+#### Major changed
+- #250 Swift4 merge 
+- #242 swift4 merge
+
+#### Updated
+- #239 Updated padding for iPhone X 
+
 ## 4.1.1
 
 #### Updated

@@ -435,7 +435,7 @@ internal extension SKPhotoBrowser {
         if UIInterfaceOrientationIsLandscape(currentOrientation) {
             height = 32
         }
-        return CGRect(x: 0, y: view.bounds.size.height - height, width: view.bounds.size.width, height: height)
+        return CGRect(x: 0, y: view.bounds.size.height - (height+10), width: view.bounds.size.width, height: height)
     }
     
     func frameForToolbarHideAtOrientation() -> CGRect {

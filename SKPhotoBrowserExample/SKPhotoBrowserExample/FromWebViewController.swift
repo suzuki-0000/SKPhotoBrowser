@@ -18,10 +18,12 @@ class FromWebViewController: UIViewController, SKPhotoBrowserDelegate {
         super.viewDidLoad()
         
         SKCache.sharedCache.imageCache = CustomImageCache()
-        imageView.sd_setImage(with: URL(string: "https://placehold.jp/1500x1500.png")) {
-            guard let url = $0.3?.absoluteString else { return }
-            SKCache.sharedCache.setImage($0.0!, forKey: url)
+        let url = URL(string: "https://placehold.jp/1500x1500.png")
+        let complated: SDWebImageCompletionBlock = { (image, error, cacheType, imageURL) -> Void in
+            guard let url = imageURL?.absoluteString else { return }
+            SKCache.sharedCache.setImage(image!, forKey: url)
         }
+        imageView.sd_setImage(with: url, completed: complated)
     }
     
     @IBAction func pushButton(_ sender: AnyObject) {
