@@ -1,5 +1,10 @@
 # Change Log
 
+## 4.1.2
+
+#### Updated
+- #239 Updated padding for iPhone X 
+
 ## 4.1.1
 
 #### Updated
