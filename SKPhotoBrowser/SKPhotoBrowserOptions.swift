@@ -44,7 +44,6 @@ public struct SKPhotoBrowserOptions {
     /// Default: false
     public static var swapCloseAndDeleteButtons = false
     
-    
     /// Offset from top and from nearest screen edge of close button and delete button.
     ///
     /// - Default: 5

@@ -62,7 +62,7 @@ open class SKPhotoBrowser: UIViewController {
     // strings
     open var cancelTitle = "Cancel"
     
-    // MARK - Initializer
+    // MARK: - Initializer
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setup()
@@ -317,11 +317,11 @@ public extension SKPhotoBrowser {
         jumpToPageAtIndex(currentPageIndex + 1)
     }
     
-    func showDeleteButton(bool: Bool){
+    func showDeleteButton(bool: Bool) {
         self.showDeleteButton = bool
     }
     
-    func showToolbar(bool: Bool){
+    func showToolbar(bool: Bool) {
         self.showToolBar = bool
     }
     
@@ -518,7 +518,7 @@ internal extension SKPhotoBrowser {
         }
     }
     
-    func closeButtonPressed(_ sender: UIButton) {
+    @objc func closeButtonPressed(_ sender: UIButton) {
         determineAndClose()
     }
     
@@ -531,7 +531,7 @@ internal extension SKPhotoBrowser {
         
         if let titles = SKPhotoBrowserOptions.actionButtonTitles {
             let actionSheetController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-            actionSheetController.addAction(UIAlertAction(title: cancelTitle, style: .cancel, handler: { (action) -> Void in
+            actionSheetController.addAction(UIAlertAction(title: cancelTitle, style: .cancel, handler: { (_) -> Void in
             }))
             for idx in titles.indices {
                 actionSheetController.addAction(UIAlertAction(title: titles[idx], style: .default, handler: { (_) -> Void in
