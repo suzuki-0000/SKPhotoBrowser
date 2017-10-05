@@ -505,7 +505,7 @@ internal extension SKPhotoBrowser {
         }
     }
     
-    @objc func closeButtonPressed(_ sender: UIButton) {
+    func closeButtonPressed(_ sender: UIButton) {
         determineAndClose()
     }
     
