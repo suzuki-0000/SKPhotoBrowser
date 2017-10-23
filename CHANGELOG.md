@@ -1,5 +1,10 @@
 # Change Log
 
+## 5.0.1
+
+#### Updated
+- #246 Updated to Swift 4 and made Swift Lint recommended changes
+
 ## 5.0.0
 
 #### Major changed
