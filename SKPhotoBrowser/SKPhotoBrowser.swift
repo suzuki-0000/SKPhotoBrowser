@@ -225,7 +225,7 @@ open class SKPhotoBrowser: UIViewController {
         if !animated {
             modalTransitionStyle = .crossDissolve
         }
-        
+        delegate?.willDismissAtPageIndex?(self.currentPageIndex)
         dismiss(animated: !animated) {
             completion?()
             self.delegate?.didDismissAtPageIndex?(self.currentPageIndex)
