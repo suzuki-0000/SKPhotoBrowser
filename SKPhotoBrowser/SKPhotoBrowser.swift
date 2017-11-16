@@ -99,11 +99,13 @@ open class SKPhotoBrowser: UIViewController {
     }
     
     func setup() {
-        guard let window = UIApplication.shared.preferredApplicationWindow else {
+        if let window = UIApplication.shared.delegate?.window {
+            applicationWindow = window
+        } else if let window = UIApplication.shared.keyWindow {
+            applicationWindow = window
+        } else {
             return
         }
-
-        applicationWindow = window
         
         modalPresentationCapturesStatusBarAppearance = true
         modalPresentationStyle = .custom
@@ -427,22 +429,20 @@ internal extension SKPhotoBrowser {
 // MARK: - Internal Function For Frame Calc
 
 internal extension SKPhotoBrowser {
+
     func frameForToolbarAtOrientation() -> CGRect {
-        let currentOrientation = UIApplication.shared.statusBarOrientation
-        var height: CGFloat = navigationController?.navigationBar.frame.size.height ?? 44
-        if UIInterfaceOrientationIsLandscape(currentOrientation) {
-            height = 32
-        }
-        return CGRect(x: 0, y: view.bounds.size.height - (height+10), width: view.bounds.size.width, height: height)
+        let offset: CGFloat = {
+            if #available(iOS 11.0, *) {
+                return view.safeAreaInsets.bottom
+            } else {
+                return 15
+            }
+        }()
+        return view.bounds.divided(atDistance: 44, from: .maxYEdge).slice.offsetBy(dx: 0, dy: -offset)
     }
-    
+
     func frameForToolbarHideAtOrientation() -> CGRect {
-        let currentOrientation = UIApplication.shared.statusBarOrientation
-        var height: CGFloat = navigationController?.navigationBar.frame.size.height ?? 44
-        if UIInterfaceOrientationIsLandscape(currentOrientation) {
-            height = 32
-        }
-        return CGRect(x: 0, y: view.bounds.size.height + height, width: view.bounds.size.width, height: height)
+        return view.bounds.divided(atDistance: 44, from: .maxYEdge).slice.offsetBy(dx: 0, dy: 44)
     }
     
     func frameForPageAtIndex(_ index: Int) -> CGRect {
