@@ -1,7 +1,7 @@
 SKPhotoBrowser
 ========================
 
-![Swift](http://img.shields.io/badge/swift-3.0-brightgreen.svg)
+![Swift](http://img.shields.io/badge/swift-4.0-brightgreen.svg)
 [![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![Cocoapods Compatible](https://img.shields.io/cocoapods/v/SKPhotoBrowser.svg?style=flat)](http://cocoadocs.org/docsets/SKPhotoBrowser)
 
@@ -29,27 +29,28 @@ Below is a table that shows which version of SKPhotoBrowser you should use for y
 
 | Swift version | SKPhotoBrowser version    |
 | ------------- | --------------- |
-| 3.X           | >= 4.0.0 |
+| 4.X           | >= 5.0.0 |
+| 3.2           | >= 4.0.0 |
 | 2.3           | 2.0.4 - 3.1.4  |
 | 2.2           | <= 2.0.3        |
 
-##Installation
+## Installation
 
-####CocoaPods
+#### CocoaPods
 available on CocoaPods. Just add the following to your project Podfile:
 ```
 pod 'SKPhotoBrowser'
 use_frameworks!
 ```
 
-####Carthage
+#### Carthage
 To integrate into your Xcode project using Carthage, specify it in your Cartfile:
 
 ```ogdl
 github "suzuki-0000/SKPhotoBrowser"
 ```
 
-##Usage
+## Usage
 See the code snippet below for an example of how to implement, or see the example project.
 	
 from UIImages:

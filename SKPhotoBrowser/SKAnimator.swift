@@ -37,10 +37,7 @@ class SKAnimator: NSObject, SKPhotoBrowserAnimatorDelegate {
     }
     
     func willPresent(_ browser: SKPhotoBrowser) {
-        guard let appWindow = UIApplication.shared.delegate?.window else {
-            return
-        }
-        guard let window = appWindow else {
+        guard let window = UIApplication.shared.preferredApplicationWindow else {
             return
         }
         guard let sender = browser.delegate?.viewForPhoto?(browser, index: browser.initialPageIndex) ?? senderViewForAnimation else {
@@ -139,7 +136,7 @@ private extension SKAnimator {
 }
 
 private extension SKAnimator {
-    func presentAnimation(_ browser: SKPhotoBrowser, completion: ((Void) -> Void)? = nil) {
+    func presentAnimation(_ browser: SKPhotoBrowser, completion: (() -> Void)? = nil) {
         browser.view.isHidden = true
         browser.view.alpha = 0.0
         
@@ -164,7 +161,7 @@ private extension SKAnimator {
             })
     }
     
-    func dismissAnimation(_ browser: SKPhotoBrowser, completion: ((Void) -> Void)? = nil) {
+    func dismissAnimation(_ browser: SKPhotoBrowser, completion: (() -> Void)? = nil) {
         UIView.animate(
             withDuration: animationDuration,
             delay:0,

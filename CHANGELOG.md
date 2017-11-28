@@ -1,5 +1,19 @@
 # Change Log
 
+## 5.0.1
+
+#### Updated
+- #246 Updated to Swift 4 and made Swift Lint recommended changes
+
+## 5.0.0
+
+#### Major changed
+- #250 Swift4 merge 
+- #242 swift4 merge
+
+#### Updated
+- #239 Updated padding for iPhone X 
+
 ## 4.1.1
 
 #### Updated
@@ -9,6 +23,8 @@
 - #216 update code to Swift 3.1 
 - #223 Removed deprecated constants
 - #225 Custom Cancel button title 
+- #227 Attach toolbar and delete button to single browser instance 
+- #236 improve SKPhotoBrowserDelegate 
 
 ## 4.1.0
 Released on 30-8-2017

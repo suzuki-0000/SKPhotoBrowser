@@ -15,13 +15,11 @@ public struct SKPhotoBrowserOptions {
     public static var shareExtraCaption: String?
     public static var actionButtonTitles: [String]?
     
-    public static var displayToolbar: Bool = true
     public static var displayCounterLabel: Bool = true
     public static var displayBackAndForwardButton: Bool = true
     public static var disableVerticalSwipe: Bool = false
     
     public static var displayCloseButton: Bool = true
-    public static var displayDeleteButton: Bool = false
     
     public static var displayHorizontalScrollIndicator: Bool = true
     public static var displayVerticalScrollIndicator: Bool = true
@@ -43,7 +41,6 @@ public struct SKPhotoBrowserOptions {
     ///
     /// Default: false
     public static var swapCloseAndDeleteButtons = false
-    
     
     /// Offset from top and from nearest screen edge of close button and delete button.
     ///
