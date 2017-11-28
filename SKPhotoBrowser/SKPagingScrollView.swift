@@ -15,7 +15,7 @@ class SKPagingScrollView: UIScrollView {
     fileprivate var recycledPages = [SKZoomingScrollView]()
     
     fileprivate weak var browser: SKPhotoBrowser?
-
+    
     var numberOfPhotos: Int {
         return browser?.photos.count ?? 0
     }
@@ -123,7 +123,7 @@ class SKPagingScrollView: UIScrollView {
                 recycledPages.append(page)
                 page.prepareForReuse()
                 page.removeFromSuperview()
-            }
+        }
         
         let visibleSet: Set<SKZoomingScrollView> = Set(visiblePages)
         let visibleSetWithoutRecycled: Set<SKZoomingScrollView> = visibleSet.subtracting(recycledPages)
@@ -185,7 +185,7 @@ class SKPagingScrollView: UIScrollView {
             .filter({ $0.captionView != nil })
             .forEach {
                 captionViews.insert($0.captionView)
-            }
+        }
         return captionViews
     }
 }
@@ -199,6 +199,9 @@ private extension SKPagingScrollView {
     }
     
     func createCaptionView(_ index: Int) -> SKCaptionView? {
+        if let delegate = self.browser?.delegate {
+            return delegate.captionViewForPhotoAtIndex!(index: index)
+        }
         guard let photo = browser?.photoAtIndex(index), photo.caption != nil else {
             return nil
         }
@@ -227,3 +230,4 @@ private extension SKPagingScrollView {
         return lastIndex
     }
 }
+

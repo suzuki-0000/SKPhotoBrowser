@@ -76,5 +76,10 @@ import Foundation
      Tells the delegate that the controls view toggled visibility
      */
     @objc optional func controlsVisibilityToggled(_ browser: SKPhotoBrowser, hidden: Bool)
+    
+    /**
+     Allows  the delegate to create its own caption view
+     */
+    @objc optional func captionViewForPhotoAtIndex(index: Int) -> SKCaptionView?
 }
 
