@@ -119,6 +119,10 @@ open class SKPhotoBrowser: UIViewController {
     override open func viewDidLoad() {
         super.viewDidLoad()
         
+        if #available(iOS 11.0, *) {
+            self.view.accessibilityIgnoresInvertColors = true
+        }
+        
         configureAppearance()
         configureCloseButton()
         configureDeleteButton()
