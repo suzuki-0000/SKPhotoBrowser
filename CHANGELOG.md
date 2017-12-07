@@ -1,5 +1,12 @@
 # Change Log
 
+## 5.0.2
+- #255 Fixed the crash where the PhotoBrowser could crash.
+- #262 Fix calling willDismissAtPageIndex delegate method
+- #263 Remove unused options
+- #263 Use iOS 11 Safe Area Insets to layout toolbar
+- #270 Added functionality to add new photos at the end or at the start of c…
+
 ## 5.0.1
 
 #### Updated
