@@ -102,6 +102,8 @@ open class SKPhotoBrowser: UIViewController {
         guard let window = UIApplication.shared.preferredApplicationWindow else {
             return
         }
+
+        applicationWindow = window
         
         applicationWindow = window
         
@@ -118,6 +120,10 @@ open class SKPhotoBrowser: UIViewController {
     // MARK: - override
     override open func viewDidLoad() {
         super.viewDidLoad()
+        
+        if #available(iOS 11.0, *) {
+            self.view.accessibilityIgnoresInvertColors = true
+        }
         
         configureAppearance()
         configureCloseButton()
@@ -437,7 +443,7 @@ internal extension SKPhotoBrowser {
 // MARK: - Internal Function For Frame Calc
 
 internal extension SKPhotoBrowser {
-    
+
     func frameForToolbarAtOrientation() -> CGRect {
         let offset: CGFloat = {
             if #available(iOS 11.0, *) {
@@ -448,7 +454,7 @@ internal extension SKPhotoBrowser {
         }()
         return view.bounds.divided(atDistance: 44, from: .maxYEdge).slice.offsetBy(dx: 0, dy: -offset)
     }
-    
+
     func frameForToolbarHideAtOrientation() -> CGRect {
         return view.bounds.divided(atDistance: 44, from: .maxYEdge).slice.offsetBy(dx: 0, dy: 44)
     }
