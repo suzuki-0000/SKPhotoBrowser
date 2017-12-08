@@ -40,7 +40,7 @@ class SKAnimator: NSObject, SKPhotoBrowserAnimatorDelegate {
         guard let window = UIApplication.shared.preferredApplicationWindow else {
             return
         }
-        guard let sender = browser.delegate?.viewForPhoto?(browser, index: browser.initialPageIndex) ?? senderViewForAnimation else {
+        guard let sender = browser.delegate?.viewForPhoto?(browser, index: browser.currentPageIndex) ?? senderViewForAnimation else {
             presentAnimation(browser)
             return
         }
@@ -77,9 +77,8 @@ class SKAnimator: NSObject, SKPhotoBrowserAnimatorDelegate {
         }
         
         senderViewForAnimation = sender
-        browser.view.isHidden = true
-        browser.backgroundView.isHidden = false
-        browser.backgroundView.alpha = 1
+        browser.view.isHidden = false
+        browser.view.alpha = 1
         
         senderViewOriginalFrame = calcOriginFrame(sender)
         
@@ -143,20 +142,17 @@ private extension SKAnimator {
         UIView.animate(
             withDuration: animationDuration,
             delay: 0,
-            usingSpringWithDamping:animationDamping,
-            initialSpringVelocity:0,
-            options:UIViewAnimationOptions(),
+            usingSpringWithDamping: animationDamping,
+            initialSpringVelocity: 0,
+            options: UIViewAnimationOptions(),
             animations: {
                 browser.showButtons()
-                browser.backgroundView.alpha = 1.0
-                
+                browser.view.isHidden = false
+                browser.view.alpha = 1.0
+
                 self.resizableImageView?.frame = self.finalImageViewFrame
             },
             completion: { (_) -> Void in
-                browser.view.isHidden = false
-                browser.view.alpha = 1.0
-                browser.backgroundView.isHidden = true
-                
                 self.resizableImageView?.alpha = 0.0
             })
     }
@@ -165,11 +161,11 @@ private extension SKAnimator {
         UIView.animate(
             withDuration: animationDuration,
             delay:0,
-            usingSpringWithDamping:animationDamping,
-            initialSpringVelocity:0,
-            options:UIViewAnimationOptions(),
+            usingSpringWithDamping: animationDamping,
+            initialSpringVelocity: 0,
+            options: UIViewAnimationOptions(),
             animations: {
-                browser.backgroundView.alpha = 0.0
+                browser.view.alpha = 0.0
                 
                 self.resizableImageView?.layer.frame = self.senderViewOriginalFrame
             },
