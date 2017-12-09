@@ -200,7 +200,7 @@ private extension SKPagingScrollView {
     
     func createCaptionView(_ index: Int) -> SKCaptionView? {
         if let delegate = self.browser?.delegate {
-            return delegate.captionViewForPhotoAtIndex!(index: index)
+            return delegate.captionViewForPhotoAtIndex?(index: index)
         }
         guard let photo = browser?.photoAtIndex(index), photo.caption != nil else {
             return nil
