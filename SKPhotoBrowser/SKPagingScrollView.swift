@@ -11,8 +11,8 @@ import Foundation
 class SKPagingScrollView: UIScrollView {
     let pageIndexTagOffset: Int = 1000
     let sideMargin: CGFloat = 10
-    fileprivate var visiblePages = [SKZoomingScrollView]()
-    fileprivate var recycledPages = [SKZoomingScrollView]()
+    fileprivate var visiblePages: [SKZoomingScrollView] = []
+    fileprivate var recycledPages: [SKZoomingScrollView] = []
     
     fileprivate weak var browser: SKPhotoBrowser?
     
@@ -118,12 +118,13 @@ class SKPagingScrollView: UIScrollView {
         let lastIndex: Int = getLastIndex()
         
         visiblePages
-            .filter({ $0.tag - pageIndexTagOffset < firstIndex ||  $0.tag - pageIndexTagOffset > lastIndex })
+            .filter({ $0.tag - pageIndexTagOffset < firstIndex })
+            .filter({ $0.tag - pageIndexTagOffset > lastIndex })
             .forEach { page in
                 recycledPages.append(page)
                 page.prepareForReuse()
                 page.removeFromSuperview()
-        }
+            }
         
         let visibleSet: Set<SKZoomingScrollView> = Set(visiblePages)
         let visibleSetWithoutRecycled: Set<SKZoomingScrollView> = visibleSet.subtracting(recycledPages)
@@ -161,6 +162,7 @@ class SKPagingScrollView: UIScrollView {
         let pageFrame = frameForPageAtIndex(index)
         let captionSize = captionView.sizeThatFits(CGSize(width: pageFrame.size.width, height: 0))
         let navHeight = browser?.navigationController?.navigationBar.frame.size.height ?? 44
+        
         return CGRect(x: pageFrame.origin.x, y: pageFrame.size.height - captionSize.height - navHeight,
                       width: pageFrame.size.width, height: captionSize.height)
     }
@@ -182,10 +184,8 @@ class SKPagingScrollView: UIScrollView {
     func getCaptionViews() -> Set<SKCaptionView> {
         var captionViews = Set<SKCaptionView>()
         visiblePages
-            .filter({ $0.captionView != nil })
-            .forEach {
-                captionViews.insert($0.captionView)
-        }
+            .filter { $0.captionView != nil }
+            .forEach { captionViews.insert($0.captionView) }
         return captionViews
     }
 }
@@ -199,9 +199,9 @@ private extension SKPagingScrollView {
     }
     
     func createCaptionView(_ index: Int) -> SKCaptionView? {
-        if let delegate = self.browser?.delegate {
-            return delegate.captionViewForPhotoAtIndex!(index: index)
-        }
+//        if let delegate = self.browser?.delegate {
+//            return delegate.captionViewForPhotoAtIndex?(index: index)
+//        }
         guard let photo = browser?.photoAtIndex(index), photo.caption != nil else {
             return nil
         }

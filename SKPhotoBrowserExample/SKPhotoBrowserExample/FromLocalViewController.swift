@@ -18,7 +18,7 @@ class FromLocalViewController: UIViewController, UICollectionViewDataSource, UIC
         super.viewDidLoad()
 
         // Static setup
-        SKPhotoBrowserOptions.displayAction = false
+        SKPhotoBrowserOptions.displayAction = true
         SKPhotoBrowserOptions.displayStatusbar = true
 
         setupTestData()
@@ -59,15 +59,8 @@ extension FromLocalViewController {
 
 extension FromLocalViewController {
     @objc(collectionView:didSelectItemAtIndexPath:) func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let cell = collectionView.cellForItem(at: indexPath) as? ExampleCollectionViewCell else {
-            return
-        }
-        guard let originImage = cell.exampleImageView.image else {
-            return
-        }
         
-        let browser = SKPhotoBrowser(originImage: originImage, photos: images, animatedFromView: cell)
-        browser.initializePageIndex(indexPath.row)
+        let browser = SKPhotoBrowser(photos: images, initialPageIndex: indexPath.row)
         browser.delegate = self
 //        browser.updateCloseButton(UIImage(named: "image1.jpg")!)
         

@@ -60,11 +60,6 @@ private extension SKToolbar {
         clipsToBounds = true
         isTranslucent = true
         setBackgroundImage(UIImage(), forToolbarPosition: .any, barMetrics: .default)
-        
-        // toolbar
-        if !(browser?.showToolBar)! {
-            isHidden = true
-        }
     }
     
     func setupToolbar() {
