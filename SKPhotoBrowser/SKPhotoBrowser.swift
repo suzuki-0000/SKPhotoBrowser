@@ -46,14 +46,10 @@ open class SKPhotoBrowser: UIViewController {
     
     // delegate
     open weak var delegate: SKPhotoBrowserDelegate?
-    
-    // photos
-    var numberOfPhotos: Int {
-        return photos.count
-    }
-    
+
     // statusbar initial state
     private var statusbarHidden: Bool = UIApplication.shared.isStatusBarHidden
+    
     // strings
     open var cancelTitle = "Cancel"
     
@@ -262,7 +258,7 @@ public extension SKPhotoBrowser {
 
 public extension SKPhotoBrowser {
     func initializePageIndex(_ index: Int) {
-        let i = min(index, numberOfPhotos - 1)
+        let i = min(index, photos.count - 1)
         currentPageIndex = i
         
         if isViewLoaded {
@@ -274,7 +270,7 @@ public extension SKPhotoBrowser {
     }
     
     func jumpToPageAtIndex(_ index: Int) {
-        if index < numberOfPhotos {
+        if index < photos.count {
             if !isEndAnimationByToolBar {
                 return
             }
@@ -282,7 +278,7 @@ public extension SKPhotoBrowser {
             toolbar.updateToolbar(currentPageIndex)
             
             let pageFrame = frameForPageAtIndex(index)
-            pagingScrollView.animate(pageFrame)
+            pagingScrollView.jumpToPageAtIndex(pageFrame)
         }
         hideControlsAfterDelay()
     }
@@ -504,7 +500,7 @@ internal extension SKPhotoBrowser {
     @objc func actionButtonPressed(ignoreAndShare: Bool) {
         delegate?.willShowActionSheet?(currentPageIndex)
         
-        guard numberOfPhotos > 0 else {
+        guard photos.count > 0 else {
             return
         }
         
@@ -645,7 +641,7 @@ extension SKPhotoBrowser: UIScrollViewDelegate {
         // Calculate current page
         let previousCurrentPage = currentPageIndex
         let visibleBounds = pagingScrollView.bounds
-        currentPageIndex = min(max(Int(floor(visibleBounds.midX / visibleBounds.width)), 0), numberOfPhotos - 1)
+        currentPageIndex = min(max(Int(floor(visibleBounds.midX / visibleBounds.width)), 0), photos.count - 1)
         
         if currentPageIndex != previousCurrentPage {
             delegate?.didShowPhotoAtIndex?(self, index: currentPageIndex)

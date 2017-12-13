@@ -43,14 +43,14 @@ class SKToolbar: UIToolbar {
     func updateToolbar(_ currentPageIndex: Int) {
         guard let browser = browser else { return }
         
-        if browser.numberOfPhotos > 1 {
-            toolCounterLabel.text = "\(currentPageIndex + 1) / \(browser.numberOfPhotos)"
+        if browser.photos.count > 1 {
+            toolCounterLabel.text = "\(currentPageIndex + 1) / \(browser.photos.count)"
         } else {
             toolCounterLabel.text = nil
         }
         
         toolPreviousButton.isEnabled = (currentPageIndex > 0)
-        toolNextButton.isEnabled = (currentPageIndex < browser.numberOfPhotos - 1)
+        toolNextButton.isEnabled = (currentPageIndex < browser.photos.count - 1)
     }
 }
 
@@ -68,7 +68,7 @@ private extension SKToolbar {
         let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
         var items = [UIBarButtonItem]()
         items.append(flexSpace)
-        if browser.numberOfPhotos > 1 && SKPhotoBrowserOptions.displayBackAndForwardButton {
+        if browser.photos.count > 1 && SKPhotoBrowserOptions.displayBackAndForwardButton {
             items.append(toolPreviousButton)
         }
         if SKPhotoBrowserOptions.displayCounterLabel {
@@ -78,7 +78,7 @@ private extension SKToolbar {
         } else {
             items.append(flexSpace)
         }
-        if browser.numberOfPhotos > 1 && SKPhotoBrowserOptions.displayBackAndForwardButton {
+        if browser.photos.count > 1 && SKPhotoBrowserOptions.displayBackAndForwardButton {
             items.append(toolNextButton)
         }
         items.append(flexSpace)
@@ -124,7 +124,10 @@ class SKToolbarButton: UIButton {
         backgroundColor = .clear
         imageEdgeInsets = insets
         translatesAutoresizingMaskIntoConstraints = true
-        autoresizingMask = [.flexibleBottomMargin, .flexibleLeftMargin, .flexibleRightMargin, .flexibleTopMargin]
+        autoresizingMask = [.flexibleBottomMargin,
+                            .flexibleLeftMargin,
+                            .flexibleRightMargin,
+                            .flexibleTopMargin]
         contentMode = .center
         
         let image = UIImage(named: "SKPhotoBrowser.bundle/images/\(imageName)",

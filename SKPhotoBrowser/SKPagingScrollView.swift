@@ -9,11 +9,10 @@
 import Foundation
 
 class SKPagingScrollView: UIScrollView {
-    let pageIndexTagOffset: Int = 1000
-    let sideMargin: CGFloat = 10
+    fileprivate let pageIndexTagOffset: Int = 1000
+    fileprivate let sideMargin: CGFloat = 10
     fileprivate var visiblePages: [SKZoomingScrollView] = []
     fileprivate var recycledPages: [SKZoomingScrollView] = []
-    
     fileprivate weak var browser: SKPhotoBrowser?
     
     var numberOfPhotos: Int {
@@ -75,8 +74,9 @@ class SKPagingScrollView: UIScrollView {
         }
     }
     
-    func animate(_ frame: CGRect) {
-        setContentOffset(CGPoint(x: frame.origin.x - sideMargin, y: 0), animated: true)
+    func jumpToPageAtIndex(_ frame: CGRect) {
+        let point = CGPoint(x: frame.origin.x - sideMargin, y: 0)
+        setContentOffset(point, animated: true)
     }
     
     func updateFrame(_ bounds: CGRect, currentPageIndex: Int) {
@@ -199,9 +199,6 @@ private extension SKPagingScrollView {
     }
     
     func createCaptionView(_ index: Int) -> SKCaptionView? {
-//        if let delegate = self.browser?.delegate {
-//            return delegate.captionViewForPhotoAtIndex?(index: index)
-//        }
         guard let photo = browser?.photoAtIndex(index), photo.caption != nil else {
             return nil
         }
