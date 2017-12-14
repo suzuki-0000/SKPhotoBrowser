@@ -1,9 +1,14 @@
 # Change Log
 
+## 5.0.3
+
+#### Updated
+- Refactoring 
+
 ## 5.0.2
 
 #### Updated
-- Refactoring part1
+- Refactoring 
 - #255 Fixed the crash where the PhotoBrowser could crash.
 - #262 Fix calling willDismissAtPageIndex delegate method
 - #263 Remove unused options
