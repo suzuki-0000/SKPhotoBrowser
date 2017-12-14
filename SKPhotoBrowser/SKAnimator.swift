@@ -102,17 +102,18 @@ class SKAnimator: NSObject, SKPhotoBrowserAnimatorDelegate {
             width: scrollFrame.width,
             height: scrollFrame.height)
         
-        resizableImageView!.image = image.rotateImageByOrientation()
-        resizableImageView!.frame = frame
-        resizableImageView!.alpha = 1.0
-        resizableImageView!.clipsToBounds = true
-        resizableImageView!.contentMode = photo.contentMode
-        if let view = senderViewForAnimation, view.layer.cornerRadius != 0 {
-            let duration = (animationDuration * Double(animationDamping))
-            resizableImageView!.layer.masksToBounds = true
-            resizableImageView!.addCornerRadiusAnimation(0, to: view.layer.cornerRadius, duration: duration)
+        if let resizableImageView = resizableImageView {
+            resizableImageView.image = image.rotateImageByOrientation()
+            resizableImageView.frame = frame
+            resizableImageView.alpha = 1.0
+            resizableImageView.clipsToBounds = true
+            resizableImageView.contentMode = photo.contentMode
+            if let view = senderViewForAnimation, view.layer.cornerRadius != 0 {
+                let duration = (animationDuration * Double(animationDamping))
+                resizableImageView.layer.masksToBounds = true
+                resizableImageView.addCornerRadiusAnimation(0, to: view.layer.cornerRadius, duration: duration)
+            }
         }
-        
         dismissAnimation(browser)
     }
 }
