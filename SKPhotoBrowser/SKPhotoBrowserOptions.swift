@@ -10,17 +10,16 @@ import UIKit
 
 public struct SKPhotoBrowserOptions {
     public static var displayStatusbar: Bool = false
-    
+    public static var displayCloseButton: Bool = true
+    public static var displayDeleteButton: Bool = false
+
     public static var displayAction: Bool = true
     public static var shareExtraCaption: String?
     public static var actionButtonTitles: [String]?
     
     public static var displayCounterLabel: Bool = true
     public static var displayBackAndForwardButton: Bool = true
-    public static var disableVerticalSwipe: Bool = false
-    
-    public static var displayCloseButton: Bool = true
-    
+
     public static var displayHorizontalScrollIndicator: Bool = true
     public static var displayVerticalScrollIndicator: Bool = true
     
@@ -29,19 +28,17 @@ public struct SKPhotoBrowserOptions {
     public static var enableSingleTapDismiss: Bool = false
     
     public static var backgroundColor: UIColor = .black
-    
-    public static var indicatorColor: UIColor = UIColor.white
+    public static var indicatorColor: UIColor = .white
     public static var indicatorStyle: UIActivityIndicatorViewStyle = .whiteLarge
 
-    public static var toolbarTextShadowColor: UIColor = .darkText    
-    
     /// By default close button is on left side and delete button is on right.
     ///
     /// Set this property to **true** for swap they.
     ///
     /// Default: false
-    public static var swapCloseAndDeleteButtons = false
-    
+    public static var swapCloseAndDeleteButtons: Bool = false
+    public static var disableVerticalSwipe: Bool = false
+
     /// Offset from top and from nearest screen edge of close button and delete button.
     ///
     /// - Default: 5
