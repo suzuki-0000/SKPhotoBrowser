@@ -20,7 +20,7 @@ open class SKPhotoBrowser: UIViewController {
     internal lazy var pagingScrollView: SKPagingScrollView = SKPagingScrollView(frame: self.view.frame, browser: self)
     
     // appearance
-    fileprivate let bgColor: UIColor = .black
+    fileprivate let bgColor: UIColor = SKPhotoBrowserOptions.backgroundColor
     // animation
     fileprivate let animator: SKAnimator = .init()
 
