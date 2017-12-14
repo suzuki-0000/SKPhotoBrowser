@@ -148,6 +148,11 @@ private extension SKAnimator {
         let finalFrame = self.finalImageViewFrame
         browser.view.isHidden = true
         browser.view.alpha = 0.0
+        
+        if #available(iOS 11.0, *) {
+            backgroundView.accessibilityIgnoresInvertColors = true
+            self.resizableImageView?.accessibilityIgnoresInvertColors = true
+        }
 
         UIView.animate(
             withDuration: animationDuration,

@@ -540,6 +540,10 @@ private extension SKPhotoBrowser {
         view.backgroundColor = bgColor
         view.clipsToBounds = true
         view.isOpaque = false
+        
+        if #available(iOS 11.0, *) {
+            view.accessibilityIgnoresInvertColors = true
+        }
     }
     
     func configurePagingScrollView() {
