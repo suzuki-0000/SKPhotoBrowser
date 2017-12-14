@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		212705891C92C69C00466223 /* FromCameraRollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212705881C92C69C00466223 /* FromCameraRollViewController.swift */; };
-		88ABF7F872EE84010BCE3BD6 /* Pods_SKPhotoBrowserExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB686E31A24C3FFC5B05ECF8 /* Pods_SKPhotoBrowserExample.framework */; };
 		8909B55B1BC792150060A053 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8909B55A1BC792150060A053 /* AppDelegate.swift */; };
 		8909B55D1BC792150060A053 /* FromLocalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8909B55C1BC792150060A053 /* FromLocalViewController.swift */; };
 		8909B5601BC792150060A053 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8909B55E1BC792150060A053 /* Main.storyboard */; };
@@ -27,8 +26,8 @@
 		8909B58B1BC792DC0060A053 /* image8.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8909B57F1BC792DC0060A053 /* image8.jpg */; };
 		8909B58C1BC792DC0060A053 /* image9.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8909B5801BC792DC0060A053 /* image9.jpg */; };
 		89FC5DBB1D54A04900F1BE52 /* FromWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89FC5DBA1D54A04900F1BE52 /* FromWebViewController.swift */; };
-		A6A7B7801C9578E30025AC07 /* ReferenceProxy in Frameworks */ = {isa = PBXBuildFile; fileRef = 8909B5711BC792570060A053 /* SKPhotoBrowser.framework */; };
-		A6A7B7811C9578E30025AC07 /* ReferenceProxy in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8909B5711BC792570060A053 /* SKPhotoBrowser.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		A6A7B7801C9578E30025AC07 /* SKPhotoBrowser.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8909B5711BC792570060A053 /* SKPhotoBrowser.framework */; };
+		A6A7B7811C9578E30025AC07 /* SKPhotoBrowser.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8909B5711BC792570060A053 /* SKPhotoBrowser.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		EB55C74F2E19BE99A3DD28FF /* Pods_SKPhotoBrowserExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC185D4686B5554C11523E7C /* Pods_SKPhotoBrowserExample.framework */; };
 /* End PBXBuildFile section */
 
@@ -63,7 +62,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				A6A7B7811C9578E30025AC07 /* ReferenceProxy in Embed Frameworks */,
+				A6A7B7811C9578E30025AC07 /* SKPhotoBrowser.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -104,7 +103,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A6A7B7801C9578E30025AC07 /* ReferenceProxy in Frameworks */,
+				A6A7B7801C9578E30025AC07 /* SKPhotoBrowser.framework in Frameworks */,
 				EB55C74F2E19BE99A3DD28FF /* Pods_SKPhotoBrowserExample.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -112,15 +111,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		4462E0EB8EBBBA6309EEEEB9 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				4646E40B4CEC62B4734AB729 /* Pods-SKPhotoBrowserExample.debug.xcconfig */,
-				241888FD69B198BD34C3C0BB /* Pods-SKPhotoBrowserExample.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 		8909B54E1BC792150060A053 = {
 			isa = PBXGroup;
 			children = (
@@ -221,7 +211,7 @@
 			children = (
 				6726ABE37DF17134C0BA8EBC /* Pods-SKPhotoBrowserExample.debug.xcconfig */,
 				3CB7DBB2A904933FBC55D566 /* Pods-SKPhotoBrowserExample.release.xcconfig */,
-                );
+			);
 			name = Pods;
 			sourceTree = "<group>";
 		};
@@ -362,9 +352,12 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-SKPhotoBrowserExample/Pods-SKPhotoBrowserExample-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -377,13 +370,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-SKPhotoBrowserExample-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run \'pod install\' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -529,7 +525,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.keishi.suzuki.aSKPhotoBrowserExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -544,7 +540,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.keishi.suzuki.aSKPhotoBrowserExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};

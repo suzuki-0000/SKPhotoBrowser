@@ -1,4 +1,4 @@
-//
+    //
 //  SKZoomingScrollView.swift
 //  SKViewExample
 //
@@ -188,14 +188,13 @@ open class SKZoomingScrollView: UIScrollView {
             // image
             photoImageView.image = image
             photoImageView.contentMode = photo.contentMode
-            photoImageView.backgroundColor = SKPhotoBrowserOptions.backgroundColor
-            
-            var photoImageViewFrame = CGRect.zero
-            photoImageViewFrame.origin = CGPoint.zero
+
+            var photoImageViewFrame: CGRect = .zero
+            photoImageViewFrame.origin = .zero
             photoImageViewFrame.size = image.size
-            
+
             photoImageView.frame = photoImageViewFrame
-            
+
             contentSize = photoImageViewFrame.size
             
             setMaxMinZoomScalesForCurrentBounds()
@@ -301,7 +300,6 @@ private extension SKZoomingScrollView {
         let viewTouchPoint = touch.location(in: view)
         let viewWidthTouch = viewTouchPoint.x
         let viewPercentTouch = viewWidthTouch / oneWidthViewPercent
-        
         let photoWidth = photoImageView.bounds.width
         let onePhotoPercent = photoWidth / 100
         let needPoint = viewPercentTouch * onePhotoPercent

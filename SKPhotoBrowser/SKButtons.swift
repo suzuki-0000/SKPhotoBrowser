@@ -12,22 +12,20 @@ import Foundation
 private let bundle = Bundle(for: SKPhotoBrowser.self)
 
 class SKButton: UIButton {
-    var showFrame: CGRect!
-    var hideFrame: CGRect!
-    var insets: UIEdgeInsets {
+    internal var showFrame: CGRect!
+    internal var hideFrame: CGRect!
+    
+    fileprivate var insets: UIEdgeInsets {
         if UI_USER_INTERFACE_IDIOM() == .phone {
             return UIEdgeInsets(top: 15.25, left: 15.25, bottom: 15.25, right: 15.25)
         } else {
             return UIEdgeInsets(top: 12, left: 12, bottom: 12, right: 12)
         }
     }
-    var size: CGSize = CGSize(width: 44, height: 44)
-    var margin: CGFloat = SKPhotoBrowserOptions.closeAndDeleteButtonPadding
-    
-    var buttonTopOffset: CGFloat {
-        return 30
-    }
-    
+    fileprivate let size: CGSize = CGSize(width: 44, height: 44)
+    fileprivate let buttonTopOffset: CGFloat = 30
+    fileprivate var margin: CGFloat = SKPhotoBrowserOptions.closeAndDeleteButtonPadding
+
     func setup(_ imageName: String) {
         backgroundColor = .clear
         imageEdgeInsets = insets
@@ -77,7 +75,6 @@ class SKImageButton: SKButton {
 
 class SKCloseButton: SKImageButton {
     override var imageName: String { return "btn_common_close_wh" }
-    
     override var margin: CGFloat {
         get {
             return SKPhotoBrowserOptions.swapCloseAndDeleteButtons
@@ -92,7 +89,6 @@ class SKCloseButton: SKImageButton {
 
 class SKDeleteButton: SKImageButton {
     override var imageName: String { return "btn_common_delete_wh" }
-    
     override var margin: CGFloat {
         get { return SKPhotoBrowserOptions.swapCloseAndDeleteButtons
             ? leftSidePositionMargin
