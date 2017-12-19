@@ -23,10 +23,8 @@ open class SKPhotoBrowser: UIViewController {
     fileprivate let bgColor: UIColor = SKPhotoBrowserOptions.backgroundColor
     // animation
     fileprivate let animator: SKAnimator = .init()
-
-    // optional actions view
-    fileprivate var closeButton: SKCloseButton!
-    fileprivate var deleteButton: SKDeleteButton!
+    
+    fileprivate var actionView: SKActionView!
     fileprivate var toolbar: SKToolbar!
     
     // actions
@@ -107,8 +105,7 @@ open class SKPhotoBrowser: UIViewController {
         configureAppearance()
         configurePagingScrollView()
         configureGestureControl()
-        configureCloseButton()
-        configureDeleteButton()
+        configureActionView()
         configureToolbar()
 
         animator.willPresent(self)
@@ -146,11 +143,6 @@ open class SKPhotoBrowser: UIViewController {
     
     override open var prefersStatusBarHidden: Bool {
         return !SKPhotoBrowserOptions.displayStatusbar
-    }
-    
-    override open func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransition(to: size, with: coordinator)
-        deleteButton.updateFrame(size)
     }
     
     // MARK: - Notification
@@ -227,31 +219,11 @@ open class SKPhotoBrowser: UIViewController {
 
 public extension SKPhotoBrowser {
     func updateCloseButton(_ image: UIImage, size: CGSize? = nil) {
-        if closeButton == nil {
-            configureCloseButton()
-        }
-        closeButton.setImage(image, for: UIControlState())
-        
-        if let size = size {
-            closeButton.setFrameSize(size)
-        }
+        actionView.updateCloseButton(image: image, size: size)
     }
     
     func updateDeleteButton(_ image: UIImage, size: CGSize? = nil) {
-        if deleteButton == nil {
-            configureDeleteButton()
-        }
-        deleteButton.setImage(image, for: UIControlState())
-        
-        if let size = size {
-            deleteButton.setFrameSize(size)
-        }
-    }
-    
-    @objc func deleteButtonPressed(_ sender: UIButton) {
-        delegate?.removePhoto?(self, index: currentPageIndex) { [weak self] in
-            self?.deleteImage()
-        }
+        actionView.updateDeleteButton(image: image, size: size)
     }
 }
 
@@ -384,14 +356,7 @@ public extension SKPhotoBrowser {
 
 internal extension SKPhotoBrowser {
     func showButtons() {
-        if SKPhotoBrowserOptions.displayCloseButton {
-            closeButton.alpha = 1
-            closeButton.frame = closeButton.showFrame
-        }
-        if SKPhotoBrowserOptions.displayDeleteButton {
-            deleteButton.alpha = 1
-            deleteButton.frame = deleteButton.showFrame
-        }
+        actionView.animate(hidden: false)
     }
     
     func pageDisplayedAtIndex(_ index: Int) -> SKZoomingScrollView? {
@@ -493,11 +458,7 @@ internal extension SKPhotoBrowser {
             }
         }
     }
-    
-    @objc func closeButtonPressed(_ sender: UIButton) {
-        determineAndClose()
-    }
-    
+   
     @objc func actionButtonPressed(ignoreAndShare: Bool) {
         delegate?.willShowActionSheet?(currentPageIndex)
         
@@ -533,6 +494,25 @@ internal extension SKPhotoBrowser {
             popupShare()
         }
     }
+    
+    func deleteImage() {
+        defer {
+            reloadData()
+        }
+        
+        if photos.count > 1 {
+            pagingScrollView.deleteImage()
+            
+            photos.remove(at: currentPageIndex)
+            if currentPageIndex != 0 {
+                gotoPreviousPage()
+            }
+            toolbar.updateToolbar(currentPageIndex)
+            
+        } else if photos.count == 1 {
+            dismissPhotoBrowser(animated: true)
+        }
+    }
 }
 
 // MARK: - Private Function
@@ -558,20 +538,11 @@ private extension SKPhotoBrowser {
         view.addGestureRecognizer(panGesture)
     }
     
-    func configureCloseButton() {
-        closeButton = SKCloseButton(frame: .zero)
-        closeButton.addTarget(self, action: #selector(closeButtonPressed(_:)), for: .touchUpInside)
-        closeButton.isHidden = !SKPhotoBrowserOptions.displayCloseButton
-        view.addSubview(closeButton)
+    func configureActionView() {
+        actionView = SKActionView(frame: view.frame, browser: self)
+        view.addSubview(actionView)
     }
-    
-    func configureDeleteButton() {
-        deleteButton = SKDeleteButton(frame: .zero)
-        deleteButton.addTarget(self, action: #selector(deleteButtonPressed(_:)), for: .touchUpInside)
-        deleteButton.isHidden = !SKPhotoBrowserOptions.displayDeleteButton
-        view.addSubview(deleteButton)
-    }
-    
+
     func configureToolbar() {
         toolbar = SKToolbar(frame: frameForToolbarAtOrientation(), browser: self)
         view.addSubview(toolbar)
@@ -581,48 +552,22 @@ private extension SKPhotoBrowser {
         cancelControlHiding()
         
         let captionViews = pagingScrollView.getCaptionViews()
-        
+        actionView.animate(hidden: hidden)
         UIView.animate(withDuration: 0.35,
                        animations: { () -> Void in
                         let alpha: CGFloat = hidden ? 0.0 : 1.0
                         self.toolbar.alpha = alpha
                         self.toolbar.frame = hidden ? self.frameForToolbarHideAtOrientation() : self.frameForToolbarAtOrientation()
                         
-                        if SKPhotoBrowserOptions.displayCloseButton {
-                            self.closeButton.alpha = alpha
-                            self.closeButton.frame = hidden ? self.closeButton.hideFrame : self.closeButton.showFrame
-                        }
-                        if SKPhotoBrowserOptions.displayDeleteButton {
-                            self.deleteButton.alpha = alpha
-                            self.deleteButton.frame = hidden ? self.deleteButton.hideFrame : self.deleteButton.showFrame
-                        }
                         captionViews.forEach { $0.alpha = alpha }
-        },
-                       completion: nil)
+        }, completion: nil)
         if !permanent {
             hideControlsAfterDelay()
         }
         setNeedsStatusBarAppearanceUpdate()
     }
     
-    func deleteImage() {
-        defer {
-            reloadData()
-        }
-        
-        if photos.count > 1 {
-            pagingScrollView.deleteImage()
-            
-            photos.remove(at: currentPageIndex)
-            if currentPageIndex != 0 {
-                gotoPreviousPage()
-            }
-            toolbar.updateToolbar(currentPageIndex)
-            
-        } else if photos.count == 1 {
-            dismissPhotoBrowser(animated: true)
-        }
-    }
+
 }
 
 // MARK: - UIScrollView Delegate

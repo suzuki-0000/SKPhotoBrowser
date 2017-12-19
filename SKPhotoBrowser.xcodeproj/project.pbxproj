@@ -12,6 +12,7 @@
 		26C97AD51D0EB6870039F6CB /* SKCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26C97AD41D0EB6870039F6CB /* SKCache.swift */; };
 		26C97AD71D0EB6A00039F6CB /* SKCacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26C97AD61D0EB6A00039F6CB /* SKCacheTests.swift */; };
 		26C97AD91D0EB8BB0039F6CB /* SKCacheable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26C97AD81D0EB8BB0039F6CB /* SKCacheable.swift */; };
+		7643F4B41FE8CE7A00475F6E /* SKActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7643F4B31FE8CE7A00475F6E /* SKActionView.swift */; };
 		8909B5341BC791280060A053 /* SKPhotoBrowser.h in Headers */ = {isa = PBXBuildFile; fileRef = 8909B5331BC791280060A053 /* SKPhotoBrowser.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8909B5431BC791510060A053 /* SKCaptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8909B53B1BC791510060A053 /* SKCaptionView.swift */; };
 		8909B5441BC791510060A053 /* SKDetectingImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8909B53C1BC791510060A053 /* SKDetectingImageView.swift */; };
@@ -50,6 +51,7 @@
 		26C97AD41D0EB6870039F6CB /* SKCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKCache.swift; sourceTree = "<group>"; };
 		26C97AD61D0EB6A00039F6CB /* SKCacheTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKCacheTests.swift; sourceTree = "<group>"; };
 		26C97AD81D0EB8BB0039F6CB /* SKCacheable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKCacheable.swift; sourceTree = "<group>"; };
+		7643F4B31FE8CE7A00475F6E /* SKActionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKActionView.swift; sourceTree = "<group>"; };
 		8909B5301BC791280060A053 /* SKPhotoBrowser.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SKPhotoBrowser.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8909B5331BC791280060A053 /* SKPhotoBrowser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SKPhotoBrowser.h; sourceTree = "<group>"; };
 		8909B5351BC791280060A053 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -134,6 +136,7 @@
 				8909B53D1BC791510060A053 /* SKDetectingView.swift */,
 				8909B53E1BC791510060A053 /* SKIndicatorView.swift */,
 				8CA6C6511CBE76E80054D3C2 /* SKLocalPhoto.swift */,
+				7643F4B31FE8CE7A00475F6E /* SKActionView.swift */,
 				89C24A831D657AFE005F09A9 /* SKPagingScrollView.swift */,
 				8909B53F1BC791510060A053 /* SKPhoto.swift */,
 				8909B5411BC791510060A053 /* SKPhotoBrowser.swift */,
@@ -296,6 +299,7 @@
 				8CA6C6521CBE76E80054D3C2 /* SKLocalPhoto.swift in Sources */,
 				89D0BA471D5994A8002A811B /* SKAnimator.swift in Sources */,
 				210E53ED1C986D3A008DD5E3 /* UIView+Radius.swift in Sources */,
+				7643F4B41FE8CE7A00475F6E /* SKActionView.swift in Sources */,
 				8917B1B01D5A13DE000CE1C4 /* SKPhotoBrowserDelegate.swift in Sources */,
 				D2265CCF1F799C75009256CC /* UIApplication+UIWindow.swift in Sources */,
 				89D0BA491D59966B002A811B /* SKMesurement.swift in Sources */,
