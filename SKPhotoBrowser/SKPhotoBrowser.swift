@@ -24,6 +24,7 @@ open class SKPhotoBrowser: UIViewController {
     // animation
     fileprivate let animator: SKAnimator = .init()
 
+    // optional actions view
     fileprivate var closeButton: SKCloseButton!
     fileprivate var deleteButton: SKDeleteButton!
     fileprivate var toolbar: SKToolbar!
@@ -506,8 +507,8 @@ internal extension SKPhotoBrowser {
         
         if let titles = SKPhotoBrowserOptions.actionButtonTitles {
             let actionSheetController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-            actionSheetController.addAction(UIAlertAction(title: cancelTitle, style: .cancel, handler: { (_) -> Void in
-            }))
+            actionSheetController.addAction(UIAlertAction(title: cancelTitle, style: .cancel))
+            
             for idx in titles.indices {
                 actionSheetController.addAction(UIAlertAction(title: titles[idx], style: .default, handler: { (_) -> Void in
                     self.delegate?.didDismissActionSheetWithButtonIndex?(idx, photoIndex: self.currentPageIndex)

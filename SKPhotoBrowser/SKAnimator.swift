@@ -60,18 +60,20 @@ class SKAnimator: NSObject, SKPhotoBrowserAnimatorDelegate {
         
         senderViewOriginalFrame = calcOriginFrame(sender)
         finalImageViewFrame = calcFinalFrame(imageRatio)
-
         resizableImageView = UIImageView(image: imageFromView)
-        resizableImageView!.frame = senderViewOriginalFrame
-        resizableImageView!.clipsToBounds = true
-        resizableImageView!.contentMode = photo.contentMode
-        if sender.layer.cornerRadius != 0 {
-            let duration = (animationDuration * Double(animationDamping))
-            resizableImageView!.layer.masksToBounds = true
-            resizableImageView!.addCornerRadiusAnimation(sender.layer.cornerRadius, to: 0, duration: duration)
-        }
-        window?.addSubview(resizableImageView!)
         
+        if let resizableImageView = resizableImageView {
+            resizableImageView.frame = senderViewOriginalFrame
+            resizableImageView.clipsToBounds = true
+            resizableImageView.contentMode = photo.contentMode
+            if sender.layer.cornerRadius != 0 {
+                let duration = (animationDuration * Double(animationDamping))
+                resizableImageView.layer.masksToBounds = true
+                resizableImageView.addCornerRadiusAnimation(sender.layer.cornerRadius, to: 0, duration: duration)
+            }
+            window?.addSubview(resizableImageView)
+        }
+
         presentAnimation(browser)
     }
     
@@ -86,23 +88,23 @@ class SKAnimator: NSObject, SKPhotoBrowserAnimatorDelegate {
         }
 
         senderViewForAnimation = sender
+        browser.view.isHidden = true
         backgroundView.isHidden = false
         backgroundView.alpha = 1.0
         backgroundView.backgroundColor = .clear
-        browser.view.isHidden = true
         senderViewOriginalFrame = calcOriginFrame(sender)
         
-        let photo = browser.photoAtIndex(browser.currentPageIndex)
-        let contentOffset = scrollView.contentOffset
-        let scrollFrame = scrollView.photoImageView.frame
-        let offsetY = scrollView.center.y - (scrollView.bounds.height/2)
-        let frame = CGRect(
-            x: scrollFrame.origin.x - contentOffset.x,
-            y: scrollFrame.origin.y + contentOffset.y + offsetY,
-            width: scrollFrame.width,
-            height: scrollFrame.height)
-        
         if let resizableImageView = resizableImageView {
+            let photo = browser.photoAtIndex(browser.currentPageIndex)
+            let contentOffset = scrollView.contentOffset
+            let scrollFrame = scrollView.photoImageView.frame
+            let offsetY = scrollView.center.y - (scrollView.bounds.height/2)
+            let frame = CGRect(
+                x: scrollFrame.origin.x - contentOffset.x,
+                y: scrollFrame.origin.y + contentOffset.y + offsetY,
+                width: scrollFrame.width,
+                height: scrollFrame.height)
+            
             resizableImageView.image = image.rotateImageByOrientation()
             resizableImageView.frame = frame
             resizableImageView.alpha = 1.0
