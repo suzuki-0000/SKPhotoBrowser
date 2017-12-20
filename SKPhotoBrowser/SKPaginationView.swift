@@ -1,5 +1,5 @@
 //
-//  SKToolbar.swift
+//  SKPaginationView.swift
 //  SKPhotoBrowser
 //
 //  Created by keishi_suzuki on 2017/12/20.
