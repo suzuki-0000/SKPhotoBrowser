@@ -32,6 +32,21 @@ class SKActionView: UIView {
         configureDeleteButton()
     }
     
+    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+        if let view = super.hitTest(point, with: event) {
+            if closeButton.frame.contains(point) || deleteButton.frame.contains(point) {
+                return view
+            }
+            return nil
+        }
+        return nil
+    }
+    
+    func updateFrame(frame: CGRect) {
+        self.frame = frame
+        setNeedsDisplay()
+    }
+
     func updateCloseButton(image: UIImage, size: CGSize? = nil) {
         configureCloseButton(image: image, size: size)
     }
@@ -67,34 +82,6 @@ class SKActionView: UIView {
         
         browser.delegate?.removePhoto?(browser, index: browser.currentPageIndex) { [weak self] in
             self?.browser?.deleteImage()
-        }
-    }
-    
-    @objc func actionButtonPressed(ignoreAndShare: Bool) {
-        if let titles = SKPhotoBrowserOptions.actionButtonTitles {
-            let actionSheetController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-            actionSheetController.addAction(UIAlertAction(title: cancelTitle, style: .cancel))
-            
-            for idx in titles.indices {
-                actionSheetController.addAction(UIAlertAction(title: titles[idx], style: .default, handler: { [unowned self] (_) -> Void in
-                    guard let browser = self.browser else { return }
-                    browser.delegate?.didDismissActionSheetWithButtonIndex?(idx, photoIndex: browser.currentPageIndex)
-                }))
-            }
-            
-            if UI_USER_INTERFACE_IDIOM() == .phone {
-                browser?.present(actionSheetController, animated: true, completion: nil)
-            } else {
-                actionSheetController.modalPresentationStyle = .popover
-                if let popoverController = actionSheetController.popoverPresentationController {
-                    popoverController.sourceView = self
-//                    popoverController.barButtonItem = toolbar.toolActionButton
-                }
-                browser?.present(actionSheetController, animated: true, completion: nil)
-            }
-            
-        } else {
-            browser?.popupShare()
         }
     }
 }

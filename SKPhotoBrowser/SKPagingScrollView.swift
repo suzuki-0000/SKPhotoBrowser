@@ -14,7 +14,7 @@ class SKPagingScrollView: UIScrollView {
     fileprivate var visiblePages: [SKZoomingScrollView] = []
     fileprivate var recycledPages: [SKZoomingScrollView] = []
     fileprivate weak var browser: SKPhotoBrowser?
-    
+
     var numberOfPhotos: Int {
         return browser?.photos.count ?? 0
     }
@@ -25,16 +25,16 @@ class SKPagingScrollView: UIScrollView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
-        isPagingEnabled = true
-        showsHorizontalScrollIndicator = true
-        showsVerticalScrollIndicator = true
     }
     
     convenience init(frame: CGRect, browser: SKPhotoBrowser) {
         self.init(frame: frame)
         self.browser = browser
-        
+
+        isPagingEnabled = true
+        showsHorizontalScrollIndicator = true
+        showsVerticalScrollIndicator = true
+
         updateFrame(bounds, currentPageIndex: browser.currentPageIndex)
     }
     
@@ -43,7 +43,7 @@ class SKPagingScrollView: UIScrollView {
         visiblePages.removeAll()
         recycledPages.removeAll()
     }
-    
+
     func loadAdjacentPhotosIfNecessary(_ photo: SKPhotoProtocol, currentPageIndex: Int) {
         guard let browser = browser, let page = pageDisplayingAtPhoto(photo) else {
             return
@@ -188,6 +188,16 @@ class SKPagingScrollView: UIScrollView {
             .forEach { captionViews.insert($0.captionView) }
         return captionViews
     }
+    
+    func setControlsHidden(hidden: Bool) {
+        let captionViews = getCaptionViews()
+        let alpha: CGFloat = hidden ? 0.0 : 1.0
+        
+        UIView.animate(withDuration: 0.35,
+                       animations: { () -> Void in
+                        captionViews.forEach { $0.alpha = alpha }
+                       }, completion: nil)
+    }
 }
 
 private extension SKPagingScrollView {
@@ -199,9 +209,9 @@ private extension SKPagingScrollView {
     }
     
     func createCaptionView(_ index: Int) -> SKCaptionView? {
-        if let delegate = self.browser?.delegate {
-            return delegate.captionViewForPhotoAtIndex?(index: index)
-        }
+//        if let delegate = self.browser?.delegate {
+//            return delegate.captionViewForPhotoAtIndex?(index: index)
+//        }
         guard let photo = browser?.photoAtIndex(index), photo.caption != nil else {
             return nil
         }

@@ -25,8 +25,9 @@ open class SKPhotoBrowser: UIViewController {
     fileprivate let animator: SKAnimator = .init()
     
     fileprivate var actionView: SKActionView!
+    fileprivate var paginationView: SKPaginationView!
     fileprivate var toolbar: SKToolbar!
-    
+
     // actions
     fileprivate var activityViewController: UIActivityViewController!
     fileprivate var panGesture: UIPanGestureRecognizer!
@@ -106,6 +107,7 @@ open class SKPhotoBrowser: UIViewController {
         configurePagingScrollView()
         configureGestureControl()
         configureActionView()
+        configurePaginationView()
         configureToolbar()
 
         animator.willPresent(self)
@@ -125,14 +127,19 @@ open class SKPhotoBrowser: UIViewController {
     override open func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         isPerformingLayout = true
-        
-        pagingScrollView.updateFrame(view.bounds, currentPageIndex: currentPageIndex)
-        
-        toolbar.frame = frameForToolbarAtOrientation()
-        
         // where did start
         delegate?.didShowPhotoAtIndex?(self, index: currentPageIndex)
+
+        // toolbar
+        toolbar.frame = frameForToolbarAtOrientation()
         
+        // action
+        actionView.updateFrame(frame: view.frame)
+
+        // paging
+        paginationView.updateFrame(frame: view.frame)
+        pagingScrollView.updateFrame(view.bounds, currentPageIndex: currentPageIndex)
+
         isPerformingLayout = false
     }
     
@@ -177,13 +184,9 @@ open class SKPhotoBrowser: UIViewController {
     
     open func performLayout() {
         isPerformingLayout = true
-        
-        toolbar.updateToolbar(currentPageIndex)
-        
+
         // reset local cache
         pagingScrollView.reload()
-        
-        // reframe
         pagingScrollView.updateContentOffset(currentPageIndex)
         pagingScrollView.tilePages()
         
@@ -239,6 +242,7 @@ public extension SKPhotoBrowser {
             if !isViewActive {
                 pagingScrollView.tilePages()
             }
+            paginationView.update(currentPageIndex)
         }
     }
     
@@ -248,8 +252,7 @@ public extension SKPhotoBrowser {
                 return
             }
             isEndAnimationByToolBar = false
-            toolbar.updateToolbar(currentPageIndex)
-            
+
             let pageFrame = frameForPageAtIndex(index)
             pagingScrollView.jumpToPageAtIndex(pageFrame)
         }
@@ -298,7 +301,7 @@ public extension SKPhotoBrowser {
     }
     
     func areControlsHidden() -> Bool {
-        return toolbar.alpha == 0.0
+        return paginationView.alpha == 0.0
     }
     
     func popupShare(includeCaption: Bool = true) {
@@ -507,7 +510,7 @@ internal extension SKPhotoBrowser {
             if currentPageIndex != 0 {
                 gotoPreviousPage()
             }
-            toolbar.updateToolbar(currentPageIndex)
+            paginationView.update(currentPageIndex)
             
         } else if photos.count == 1 {
             dismissPhotoBrowser(animated: true)
@@ -543,43 +546,42 @@ private extension SKPhotoBrowser {
         view.addSubview(actionView)
     }
 
+    func configurePaginationView() {
+        paginationView = SKPaginationView(frame: view.frame, browser: self)
+        view.addSubview(paginationView)
+    }
+    
     func configureToolbar() {
         toolbar = SKToolbar(frame: frameForToolbarAtOrientation(), browser: self)
         view.addSubview(toolbar)
     }
-    
+
     func setControlsHidden(_ hidden: Bool, animated: Bool, permanent: Bool) {
+        // timer update
         cancelControlHiding()
         
-        let captionViews = pagingScrollView.getCaptionViews()
+        // scroll animation
+        pagingScrollView.setControlsHidden(hidden: hidden)
+
+        // paging animation
+        paginationView.setControlsHidden(hidden: hidden)
+        
+        // action view animation
         actionView.animate(hidden: hidden)
-        UIView.animate(withDuration: 0.35,
-                       animations: { () -> Void in
-                        let alpha: CGFloat = hidden ? 0.0 : 1.0
-                        self.toolbar.alpha = alpha
-                        self.toolbar.frame = hidden ? self.frameForToolbarHideAtOrientation() : self.frameForToolbarAtOrientation()
-                        
-                        captionViews.forEach { $0.alpha = alpha }
-        }, completion: nil)
+        
         if !permanent {
             hideControlsAfterDelay()
         }
         setNeedsStatusBarAppearanceUpdate()
     }
-    
-
 }
 
 // MARK: - UIScrollView Delegate
 
 extension SKPhotoBrowser: UIScrollViewDelegate {
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        guard isViewActive else {
-            return
-        }
-        guard !isPerformingLayout else {
-            return
-        }
+        guard isViewActive else { return }
+        guard !isPerformingLayout else { return }
         
         // tile page
         pagingScrollView.tilePages()
@@ -591,7 +593,7 @@ extension SKPhotoBrowser: UIScrollViewDelegate {
         
         if currentPageIndex != previousCurrentPage {
             delegate?.didShowPhotoAtIndex?(self, index: currentPageIndex)
-            toolbar.updateToolbar(currentPageIndex)
+            paginationView.update(currentPageIndex)
         }
     }
     

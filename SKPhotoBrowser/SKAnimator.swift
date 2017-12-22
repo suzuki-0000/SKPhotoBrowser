@@ -97,7 +97,7 @@ class SKAnimator: NSObject, SKPhotoBrowserAnimatorDelegate {
         if let resizableImageView = resizableImageView {
             let photo = browser.photoAtIndex(browser.currentPageIndex)
             let contentOffset = scrollView.contentOffset
-            let scrollFrame = scrollView.photoImageView.frame
+            let scrollFrame = scrollView.imageView.frame
             let offsetY = scrollView.center.y - (scrollView.bounds.height/2)
             let frame = CGRect(
                 x: scrollFrame.origin.x - contentOffset.x,
