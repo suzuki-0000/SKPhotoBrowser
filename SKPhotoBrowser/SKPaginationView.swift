@@ -55,7 +55,6 @@ class SKPaginationView: UIView {
     
     func update(_ currentPageIndex: Int) {
         guard let browser = browser else { return }
-        
 
         if browser.photos.count > 1 {
             counterLabel.text = "\(currentPageIndex + 1) / \(browser.photos.count)"
@@ -120,7 +119,6 @@ private extension SKPaginationView {
         addSubview(nextButton)
     }
 }
-    
 
 class SKPaginationButton: UIButton {
     let insets: UIEdgeInsets = UIEdgeInsets(top: 13.25, left: 17.25, bottom: 13.25, right: 17.25)
