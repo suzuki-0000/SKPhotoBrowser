@@ -72,7 +72,7 @@ open class SKPhotoBrowser: UIViewController {
     public convenience init(originImage: UIImage, photos: [SKPhotoProtocol], animatedFromView: UIView) {
         self.init(nibName: nil, bundle: nil)
         self.photos = photos
-        self.photos.forEach{ $0.checkCache() }
+        self.photos.forEach { $0.checkCache() }
         animator.senderOriginImage = originImage
         animator.senderViewForAnimation = animatedFromView
     }
@@ -80,7 +80,7 @@ open class SKPhotoBrowser: UIViewController {
     public convenience init(photos: [SKPhotoProtocol], initialPageIndex: Int) {
         self.init(nibName: nil, bundle: nil)
         self.photos = photos
-        self.photos.forEach{ $0.checkCache() }
+        self.photos.forEach { $0.checkCache() }
         self.currentPageIndex = min(initialPageIndex, photos.count - 1)
         animator.senderOriginImage = photos[currentPageIndex].underlyingImage
         animator.senderViewForAnimation = photos[currentPageIndex] as? UIView
@@ -206,7 +206,6 @@ open class SKPhotoBrowser: UIViewController {
         if !animated {
             modalTransitionStyle = .crossDissolve
         }
-        delegate?.willDismissAtPageIndex?(self.currentPageIndex)
         dismiss(animated: !animated) {
             completion?()
             self.delegate?.didDismissAtPageIndex?(self.currentPageIndex)
@@ -214,6 +213,7 @@ open class SKPhotoBrowser: UIViewController {
     }
     
     open func determineAndClose() {
+        delegate?.willDismissAtPageIndex?(self.currentPageIndex)
         animator.willDismiss(self)
     }
 }
@@ -344,12 +344,12 @@ public extension SKPhotoBrowser {
         return currentPageIndex
     }
     
-    func addPhotos(photos: [SKPhotoProtocol]){
+    func addPhotos(photos: [SKPhotoProtocol]) {
         self.photos.append(contentsOf: photos)
         self.reloadData()
     }
     
-    func insertPhotos(photos: [SKPhotoProtocol], at index: Int){
+    func insertPhotos(photos: [SKPhotoProtocol], at index: Int) {
         self.photos.insert(contentsOf: photos, at: index)
         self.reloadData()
     }
@@ -608,5 +608,3 @@ extension SKPhotoBrowser: UIScrollViewDelegate {
         isEndAnimationByToolBar = true
     }
 }
-
-

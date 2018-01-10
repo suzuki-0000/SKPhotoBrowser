@@ -58,6 +58,7 @@ class SKAnimator: NSObject, SKPhotoBrowserAnimatorDelegate {
         let imageFromView = (senderOriginImage ?? browser.getImageFromView(sender)).rotateImageByOrientation()
         let imageRatio = imageFromView.size.width / imageFromView.size.height
         
+        senderOriginImage = nil
         senderViewOriginalFrame = calcOriginFrame(sender)
         finalImageViewFrame = calcFinalFrame(imageRatio)
         resizableImageView = UIImageView(image: imageFromView)
@@ -122,7 +123,7 @@ class SKAnimator: NSObject, SKPhotoBrowserAnimatorDelegate {
 
 private extension SKAnimator {
     func calcOriginFrame(_ sender: UIView) -> CGRect {
-        if let senderViewOriginalFrameTemp = sender.superview?.convert(sender.frame, to:nil) {
+        if let senderViewOriginalFrameTemp = sender.superview?.convert(sender.frame, to: nil) {
             return senderViewOriginalFrameTemp
         } else if let senderViewOriginalFrameTemp = sender.layer.superlayer?.convert(sender.frame, to: nil) {
             return senderViewOriginalFrameTemp
@@ -176,7 +177,7 @@ private extension SKAnimator {
 
         UIView.animate(
             withDuration: animationDuration,
-            delay:0,
+            delay: 0,
             usingSpringWithDamping: animationDamping,
             initialSpringVelocity: 0,
             options: UIViewAnimationOptions(),
