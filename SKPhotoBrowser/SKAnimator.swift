@@ -98,7 +98,7 @@ class SKAnimator: NSObject, SKPhotoBrowserAnimatorDelegate {
         let offsetY = scrollView.center.y - (scrollView.bounds.height/2)
         let frame = CGRect(
             x: scrollFrame.origin.x - contentOffset.x,
-            y: scrollFrame.origin.y + contentOffset.y + offsetY,
+            y: scrollFrame.origin.y + contentOffset.y + offsetY - scrollView.contentOffset.y,
             width: scrollFrame.width,
             height: scrollFrame.height)
         
