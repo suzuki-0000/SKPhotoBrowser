@@ -119,14 +119,17 @@ open class SKZoomingScrollView: UIScrollView {
         
         let xScale = boundsSize.width / imageSize.width
         let yScale = boundsSize.height / imageSize.height
-        let minScale: CGFloat = min(xScale, yScale)
+        var minScale: CGFloat = min(xScale, yScale)
         var maxScale: CGFloat = 1.0
         
         let scale = max(UIScreen.main.scale, 2.0)
         let deviceScreenWidth = UIScreen.main.bounds.width * scale // width in pixels. scale needs to remove if to use the old algorithm
         let deviceScreenHeight = UIScreen.main.bounds.height * scale // height in pixels. scale needs to remove if to use the old algorithm
         
-        if photoImageView.frame.width < deviceScreenWidth {
+		if SKPhotoBrowserOptions.longPhotoWidthMatchScreen && photoImageView.frame.height >= photoImageView.frame.width {
+			minScale = 1.0
+			maxScale = 2.5
+		} else if photoImageView.frame.width < deviceScreenWidth {
             // I think that we should to get coefficient between device screen width and image width and assign it to maxScale. I made two mode that we will get the same result for different device orientations.
             if UIApplication.shared.statusBarOrientation.isPortrait {
                 maxScale = deviceScreenHeight / photoImageView.frame.width
@@ -155,7 +158,7 @@ open class SKZoomingScrollView: UIScrollView {
         */
         
         // reset position
-        photoImageView.frame = CGRect(x: 0, y: 0, width: photoImageView.frame.size.width, height: photoImageView.frame.size.height)
+		photoImageView.frame.origin = CGPoint.zero
         setNeedsLayout()
     }
     
@@ -173,7 +176,6 @@ open class SKZoomingScrollView: UIScrollView {
         maximumZoomScale = 1
         minimumZoomScale = 1
         zoomScale = 1
-        contentSize = CGSize.zero
         
         if !flag {
             if photo.underlyingImage == nil {
@@ -191,14 +193,23 @@ open class SKZoomingScrollView: UIScrollView {
 
             var photoImageViewFrame: CGRect = .zero
             photoImageViewFrame.origin = .zero
-            photoImageViewFrame.size = image.size
+			// long photo
+			if SKPhotoBrowserOptions.longPhotoWidthMatchScreen && image.size.height >= image.size.width {
+				let imageHeight = SKMesurement.screenWidth / image.size.width * image.size.height
+				photoImageViewFrame.size = CGSize(width: SKMesurement.screenWidth, height: imageHeight)
+			} else {
+				photoImageViewFrame.size = image.size
+			}
 
             photoImageView.frame = photoImageViewFrame
 
             contentSize = photoImageViewFrame.size
             
             setMaxMinZoomScalesForCurrentBounds()
-        }
+		} else {
+			// change contentSize will reset contentOffset, so only set the contentsize zero when the image is nil
+			contentSize = CGSize.zero
+		}
         setNeedsLayout()
     }
     
