@@ -119,7 +119,7 @@ open class SKZoomingScrollView: UIScrollView {
         
         let xScale = boundsSize.width / imageSize.width
         let yScale = boundsSize.height / imageSize.height
-        let minScale: CGFloat = min(xScale, yScale)
+        var minScale: CGFloat = min(xScale, yScale)
         var maxScale: CGFloat = 1.0
         
         let scale = max(UIScreen.main.scale, 2.0)
@@ -173,7 +173,6 @@ open class SKZoomingScrollView: UIScrollView {
         maximumZoomScale = 1
         minimumZoomScale = 1
         zoomScale = 1
-        contentSize = CGSize.zero
         
         if !flag {
             if photo.underlyingImage == nil {
@@ -192,13 +191,15 @@ open class SKZoomingScrollView: UIScrollView {
             var imageViewFrame: CGRect = .zero
             imageViewFrame.origin = .zero
             imageViewFrame.size = image.size
-
             imageView.frame = imageViewFrame
 
             contentSize = imageViewFrame.size
             
             setMaxMinZoomScalesForCurrentBounds()
-        }
+		} else {
+			// change contentSize will reset contentOffset, so only set the contentsize zero when the image is nil
+			contentSize = CGSize.zero
+		}
         setNeedsLayout()
     }
     
