@@ -29,7 +29,7 @@ open class SKCaptionView: UIView {
     }
     
     open override func sizeThatFits(_ size: CGSize) -> CGSize {
-        guard let text = photoLabel.text, text.characters.count > 0 else {
+        guard let text = photoLabel.text, text.count > 0 else {
             return CGSize.zero
         }
         
