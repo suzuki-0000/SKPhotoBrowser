@@ -56,7 +56,7 @@ private extension FromWebViewController {
     func createWebPhotos() -> [SKPhotoProtocol] {
         return (0..<10).map { (i: Int) -> SKPhotoProtocol in
 //            let photo = SKPhoto.photoWithImageURL("https://placehold.jp/150\(i)x150\(i).png", holder: UIImage(named: "image0.jpg")!)
-            let photo = SKPhoto.photoWithImageURL("https://placehold.jp/156\(i)x150\(i).png")
+            let photo = SKPhoto.photoWithImageURL("https://placehold.jp/10\(i)x100\(i).png")
             photo.caption = caption[i%10]
             photo.shouldCachePhotoURLImage = true
             return photo

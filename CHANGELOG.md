@@ -1,5 +1,9 @@
 # Change Log
 
+## 5.0.5
+- #271 SmartInvert now works properly 
+- #288 Add the long photo width match screen option. 
+
 ## 5.0.4
 
 #### Updated
