@@ -102,10 +102,10 @@ class SKAnimator: NSObject, SKPhotoBrowserAnimatorDelegate {
             let offsetY = scrollView.center.y - (scrollView.bounds.height/2)
             let frame = CGRect(
                 x: scrollFrame.origin.x - contentOffset.x,
-                y: scrollFrame.origin.y + contentOffset.y + offsetY,
+                y: scrollFrame.origin.y + contentOffset.y + offsetY - scrollView.contentOffset.y,
                 width: scrollFrame.width,
                 height: scrollFrame.height)
-            
+
             resizableImageView.image = image.rotateImageByOrientation()
             resizableImageView.frame = frame
             resizableImageView.alpha = 1.0
@@ -138,10 +138,12 @@ private extension SKAnimator {
             let height = width / imageRatio
             let yOffset = (SKMesurement.screenHeight - height) / 2
             return CGRect(x: 0, y: yOffset, width: width, height: height)
-		} else if SKPhotoBrowserOptions.longPhotoWidthMatchScreen && imageRatio <= 1.0 {
-			let height = SKMesurement.screenWidth / imageRatio
-			return CGRect(x: 0.0, y: 0, width: SKMesurement.screenWidth, height: height)
-		} else {
+
+        } else if SKPhotoBrowserOptions.longPhotoWidthMatchScreen && imageRatio <= 1.0 {
+            let height = SKMesurement.screenWidth / imageRatio
+            return CGRect(x: 0.0, y: 0, width: SKMesurement.screenWidth, height: height)
+            
+        } else {
             let height = SKMesurement.screenHeight
             let width = height * imageRatio
             let xOffset = (SKMesurement.screenWidth - width) / 2
@@ -155,6 +157,11 @@ private extension SKAnimator {
         let finalFrame = self.finalImageViewFrame
         browser.view.isHidden = true
         browser.view.alpha = 0.0
+        
+        if #available(iOS 11.0, *) {
+            backgroundView.accessibilityIgnoresInvertColors = true
+            self.resizableImageView?.accessibilityIgnoresInvertColors = true
+        }
 
         UIView.animate(
             withDuration: animationDuration,

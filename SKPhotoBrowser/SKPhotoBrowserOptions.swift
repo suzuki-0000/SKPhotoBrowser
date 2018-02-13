@@ -43,11 +43,11 @@ public struct SKPhotoBrowserOptions {
     ///
     /// - Default: 5
     public static var closeAndDeleteButtonPadding: CGFloat = 5
-
-	/// if this value is true, the long photo width will match the screen,
-	/// and the minScale is 1.0, the maxScale is 2.5
-	/// Default: false
-	public static var longPhotoWidthMatchScreen: Bool = false
+    
+    /// if this value is true, the long photo width will match the screen,
+    /// and the minScale is 1.0, the maxScale is 2.5
+    /// Default: false
+    public static var longPhotoWidthMatchScreen: Bool = false
 }
 
 public struct SKCaptionOptions {
