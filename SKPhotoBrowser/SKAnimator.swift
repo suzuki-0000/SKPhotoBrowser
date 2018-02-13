@@ -138,7 +138,7 @@ private extension SKAnimator {
             let height = width / imageRatio
             let yOffset = (SKMesurement.screenHeight - height) / 2
             return CGRect(x: 0, y: yOffset, width: width, height: height)
-            
+
         } else if SKPhotoBrowserOptions.longPhotoWidthMatchScreen && imageRatio <= 1.0 {
             let height = SKMesurement.screenWidth / imageRatio
             return CGRect(x: 0.0, y: 0, width: SKMesurement.screenWidth, height: height)
