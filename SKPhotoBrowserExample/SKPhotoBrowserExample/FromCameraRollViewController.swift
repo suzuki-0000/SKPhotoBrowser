@@ -114,7 +114,7 @@ class FromCameraRollViewController: UIViewController, SKPhotoBrowserDelegate, UI
         
         assets.forEach { (asset) -> Void in
             
-            _ = requestImageForAsset(asset, options:bigRequestOptions, completion: { [weak self] (image, _) -> Void in
+            _ = requestImageForAsset(asset, options: bigRequestOptions, completion: { [weak self] (image, _) -> Void in
                 
                 if let image = image, let index = self?.assets.index(of: asset) {
                     fetchedImages[index] = image
@@ -140,7 +140,7 @@ class FromCameraRollViewController: UIViewController, SKPhotoBrowserDelegate, UI
         
         let result = PHAsset.fetchAssets(with: options)
         let amount = min(result.count, limit)
-        self.assets = result.objects(at: IndexSet(integersIn: NSRange(location: 0, length: amount).toRange() ?? 0..<0))
+        self.assets = result.objects(at: IndexSet(integersIn: Range(NSRange(location: 0, length: amount)) ?? 0..<0))
     }
     
     fileprivate func requestImageForAsset(_ asset: PHAsset, options: PHImageRequestOptions, completion: @escaping (_ image: UIImage?, _ requestId: PHImageRequestID?) -> Void) -> PHImageRequestID {

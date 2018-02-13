@@ -37,7 +37,9 @@ class SKButton: UIButton {
         setImage(image, for: UIControlState())
     }
   
-    func setFrameSize(_ size: CGSize) {
+    func setFrameSize(_ size: CGSize? = nil) {
+        guard let size = size else { return }
+        
         let newRect = CGRect(x: margin, y: buttonTopOffset, width: size.width, height: size.height)
         frame = newRect
         showFrame = newRect

@@ -1,14 +1,18 @@
 # Change Log
 
+## 5.0.4
+
+#### Updated
+- #273 Fixed crash on resizableImageView force unwrapping.
+
 ## 5.0.3
 
 #### Updated
-- Refactoring 
+- Refactoring for swift4.0
 
 ## 5.0.2
 
 #### Updated
-- Refactoring 
 - #255 Fixed the crash where the PhotoBrowser could crash.
 - #262 Fix calling willDismissAtPageIndex delegate method
 - #263 Remove unused options
