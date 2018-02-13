@@ -3,6 +3,7 @@
 ## 5.0.5
 - #271 SmartInvert now works properly 
 - #288 Add the long photo width match screen option. 
+- #289 Add SWIFT_VERSION to xcconfig
 
 ## 5.0.4
 
