@@ -1,14 +1,22 @@
 # Change Log
 
+## 5.0.6
+
+#### Updated
+- #292 Fix crash when imageRatio isNan by arnaudWasappli 
+- #291 When disableVerticalSwipe is true the browser crashes on close by aliillyas 
+
 ## 5.0.5
-- #271 SmartInvert now works properly 
-- #288 Add the long photo width match screen option. 
-- #289 Add SWIFT_VERSION to xcconfig
+
+#### Updated
+- #271 SmartInvert now works properly by timroesner 
+- #288 Add the long photo width match screen option by dirtmelon 
+- #289 Add SWIFT_VERSION to xcconfig by cheungpat
 
 ## 5.0.4
 
 #### Updated
-- #273 Fixed crash on resizableImageView force unwrapping.
+- #273 Fixed crash on resizableImageView force unwrapping by matuslittva 
 
 ## 5.0.3
 
