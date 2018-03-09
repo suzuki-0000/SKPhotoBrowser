@@ -133,6 +133,8 @@ private extension SKAnimator {
     }
     
     func calcFinalFrame(_ imageRatio: CGFloat) -> CGRect {
+        guard !imageRatio.isNaN else { return .zero }
+        
         if SKMesurement.screenRatio < imageRatio {
             let width = SKMesurement.screenWidth
             let height = width / imageRatio
