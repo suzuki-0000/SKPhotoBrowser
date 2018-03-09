@@ -30,7 +30,7 @@ open class SKPhotoBrowser: UIViewController {
 
     // actions
     fileprivate var activityViewController: UIActivityViewController!
-    fileprivate var panGesture: UIPanGestureRecognizer!
+    fileprivate var panGesture: UIPanGestureRecognizer?
 
     // for status check property
     fileprivate var isEndAnimationByToolBar: Bool = true
@@ -197,7 +197,9 @@ open class SKPhotoBrowser: UIViewController {
     
     open func prepareForClosePhotoBrowser() {
         cancelControlHiding()
-        view.removeGestureRecognizer(panGesture)
+        if let panGesture = panGesture {
+            view.removeGestureRecognizer(panGesture)
+        }
         NSObject.cancelPreviousPerformRequests(withTarget: self)
     }
     
@@ -540,9 +542,12 @@ private extension SKPhotoBrowser {
             return
         }
         panGesture = UIPanGestureRecognizer(target: self, action: #selector(SKPhotoBrowser.panGestureRecognized(_:)))
-        panGesture.minimumNumberOfTouches = 1
-        panGesture.maximumNumberOfTouches = 1
-        view.addGestureRecognizer(panGesture)
+        panGesture?.minimumNumberOfTouches = 1
+        panGesture?.maximumNumberOfTouches = 1
+
+        if let panGesture = panGesture {
+            view.addGestureRecognizer(panGesture)
+        }
     }
     
     func configureActionView() {
