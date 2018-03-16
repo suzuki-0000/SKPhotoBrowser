@@ -27,8 +27,8 @@ public struct SKPhotoBrowserOptions {
     public static var enableZoomBlackArea: Bool = true
     public static var enableSingleTapDismiss: Bool = false
     
-    public static var backgroundColor: UIColor = .black
-    public static var indicatorColor: UIColor = .white
+    public static var backgroundColor: UIColor = .white
+    public static var indicatorColor: UIColor = .black
     public static var indicatorStyle: UIActivityIndicatorViewStyle = .whiteLarge
 
     /// By default close button is on left side and delete button is on right.
@@ -51,7 +51,7 @@ public struct SKPhotoBrowserOptions {
 }
 
 public struct SKCaptionOptions {
-    public static var textColor: UIColor = .white
+    public static var textColor: UIColor = .black
     public static var textAlignment: NSTextAlignment = .center
     public static var numberOfLine: Int = 3
     public static var lineBreakMode: NSLineBreakMode = .byTruncatingTail
@@ -59,7 +59,7 @@ public struct SKCaptionOptions {
 }
 
 public struct SKToolbarOptions {
-    public static var textColor: UIColor = .white
+    public static var textColor: UIColor = .black
     public static var font: UIFont = .systemFont(ofSize: 17.0)
     public static var textShadowColor: UIColor = .black
 }
