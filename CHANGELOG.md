@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.0.7
+
+#### Updated
+- #301 SKPhotoBrowserOptions.displayCounterLabel is not working 
+- #297 I want to hide SKPagingScrollView's horizontal indicator by mothule
+
 ## 5.0.6
 
 #### Updated

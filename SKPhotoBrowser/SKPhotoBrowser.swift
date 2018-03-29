@@ -538,9 +538,8 @@ private extension SKPhotoBrowser {
     }
 
     func configureGestureControl() {
-        guard !SKPhotoBrowserOptions.disableVerticalSwipe else {
-            return
-        }
+        guard !SKPhotoBrowserOptions.disableVerticalSwipe else { return }
+        
         panGesture = UIPanGestureRecognizer(target: self, action: #selector(SKPhotoBrowser.panGestureRecognized(_:)))
         panGesture?.minimumNumberOfTouches = 1
         panGesture?.maximumNumberOfTouches = 1

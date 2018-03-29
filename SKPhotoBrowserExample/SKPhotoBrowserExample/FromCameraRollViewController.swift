@@ -68,7 +68,6 @@ class FromCameraRollViewController: UIViewController, SKPhotoBrowserDelegate, UI
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "exampleCollectionViewCell", for: indexPath)
         let asset = assets[(indexPath as NSIndexPath).row]
         

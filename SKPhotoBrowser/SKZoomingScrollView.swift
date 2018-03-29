@@ -22,8 +22,9 @@ open class SKZoomingScrollView: UIScrollView {
         }
     }
     
-    fileprivate(set) var imageView: SKDetectingImageView!
     fileprivate weak var browser: SKPhotoBrowser?
+    
+    fileprivate(set) var imageView: SKDetectingImageView!
     fileprivate var tapView: SKDetectingView!
     fileprivate var indicatorView: SKIndicatorView!
     
