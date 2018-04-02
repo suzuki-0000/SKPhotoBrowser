@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.0.8
+
+#### Updated
+- #304 CaptionViewForPhotoAtIndex is not work 
+- #302 Add method to remove all images for SKCache by filograno
+
 ## 5.0.7
 
 #### Updated
