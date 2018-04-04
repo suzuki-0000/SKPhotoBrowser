@@ -18,7 +18,7 @@ class FromWebViewController: UIViewController, SKPhotoBrowserDelegate {
         super.viewDidLoad()
         
         SKCache.sharedCache.imageCache = CustomImageCache()
-        let url = URL(string: "https://placehold.jp/1500x1500.png")
+        let url = URL(string: "https://placehold.jp/150x150.png")
         let complated: SDWebImageCompletionBlock = { (image, error, cacheType, imageURL) -> Void in
             guard let url = imageURL?.absoluteString else { return }
             SKCache.sharedCache.setImage(image!, forKey: url)
@@ -55,8 +55,7 @@ extension FromWebViewController {
 private extension FromWebViewController {
     func createWebPhotos() -> [SKPhotoProtocol] {
         return (0..<10).map { (i: Int) -> SKPhotoProtocol in
-//            let photo = SKPhoto.photoWithImageURL("https://placehold.jp/150\(i)x150\(i).png", holder: UIImage(named: "image0.jpg")!)
-            let photo = SKPhoto.photoWithImageURL("https://placehold.jp/10\(i)x100\(i).png")
+            let photo = SKPhoto.photoWithImageURL("https://placehold.jp/15\(i)x15\(i).png")
             photo.caption = caption[i%10]
             photo.shouldCachePhotoURLImage = true
             return photo

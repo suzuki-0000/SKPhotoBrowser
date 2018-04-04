@@ -190,30 +190,31 @@ SKPhotoBrowserOptions.disableVerticalSwipe = true
 
 #### Delegate
 There's some trigger point you can handle using delegate. those are optional.
-- didShowPhotoAtIndex(index:Int) 
-- willDismissAtPageIndex(index:Int)
-- willShowActionSheet(photoIndex: Int)
-- didDismissAtPageIndex(index:Int)
-- didDismissActionSheetWithButtonIndex(buttonIndex: Int, photoIndex: Int)
-- didScrollToIndex(index: Int)
-- removePhoto(browser: SKPhotoBrowser, index: Int, reload: (() -> Void))
-- viewForPhoto(browser: SKPhotoBrowser, index: Int) -> UIView?
-- controlsVisibilityToggled(hidden: Bool)
+See [SKPhotoBrowserDelegate](https://github.com/suzuki-0000/SKPhotoBrowser/blob/master/SKPhotoBrowser/SKPhotoBrowserDelegate.swift) for more details.
+- didShowPhotoAtIndex(_ index:Int) 
+- willDismissAtPageIndex(_ index:Int)
+- willShowActionSheet(_ photoIndex: Int)
+- didDismissAtPageIndex(_ index:Int)
+- didDismissActionSheetWithButtonIndex(_ buttonIndex: Int, photoIndex: Int)
+- didScrollToIndex(_ index: Int)
+- removePhoto(_ browser: SKPhotoBrowser, index: Int, reload: (() -> Void))
+- viewForPhoto(_ browser: SKPhotoBrowser, index: Int) -> UIView?
+- controlsVisibilityToggled(_ browser: SKPhotoBrowser, hidden: Bool)
 
 ```swift
 let browser = SKPhotoBrowser(originImage: originImage, photos: images, animatedFromView: cell)
 browser.delegate = self
 
 // MARK: - SKPhotoBrowserDelegate
-func didShowPhotoAtIndex(index: Int) {
+func didShowPhotoAtIndex(_ index: Int) {
 // when photo will be shown
 }
 
-func willDismissAtPageIndex(index: Int) {
+func willDismissAtPageIndex(_ index: Int) {
 // when PhotoBrowser will be dismissed
 }
 
-func didDismissAtPageIndex(index: Int) {
+func didDismissAtPageIndex(_ index: Int) {
 // when PhotoBrowser did dismissed
 }
 
@@ -221,6 +222,7 @@ func didDismissAtPageIndex(index: Int) {
 
 #### Options
 You can access via `SKPhotoBrowserOptions`, which can use for browser control.
+See [SKPhotoBrowserOptions](https://github.com/suzuki-0000/SKPhotoBrowser/blob/master/SKPhotoBrowser/SKPhotoBrowserOptions.swift) for more details.
 - single tap handling, dismiss/noaction
 - blackArea handling which is appearing outside of photo
 - bounce animation when appearing/dismissing
@@ -228,7 +230,6 @@ You can access via `SKPhotoBrowserOptions`, which can use for browser control.
 ``` swift
 SKPhotoBrowserOptions.enableZoomBlackArea    = true  // default true
 SKPhotoBrowserOptions.enableSingleTapDismiss = true  // default false
-SKPhotoBrowserOptions.bounceAnimation        = true  // default false
 ``` 
 
 ## Photos from

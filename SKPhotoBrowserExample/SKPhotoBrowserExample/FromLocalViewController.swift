@@ -18,9 +18,13 @@ class FromLocalViewController: UIViewController, UICollectionViewDataSource, UIC
         super.viewDidLoad()
 
         // Static setup
+        SKPhotoBrowserOptions.displayDeleteButton = false
         SKPhotoBrowserOptions.displayAction = true
         SKPhotoBrowserOptions.displayStatusbar = true
-
+        SKPhotoBrowserOptions.displayCounterLabel = true
+        SKPhotoBrowserOptions.displayBackAndForwardButton = true
+        SKPhotoBrowserOptions.displayAction = true
+        
         setupTestData()
         setupCollectionView()
     }
@@ -133,7 +137,7 @@ class ExampleCollectionViewCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         exampleImageView.image = nil
-        layer.cornerRadius = 25.0
+//        layer.cornerRadius = 25.0
         layer.masksToBounds = true
     }
     

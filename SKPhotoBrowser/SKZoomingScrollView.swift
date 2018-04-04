@@ -15,6 +15,7 @@ open class SKZoomingScrollView: UIScrollView {
             imageView.image = nil
             if photo != nil && photo.underlyingImage != nil {
                 displayImage(complete: true)
+                return
             }
             if photo != nil {
                 displayImage(complete: false)
