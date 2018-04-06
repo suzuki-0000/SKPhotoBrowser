@@ -341,8 +341,6 @@ public extension SKPhotoBrowser {
         return paginationView.alpha == 0.0
     }
     
- 
-    
     func getCurrentPageIndex() -> Int {
         return currentPageIndex
     }
