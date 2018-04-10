@@ -1,9 +1,8 @@
 SKPhotoBrowser
-========================
-
 ![Swift](http://img.shields.io/badge/swift-4.0-brightgreen.svg)
 [![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![Cocoapods Compatible](https://img.shields.io/cocoapods/v/SKPhotoBrowser.svg?style=flat)](http://cocoadocs.org/docsets/SKPhotoBrowser)
+[![All Contributors](https://img.shields.io/badge/all_contributors-17-orange.svg?style=flat-square)](#contributors)
 
 Simple PhotoBrowser/Viewer inspired by facebook, twitter photo browsers written by swift, based on [IDMPhotoBrowser](https://github.com/ideaismobile/IDMPhotoBrowser), [MWPhotoBrowser](https://github.com/mwaterfall/MWPhotoBrowser).
 
@@ -237,4 +236,19 @@ SKPhotoBrowserOptions.enableSingleTapDismiss = true  // default false
 
 ## License
 available under the MIT license. See the LICENSE file for more info.
+
+
+## Contributors
+
+Thanks goes to these wonderful people ([emoji key](https://github.com/kentcdodds/all-contributors#emoji-key)):
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore -->
+| [<img src="https://avatars1.githubusercontent.com/u/12511909?v=4" width="40px;"/><br /><sub><b>Alexander Khitev</b></sub>](https://github.com/alexanderkhitev)<br />[💻](https://github.com/suzuki-0000/SKPhotoBrowser/commits?author=alexanderkhitev "Code") | [<img src="https://avatars2.githubusercontent.com/u/1032307?v=4" width="40px;"/><br /><sub><b>K Rummler</b></sub>](https://github.com/krummler)<br />[💻](https://github.com/suzuki-0000/SKPhotoBrowser/commits?author=krummler "Code") | [<img src="https://avatars2.githubusercontent.com/u/198395?v=4" width="40px;"/><br /><sub><b>Mads Bjerre</b></sub>](http://wisekopf.com)<br />[💻](https://github.com/suzuki-0000/SKPhotoBrowser/commits?author=madsb "Code") | [<img src="https://avatars3.githubusercontent.com/u/4025839?v=4" width="40px;"/><br /><sub><b>Meng Ye</b></sub>](https://jk2K.com)<br />[💻](https://github.com/suzuki-0000/SKPhotoBrowser/commits?author=jk2K "Code") | [<img src="https://avatars2.githubusercontent.com/u/351683?v=4" width="40px;"/><br /><sub><b>_ant_one</b></sub>](https://github.com/barrault01)<br />[💻](https://github.com/suzuki-0000/SKPhotoBrowser/commits?author=barrault01 "Code") | [<img src="https://avatars0.githubusercontent.com/u/13894518?v=4" width="40px;"/><br /><sub><b>Tim Roesner</b></sub>](http://timroesner.com)<br />[💻](https://github.com/suzuki-0000/SKPhotoBrowser/commits?author=timroesner "Code") | [<img src="https://avatars0.githubusercontent.com/u/1303682?v=4" width="40px;"/><br /><sub><b>胥冥</b></sub>](http://www.zxming.com)<br />[💻](https://github.com/suzuki-0000/SKPhotoBrowser/commits?author=zxming "Code") |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| [<img src="https://avatars3.githubusercontent.com/u/371957?v=4" width="40px;"/><br /><sub><b>Kevin Wolkober</b></sub>](http://kevinwo.github.io)<br />[💻](https://github.com/suzuki-0000/SKPhotoBrowser/commits?author=kevinwo "Code") | [<img src="https://avatars2.githubusercontent.com/u/110283?v=4" width="40px;"/><br /><sub><b>PJ Gray</b></sub>](http://www.saygoodnight.com/)<br />[💻](https://github.com/suzuki-0000/SKPhotoBrowser/commits?author=pj4533 "Code") | [<img src="https://avatars1.githubusercontent.com/u/4082752?v=4" width="40px;"/><br /><sub><b>ghysrc</b></sub>](https://github.com/ghysrc)<br />[💻](https://github.com/suzuki-0000/SKPhotoBrowser/commits?author=ghysrc "Code") | [<img src="https://avatars1.githubusercontent.com/u/5204614?v=4" width="40px;"/><br /><sub><b>Josef Doležal</b></sub>](http://josefdolezal.github.com)<br />[💻](https://github.com/suzuki-0000/SKPhotoBrowser/commits?author=josefdolezal "Code") | [<img src="https://avatars1.githubusercontent.com/u/189020?v=4" width="40px;"/><br /><sub><b>Mark Goody</b></sub>](https://marramgrass.micro.blog/)<br />[💻](https://github.com/suzuki-0000/SKPhotoBrowser/commits?author=marramgrass "Code") | [<img src="https://avatars2.githubusercontent.com/u/1270537?v=4" width="40px;"/><br /><sub><b>Philippe Riegert</b></sub>](https://github.com/PhilippeRiegert)<br />[💻](https://github.com/suzuki-0000/SKPhotoBrowser/commits?author=PhilippeRiegert "Code") | [<img src="https://avatars2.githubusercontent.com/u/399560?v=4" width="40px;"/><br /><sub><b>Bryan Irace</b></sub>](http://irace.me)<br />[💻](https://github.com/suzuki-0000/SKPhotoBrowser/commits?author=irace "Code") |
+| [<img src="https://avatars1.githubusercontent.com/u/12068299?v=4" width="40px;"/><br /><sub><b>dirtmelon</b></sub>](https://github.com/dirtmelon)<br />[💻](https://github.com/suzuki-0000/SKPhotoBrowser/commits?author=dirtmelon "Code") | [<img src="https://avatars0.githubusercontent.com/u/103670?v=4" width="40px;"/><br /><sub><b>Heberti Almeida</b></sub>](https://dribbble.com/hebertialmeida)<br />[💻](https://github.com/suzuki-0000/SKPhotoBrowser/commits?author=hebertialmeida "Code") | [<img src="https://avatars2.githubusercontent.com/u/501784?v=4" width="40px;"/><br /><sub><b>Felix Weiss</b></sub>](http://othellogame.net)<br />[💻](https://github.com/suzuki-0000/SKPhotoBrowser/commits?author=appsunited "Code") |
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+This project follows the [all-contributors](https://github.com/kentcdodds/all-contributors) specification. Contributions of any kind welcome!
 
