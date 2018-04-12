@@ -34,3 +34,10 @@ Pods/
 #
 # Add this line if you want to avoid checking in source code from Carthage dependencies.
 Carthage/Build
+
+# npm
+package-lock.json
+node_modules/
+
+# all-contributors
+.all-contributorsrc
