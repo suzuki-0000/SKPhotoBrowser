@@ -20,7 +20,10 @@ class FromLocalViewController: UIViewController, UICollectionViewDataSource, UIC
         // Static setup
         SKPhotoBrowserOptions.displayAction = true
         SKPhotoBrowserOptions.displayStatusbar = true
-
+        SKPhotoBrowserOptions.displayCounterLabel = true
+        SKPhotoBrowserOptions.displayBackAndForwardButton = true
+        SKPhotoBrowserOptions.displayAction = true
+        
         setupTestData()
         setupCollectionView()
     }
@@ -55,7 +58,6 @@ extension FromLocalViewController {
 
 extension FromLocalViewController {
     @objc(collectionView:didSelectItemAtIndexPath:) func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
         let browser = SKPhotoBrowser(photos: images, initialPageIndex: indexPath.row)
         browser.delegate = self
 //        browser.updateCloseButton(UIImage(named: "image1.jpg")!)
@@ -97,10 +99,10 @@ extension FromLocalViewController {
         // handle dismissing custom actions
     }
     
-    func removePhoto(index: Int, reload: (() -> Void)) {
+    func removePhoto(_ browser: SKPhotoBrowser, index: Int, reload: @escaping (() -> Void)) {
         reload()
     }
-    
+
     func viewForPhoto(_ browser: SKPhotoBrowser, index: Int) -> UIView? {
         return collectionView.cellForItem(at: IndexPath(item: index, section: 0))
     }
@@ -133,7 +135,7 @@ class ExampleCollectionViewCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         exampleImageView.image = nil
-        layer.cornerRadius = 25.0
+//        layer.cornerRadius = 25.0
         layer.masksToBounds = true
     }
     

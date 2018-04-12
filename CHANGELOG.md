@@ -1,5 +1,14 @@
 # Change Log
 
+## 5.0.8
+
+#### Updated
+- #224 override popupShare not working
+- #248 always ignore image cache, asked by FicowShen
+- #304 CaptionViewForPhotoAtIndex is not work 
+- #301 SKPhotoBrowserOptions.displayDeleteButton not working
+- #302 Add method to remove all images for SKCache by filograno
+
 ## 5.0.7
 
 #### Updated
