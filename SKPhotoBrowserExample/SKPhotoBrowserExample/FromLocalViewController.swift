@@ -22,8 +22,7 @@ class FromLocalViewController: UIViewController, UICollectionViewDataSource, UIC
         SKPhotoBrowserOptions.displayStatusbar = true
         SKPhotoBrowserOptions.displayCounterLabel = true
         SKPhotoBrowserOptions.displayBackAndForwardButton = true
-        SKPhotoBrowserOptions.displayAction = true
-        
+
         setupTestData()
         setupCollectionView()
     }
@@ -105,6 +104,10 @@ extension FromLocalViewController {
 
     func viewForPhoto(_ browser: SKPhotoBrowser, index: Int) -> UIView? {
         return collectionView.cellForItem(at: IndexPath(item: index, section: 0))
+    }
+    
+    func captionViewForPhotoAtIndex(index: Int) -> SKCaptionView? {
+        return nil
     }
 }
 

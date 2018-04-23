@@ -83,4 +83,8 @@ class CustomImageCache: SKImageCacheable {
 
     func removeImageForKey(_ key: String) {
     }
+    
+    func removeAllImages() {
+    }
+    
 }
