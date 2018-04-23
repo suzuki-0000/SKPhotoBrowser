@@ -1,5 +1,12 @@
 # Change Log
 
+## 5.0.9
+
+#### Updated
+- #304 CaptionViewForPhotoAtIndex is not work 
+- #305 Padding properties for close and delete button. 
+- Bug  At iphoneX, close / delete / pagination can be tapped correctly.
+
 ## 5.0.8
 
 #### Updated

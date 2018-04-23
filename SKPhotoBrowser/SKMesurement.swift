@@ -27,4 +27,10 @@ struct SKMesurement {
     static var screenRatio: CGFloat {
         return screenWidth / screenHeight
     }
+    static var isPhoneX: Bool {
+        if isPhone && UIScreen.main.nativeBounds.height == 2436 {
+           return true
+        }
+        return false
+    }
 }
