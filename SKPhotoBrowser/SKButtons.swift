@@ -96,8 +96,8 @@ class SKDeleteButton: SKImageButton {
     override var marginX: CGFloat {
         get {
             return SKPhotoBrowserOptions.swapCloseAndDeleteButtons
-                ? SKMesurement.screenWidth - SKButtonOptions.deleteButtonPadding.x - self.size.width
-                : SKButtonOptions.deleteButtonPadding.x
+                ? SKButtonOptions.deleteButtonPadding.x
+                : SKMesurement.screenWidth - SKButtonOptions.deleteButtonPadding.x - self.size.width
         }
         set { super.marginX = newValue }
     }
