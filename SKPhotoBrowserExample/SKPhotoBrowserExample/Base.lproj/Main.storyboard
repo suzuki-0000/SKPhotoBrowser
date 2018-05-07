@@ -1,7 +1,12 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="qgG-zu-Htx">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="qgG-zu-Htx">
+    <device id="retina5_5" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--FromLocal-->
@@ -13,11 +18,11 @@
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="ZcN-ut-rvO">
-                                <rect key="frame" x="0.0" y="20" width="600" height="531"/>
+                                <rect key="frame" x="0.0" y="20" width="414" height="667"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="D0c-dd-EhH">
                                     <size key="itemSize" width="182" height="182"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -36,7 +41,6 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="182" height="182"/>
                                                 </imageView>
                                             </subviews>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <constraints>
                                             <constraint firstItem="K7z-9G-al0" firstAttribute="top" secondItem="qLy-43-M80" secondAttribute="top" id="4Z1-QF-YR7"/>
@@ -77,37 +81,25 @@
                         <viewControllerLayoutGuide type="bottom" id="y5T-GC-T6k"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="pNX-nL-SLw">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZK0-HE-9Bs">
-                                <rect key="frame" x="220" y="253" width="161" height="94"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZK0-HE-9Bs">
+                                <rect key="frame" x="113.66666666666669" y="339" width="187" height="58"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-UltraLight" family="Helvetica Neue" pointSize="40"/>
-                                <state key="normal" title="Present"/>
+                                <state key="normal" title="Show More"/>
                                 <connections>
                                     <action selector="pushButton:" destination="wTD-ba-cWw" eventType="touchUpInside" id="xIc-2O-Gmb"/>
                                 </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yxe-Wd-8iE">
-                                <rect key="frame" x="180" y="78" width="240" height="128"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="128" id="a4K-nx-MJW"/>
-                                    <constraint firstAttribute="width" constant="240" id="tzG-IV-N9z"/>
-                                </constraints>
-                            </imageView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="ZK0-HE-9Bs" firstAttribute="top" secondItem="yxe-Wd-8iE" secondAttribute="bottom" constant="50" id="8Aq-op-KMh"/>
                             <constraint firstItem="ZK0-HE-9Bs" firstAttribute="centerY" secondItem="pNX-nL-SLw" secondAttribute="centerY" id="9jd-Un-cAK"/>
                             <constraint firstItem="ZK0-HE-9Bs" firstAttribute="centerX" secondItem="pNX-nL-SLw" secondAttribute="centerX" id="h6U-H1-RV4"/>
-                            <constraint firstItem="yxe-Wd-8iE" firstAttribute="centerX" secondItem="pNX-nL-SLw" secondAttribute="centerX" id="xA1-uS-dJw"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="FromWeb" id="2lE-np-9H3"/>
-                    <connections>
-                        <outlet property="imageView" destination="yxe-Wd-8iE" id="aMH-Df-3r0"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jdP-ty-Ygs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -122,11 +114,11 @@
                         <viewControllerLayoutGuide type="bottom" id="l1U-c1-FNM"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="FhP-Hc-46e">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="f1m-3Z-8mE">
-                                <rect key="frame" x="0.0" y="20" width="600" height="531"/>
+                                <rect key="frame" x="0.0" y="20" width="414" height="667"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Vak-iW-bLh">
                                     <size key="itemSize" width="182" height="182"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -145,7 +137,6 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="182" height="182"/>
                                                 </imageView>
                                             </subviews>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <constraints>
                                             <constraint firstItem="NkL-63-CXI" firstAttribute="leading" secondItem="6Rl-Fl-Pik" secondAttribute="leading" id="4VA-fI-wdu"/>
@@ -164,7 +155,7 @@
                                 </connections>
                             </collectionView>
                         </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="l1U-c1-FNM" firstAttribute="top" secondItem="f1m-3Z-8mE" secondAttribute="bottom" id="D1M-80-UYO"/>
                             <constraint firstAttribute="trailing" secondItem="f1m-3Z-8mE" secondAttribute="trailing" id="UY9-Uk-tuW"/>
@@ -189,7 +180,7 @@
                     <tabBar key="tabBar" contentMode="scaleToFill" id="qXa-Ne-beE">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                     </tabBar>
                     <connections>
                         <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="TmI-eA-2RC"/>

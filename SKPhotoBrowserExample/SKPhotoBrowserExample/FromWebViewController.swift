@@ -11,7 +11,6 @@ import SKPhotoBrowser
 import SDWebImage
 
 class FromWebViewController: UIViewController, SKPhotoBrowserDelegate {
-    @IBOutlet weak var imageView: UIImageView!
     var images = [SKPhotoProtocol]()
     
     override func viewDidLoad() {
@@ -23,7 +22,6 @@ class FromWebViewController: UIViewController, SKPhotoBrowserDelegate {
             guard let url = imageURL?.absoluteString else { return }
             SKCache.sharedCache.setImage(image!, forKey: url)
         }
-        imageView.sd_setImage(with: url, completed: complated)
     }
     
     @IBAction func pushButton(_ sender: AnyObject) {
@@ -81,10 +79,8 @@ class CustomImageCache: SKImageCacheable {
         cache.store(image, forKey: key)
     }
 
-    func removeImageForKey(_ key: String) {
-    }
+    func removeImageForKey(_ key: String) {}
     
-    func removeAllImages() {
-    }
+    func removeAllImages() {}
     
 }
