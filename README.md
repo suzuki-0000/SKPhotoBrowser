@@ -15,7 +15,9 @@ Simple PhotoBrowser/Viewer inspired by facebook, twitter photo browsers written 
 - Landscape handling
 - Delete photo support(by offbye). By set displayDelete=true show a delete icon in statusbar, deleted indexes can be obtain from delegate func didDeleted 
 
-![sample](Screenshots/example03.gif)
+| Table/CollectionView sample | Button tap sample |
+| ------------- | --------------- |
+| ![sample](Screenshots/example01.gif) | ![sample](Screenshots/example02.gif) |
 
 ## Requirements
 - iOS 8.0+

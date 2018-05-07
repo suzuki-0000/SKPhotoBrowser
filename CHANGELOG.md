@@ -1,5 +1,10 @@
 # Change Log
 
+## 5.1.0
+
+#### Updated
+- #311 Delete and Close Button Overlapping bug by rajendersha
+
 ## 5.0.9
 
 #### Updated
