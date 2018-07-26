@@ -9,7 +9,7 @@
 import UIKit
 
 open class SKCache {
-    open static let sharedCache = SKCache()
+    public static let sharedCache = SKCache()
     open var imageCache: SKCacheable
 
     init() {

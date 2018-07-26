@@ -34,7 +34,7 @@ class SKButton: UIButton {
         autoresizingMask = [.flexibleBottomMargin, .flexibleLeftMargin, .flexibleRightMargin, .flexibleTopMargin]
         
         let image = UIImage(named: "SKPhotoBrowser.bundle/images/\(imageName)", in: bundle, compatibleWith: nil) ?? UIImage()
-        setImage(image, for: UIControlState())
+        setImage(image, for: .normal)
     }
   
     func setFrameSize(_ size: CGSize? = nil) {
