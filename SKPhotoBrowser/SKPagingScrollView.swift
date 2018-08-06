@@ -43,6 +43,7 @@ class SKPagingScrollView: UIScrollView {
         visiblePages.removeAll()
         recycledPages.removeAll()
     }
+    
 
     func loadAdjacentPhotosIfNecessary(_ photo: SKPhotoProtocol, currentPageIndex: Int) {
         guard let browser = browser, let page = pageDisplayingAtPhoto(photo) else {
@@ -162,9 +163,18 @@ class SKPagingScrollView: UIScrollView {
         let pageFrame = frameForPageAtIndex(index)
         let captionSize = captionView.sizeThatFits(CGSize(width: pageFrame.size.width, height: 0))
         let paginationFrame = browser?.paginationView.frame ?? .zero
+        let toolbarFrame = browser?.toolbar.frame ?? .zero
+        
+        var frameSet = CGRect.zero
+        switch SKCaptionOptions.captionLocation {
+        case .basic:
+            frameSet = paginationFrame
+        case .bottom:
+            frameSet = toolbarFrame
+        }
         
         return CGRect(x: pageFrame.origin.x,
-                      y: paginationFrame.minY - captionSize.height,
+                      y: pageFrame.size.height - captionSize.height - frameSet.height,
                       width: pageFrame.size.width, height: captionSize.height)
     }
     
