@@ -57,6 +57,7 @@ public struct SKCaptionOptions {
     public static var numberOfLine: Int = 3
     public static var lineBreakMode: NSLineBreakMode = .byTruncatingTail
     public static var font: UIFont = .systemFont(ofSize: 17.0)
+    public static var backgroundColor: UIColor = .clear
 }
 
 public struct SKToolbarOptions {

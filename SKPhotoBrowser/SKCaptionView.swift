@@ -57,7 +57,7 @@ private extension SKCaptionView {
         photoLabel = UILabel(frame: CGRect(x: photoLabelPadding, y: 0, width: bounds.size.width - (photoLabelPadding * 2), height: bounds.size.height))
         photoLabel.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         photoLabel.isOpaque = false
-        photoLabel.backgroundColor = .clear
+        photoLabel.backgroundColor = SKCaptionOptions.backgroundColor
         photoLabel.textColor = SKCaptionOptions.textColor
         photoLabel.textAlignment = SKCaptionOptions.textAlignment
         photoLabel.lineBreakMode = SKCaptionOptions.lineBreakMode
