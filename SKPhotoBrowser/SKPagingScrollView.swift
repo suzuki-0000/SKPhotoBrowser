@@ -33,7 +33,7 @@ class SKPagingScrollView: UIScrollView {
 
         isPagingEnabled = true
         showsHorizontalScrollIndicator = SKPhotoBrowserOptions.displayPagingHorizontalScrollIndicator
-        showsVerticalScrollIndicator = true
+        showsVerticalScrollIndicator = SKPhotoBrowserOptions.displayPagingVerticalScrollIndicator
 
         updateFrame(bounds, currentPageIndex: browser.currentPageIndex)
     }

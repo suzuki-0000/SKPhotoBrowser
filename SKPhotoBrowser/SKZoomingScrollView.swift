@@ -42,7 +42,6 @@ open class SKZoomingScrollView: UIScrollView {
     convenience init(frame: CGRect, browser: SKPhotoBrowser) {
         self.init(frame: frame)
         self.browser = browser
-        setup()
     }
     
     deinit {
