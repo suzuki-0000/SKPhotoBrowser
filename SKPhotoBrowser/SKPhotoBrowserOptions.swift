@@ -45,6 +45,9 @@ public struct SKPhotoBrowserOptions {
     /// and the minScale is 1.0, the maxScale is 2.5
     /// Default: false
     public static var longPhotoWidthMatchScreen: Bool = false
+    
+    public static var customToolBarItem: Bool = false
+    public static var toolBarItems: [UIBarButtonItem] = []
 }
 
 public struct SKButtonOptions {

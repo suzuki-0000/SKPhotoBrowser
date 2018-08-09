@@ -217,6 +217,8 @@ open class SKPhotoBrowser: UIViewController {
     open func determineAndClose() {
         delegate?.willDismissAtPageIndex?(self.currentPageIndex)
         animator.willDismiss(self)
+        SKPhotoBrowserOptions.customToolBarItem = false
+        SKPhotoBrowserOptions.toolBarItems.removeAll()
     }
     
     open func popupShare(includeCaption: Bool = true) {
