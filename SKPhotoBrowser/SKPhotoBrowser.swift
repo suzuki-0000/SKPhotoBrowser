@@ -81,7 +81,7 @@ open class SKPhotoBrowser: UIViewController {
         self.init(nibName: nil, bundle: nil)
         self.photos = photos
         self.photos.forEach { $0.checkCache() }
-        self.currentPageIndex = min(initialPageIndex, photos.count - 1)
+        self.currentPageIndex = min(max(0, initialPageIndex), photos.count - 1)
         animator.senderOriginImage = photos[currentPageIndex].underlyingImage
         animator.senderViewForAnimation = photos[currentPageIndex] as? UIView
     }
@@ -217,6 +217,8 @@ open class SKPhotoBrowser: UIViewController {
     open func determineAndClose() {
         delegate?.willDismissAtPageIndex?(self.currentPageIndex)
         animator.willDismiss(self)
+        SKPhotoBrowserOptions.customToolBarItem = false
+        SKPhotoBrowserOptions.toolBarItems.removeAll()
     }
     
     open func popupShare(includeCaption: Bool = true) {
