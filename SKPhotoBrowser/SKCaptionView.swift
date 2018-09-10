@@ -22,8 +22,7 @@ open class SKCaptionView: UIView {
     }
     
     public convenience init(photo: SKPhotoProtocol) {
-        let screenBound = UIScreen.main.bounds
-        self.init(frame: CGRect(x: 0, y: 0, width: screenBound.size.width, height: screenBound.size.height))
+        self.init(frame: CGRect(x: 0, y: 0, width: SKMesurement.screenWidth, height: SKMesurement.screenHeight))
         self.photo = photo
         setup()
     }
