@@ -26,7 +26,7 @@ open class SKPhotoBrowser: UIViewController {
     
     fileprivate var actionView: SKActionView!
     fileprivate(set) var paginationView: SKPaginationView!
-    fileprivate var toolbar: SKToolbar!
+    var toolbar: SKToolbar!
 
     // actions
     fileprivate var activityViewController: UIActivityViewController!
@@ -137,7 +137,12 @@ open class SKPhotoBrowser: UIViewController {
         actionView.updateFrame(frame: view.frame)
 
         // paging
-        paginationView.updateFrame(frame: view.frame)
+        switch SKCaptionOptions.captionLocation {
+        case .basic:
+            paginationView.updateFrame(frame: view.frame)
+        case .bottom:
+            paginationView.frame = frameForPaginationAtOrientation()
+        }
         pagingScrollView.updateFrame(view.bounds, currentPageIndex: currentPageIndex)
 
         isPerformingLayout = false
@@ -394,6 +399,12 @@ internal extension SKPhotoBrowser {
         return view.bounds.divided(atDistance: 44, from: .maxYEdge).slice.offsetBy(dx: 0, dy: 44)
     }
     
+    func frameForPaginationAtOrientation() -> CGRect {
+        let offset = UIInterfaceOrientationIsLandscape(UIApplication.shared.statusBarOrientation) ? 35 : 44
+        
+        return CGRect(x: 0, y: self.view.bounds.size.height - CGFloat(offset), width: self.view.bounds.size.width, height: CGFloat(offset))
+    }
+    
     func frameForPageAtIndex(_ index: Int) -> CGRect {
         let bounds = pagingScrollView.bounds
         var pageFrame = bounds
@@ -456,7 +467,7 @@ internal extension SKPhotoBrowser {
                 
                 UIView.beginAnimations(nil, context: nil)
                 UIView.setAnimationDuration(animationDuration)
-                UIView.setAnimationCurve(UIViewAnimationCurve.easeIn)
+                UIView.setAnimationCurve(UIView.AnimationCurve.easeIn)
                 zoomingScrollView.center = CGPoint(x: finalX, y: finalY)
                 UIView.commitAnimations()
             }

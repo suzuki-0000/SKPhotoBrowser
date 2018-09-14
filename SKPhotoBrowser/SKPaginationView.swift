@@ -55,7 +55,7 @@ class SKPaginationView: UIView {
     }
     
     func updateFrame(frame: CGRect) {
-        self.frame = CGRect(x: 0, y: frame.height - margin - extraMargin, width: frame.width, height: 100)
+        self.frame = CGRect(x: 0, y: frame.height - margin, width: frame.width, height: 100)
     }
     
     func update(_ currentPageIndex: Int) {
@@ -145,7 +145,7 @@ class SKPaginationButton: UIButton {
         
         let image = UIImage(named: "SKPhotoBrowser.bundle/images/\(imageName)",
             in: bundle, compatibleWith: nil) ?? UIImage()
-        setImage(image, for: UIControlState())
+        setImage(image, for: .normal)
     }
 }
 
