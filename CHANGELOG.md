@@ -1,5 +1,19 @@
 # Change Log
 
+## 6.0.0
+
+### Big Changed
+- #330 Changes for swift 4.2, Xcode 10, and iOS 12 by jlcanale 
+
+#### Updated
+- #314 Add possibility to provide custom request parameters by Fiser33 
+- #315 Fix: Unable to set delete and close button images without setting size. by kiztonwose
+- #318 fix unreleased views in uiwindow for non-dismiss animation case by fans3210
+- #321 Set the backround view's background color from settings by pantelisss 
+- #331 Add ability to lower caption and give caption a background gradient by corban123
+- #334 Prevent app crashed on zooming when xScale or yScale is NaN, Inf by GE-N
+- #335 use the size of the window instead of UIScreen to support SplitScreen by PatrickDotStar
+
 ## 5.1.0
 
 #### Updated
