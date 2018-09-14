@@ -100,7 +100,7 @@ extension SKActionView {
         }
         
         if let image = image {
-            closeButton.setImage(image, for: UIControlState())
+            closeButton.setImage(image, for: for: .normal)
         }
     }
     
@@ -117,7 +117,7 @@ extension SKActionView {
         }
         
         if let image = image {
-            deleteButton.setImage(image, for: UIControlState())
+            deleteButton.setImage(image, for: .normal)
         }
     }
 }
