@@ -3,10 +3,22 @@
 Simple PhotoBrowser/Viewer inspired by facebook, twitter photo browsers written by swift
 </H4>
 
-![Swift](http://img.shields.io/badge/swift-4.0-brightgreen.svg)
-[![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
-[![Cocoapods Compatible](https://img.shields.io/cocoapods/v/SKPhotoBrowser.svg?style=flat)](http://cocoadocs.org/docsets/SKPhotoBrowser)
-[![All Contributors](https://img.shields.io/badge/all_contributors-20-orange.svg?style=flat-square)](#contributors)
+<p align="center">
+<a href="https://developer.apple.com/swift">
+   <img alt="Swift4" src="https://img.shields.io/badge/language-swift4.2-orange.svg?style=flat" />
+ </a>
+<a href="http://cocoadocs.org/docsets/SKPhotoBrowser">
+  <img src="https://img.shields.io/cocoapods/v/SKPhotoBrowser.svg?style=flat" />
+</a>
+<a href="https://github.com/Carthage/Carthage">
+   <img alt="Build Status" src="https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat" />
+ </a>
+<a href="https://developer.apple.com/swift/">
+   <img alt="Platform" src="https://img.shields.io/badge/platform-iOS-green.svg" /></a>
+<a href="">
+   <img alt="Contributors" src="https://img.shields.io/badge/all_contributors-20-orange.svg?style=flat-square" /></a>
+</p>
+
 
 ## features
 - Display one or more images by providing either `UIImage` objects, or string of URL array.
