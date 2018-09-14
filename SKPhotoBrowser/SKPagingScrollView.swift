@@ -43,7 +43,6 @@ class SKPagingScrollView: UIScrollView {
         visiblePages.removeAll()
         recycledPages.removeAll()
     }
-    
 
     func loadAdjacentPhotosIfNecessary(_ photo: SKPhotoProtocol, currentPageIndex: Int) {
         guard let browser = browser, let page = pageDisplayingAtPhoto(photo) else {

@@ -400,7 +400,7 @@ internal extension SKPhotoBrowser {
     }
     
     func frameForPaginationAtOrientation() -> CGRect {
-        let offset = UIInterfaceOrientationIsLandscape(UIApplication.shared.statusBarOrientation) ? 35 : 44
+        let offset = UIDevice.current.orientation.isLandscape ? 35 : 44
         
         return CGRect(x: 0, y: self.view.bounds.size.height - CGFloat(offset), width: self.view.bounds.size.width, height: CGFloat(offset))
     }

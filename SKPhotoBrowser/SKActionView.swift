@@ -100,7 +100,7 @@ extension SKActionView {
         }
         
         if let image = image {
-            closeButton.setImage(image, for: for: .normal)
+            closeButton.setImage(image, for: .normal)
         }
     }
     
