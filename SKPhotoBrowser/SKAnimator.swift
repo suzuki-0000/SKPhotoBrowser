@@ -84,7 +84,10 @@ class SKAnimator: NSObject, SKPhotoBrowserAnimatorDelegate {
             let scrollView = browser.pageDisplayedAtIndex(browser.currentPageIndex) else {
                 
             senderViewForAnimation?.isHidden = false
-            browser.dismissPhotoBrowser(animated: false)
+            browser.dismissPhotoBrowser(animated: false) {
+                self.resizableImageView?.removeFromSuperview()
+                self.backgroundView.removeFromSuperview()
+            }
             return
         }
 
