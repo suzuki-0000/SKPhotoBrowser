@@ -55,7 +55,7 @@ class SKPaginationView: UIView {
     }
     
     func updateFrame(frame: CGRect) {
-        self.frame = CGRect(x: 0, y: frame.height - margin - extraMargin, width: frame.width, height: 100)
+        self.frame = CGRect(x: 0, y: frame.height - margin, width: frame.width, height: 100)
     }
     
     func update(_ currentPageIndex: Int) {

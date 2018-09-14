@@ -55,11 +55,18 @@ public struct SKButtonOptions {
 }
 
 public struct SKCaptionOptions {
+    public enum CaptionLocation {
+        case basic
+        case bottom
+    }
+
     public static var textColor: UIColor = .white
     public static var textAlignment: NSTextAlignment = .center
     public static var numberOfLine: Int = 3
     public static var lineBreakMode: NSLineBreakMode = .byTruncatingTail
     public static var font: UIFont = .systemFont(ofSize: 17.0)
+    public static var backgroundColor: UIColor = .clear
+    public static var captionLocation: CaptionLocation = .basic
 }
 
 public struct SKToolbarOptions {
