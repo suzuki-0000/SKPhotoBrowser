@@ -186,6 +186,7 @@ open class SKZoomingScrollView: UIScrollView {
             photo.loadUnderlyingImageAndNotify()
         } else {
             indicatorView.stopAnimating()
+            photo.loadUnderlyingImageAndNotify()
         }
         
         if let image = photo.underlyingImage, photo != nil {
