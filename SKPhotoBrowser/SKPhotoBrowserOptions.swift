@@ -22,6 +22,7 @@ public struct SKPhotoBrowserOptions {
 
     public static var displayHorizontalScrollIndicator: Bool = true
     public static var displayVerticalScrollIndicator: Bool = true
+    public static var displayPagingHorizontalScrollIndicator: Bool = true
     
     public static var bounceAnimation: Bool = false
     public static var enableZoomBlackArea: Bool = true
@@ -29,7 +30,7 @@ public struct SKPhotoBrowserOptions {
     
     public static var backgroundColor: UIColor = .white
     public static var indicatorColor: UIColor = .black
-    public static var indicatorStyle: UIActivityIndicatorViewStyle = .whiteLarge
+    public static var indicatorStyle: UIActivityIndicatorView.Style = .whiteLarge
 
     /// By default close button is on left side and delete button is on right.
     ///
@@ -39,23 +40,32 @@ public struct SKPhotoBrowserOptions {
     public static var swapCloseAndDeleteButtons: Bool = false
     public static var disableVerticalSwipe: Bool = false
 
-    /// Offset from top and from nearest screen edge of close button and delete button.
-    ///
-    /// - Default: 5
-    public static var closeAndDeleteButtonPadding: CGFloat = 5
-    
     /// if this value is true, the long photo width will match the screen,
     /// and the minScale is 1.0, the maxScale is 2.5
     /// Default: false
     public static var longPhotoWidthMatchScreen: Bool = false
+
+    /// Provide custom session configuration (eg. for headers, etc.)
+    public static var sessionConfiguration: URLSessionConfiguration = .default
+}
+
+public struct SKButtonOptions {
+    public static var closeButtonPadding: CGPoint = CGPoint(x: 5, y: 20)
+    public static var deleteButtonPadding: CGPoint = CGPoint(x: 5, y: 20)
 }
 
 public struct SKCaptionOptions {
+    public enum CaptionLocation {
+        case basic
+        case bottom
+    }
     public static var textColor: UIColor = .black
     public static var textAlignment: NSTextAlignment = .center
     public static var numberOfLine: Int = 3
     public static var lineBreakMode: NSLineBreakMode = .byTruncatingTail
     public static var font: UIFont = .systemFont(ofSize: 17.0)
+    public static var backgroundColor: UIColor = .clear
+    public static var captionLocation: CaptionLocation = .basic
 }
 
 public struct SKToolbarOptions {

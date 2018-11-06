@@ -16,15 +16,21 @@ struct SKMesurement {
         return UIApplication.shared.statusBarFrame.height
     }
     static var screenHeight: CGFloat {
-        return UIScreen.main.bounds.height
+        return UIApplication.shared.preferredApplicationWindow?.bounds.height ?? UIScreen.main.bounds.height
     }
     static var screenWidth: CGFloat {
-        return UIScreen.main.bounds.width
+        return UIApplication.shared.preferredApplicationWindow?.bounds.width ?? UIScreen.main.bounds.width
     }
     static var screenScale: CGFloat {
         return UIScreen.main.scale
     }
     static var screenRatio: CGFloat {
         return screenWidth / screenHeight
+    }
+    static var isPhoneX: Bool {
+        if isPhone && UIScreen.main.nativeBounds.height == 2436 {
+           return true
+        }
+        return false
     }
 }

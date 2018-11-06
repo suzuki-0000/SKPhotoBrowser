@@ -13,7 +13,6 @@ private let bundle = Bundle(for: SKPhotoBrowser.self)
 
 class SKToolbar: UIToolbar {
     var toolActionButton: UIBarButtonItem!
-    
     fileprivate weak var browser: SKPhotoBrowser?
     
     required init?(coder aDecoder: NSCoder) {
@@ -30,6 +29,15 @@ class SKToolbar: UIToolbar {
         
         setupApperance()
         setupToolbar()
+    }
+    
+    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+        if let view = super.hitTest(point, with: event) {
+            if SKMesurement.screenWidth - point.x < 50 { // FIXME: not good idea
+                return view
+            }
+        }
+        return nil
     }
 }
 

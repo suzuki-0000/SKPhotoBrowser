@@ -95,11 +95,13 @@ extension SKActionView {
             addSubview(closeButton)
         }
 
-        guard let size = size else { return }
-        closeButton.setFrameSize(size)
+        if let size = size {
+            closeButton.setFrameSize(size)
+        }
         
-        guard let image = image else { return }
-        closeButton.setImage(image, for: UIControlState())
+        if let image = image {
+            closeButton.setImage(image, for: .normal)
+        }
     }
     
     func configureDeleteButton(image: UIImage? = nil, size: CGSize? = nil) {
@@ -109,11 +111,13 @@ extension SKActionView {
             deleteButton.isHidden = !SKPhotoBrowserOptions.displayDeleteButton
             addSubview(deleteButton)
         }
-
-        guard let size = size else { return }
-        deleteButton.setFrameSize(size)
         
-        guard let image = image else { return }
-        deleteButton.setImage(image, for: UIControlState())
+        if let size = size {
+            deleteButton.setFrameSize(size)
+        }
+        
+        if let image = image {
+            deleteButton.setImage(image, for: .normal)
+        }
     }
 }
