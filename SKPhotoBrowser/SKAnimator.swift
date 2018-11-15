@@ -58,7 +58,7 @@ class SKAnimator: NSObject, SKPhotoBrowserAnimatorDelegate {
         let imageFromView = (senderOriginImage ?? browser.getImageFromView(sender)).rotateImageByOrientation()
         let imageRatio = imageFromView.size.width / imageFromView.size.height
         
-        senderOriginImage = nil
+//        senderOriginImage = nil
         senderViewOriginalFrame = calcOriginFrame(sender)
         finalImageViewFrame = calcFinalFrame(imageRatio)
         resizableImageView = UIImageView(image: imageFromView)
