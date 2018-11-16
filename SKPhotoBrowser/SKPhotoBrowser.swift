@@ -53,9 +53,7 @@ open class SKPhotoBrowser: UIViewController {
     
     // strings
     open var cancelTitle = "Cancel"
-    
-    open var completionWithItemsHandler: UIActivityViewController.CompletionWithItemsHandler?
-    
+
     // MARK: - Initializer
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -250,7 +248,6 @@ open class SKPhotoBrowser: UIViewController {
         
         activityViewController = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
         activityViewController.completionWithItemsHandler = { (activity, success, items, error) in
-            self.completionWithItemsHandler?(activity, success, items, error)
             self.hideControlsAfterDelay()
             self.activityViewController = nil
         }
