@@ -5,7 +5,7 @@ Simple PhotoBrowser/Viewer inspired by facebook, twitter photo browsers written 
 
 <p align="center">
 <a href="https://developer.apple.com/swift">
-   <img alt="Swift4" src="https://img.shields.io/badge/language-swift4.2-orange.svg?style=flat" />
+   <img alt="Swift5" src="https://img.shields.io/badge/language-swift5.0-orange.svg?style=flat" />
  </a>
 <a href="http://cocoadocs.org/docsets/SKPhotoBrowser">
   <img src="https://img.shields.io/cocoapods/v/SKPhotoBrowser.svg?style=flat" />
@@ -44,6 +44,7 @@ Below is a table that shows which version of SKPhotoBrowser you should use for y
 
 | Swift version | SKPhotoBrowser version    |
 | ------------- | --------------- |
+| 5.0           | >= 6.1.0 |
 | 4.2           | >= 6.0.0 |
 | 4.1           | >= 5.0.0 |
 | 3.2           | >= 4.0.0 |
