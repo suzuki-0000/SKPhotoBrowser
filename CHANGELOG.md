@@ -1,5 +1,19 @@
 # Change Log
 
+## 6.1.0
+
+### Big Changed
+- #330 Changes for swift 5.0, Xcode 10.2,
+
+#### Updated
+- #339 fix #316 and #323 bug by xiaoweiFive 
+- #342 update readme.md by SherlockQi 
+- #344 fixed broken page recycling (regression from c6df44f9)
+- #348 keep thumbnail display until image download finished by seanxux 
+- #353 loop call SKPhotoBrowserDelegate.controlsVisibilityToggled function by cp110
+- #361 Support for iPhoneXS, XSMax and XR by jdanthinne 
+- #361 Xcode 10.2 optimization by TParizek 
+
 ## 6.0.0
 
 ### Big Changed
