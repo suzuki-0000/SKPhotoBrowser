@@ -16,7 +16,7 @@ Simple PhotoBrowser/Viewer inspired by facebook, twitter photo browsers written 
 <a href="https://developer.apple.com/swift/">
    <img alt="Platform" src="https://img.shields.io/badge/platform-iOS-green.svg" /></a>
 <a href="">
-   <img alt="Contributors" src="https://img.shields.io/badge/all_contributors-20-orange.svg?style=flat-square" /></a>
+   <img alt="Contributors" src="https://img.shields.io/badge/all_contributors-66-orange.svg?style=flat-square" /></a>
 </p>
 
 
