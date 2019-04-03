@@ -590,7 +590,7 @@ private extension SKPhotoBrowser {
         // action view animation
         actionView.animate(hidden: hidden)
         
-        if !permanent {
+        if !hidden && !permanent {
             hideControlsAfterDelay()
         }
         setNeedsStatusBarAppearanceUpdate()
