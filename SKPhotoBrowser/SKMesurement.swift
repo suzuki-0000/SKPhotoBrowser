@@ -28,7 +28,8 @@ struct SKMesurement {
         return screenWidth / screenHeight
     }
     static var isPhoneX: Bool {
-        if isPhone && UIScreen.main.nativeBounds.height == 2436 {
+        let iPhoneXHeights: [CGFloat] = [2436, 2688, 1792]
+        if isPhone, iPhoneXHeights.contains(UIScreen.main.nativeBounds.height) {
            return true
         }
         return false
