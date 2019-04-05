@@ -66,7 +66,7 @@ open class SKPhotoBrowser: UIViewController {
         setup()
     }
     
-    public convenience init(photos: [SKPhotoProtocol]) {
+    @objc public convenience init(photos: [SKPhotoProtocol]) {
         self.init(photos: photos, initialPageIndex: 0)
     }
     
@@ -79,7 +79,7 @@ open class SKPhotoBrowser: UIViewController {
         animator.senderViewForAnimation = animatedFromView
     }
     
-    public convenience init(photos: [SKPhotoProtocol], initialPageIndex: Int) {
+    @objc public convenience init(photos: [SKPhotoProtocol], initialPageIndex: Int) {
         self.init(nibName: nil, bundle: nil)
         self.photos = photos
         self.photos.forEach { $0.checkCache() }

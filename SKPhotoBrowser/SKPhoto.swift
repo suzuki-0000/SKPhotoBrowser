@@ -109,7 +109,7 @@ open class SKPhoto: NSObject, SKPhotoProtocol {
 
 // MARK: - Static Function
 
-extension SKPhoto {
+@objc extension SKPhoto {
     public static func photoWithImage(_ image: UIImage) -> SKPhoto {
         return SKPhoto(image: image)
     }
