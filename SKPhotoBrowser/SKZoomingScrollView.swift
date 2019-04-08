@@ -230,14 +230,11 @@ open class SKZoomingScrollView: UIScrollView {
             // zoom out
             setZoomScale(minimumZoomScale, animated: true)
         } else {
-            // zoom in
-            // I think that the result should be the same after double touch or pinch
-           /* var newZoom: CGFloat = zoomScale * 3.13
+            var newZoom: CGFloat = zoomScale * 3.13
             if newZoom >= maximumZoomScale {
                 newZoom = maximumZoomScale
             }
-            */
-            let zoomRect = zoomRectForScrollViewWith(maximumZoomScale, touchPoint: touchPoint)
+            let zoomRect = zoomRectForScrollViewWith(newZoom, touchPoint: touchPoint)
             zoom(to: zoomRect, animated: true)
         }
         
@@ -330,11 +327,15 @@ private extension SKZoomingScrollView {
     }
     
     func zoomRectForScrollViewWith(_ scale: CGFloat, touchPoint: CGPoint) -> CGRect {
-        let w = frame.size.width / scale
-        let h = frame.size.height / scale
-        let x = touchPoint.x - (h / max(SKMesurement.screenScale, 2.0))
-        let y = touchPoint.y - (w / max(SKMesurement.screenScale, 2.0))
+        let w = self.frame.size.width / scale
+        let h = self.frame.size.height / scale
+        let x = touchPoint.x - w / 2.0
+        let y = touchPoint.y - h / 2.0
         
-        return CGRect(x: x, y: y, width: w, height: h)
+        let rect = CGRect(x: x, y: y, width: w, height: h)
+        print(touchPoint)
+        print(rect.midX, rect.midY)
+        
+        return rect
     }
 }

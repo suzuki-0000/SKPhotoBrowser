@@ -154,6 +154,7 @@ open class SKPhotoBrowser: UIViewController {
     override open func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         isViewActive = true
+        self.hideControlsAfterDelay()
     }
     
     override open var prefersStatusBarHidden: Bool {
@@ -590,6 +591,8 @@ private extension SKPhotoBrowser {
         
         // action view animation
         actionView.animate(hidden: hidden)
+        
+        self.toolbar.setControlsHidden(hidden: hidden)
         
         if !hidden && !permanent {
             hideControlsAfterDelay()
