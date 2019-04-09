@@ -16,6 +16,12 @@ class SKActionView: UIView {
     // Action
     fileprivate var cancelTitle = "Cancel"
     
+    private var substrates: [UIView] = []
+    
+    private struct Constants {
+        static let substrateHeight: CGFloat = 119
+    }
+    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -28,6 +34,7 @@ class SKActionView: UIView {
         self.init(frame: frame)
         self.browser = browser
 
+        self.configureSubstrates()
         configureCloseButton()
         configureDeleteButton()
     }
@@ -69,6 +76,13 @@ class SKActionView: UIView {
                         if SKPhotoBrowserOptions.displayDeleteButton {
                             self.deleteButton.alpha = alpha
                             self.deleteButton.frame = deleteFrame
+                        }
+                        self.substrates.forEach { substrate in
+                            substrate.transform = hidden
+                                ? substrate.frame.minY <= 0
+                                    ? CGAffineTransform(translationX: 0, y: -Constants.substrateHeight)
+                                    : CGAffineTransform(translationX: 0, y: Constants.substrateHeight)
+                                : .identity
                         }
         }, completion: nil)
     }
@@ -119,5 +133,44 @@ extension SKActionView {
         if let image = image {
             deleteButton.setImage(image, for: .normal)
         }
+    }
+    
+    private func configureSubstrates() {
+        let clearColor = UIColor.clear.cgColor
+        let blackColor = UIColor(white: 0, alpha: 0.38).cgColor
+        
+        self.setupTopSubstrate(blackColor, clearColor)
+        self.setupBottomSubstrate(clearColor, blackColor)
+    }
+
+    private func setupTopSubstrate(_ colors: CGColor...) {
+        let topSubstrateFrame = CGRect(
+            x: 0, y: 0,
+            width: self.bounds.width, height: Constants.substrateHeight)
+        self.setupSubstrateView(frame: topSubstrateFrame, colors)
+    }
+    
+    private func setupBottomSubstrate(_ colors: CGColor...) {
+        let bottomSubstrateFrame = CGRect(
+            x: 0, y: self.bounds.height - Constants.substrateHeight,
+            width: self.bounds.width, height: Constants.substrateHeight)
+        self.setupSubstrateView(frame: bottomSubstrateFrame, colors)
+    }
+    
+    fileprivate func setupSubstrateView(frame substrateFrame: CGRect, _ colors: [CGColor]) {
+        let substrate = UIView(frame: substrateFrame)
+        let substrateLayer = self.gradientLayer(with: substrate.bounds, colors: colors)
+        substrate.layer.insertSublayer(substrateLayer, at: 0)
+        self.addSubview(substrate)
+        self.substrates.append(substrate)
+    }
+    
+    private func gradientLayer(with bounds: CGRect, colors: [CGColor]) -> CALayer {
+        let gradient = CAGradientLayer()
+        gradient.startPoint = CGPoint(x: 0, y: 0)
+        gradient.endPoint = CGPoint(x: 0, y: 1)
+        gradient.frame = bounds
+        gradient.colors = colors
+        return gradient
     }
 }
