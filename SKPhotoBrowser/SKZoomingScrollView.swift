@@ -332,10 +332,6 @@ private extension SKZoomingScrollView {
         let x = touchPoint.x - w / 2.0
         let y = touchPoint.y - h / 2.0
         
-        let rect = CGRect(x: x, y: y, width: w, height: h)
-        print(touchPoint)
-        print(rect.midX, rect.midY)
-        
-        return rect
+        return CGRect(x: x, y: y, width: w, height: h)
     }
 }

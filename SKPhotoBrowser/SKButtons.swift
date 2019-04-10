@@ -79,6 +79,10 @@ class SKCloseButton: SKImageButton {
         set { super.marginY = newValue }
     }
     
+    override var insets: UIEdgeInsets {
+        return .zero
+    }
+    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
