@@ -244,7 +244,7 @@ open class SKPhotoBrowser: UIViewController {
         }
         
         if let activityItemProvider = activityItemProvider {
-            activityItems.append(activityItemProvider)
+            activityItems.append(activityItemProvider.item as AnyObject)
         }
         
         activityViewController = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
