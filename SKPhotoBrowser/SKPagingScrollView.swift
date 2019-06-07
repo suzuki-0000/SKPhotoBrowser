@@ -11,8 +11,8 @@ import Foundation
 class SKPagingScrollView: UIScrollView {
     fileprivate let pageIndexTagOffset: Int = 1000
     fileprivate let sideMargin: CGFloat = 10
-    fileprivate var visiblePages: [SKZoomingScrollView] = []
-    fileprivate var recycledPages: [SKZoomingScrollView] = []
+    fileprivate var visiblePages: [BasePresentableView] = []
+    fileprivate var recycledPages: [BasePresentableView] = []
     fileprivate weak var browser: SKPhotoBrowser?
 
     var numberOfPhotos: Int {
@@ -91,8 +91,8 @@ class SKPagingScrollView: UIScrollView {
                 let pageIndex = page.tag - pageIndexTagOffset
                 page.frame = frameForPageAtIndex(pageIndex)
                 page.setMaxMinZoomScalesForCurrentBounds()
-                if page.captionView != nil {
-                    page.captionView.frame = frameForCaptionView(page.captionView, index: pageIndex)
+                if let captionView = page.captionView {
+                    captionView.frame = frameForCaptionView(captionView, index: pageIndex)
                 }
             }
         }
@@ -125,24 +125,34 @@ class SKPagingScrollView: UIScrollView {
                 page.removeFromSuperview()
             }
         
-        let visibleSet: Set<SKZoomingScrollView> = Set(visiblePages)
-        let visibleSetWithoutRecycled: Set<SKZoomingScrollView> = visibleSet.subtracting(recycledPages)
-        visiblePages = Array(visibleSetWithoutRecycled)
+        let visibleSet = Set(visiblePages as [UIView])
+        let visibleSetWithoutRecycled = visibleSet.subtracting(recycledPages)
+        // swiftlint:disable force_cast
+        visiblePages = Array(visibleSetWithoutRecycled) as! [BasePresentableView]
+        // swiftlint:enabl  force_cast
+        let recycledImagePages = recycledPages
+            .filter { $0.presentableType == .image }
+            .take(last: 2)
         
-        while recycledPages.count > 2 {
-            recycledPages.removeFirst()
-        }
+        let recycledVideoPages = recycledPages
+            .filter { $0.presentableType == .video }
+            .take(last: 2)
+        
+        self.recycledPages = recycledImagePages + recycledVideoPages
         
         for index: Int in firstIndex...lastIndex {
             if visiblePages.filter({ $0.tag - pageIndexTagOffset == index }).count > 0 {
                 continue
             }
             
-            let page: SKZoomingScrollView = SKZoomingScrollView(frame: frame, browser: browser)
-            page.frame = frameForPageAtIndex(index)
-            page.tag = index + pageIndexTagOffset
             let photo = browser.photos[index]
-            page.photo = photo
+            let page = PresentableViewFactory(
+                photo: photo,
+                frame: frameForPageAtIndex(index),
+                browser: browser)
+            
+            page.tag = index + pageIndexTagOffset
+            
             if let thumbnail = browser.animator.senderOriginImage,
                 index == browser.initPageIndex,
                 photo.underlyingImage == nil {
@@ -182,14 +192,14 @@ class SKPagingScrollView: UIScrollView {
                       width: pageFrame.size.width, height: captionSize.height)
     }
     
-    func pageDisplayedAtIndex(_ index: Int) -> SKZoomingScrollView? {
+    func pageDisplayedAtIndex(_ index: Int) -> BasePresentableView? {
         for page in visiblePages where page.tag - pageIndexTagOffset == index {
             return page
         }
         return nil
     }
     
-    func pageDisplayingAtPhoto(_ photo: SKPhotoProtocol) -> SKZoomingScrollView? {
+    func pageDisplayingAtPhoto(_ photo: SKPhotoProtocol) -> BasePresentableView? {
         for page in visiblePages where page.photo === photo {
             return page
         }
@@ -200,7 +210,7 @@ class SKPagingScrollView: UIScrollView {
         var captionViews = Set<SKCaptionView>()
         visiblePages
             .filter { $0.captionView != nil }
-            .forEach { captionViews.insert($0.captionView) }
+            .forEach { captionViews.insert($0.captionView!) }
         return captionViews
     }
     
@@ -256,3 +266,18 @@ private extension SKPagingScrollView {
     }
 }
 
+private func PresentableViewFactory(photo: SKPhotoProtocol, frame: CGRect, browser: SKPhotoBrowser) -> BasePresentableView {
+    
+    let presentableView: BasePresentableView
+    
+    switch photo.type {
+    case .image:
+        presentableView = SKZoomingScrollView(frame: frame, browser: browser)
+    case .video:
+        presentableView = SKVideoPlayerView(frame: frame, browser: browser)
+    }
+    
+    presentableView.photo = photo
+    
+    return presentableView
+}

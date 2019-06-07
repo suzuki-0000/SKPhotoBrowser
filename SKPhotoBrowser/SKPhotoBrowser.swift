@@ -161,6 +161,10 @@ open class SKPhotoBrowser: UIViewController {
         return !SKPhotoBrowserOptions.displayStatusbar
     }
     
+    override open var prefersHomeIndicatorAutoHidden: Bool {
+        return true
+    }
+    
     // MARK: - Notification
     @objc open func handleSKPhotoLoadingDidEndNotification(_ notification: Notification) {
         guard let photo = notification.object as? SKPhotoProtocol else {
@@ -373,7 +377,7 @@ internal extension SKPhotoBrowser {
         actionView.animate(hidden: false)
     }
     
-    func pageDisplayedAtIndex(_ index: Int) -> SKZoomingScrollView? {
+    func pageDisplayedAtIndex(_ index: Int) -> BasePresentableView? {
         return pagingScrollView.pageDisplayedAtIndex(index)
     }
     
@@ -423,7 +427,7 @@ internal extension SKPhotoBrowser {
 
 internal extension SKPhotoBrowser {
     @objc func panGestureRecognized(_ sender: UIPanGestureRecognizer) {
-        guard let zoomingScrollView: SKZoomingScrollView = pagingScrollView.pageDisplayedAtIndex(currentPageIndex) else {
+        guard let zoomingScrollView = pagingScrollView.pageDisplayedAtIndex(currentPageIndex) else {
             return
         }
         

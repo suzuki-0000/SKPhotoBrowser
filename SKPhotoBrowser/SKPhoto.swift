@@ -8,24 +8,19 @@
 
 import UIKit
 
-@objc public protocol SKPhotoProtocol: NSObjectProtocol {
-    var index: Int { get set }
-    var underlyingImage: UIImage! { get }
-    var caption: String? { get }
-    var contentMode: UIView.ContentMode { get set }
-    func loadUnderlyingImageAndNotify()
-    func checkCache()
-}
-
 // MARK: - SKPhoto
 open class SKPhoto: NSObject, SKPhotoProtocol {
+    
     open var index: Int = 0
     open var underlyingImage: UIImage!
     open var caption: String?
     open var contentMode: UIView.ContentMode = .scaleAspectFill
     open var shouldCachePhotoURLImage: Bool = false
     open var photoURL: String!
-
+    open var type: MediaType = .image
+    
+    open var videoStreamURL: String?
+    
     override init() {
         super.init()
     }
