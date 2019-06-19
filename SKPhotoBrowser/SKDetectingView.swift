@@ -16,6 +16,15 @@ import UIKit
 class SKDetectingView: UIView {
     weak var delegate: SKDetectingViewDelegate?
     
+    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+        guard let superView = super.hitTest(point, with: event)
+            else { return nil }
+
+        return superView.subviews
+            .first { $0.frame.contains(point) && !($0.gestureRecognizers?.isEmpty ?? true) }
+             ?? superView
+    }
+    
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesEnded(touches, with: event)
         defer {

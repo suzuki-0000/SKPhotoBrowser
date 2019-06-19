@@ -65,6 +65,11 @@ class SKVideoPlayerView: UIView, PresentableViewType {
         setup()
     }
     
+    deinit {
+        self.playerController.player?.removeObserver(self, forKeyPath: #keyPath(AVPlayer.rate))
+        self.unsubscribeFromPlayToEndNotification()
+    }
+    
     func setMaxMinZoomScalesForCurrentBounds() {
         
     }
@@ -122,7 +127,19 @@ class SKVideoPlayerView: UIView, PresentableViewType {
     // MARK: - Private
     
     private func setObservation(in player: AVPlayer) {
-        player.addObserver(self, forKeyPath: #keyPath(AVPlayer.rate), options: [], context: nil)
+        player.addObserver(self, forKeyPath: #keyPath(AVPlayer.rate), options: [.new], context: nil)
+        self.unsubscribeFromPlayToEndNotification()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(playerItemDidPlayToEndTime), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: nil)
+        
+    }
+    
+    private func unsubscribeFromPlayToEndNotification() {
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: nil)
+    }
+    
+    @objc private func playerItemDidPlayToEndTime() {
+        self.playerController.player?.seek(to: CMTime(seconds: 0, preferredTimescale: 1))
     }
     
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
@@ -143,17 +160,20 @@ class SKVideoPlayerView: UIView, PresentableViewType {
     
     fileprivate func setupImageView() {
         // image
-        playButtonImageView = SKDetectingView(frame: frame)
-        playButtonImageView.delegate = self
-        playButtonImageView.contentMode = .bottom
-        playButtonImageView.backgroundColor = .clear
-        addSubview(playButtonImageView)
+        self.playButtonImageView = SKDetectingView(frame: frame)
+        self.playButtonImageView.delegate = self
+        self.playButtonImageView.contentMode = .bottom
+        self.playButtonImageView.backgroundColor = .clear
+        addSubview(self.playButtonImageView)
         
         let bundle = Bundle(for: SKPhotoBrowser.self)
         let image = UIImage(named: "SKPhotoBrowser.bundle/images/ic_PlayVideo", in: bundle, compatibleWith: nil)
         let imgView = UIImageView(image: image)
         imgView.center = playButtonImageView.center
         self.playButtonImageView.addSubview(imgView)
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideAndPlay))
+        imgView.addGestureRecognizer(tapGesture)
     }
     
     private func setup() {
@@ -163,8 +183,8 @@ class SKVideoPlayerView: UIView, PresentableViewType {
         
         self.setupImageView()
         // indicator
-        indicatorView = SKIndicatorView(frame: frame)
-        addSubview(indicatorView)
+        self.indicatorView = SKIndicatorView(frame: frame)
+        addSubview(self.indicatorView)
     }
     
     private func playVideo() {
@@ -180,31 +200,35 @@ class SKVideoPlayerView: UIView, PresentableViewType {
         
         let player = AVPlayer(url: url)
         self.playerController.player = player
-        playerController.player = player
         UIView.performWithoutAnimation {
             self.playerController.player?.play()
         }
     }
     
+    @objc private func hideAndPlay() {
+        self.playButtonImageView.isHidden = true
+        self.playerController.showsPlaybackControls = true
+        self.playVideo()
+        self.hideControlls()
+    }
 }
 
 extension SKVideoPlayerView: SKDetectingViewDelegate {
     
     func handleSingleTap(_ view: UIView, touch: UITouch) {
-        self.hideAndPlay()
+        self.toggleControlls()
     }
     
     func handleDoubleTap(_ view: UIView, touch: UITouch) {
-        self.hideAndPlay()
+        self.toggleControlls()
     }
     
-    private func hideAndPlay() {
-//        self.imageView.removeFromSuperview()
-        self.playButtonImageView.isHidden = true
-        self.playerController.showsPlaybackControls = true
-        self.playVideo()
+    private func toggleControlls() {
+        self.browser?.toggleControls()
+    }
+    
+    private func hideControlls() {
         self.browser?.hideControls()
     }
-    
 }
 
