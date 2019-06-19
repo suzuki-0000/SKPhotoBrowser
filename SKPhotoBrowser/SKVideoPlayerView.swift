@@ -31,7 +31,10 @@ class SKVideoPlayerView: UIView, PresentableViewType {
                 , let url = URL(string: videoURL) else {
                 return
             }
-            self.playerController.player = AVPlayer(url: url)
+            let header = SKPhotoBrowserOptions.sessionConfiguration.httpAdditionalHeaders
+            let asset: AVURLAsset = AVURLAsset.init(url: url, options: ["AVURLAssetHTTPHeaderFieldsKey": header as Any])
+            let playerItem = AVPlayerItem(asset: asset)
+            self.playerController.player = AVPlayer(playerItem: playerItem)
             self.setObservation(in: self.playerController.player!)
             self.playerController.player?.allowsExternalPlayback = true
             self.playerController.showsPlaybackControls = false
