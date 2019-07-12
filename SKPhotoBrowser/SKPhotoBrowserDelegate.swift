@@ -63,6 +63,22 @@ import Foundation
     @objc optional func removePhoto(_ browser: SKPhotoBrowser, index: Int, reload: @escaping (() -> Void))
     
     /**
+     Tells the delegate that user liked a photo
+     
+     - Parameter browser: reference to the calling SKPhotoBrowser
+     - Parameter index: the index of the liked photo
+     */
+    @objc optional func likePhoto(_ browser: SKPhotoBrowser, index: Int, sender: SKLikeButton)
+    
+    /**
+     Tells the delegate the user want to edit a photo
+     
+     - Parameter browser: reference to the calling SKPhotoBrowser
+     - Parameter index: the index of the editing photo
+     */
+    @objc optional func editPhoto(_ browser: SKPhotoBrowser, index: Int)
+    
+    /**
      Asks the delegate for the view for a certain photo. Needed to detemine the animation when presenting/closing the browser.
      
      - Parameter browser: reference to the calling SKPhotoBrowser
