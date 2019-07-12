@@ -2,15 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:/Users/velizarov/mts/pods/SKPhotoBrowser/SKPhotoBrowser/SKPhotoProtocol.swift">
-   </FileRef>
-   <FileRef
-      location = "group:/Users/velizarov/mts/pods/SKPhotoBrowser/SKPhotoBrowser/SKPresentableViewType.swift">
-   </FileRef>
-   <FileRef
-      location = "group:/Users/velizarov/mts/pods/SKPhotoBrowser/SKPhotoBrowser/SKVideoPlayerView.swift">
-   </FileRef>
-   <FileRef
       location = "self:">
    </FileRef>
 </Workspace>
