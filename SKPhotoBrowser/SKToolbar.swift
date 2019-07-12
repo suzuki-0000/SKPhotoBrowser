@@ -57,16 +57,16 @@ private extension SKToolbar {
         var items = [UIBarButtonItem]()
         
         self.toolActionButton = self.barBattonItem(imageName: "SKPhotoBrowser.bundle/images/btn_common_action_wh",
-                                              selector: #selector(actionButtonPressed(_:)))
+                                              selector: #selector(actionButtonPressed))
         
         let likeItem = self.barBattonItem(imageName: "SKPhotoBrowser.bundle/images/btn_common_heart_wh",
-                                          selector: #selector(likeButtonPressed(_:)))
+                                          selector: #selector(likeButtonPressed))
         
         let editItem = self.barBattonItem(imageName: "SKPhotoBrowser.bundle/images/btn_common_edit_wh",
-                                          selector: #selector(editButtonPressed(_:)))
+                                          selector: #selector(editButtonPressed))
         
         let deleteItem = self.barBattonItem(imageName: "SKPhotoBrowser.bundle/images/btn_common_delete_wh",
-                                            selector: #selector(deleteButtonPressed(_:)))
+                                            selector: #selector(deleteButtonPressed))
 
         items.append(contentsOf: [toolActionButton,
                                   UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil),
@@ -76,24 +76,22 @@ private extension SKToolbar {
                                   UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil),
                                   deleteItem])
         
-       
         self.setItems(items, animated: false)
         
     }
     
-    @objc func editButtonPressed(_ sender: UIButton) {
+    @objc func editButtonPressed(_ sender: UIBarButtonItem) {
         guard let browser = self.browser else { return }
         browser.delegate?.editPhoto?(browser, index: browser.currentPageIndex)
     }
     
-    @objc func likeButtonPressed(_ sender: UIButton) {
+    @objc func likeButtonPressed(_ sender: UIBarButtonItem) {
         guard let browser = self.browser else { return }
-        browser.delegate?.likePhoto?(browser, index: browser.currentPageIndex)
+        browser.delegate?.likePhoto?(browser, index: browser.currentPageIndex, sender: sender)
     }
     
     @objc func deleteButtonPressed(_ sender: UIButton) {
         guard let browser = self.browser else { return }
-        
         browser.delegate?.removePhoto?(browser, index: browser.currentPageIndex) { [weak self] in
             self?.browser?.deleteImage()
         }
