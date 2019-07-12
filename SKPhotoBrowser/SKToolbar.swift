@@ -11,6 +11,8 @@ import Foundation
 // helpers which often used
 private let bundle = Bundle(for: SKPhotoBrowser.self)
 
+// TODO: [refactoring] make toolbar more customizable
+
 class SKToolbar: UIToolbar {
     var toolActionButton: UIBarButtonItem!
     fileprivate weak var browser: SKPhotoBrowser?
@@ -54,12 +56,8 @@ private extension SKToolbar {
     func setupToolbar() {
         var items = [UIBarButtonItem]()
         
-        toolActionButton = self.barBattonItem(imageName: "SKPhotoBrowser.bundle/images/btn_common_action_wh",
+        self.toolActionButton = self.barBattonItem(imageName: "SKPhotoBrowser.bundle/images/btn_common_action_wh",
                                               selector: #selector(actionButtonPressed(_:)))
-        
-        if SKPhotoBrowserOptions.displayAction {
-            items.append(toolActionButton)
-        }
         
         let likeItem = self.barBattonItem(imageName: "SKPhotoBrowser.bundle/images/btn_common_heart_wh",
                                           selector: #selector(likeButtonPressed(_:)))
@@ -67,16 +65,12 @@ private extension SKToolbar {
         let editItem = self.barBattonItem(imageName: "SKPhotoBrowser.bundle/images/btn_common_edit_wh",
                                           selector: #selector(editButtonPressed(_:)))
         
-        items.append(likeItem)
-        items.append(editItem)
-        
-        if SKPhotoBrowserOptions.displayDeleteButton {
-            let deleteItem = self.barBattonItem(imageName: "SKPhotoBrowser.bundle/images/btn_common_delete_wh",
-                                                selector: #selector(deleteButtonPressed(_:)))
-            items.append(deleteItem)
-        }
-        //items.append(UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil))
-        setItems(items, animated: false)
+        let deleteItem = self.barBattonItem(imageName: "SKPhotoBrowser.bundle/images/btn_common_delete_wh",
+                                            selector: #selector(deleteButtonPressed(_:)))
+
+        items.append(contentsOf: [toolActionButton, likeItem, editItem, deleteItem])
+       
+        self.setItems(items, animated: false)
         
     }
     
@@ -106,13 +100,13 @@ private extension SKToolbar {
         let bundle = Bundle.init(for: SKToolbar.self)
         let deleteImage = UIImage(named: imageName, in: bundle, compatibleWith: nil)?
             .withRenderingMode(.alwaysTemplate)
-        let deleteButton = UIButton(type: .custom)
-        deleteButton.addTarget(self, action: selector, for: .touchUpInside)
-        deleteButton.setImage(deleteImage, for: .normal)
-        deleteButton.imageView?.contentMode = .scaleAspectFit
-        deleteButton.frame = CGRect(x: 0, y: 0, width: 32, height: 32)
-        deleteButton.tintColor = .white
-        return UIBarButtonItem(customView: deleteButton)
+        let button = UIButton(type: .custom)
+        button.addTarget(self, action: selector, for: .touchUpInside)
+        button.setImage(deleteImage, for: .normal)
+        button.imageView?.contentMode = .scaleAspectFit
+        button.frame = CGRect(x: 0, y: 0, width: 32, height: 32)
+        button.tintColor = .white
+        return UIBarButtonItem(customView: button)
     }
 }
 
