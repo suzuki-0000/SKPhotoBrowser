@@ -68,7 +68,14 @@ private extension SKToolbar {
         let deleteItem = self.barBattonItem(imageName: "SKPhotoBrowser.bundle/images/btn_common_delete_wh",
                                             selector: #selector(deleteButtonPressed(_:)))
 
-        items.append(contentsOf: [toolActionButton, likeItem, editItem, deleteItem])
+        items.append(contentsOf: [toolActionButton,
+                                  UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil),
+                                  likeItem,
+                                  UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil),
+                                  editItem,
+                                  UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil),
+                                  deleteItem])
+        
        
         self.setItems(items, animated: false)
         
@@ -98,11 +105,11 @@ private extension SKToolbar {
     
     private func barBattonItem(imageName: String, selector: Selector) -> UIBarButtonItem {
         let bundle = Bundle.init(for: SKToolbar.self)
-        let deleteImage = UIImage(named: imageName, in: bundle, compatibleWith: nil)?
+        let buttonImage = UIImage(named: imageName, in: bundle, compatibleWith: nil)?
             .withRenderingMode(.alwaysTemplate)
         let button = UIButton(type: .custom)
         button.addTarget(self, action: selector, for: .touchUpInside)
-        button.setImage(deleteImage, for: .normal)
+        button.setImage(buttonImage, for: .normal)
         button.imageView?.contentMode = .scaleAspectFit
         button.frame = CGRect(x: 0, y: 0, width: 32, height: 32)
         button.tintColor = .white
