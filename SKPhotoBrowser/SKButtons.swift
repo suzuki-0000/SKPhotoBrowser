@@ -124,7 +124,7 @@ class SKDeleteButton: SKImageButton {
 
 public class SKLikeButton: UIButton {
     
-    var isLiked: Bool = false {
+    public var isLiked: Bool = false {
         didSet {
             if self.isLiked {
                 self.setup("btn_common_heart_filled_wh")
@@ -134,7 +134,7 @@ public class SKLikeButton: UIButton {
         }
     }
     
-    func switchLikeState() {
+    public func switchLikeState() {
         self.isLiked = !self.isLiked
     }
     
