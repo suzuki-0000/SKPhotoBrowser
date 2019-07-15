@@ -121,3 +121,26 @@ class SKDeleteButton: SKImageButton {
         hideFrame = CGRect(x: marginX, y: -marginY, width: size.width, height: size.height)
     }
 }
+
+public class SKLikeButton: UIButton {
+    
+    var isLiked: Bool = false {
+        didSet {
+            if self.isLiked {
+                self.setup("btn_common_heart_filled_wh")
+            } else {
+                self.setup("btn_common_heart_wh")
+            }
+        }
+    }
+    
+    func switchLikeState() {
+        self.isLiked = !self.isLiked
+    }
+    
+    func setup(_ imageName: String) {
+        self.backgroundColor = .clear
+        let image = UIImage(named: "SKPhotoBrowser.bundle/images/\(imageName)", in: bundle, compatibleWith: nil) ?? UIImage()
+        self.setImage(image, for: .normal)
+    }
+}

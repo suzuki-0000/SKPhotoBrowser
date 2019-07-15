@@ -59,15 +59,14 @@ private extension SKToolbar {
         self.toolActionButton = self.barBattonItem(imageName: "SKPhotoBrowser.bundle/images/btn_common_action_wh",
                                               selector: #selector(actionButtonPressed))
         
-        let likeItem = self.barBattonItem(imageName: "SKPhotoBrowser.bundle/images/btn_common_heart_wh",
-                                          selector: #selector(likeButtonPressed))
+        let likeItem = self.getLikedBarButton(selector: #selector(likeButtonPressed(_:)))
         
         let editItem = self.barBattonItem(imageName: "SKPhotoBrowser.bundle/images/btn_common_edit_wh",
-                                          selector: #selector(editButtonPressed))
+                                          selector: #selector(editButtonPressed(_:)))
         
         let deleteItem = self.barBattonItem(imageName: "SKPhotoBrowser.bundle/images/btn_common_delete_wh",
-                                            selector: #selector(deleteButtonPressed))
-
+                                            selector: #selector(deleteButtonPressed(_:)))
+        
         items.append(contentsOf: [toolActionButton,
                                   UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil),
                                   likeItem,
@@ -85,7 +84,7 @@ private extension SKToolbar {
         browser.delegate?.editPhoto?(browser, index: browser.currentPageIndex)
     }
     
-    @objc func likeButtonPressed(_ sender: UIBarButtonItem) {
+    @objc func likeButtonPressed(_ sender: SKLikeButton) {
         guard let browser = self.browser else { return }
         browser.delegate?.likePhoto?(browser, index: browser.currentPageIndex, sender: sender)
     }
@@ -108,6 +107,16 @@ private extension SKToolbar {
         let button = UIButton(type: .custom)
         button.addTarget(self, action: selector, for: .touchUpInside)
         button.setImage(buttonImage, for: .normal)
+        button.imageView?.contentMode = .scaleAspectFit
+        button.frame = CGRect(x: 0, y: 0, width: 32, height: 32)
+        button.tintColor = .white
+        return UIBarButtonItem(customView: button)
+    }
+    
+    private func getLikedBarButton(selector: Selector) -> UIBarButtonItem {
+        let button = SKLikeButton(type: .custom)
+        button.isLiked = false
+        button.addTarget(self, action: selector, for: .touchUpInside)
         button.imageView?.contentMode = .scaleAspectFit
         button.frame = CGRect(x: 0, y: 0, width: 32, height: 32)
         button.tintColor = .white
