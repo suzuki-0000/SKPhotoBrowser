@@ -63,7 +63,7 @@ import Foundation
     @objc optional func removePhoto(_ browser: SKPhotoBrowser, index: Int, reload: @escaping (() -> Void))
     
     /**
-     Tells the delegate the user liked a photo
+     Tells the delegate that user liked a photo
      
      - Parameter browser: reference to the calling SKPhotoBrowser
      - Parameter index: the index of the liked photo

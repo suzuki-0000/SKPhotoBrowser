@@ -126,21 +126,22 @@ public class SKLikeButton: UIButton {
     
     public var isLiked: Bool = false {
         didSet {
-            if self.isLiked {
-                self.setup("btn_common_heart_filled_wh")
-            } else {
-                self.setup("btn_common_heart_wh")
-            }
+            self.setupImage()
         }
     }
     
     public func switchLikeState() {
-        self.isLiked = !self.isLiked
+        self.isLiked.toggle()
     }
     
-    func setup(_ imageName: String) {
+    func setupImage() {
         self.backgroundColor = .clear
-        let image = UIImage(named: "SKPhotoBrowser.bundle/images/\(imageName)", in: bundle, compatibleWith: nil) ?? UIImage()
+        let image: UIImage
+        if self.isLiked {
+            image = UIImage(named: "SKPhotoBrowser.bundle/images/btn_common_heart_filled_wh", in: bundle, compatibleWith: nil) ?? UIImage()
+        } else {
+            image = UIImage(named: "SKPhotoBrowser.bundle/images/btn_common_heart_wh", in: bundle, compatibleWith: nil) ?? UIImage()
+        }
         self.setImage(image, for: .normal)
     }
 }
