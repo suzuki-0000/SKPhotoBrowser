@@ -21,8 +21,9 @@ class FromLocalViewController: UIViewController, UICollectionViewDataSource, UIC
         SKPhotoBrowserOptions.displayAction = true
         SKPhotoBrowserOptions.displayStatusbar = true
         SKPhotoBrowserOptions.displayCounterLabel = true
-        SKPhotoBrowserOptions.displayBackAndForwardButton = true
-
+        SKPhotoBrowserOptions.displayBackAndForwardButton = false
+        SKCaptionOptions.captionLocation = .top
+        
         setupTestData()
         setupCollectionView()
     }

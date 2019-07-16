@@ -58,6 +58,7 @@ public struct SKCaptionOptions {
     public enum CaptionLocation {
         case basic
         case bottom
+        case top
     }
 
     public static var textColor: UIColor = .white

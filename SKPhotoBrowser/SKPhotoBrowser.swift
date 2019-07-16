@@ -145,6 +145,8 @@ open class SKPhotoBrowser: UIViewController {
             paginationView.updateFrame(frame: view.frame)
         case .bottom:
             paginationView.frame = frameForPaginationAtOrientation()
+        case .top:
+            paginationView.frame = CGRect(x: 0, y: SKMesurement.isPhoneX ? 2 : -8, width: view.frame.width, height: 100)
         }
         pagingScrollView.updateFrame(view.bounds, currentPageIndex: currentPageIndex)
 

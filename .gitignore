@@ -41,3 +41,5 @@ node_modules/
 
 # all-contributors
 .all-contributorsrc
+.idea/SKPhotoBrowser.iml
+SKPhotoBrowserExample/.idea/workspace.xml

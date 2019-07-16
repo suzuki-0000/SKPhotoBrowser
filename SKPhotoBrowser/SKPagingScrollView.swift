@@ -171,7 +171,7 @@ class SKPagingScrollView: UIScrollView {
         
         var frameSet = CGRect.zero
         switch SKCaptionOptions.captionLocation {
-        case .basic:
+        case .basic, .top:
             frameSet = paginationFrame
         case .bottom:
             frameSet = toolbarFrame

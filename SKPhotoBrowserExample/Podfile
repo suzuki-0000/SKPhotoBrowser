@@ -1,6 +1,8 @@
 platform :ios, '9.0'
-use_frameworks!
 
 target "SKPhotoBrowserExample" do
+    use_frameworks!
+    inhibit_all_warnings!
     pod 'SDWebImage'
+    pod 'Reveal-SDK', :configurations => ['Debug']
 end
