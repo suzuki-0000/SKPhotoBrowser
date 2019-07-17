@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1D41F2409C2CB5362D7E0A48 /* SubCationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D41F679E82FCD30989B22F1 /* SubCationView.swift */; };
 		212705891C92C69C00466223 /* FromCameraRollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212705881C92C69C00466223 /* FromCameraRollViewController.swift */; };
 		8909B55B1BC792150060A053 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8909B55A1BC792150060A053 /* AppDelegate.swift */; };
 		8909B55D1BC792150060A053 /* FromLocalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8909B55C1BC792150060A053 /* FromLocalViewController.swift */; };
@@ -71,6 +72,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1D41F679E82FCD30989B22F1 /* SubCationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubCationView.swift; sourceTree = "<group>"; };
 		212705881C92C69C00466223 /* FromCameraRollViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FromCameraRollViewController.swift; sourceTree = "<group>"; };
 		3CB7DBB2A904933FBC55D566 /* Pods-SKPhotoBrowserExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SKPhotoBrowserExample.release.xcconfig"; path = "Pods/Target Support Files/Pods-SKPhotoBrowserExample/Pods-SKPhotoBrowserExample.release.xcconfig"; sourceTree = "<group>"; };
 		6726ABE37DF17134C0BA8EBC /* Pods-SKPhotoBrowserExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SKPhotoBrowserExample.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SKPhotoBrowserExample/Pods-SKPhotoBrowserExample.debug.xcconfig"; sourceTree = "<group>"; };
@@ -179,6 +181,7 @@
 				89B7B9A922CA09C500A5E1B4 /* ZXFFromLocalViewController.swift */,
 				212705881C92C69C00466223 /* FromCameraRollViewController.swift */,
 				89FC5DBA1D54A04900F1BE52 /* FromWebViewController.swift */,
+				1D41F679E82FCD30989B22F1 /* SubCationView.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -382,6 +385,7 @@
 				8909B55B1BC792150060A053 /* AppDelegate.swift in Sources */,
 				89FC5DBB1D54A04900F1BE52 /* FromWebViewController.swift in Sources */,
 				89B7B9AA22CA09C500A5E1B4 /* ZXFFromLocalViewController.swift in Sources */,
+				1D41F2409C2CB5362D7E0A48 /* SubCationView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
