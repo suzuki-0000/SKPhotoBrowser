@@ -28,7 +28,7 @@ open class SKPhotoBrowser: UIViewController {
     // child component
     fileprivate var actionView: SKActionView!
     fileprivate(set) var paginationView: SKPaginationView!
-    var toolbar: SKToolbar!
+    var toolbar: SKToolbar?
 
     // actions
     fileprivate var activityViewController: UIActivityViewController!
@@ -111,7 +111,7 @@ open class SKPhotoBrowser: UIViewController {
         configureGestureControl()
         configureActionView()
         configurePaginationView()
-        configureToolbar()
+//        configureToolbar()
 
         animator.willPresent(self)
     }
@@ -134,7 +134,7 @@ open class SKPhotoBrowser: UIViewController {
         delegate?.didShowPhotoAtIndex?(self, index: currentPageIndex)
 
         // toolbar
-        toolbar.frame = frameForToolbarAtOrientation()
+        toolbar?.frame = frameForToolbarAtOrientation()
         
         // action
         actionView.updateFrame(frame: view.frame)
@@ -259,7 +259,7 @@ open class SKPhotoBrowser: UIViewController {
         } else {
             activityViewController.modalPresentationStyle = .popover
             let popover: UIPopoverPresentationController! = activityViewController.popoverPresentationController
-            popover.barButtonItem = toolbar.toolActionButton
+            popover.barButtonItem = toolbar?.toolActionButton
             present(activityViewController, animated: true, completion: nil)
         }
     }
@@ -504,7 +504,7 @@ internal extension SKPhotoBrowser {
                 
                 if let popoverController = actionSheetController.popoverPresentationController {
                     popoverController.sourceView = self.view
-                    popoverController.barButtonItem = toolbar.toolActionButton
+                    popoverController.barButtonItem = toolbar?.toolActionButton
                 }
                 
                 present(actionSheetController, animated: true, completion: { () -> Void in
@@ -576,8 +576,8 @@ private extension SKPhotoBrowser {
     }
     
     func configureToolbar() {
-        toolbar = SKToolbar(frame: frameForToolbarAtOrientation(), browser: self)
-        view.addSubview(toolbar)
+//        toolbar = SKToolbar(frame: frameForToolbarAtOrientation(), browser: self)
+//        view.addSubview(toolbar)
     }
 
     func setControlsHidden(_ hidden: Bool, animated: Bool, permanent: Bool) {
