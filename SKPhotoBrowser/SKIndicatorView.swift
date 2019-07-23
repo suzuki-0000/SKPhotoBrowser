@@ -9,6 +9,7 @@
 import UIKit
 
 class SKIndicatorView: UIActivityIndicatorView {
+    
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -18,5 +19,9 @@ class SKIndicatorView: UIActivityIndicatorView {
         center = CGPoint(x: frame.width / 2, y: frame.height / 2)
         style = SKPhotoBrowserOptions.indicatorStyle
         color = SKPhotoBrowserOptions.indicatorColor
+    }
+    
+    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+        return nil
     }
 }
