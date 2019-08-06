@@ -64,6 +64,35 @@ class SKImageButton: SKButton {
     }
 }
 
+class SKMenuButton: SKImageButton {
+    override var imageName: String { return "bt_common_menu_wh" }
+    override var marginX: CGFloat {
+        get {
+            return SKMesurement.screenWidth - SKButtonOptions.menuButtonPadding.x - self.size.width
+        }
+        set { super.marginX = newValue }
+    }
+    override var marginY: CGFloat {
+        get { return SKButtonOptions.menuButtonPadding.y + extraMarginY }
+        set { super.marginY = newValue }
+    }
+    
+    override var insets: UIEdgeInsets {
+        return .zero
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setup(imageName)
+        showFrame = CGRect(x: marginX, y: marginY, width: size.width, height: size.height)
+        hideFrame = CGRect(x: marginX, y: -marginY, width: size.width, height: size.height)
+    }
+}
+
 class SKCloseButton: SKImageButton {
     override var imageName: String { return "btn_common_close_wh" }
     override var marginX: CGFloat {

@@ -63,6 +63,13 @@ import Foundation
     @objc optional func removePhoto(_ browser: SKPhotoBrowser, index: Int, reload: @escaping (() -> Void))
     
     /**
+     Tells the delegate the user tapped on menu button
+     
+     - Parameter browser: reference to the calling SKPhotoBrowser
+     */
+    @objc optional func menuButtonDidTocuh(_ browser: SKPhotoBrowser)
+    
+    /**
      Tells the delegate that user liked a photo
      
      - Parameter browser: reference to the calling SKPhotoBrowser
