@@ -86,6 +86,13 @@ import Foundation
     @objc optional func editPhoto(_ browser: SKPhotoBrowser, index: Int)
     
     /**
+     Tells the delegate the user want to share media
+     
+     - Parameter browser: reference to the calling SKPhotoBrowser
+     */
+    @objc optional func shareMedia(_ browser: SKPhotoBrowser)
+    
+    /**
      Asks the delegate for the view for a certain photo. Needed to detemine the animation when presenting/closing the browser.
      
      - Parameter browser: reference to the calling SKPhotoBrowser

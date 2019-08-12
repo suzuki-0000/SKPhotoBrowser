@@ -97,7 +97,8 @@ private extension SKToolbar {
     }
     
     @objc func actionButtonPressed(_ sender: UIButton) {
-        self.browser?.actionButtonPressed(ignoreAndShare: true)
+        guard let browser = self.browser else { return }
+        browser.delegate?.shareMedia?(browser)
     }
     
     private func barBattonItem(imageName: String, selector: Selector) -> UIBarButtonItem {
