@@ -13,7 +13,11 @@ public let SKPHOTO_LOADING_DID_END_NOTIFICATION = "photoLoadingDidEndNotificatio
 // MARK: - SKPhotoBrowser
 open class SKPhotoBrowser: UIViewController {
     // open function
-    open var currentPageIndex: Int = 0
+    open var currentPageIndex: Int = 0 {
+        didSet {
+            self.setupLiked()
+        }
+    }
     open var initPageIndex: Int = 0
     open var activityItemProvider: UIActivityItemProvider?
     open var photos: [SKPhotoProtocol] = []
@@ -148,6 +152,7 @@ open class SKPhotoBrowser: UIViewController {
         }
         pagingScrollView.updateFrame(view.bounds, currentPageIndex: currentPageIndex)
 
+        self.setupLiked()
         isPerformingLayout = false
     }
     
@@ -420,6 +425,13 @@ internal extension SKPhotoBrowser {
         pageFrame.size.width -= (2 * 10)
         pageFrame.origin.x = (bounds.size.width * CGFloat(index)) + 10
         return pageFrame
+    }
+    
+    func setupLiked() {
+        if let toolbar = self.toolbar {
+            let photo = self.photos[currentPageIndex]
+            toolbar.isLiked = photo.isLiked
+        }
     }
 }
 

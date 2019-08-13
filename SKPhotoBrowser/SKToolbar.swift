@@ -14,8 +14,18 @@ private let bundle = Bundle(for: SKPhotoBrowser.self)
 // TODO: [refactoring] make toolbar more customizable
 
 class SKToolbar: UIToolbar {
+    
+    open var isLiked: Bool = false {
+        didSet {
+            self.likeButton?.isLiked = self.isLiked
+        }
+    }
+    
     var toolActionButton: UIBarButtonItem!
+    
     fileprivate weak var browser: SKPhotoBrowser?
+    
+    fileprivate weak var likeButton: SKLikeButton?
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -57,7 +67,7 @@ private extension SKToolbar {
         var items = [UIBarButtonItem]()
         
         self.toolActionButton = self.barBattonItem(imageName: "SKPhotoBrowser.bundle/images/btn_common_action_wh",
-                                              selector: #selector(actionButtonPressed))
+                                                   selector: #selector(actionButtonPressed))
         
         let likeItem = self.getLikedBarButton(selector: #selector(likeButtonPressed(_:)))
         
@@ -120,6 +130,7 @@ private extension SKToolbar {
         button.imageView?.contentMode = .scaleAspectFit
         button.frame = CGRect(x: 0, y: 0, width: 32, height: 32)
         button.tintColor = .white
+        self.likeButton = button
         return UIBarButtonItem(customView: button)
     }
 }
