@@ -494,42 +494,6 @@ internal extension SKPhotoBrowser {
             }
         }
     }
-   
-    @objc func actionButtonPressed(ignoreAndShare: Bool) {
-        delegate?.willShowActionSheet?(currentPageIndex)
-        
-        guard photos.count > 0 else {
-            return
-        }
-        
-        if let titles = SKPhotoBrowserOptions.actionButtonTitles {
-            let actionSheetController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-            actionSheetController.addAction(UIAlertAction(title: cancelTitle, style: .cancel))
-            
-            for idx in titles.indices {
-                actionSheetController.addAction(UIAlertAction(title: titles[idx], style: .default, handler: { (_) -> Void in
-                    self.delegate?.didDismissActionSheetWithButtonIndex?(idx, photoIndex: self.currentPageIndex)
-                }))
-            }
-            
-            if UI_USER_INTERFACE_IDIOM() == .phone {
-                present(actionSheetController, animated: true, completion: nil)
-            } else {
-                actionSheetController.modalPresentationStyle = .popover
-                
-                if let popoverController = actionSheetController.popoverPresentationController {
-                    popoverController.sourceView = self.view
-                    popoverController.barButtonItem = toolbar.toolActionButton
-                }
-                
-                present(actionSheetController, animated: true, completion: { () -> Void in
-                })
-            }
-            
-        } else {
-            popupShare()
-        }
-    }
     
     func deleteImage() {
         defer {

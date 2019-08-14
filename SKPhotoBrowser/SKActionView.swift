@@ -12,6 +12,7 @@ class SKActionView: UIView {
     internal weak var browser: SKPhotoBrowser?
     internal var closeButton: SKCloseButton!
     internal var deleteButton: SKDeleteButton!
+    internal var menuButton: SKMenuButton!
     
     // Action
     fileprivate var cancelTitle = "Cancel"
@@ -37,11 +38,12 @@ class SKActionView: UIView {
         self.configureSubstrates()
         configureCloseButton()
         configureDeleteButton()
+        configureMenuButton()
     }
     
     override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
         if let view = super.hitTest(point, with: event) {
-            if closeButton.frame.contains(point) || deleteButton.frame.contains(point) {
+            if closeButton.frame.contains(point) || deleteButton.frame.contains(point) || menuButton.frame.contains(point)  {
                 return view
             }
             return nil
@@ -65,6 +67,7 @@ class SKActionView: UIView {
     func animate(hidden: Bool) {
         let closeFrame: CGRect = hidden ? closeButton.hideFrame : closeButton.showFrame
         let deleteFrame: CGRect = hidden ? deleteButton.hideFrame : deleteButton.showFrame
+        let menuFrame: CGRect = hidden ? menuButton.hideFrame : menuButton.showFrame
         UIView.animate(withDuration: 0.35,
                        animations: { () -> Void in
                         let alpha: CGFloat = hidden ? 0.0 : 1.0
@@ -76,6 +79,10 @@ class SKActionView: UIView {
                         if SKPhotoBrowserOptions.displayDeleteButton {
                             self.deleteButton.alpha = alpha
                             self.deleteButton.frame = deleteFrame
+                        }
+                        if SKPhotoBrowserOptions.displayMenuButton {
+                            self.menuButton.alpha = alpha
+                            self.menuButton.frame = menuFrame
                         }
                         self.substrates.forEach { substrate in
                             substrate.transform = hidden
@@ -97,6 +104,12 @@ class SKActionView: UIView {
         browser.delegate?.removePhoto?(browser, index: browser.currentPageIndex) { [weak self] in
             self?.browser?.deleteImage()
         }
+    }
+    
+    @objc func menuButtonPressed(_ sender: UIButton) {
+        guard let browser = self.browser else { return }
+        browser.delegate?.menuButtonDidTocuh?(browser)
+        
     }
 }
 
@@ -132,6 +145,23 @@ extension SKActionView {
         
         if let image = image {
             deleteButton.setImage(image, for: .normal)
+        }
+    }
+    
+    func configureMenuButton(image: UIImage? = nil, size: CGSize? = nil) {
+        if menuButton == nil {
+            menuButton = SKMenuButton(frame: .zero)
+            menuButton.addTarget(self, action: #selector(menuButtonPressed(_:)), for: .touchUpInside)
+            menuButton.isHidden = !SKPhotoBrowserOptions.displayMenuButton
+            addSubview(menuButton)
+        }
+        
+        if let size = size {
+            menuButton.setFrameSize(size)
+        }
+        
+        if let image = image {
+            menuButton.setImage(image, for: .normal)
         }
     }
     

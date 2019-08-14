@@ -63,11 +63,19 @@ import Foundation
     @objc optional func removePhoto(_ browser: SKPhotoBrowser, index: Int, reload: @escaping (() -> Void))
     
     /**
+     Tells the delegate the user tapped on menu button
+     
+     - Parameter browser: reference to the calling SKPhotoBrowser
+     */
+    @objc optional func menuButtonDidTocuh(_ browser: SKPhotoBrowser)
+    
+    /**
      Tells the delegate that user liked a photo
      
      - Parameter browser: reference to the calling SKPhotoBrowser
      - Parameter index: the index of the liked photo
      */
+
     @objc optional func changeLikedState(_ browser: SKPhotoBrowser, index: Int, sender: SKLikeButton)
     
     /**
@@ -77,6 +85,13 @@ import Foundation
      - Parameter index: the index of the editing photo
      */
     @objc optional func editPhoto(_ browser: SKPhotoBrowser, index: Int)
+    
+    /**
+     Tells the delegate the user want to share media
+     
+     - Parameter browser: reference to the calling SKPhotoBrowser
+     */
+    @objc optional func shareMedia(_ browser: SKPhotoBrowser)
     
     /**
      Asks the delegate for the view for a certain photo. Needed to detemine the animation when presenting/closing the browser.
