@@ -11,13 +11,11 @@ import Foundation
 // helpers which often used
 private let bundle = Bundle(for: SKPhotoBrowser.self)
 
-// TODO: [refactoring] make toolbar more customizable
-
 class SKToolbar: UIToolbar {
     
     open var isLiked: Bool = false {
         didSet {
-            self.likeButton?.isLiked = self.isLiked
+            self.likeButton?.isSelected = self.isLiked
         }
     }
     
@@ -96,7 +94,7 @@ private extension SKToolbar {
     
     @objc func likeButtonPressed(_ sender: SKLikeButton) {
         guard let browser = self.browser else { return }
-        browser.delegate?.likePhoto?(browser, index: browser.currentPageIndex, sender: sender)
+        browser.delegate?.changeLikedState?(browser, index: browser.currentPageIndex, sender: sender)
     }
     
     @objc func deleteButtonPressed(_ sender: UIButton) {
@@ -125,7 +123,7 @@ private extension SKToolbar {
     
     private func getLikedBarButton(selector: Selector) -> UIBarButtonItem {
         let button = SKLikeButton(type: .custom)
-        button.isLiked = false
+        button.isSelected = false
         button.addTarget(self, action: selector, for: .touchUpInside)
         button.imageView?.contentMode = .scaleAspectFit
         button.frame = CGRect(x: 0, y: 0, width: 32, height: 32)
