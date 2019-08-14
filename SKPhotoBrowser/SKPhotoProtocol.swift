@@ -20,6 +20,8 @@ import Foundation
     var contentMode: UIView.ContentMode { get set }
     var type: MediaType { get }
     
+    var isLiked: Bool { get set }
+    
     var videoStreamURL: String? { get set }
     
     func loadUnderlyingImageAndNotify()

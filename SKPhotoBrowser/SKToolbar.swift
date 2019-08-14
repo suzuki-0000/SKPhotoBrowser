@@ -14,8 +14,18 @@ private let bundle = Bundle(for: SKPhotoBrowser.self)
 // TODO: [refactoring] make toolbar more customizable
 
 class SKToolbar: UIToolbar {
+    
+    open var isLiked: Bool = false {
+        didSet {
+            self.likeButton?.isSelected = self.isLiked
+        }
+    }
+    
     var toolActionButton: UIBarButtonItem!
+    
     fileprivate weak var browser: SKPhotoBrowser?
+    
+    fileprivate weak var likeButton: SKLikeButton?
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -57,7 +67,7 @@ private extension SKToolbar {
         var items = [UIBarButtonItem]()
         
         self.toolActionButton = self.barBattonItem(imageName: "SKPhotoBrowser.bundle/images/btn_common_action_wh",
-                                              selector: #selector(actionButtonPressed))
+                                                   selector: #selector(actionButtonPressed))
         
         let likeItem = self.getLikedBarButton(selector: #selector(likeButtonPressed(_:)))
         
@@ -77,8 +87,27 @@ private extension SKToolbar {
         
         self.setItems(items, animated: false)
         
+        items.append(contentsOf: [toolActionButton,
+                                  UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil),
+                                  likeItem,
+                                  UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil),
+                                  editItem,
+                                  UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil),
+                                  deleteItem])
+        
+        self.setItems(items, animated: false)
+        
     }
     
+    @objc func editButtonPressed(_ sender: UIBarButtonItem) {
+        guard let browser = self.browser else { return }
+        browser.delegate?.editPhoto?(browser, index: browser.currentPageIndex)
+    }
+    
+    @objc func likeButtonPressed(_ sender: SKLikeButton) {
+        guard let browser = self.browser else { return }
+        browser.delegate?.changeLikedState?(browser, index: browser.currentPageIndex, sender: sender)
+
     @objc func editButtonPressed(_ sender: UIBarButtonItem) {
         guard let browser = self.browser else { return }
         browser.delegate?.editPhoto?(browser, index: browser.currentPageIndex)
@@ -116,11 +145,12 @@ private extension SKToolbar {
     
     private func getLikedBarButton(selector: Selector) -> UIBarButtonItem {
         let button = SKLikeButton(type: .custom)
-        button.isLiked = false
+        button.isSelected = false
         button.addTarget(self, action: selector, for: .touchUpInside)
         button.imageView?.contentMode = .scaleAspectFit
         button.frame = CGRect(x: 0, y: 0, width: 32, height: 32)
         button.tintColor = .white
+        self.likeButton = button
         return UIBarButtonItem(customView: button)
     }
 }

@@ -75,7 +75,8 @@ import Foundation
      - Parameter browser: reference to the calling SKPhotoBrowser
      - Parameter index: the index of the liked photo
      */
-    @objc optional func likePhoto(_ browser: SKPhotoBrowser, index: Int, sender: SKLikeButton)
+
+    @objc optional func changeLikedState(_ browser: SKPhotoBrowser, index: Int, sender: SKLikeButton)
     
     /**
      Tells the delegate the user want to edit a photo

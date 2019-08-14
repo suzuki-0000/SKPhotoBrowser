@@ -20,6 +20,9 @@ open class SKLocalPhoto: NSObject, SKPhotoProtocol {
     open var type: MediaType {
         return .image
     }
+    
+    open var isLiked: Bool = false
+    
     open var videoStreamURL: String?
     
     override init() {
