@@ -34,7 +34,6 @@ class SKActionView: UIView {
     convenience init(frame: CGRect, browser: SKPhotoBrowser) {
         self.init(frame: frame)
         self.browser = browser
-
         self.configureSubstrates()
         configureCloseButton()
         configureDeleteButton()
@@ -52,10 +51,14 @@ class SKActionView: UIView {
     }
     
     func updateFrame(frame: CGRect) {
-        self.frame = frame
-        setNeedsDisplay()
+        self.layoutIfNeeded()
+        self.substrates.forEach { substrate in
+            substrate.layer.sublayers?.forEach {
+                $0.frame = substrate.bounds
+            }
+        }
     }
-
+    
     func updateCloseButton(image: UIImage, size: CGSize? = nil) {
         configureCloseButton(image: image, size: size)
     }
@@ -67,11 +70,11 @@ class SKActionView: UIView {
     func animate(hidden: Bool) {
         let closeFrame: CGRect = hidden ? closeButton.hideFrame : closeButton.showFrame
         let deleteFrame: CGRect = hidden ? deleteButton.hideFrame : deleteButton.showFrame
-        let menuFrame: CGRect = hidden ? menuButton.hideFrame : menuButton.showFrame
+        let menuFrame: CGRect = hidden ? menuButton.calculateHideRect() : menuButton.calculateShowRect()
         UIView.animate(withDuration: 0.35,
                        animations: { () -> Void in
                         let alpha: CGFloat = hidden ? 0.0 : 1.0
-
+                        
                         if SKPhotoBrowserOptions.displayCloseButton {
                             self.closeButton.alpha = alpha
                             self.closeButton.frame = closeFrame
@@ -121,7 +124,7 @@ extension SKActionView {
             closeButton.isHidden = !SKPhotoBrowserOptions.displayCloseButton
             addSubview(closeButton)
         }
-
+        
         if let size = size {
             closeButton.setFrameSize(size)
         }
@@ -172,26 +175,39 @@ extension SKActionView {
         self.setupTopSubstrate(blackColor, clearColor)
         self.setupBottomSubstrate(clearColor, blackColor)
     }
-
+    
     private func setupTopSubstrate(_ colors: CGColor...) {
         let topSubstrateFrame = CGRect(
             x: 0, y: 0,
             width: self.bounds.width, height: Constants.substrateHeight)
-        self.setupSubstrateView(frame: topSubstrateFrame, colors)
+        
+        let substrate = UIView(frame: topSubstrateFrame)
+        let substrateLayer = self.gradientLayer(with: substrate.bounds, colors: colors)
+        substrate.layer.insertSublayer(substrateLayer, at: 0)
+        self.addSubview(substrate)
+        substrate.translatesAutoresizingMaskIntoConstraints = false
+        substrate.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
+        substrate.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
+        substrate.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
+        substrate.heightAnchor.constraint(equalToConstant: Constants.substrateHeight).isActive = true
+        
+        self.substrates.append(substrate)
     }
     
     private func setupBottomSubstrate(_ colors: CGColor...) {
         let bottomSubstrateFrame = CGRect(
             x: 0, y: self.bounds.height - Constants.substrateHeight,
             width: self.bounds.width, height: Constants.substrateHeight)
-        self.setupSubstrateView(frame: bottomSubstrateFrame, colors)
-    }
-    
-    fileprivate func setupSubstrateView(frame substrateFrame: CGRect, _ colors: [CGColor]) {
-        let substrate = UIView(frame: substrateFrame)
+        let substrate = UIView(frame: bottomSubstrateFrame)
         let substrateLayer = self.gradientLayer(with: substrate.bounds, colors: colors)
         substrate.layer.insertSublayer(substrateLayer, at: 0)
         self.addSubview(substrate)
+        substrate.translatesAutoresizingMaskIntoConstraints = false
+        substrate.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+        substrate.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
+        substrate.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
+        substrate.heightAnchor.constraint(equalToConstant: Constants.substrateHeight).isActive = true
+        
         self.substrates.append(substrate)
     }
     

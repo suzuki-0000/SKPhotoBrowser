@@ -36,7 +36,7 @@ class SKButton: UIButton {
         let image = UIImage(named: "SKPhotoBrowser.bundle/images/\(imageName)", in: bundle, compatibleWith: nil) ?? UIImage()
         setImage(image, for: .normal)
     }
-  
+    
     func setFrameSize(_ size: CGSize? = nil) {
         guard let size = size else { return }
         
@@ -51,7 +51,6 @@ class SKButton: UIButton {
 
 class SKImageButton: SKButton {
     fileprivate var imageName: String { return "" }
-
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -65,6 +64,7 @@ class SKImageButton: SKButton {
 }
 
 class SKMenuButton: SKImageButton {
+    
     override var imageName: String { return "bt_common_menu_wh" }
     override var marginX: CGFloat {
         get {
@@ -72,6 +72,9 @@ class SKMenuButton: SKImageButton {
         }
         set { super.marginX = newValue }
     }
+    
+    
+    
     override var marginY: CGFloat {
         get { return SKButtonOptions.menuButtonPadding.y + extraMarginY }
         set { super.marginY = newValue }
@@ -90,6 +93,18 @@ class SKMenuButton: SKImageButton {
         setup(imageName)
         showFrame = CGRect(x: marginX, y: marginY, width: size.width, height: size.height)
         hideFrame = CGRect(x: marginX, y: -marginY, width: size.width, height: size.height)
+    }
+    
+    func calculateHideRect() -> CGRect {
+        let marginx = SKMesurement.screenWidth - SKButtonOptions.menuButtonPadding.x - self.size.width
+        let frame = CGRect(x: marginx, y: hideFrame.minY, width: self.size.width, height: self.size.height)
+        return frame
+    }
+    
+    func calculateShowRect() -> CGRect {
+        let marginx = SKMesurement.screenWidth - SKButtonOptions.menuButtonPadding.x - self.size.width
+        let frame = CGRect(x: marginx, y: showFrame.minY, width: self.size.width, height: self.size.height)
+        return frame
     }
 }
 
@@ -138,11 +153,11 @@ class SKDeleteButton: SKImageButton {
         get { return SKButtonOptions.deleteButtonPadding.y + extraMarginY }
         set { super.marginY = newValue }
     }
-
+    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setup(imageName)

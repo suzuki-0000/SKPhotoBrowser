@@ -87,16 +87,6 @@ private extension SKToolbar {
         
         self.setItems(items, animated: false)
         
-        items.append(contentsOf: [toolActionButton,
-                                  UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil),
-                                  likeItem,
-                                  UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil),
-                                  editItem,
-                                  UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil),
-                                  deleteItem])
-        
-        self.setItems(items, animated: false)
-        
     }
     
     @objc func editButtonPressed(_ sender: UIBarButtonItem) {
@@ -107,15 +97,6 @@ private extension SKToolbar {
     @objc func likeButtonPressed(_ sender: SKLikeButton) {
         guard let browser = self.browser else { return }
         browser.delegate?.changeLikedState?(browser, index: browser.currentPageIndex, sender: sender)
-
-    @objc func editButtonPressed(_ sender: UIBarButtonItem) {
-        guard let browser = self.browser else { return }
-        browser.delegate?.editPhoto?(browser, index: browser.currentPageIndex)
-    }
-    
-    @objc func likeButtonPressed(_ sender: SKLikeButton) {
-        guard let browser = self.browser else { return }
-        browser.delegate?.likePhoto?(browser, index: browser.currentPageIndex, sender: sender)
     }
     
     @objc func deleteButtonPressed(_ sender: UIButton) {

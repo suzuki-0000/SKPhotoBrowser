@@ -547,6 +547,11 @@ private extension SKPhotoBrowser {
     func configureActionView() {
         actionView = SKActionView(frame: view.frame, browser: self)
         view.addSubview(actionView)
+        actionView.translatesAutoresizingMaskIntoConstraints = false
+        actionView.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
+        actionView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
+        actionView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
+        actionView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
     }
 
     func configurePaginationView() {
