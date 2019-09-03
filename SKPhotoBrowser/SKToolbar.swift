@@ -50,7 +50,11 @@ private extension SKToolbar {
     }
     
     func setupToolbar() {
-        toolActionButton = UIBarButtonItem(barButtonSystemItem: .action, target: browser, action: #selector(SKPhotoBrowser.actionButtonPressed))
+        let btn = UIButton(type: .custom)
+        btn.setImage(UIImage(named: "SKPhotoBrowser.bundle/images/savePhoto", in: bundle, compatibleWith: nil) ?? UIImage(), for: .normal)
+        btn.addTarget(browser, action: #selector(SKPhotoBrowser.actionButtonPressed), for: .touchUpInside)
+//        toolActionButton = UIBarButtonItem(barButtonSystemItem: .save, target: browser, action: #selector(SKPhotoBrowser.actionButtonPressed))
+        toolActionButton = UIBarButtonItem(customView: btn)
         toolActionButton.tintColor = UIColor.white
         
         var items = [UIBarButtonItem]()

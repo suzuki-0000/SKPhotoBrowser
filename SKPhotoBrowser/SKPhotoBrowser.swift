@@ -28,7 +28,7 @@ open class SKPhotoBrowser: UIViewController {
     // child component
     fileprivate var actionView: SKActionView!
     fileprivate(set) var paginationView: SKPaginationView!
-    var toolbar: SKToolbar?
+    var toolbar: SKToolbar!
 
     // actions
     fileprivate var activityViewController: UIActivityViewController!
@@ -111,7 +111,7 @@ open class SKPhotoBrowser: UIViewController {
         configureGestureControl()
         configureActionView()
         configurePaginationView()
-//        configureToolbar()
+        configureToolbar()
 
         animator.willPresent(self)
     }
@@ -576,8 +576,8 @@ private extension SKPhotoBrowser {
     }
     
     func configureToolbar() {
-//        toolbar = SKToolbar(frame: frameForToolbarAtOrientation(), browser: self)
-//        view.addSubview(toolbar)
+        toolbar = SKToolbar(frame: frameForToolbarAtOrientation(), browser: self)
+        view.addSubview(toolbar)
     }
 
     func setControlsHidden(_ hidden: Bool, animated: Bool, permanent: Bool) {
