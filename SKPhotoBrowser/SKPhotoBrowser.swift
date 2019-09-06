@@ -230,38 +230,39 @@ open class SKPhotoBrowser: UIViewController {
     }
     
     open func popupShare(includeCaption: Bool = true) {
-        let photo = photos[currentPageIndex]
-        guard let underlyingImage = photo.underlyingImage else {
-            return
-        }
-        
-        var activityItems: [AnyObject] = [underlyingImage]
-        if photo.caption != nil && includeCaption {
-            if let shareExtraCaption = SKPhotoBrowserOptions.shareExtraCaption {
-                let caption = photo.caption ?? "" + shareExtraCaption
-                activityItems.append(caption as AnyObject)
-            } else {
-                activityItems.append(photo.caption as AnyObject)
-            }
-        }
-        
-        if let activityItemProvider = activityItemProvider {
-            activityItems.append(activityItemProvider)
-        }
-        
-        activityViewController = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
-        activityViewController.completionWithItemsHandler = { (activity, success, items, error) in
-            self.hideControlsAfterDelay()
-            self.activityViewController = nil
-        }
-        if UI_USER_INTERFACE_IDIOM() == .phone {
-            present(activityViewController, animated: true, completion: nil)
-        } else {
-            activityViewController.modalPresentationStyle = .popover
-            let popover: UIPopoverPresentationController! = activityViewController.popoverPresentationController
-            popover.barButtonItem = toolbar?.toolActionButton
-            present(activityViewController, animated: true, completion: nil)
-        }
+        print("下载下载下载")
+//        let photo = photos[currentPageIndex]
+//        guard let underlyingImage = photo.underlyingImage else {
+//            return
+//        }
+//
+//        var activityItems: [AnyObject] = [underlyingImage]
+//        if photo.caption != nil && includeCaption {
+//            if let shareExtraCaption = SKPhotoBrowserOptions.shareExtraCaption {
+//                let caption = photo.caption ?? "" + shareExtraCaption
+//                activityItems.append(caption as AnyObject)
+//            } else {
+//                activityItems.append(photo.caption as AnyObject)
+//            }
+//        }
+//
+//        if let activityItemProvider = activityItemProvider {
+//            activityItems.append(activityItemProvider)
+//        }
+//
+//        activityViewController = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
+//        activityViewController.completionWithItemsHandler = { (activity, success, items, error) in
+//            self.hideControlsAfterDelay()
+//            self.activityViewController = nil
+//        }
+//        if UI_USER_INTERFACE_IDIOM() == .phone {
+//            present(activityViewController, animated: true, completion: nil)
+//        } else {
+//            activityViewController.modalPresentationStyle = .popover
+//            let popover: UIPopoverPresentationController! = activityViewController.popoverPresentationController
+//            popover.barButtonItem = toolbar?.toolActionButton
+//            present(activityViewController, animated: true, completion: nil)
+//        }
     }
 }
 
@@ -616,6 +617,7 @@ extension SKPhotoBrowser: UIScrollViewDelegate {
         currentPageIndex = min(max(Int(floor(visibleBounds.midX / visibleBounds.width)), 0), photos.count - 1)
         
         if currentPageIndex != previousCurrentPage {
+            (toolbar.toolActionButton.customView as! UIButton).isEnabled = photos[currentPageIndex].underlyingImage != nil
             delegate?.didShowPhotoAtIndex?(self, index: currentPageIndex)
             paginationView.update(currentPageIndex)
         }
