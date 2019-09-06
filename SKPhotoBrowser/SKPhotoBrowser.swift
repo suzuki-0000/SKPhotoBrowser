@@ -551,6 +551,7 @@ private extension SKPhotoBrowser {
     
     func configureToolbar() {
         toolbar = SKToolbar(frame: frameForToolbarAtOrientation(), browser: self)
+        (toolbar.toolActionButton.customView as! UIButton).isEnabled = photos[currentPageIndex].underlyingImage != nil
         view.addSubview(toolbar)
     }
 
