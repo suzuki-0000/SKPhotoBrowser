@@ -2,5 +2,5 @@ platform :ios, '9.0'
 use_frameworks!
 
 target "SKPhotoBrowserExample" do
-    pod 'SDWebImage', '~>3.8'
+    pod 'SDWebImage'
 end

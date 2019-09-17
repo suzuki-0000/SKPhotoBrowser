@@ -118,8 +118,7 @@ class SKPagingScrollView: UIScrollView {
         let lastIndex: Int = getLastIndex()
         
         visiblePages
-            .filter({ $0.tag - pageIndexTagOffset < firstIndex })
-            .filter({ $0.tag - pageIndexTagOffset > lastIndex })
+            .filter({ $0.tag - pageIndexTagOffset < firstIndex ||  $0.tag - pageIndexTagOffset > lastIndex })
             .forEach { page in
                 recycledPages.append(page)
                 page.prepareForReuse()
@@ -142,7 +141,13 @@ class SKPagingScrollView: UIScrollView {
             let page: SKZoomingScrollView = SKZoomingScrollView(frame: frame, browser: browser)
             page.frame = frameForPageAtIndex(index)
             page.tag = index + pageIndexTagOffset
-            page.photo = browser.photos[index]
+            let photo = browser.photos[index]
+            page.photo = photo
+            if let thumbnail = browser.animator.senderOriginImage,
+                index == browser.initPageIndex,
+                photo.underlyingImage == nil {
+                page.displayImage(thumbnail)
+            }
             
             visiblePages.append(page)
             addSubview(page)

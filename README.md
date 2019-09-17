@@ -5,7 +5,7 @@ Simple PhotoBrowser/Viewer inspired by facebook, twitter photo browsers written 
 
 <p align="center">
 <a href="https://developer.apple.com/swift">
-   <img alt="Swift4" src="https://img.shields.io/badge/language-swift4.2-orange.svg?style=flat" />
+   <img alt="Swift5" src="https://img.shields.io/badge/language-swift5.0-orange.svg?style=flat" />
  </a>
 <a href="http://cocoadocs.org/docsets/SKPhotoBrowser">
   <img src="https://img.shields.io/cocoapods/v/SKPhotoBrowser.svg?style=flat" />
@@ -16,7 +16,7 @@ Simple PhotoBrowser/Viewer inspired by facebook, twitter photo browsers written 
 <a href="https://developer.apple.com/swift/">
    <img alt="Platform" src="https://img.shields.io/badge/platform-iOS-green.svg" /></a>
 <a href="">
-   <img alt="Contributors" src="https://img.shields.io/badge/all_contributors-20-orange.svg?style=flat-square" /></a>
+   <img alt="Contributors" src="https://img.shields.io/badge/all_contributors-66-orange.svg?style=flat-square" /></a>
 </p>
 
 
@@ -44,6 +44,7 @@ Below is a table that shows which version of SKPhotoBrowser you should use for y
 
 | Swift version | SKPhotoBrowser version    |
 | ------------- | --------------- |
+| 5.0           | >= 6.1.0 |
 | 4.2           | >= 6.0.0 |
 | 4.1           | >= 5.0.0 |
 | 3.2           | >= 4.0.0 |
@@ -79,7 +80,7 @@ images.append(photo)
 // 2. create PhotoBrowser Instance, and present from your viewController. 
 let browser = SKPhotoBrowser(photos: images)
 browser.initializePageIndex(0)
-presentViewController(browser, animated: true, completion: {})
+present(browser, animated: true, completion: {})
 ```
 
 from URLs:
@@ -93,7 +94,7 @@ images.append(photo)
 // 2. create PhotoBrowser Instance, and present. 
 let browser = SKPhotoBrowser(photos: images)
 browser.initializePageIndex(0)
-presentViewController(browser, animated: true, completion: {})
+present(browser, animated: true, completion: {})
 ```
 
 from local files:
@@ -106,7 +107,7 @@ images.append(photo)
 // 2. create PhotoBrowser Instance, and present. 
 let browser = SKPhotoBrowser(photos: images)
 browser.initializePageIndex(0)
-presentViewController(browser, animated: true, completion: {})
+present(browser, animated: true, completion: {})
 ```
 
 If you want to use zooming effect from an existing view, use another initializer:
@@ -118,7 +119,7 @@ func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath i
 
    let browser = SKPhotoBrowser(originImage: originImage ?? UIImage(), photos: images, animatedFromView: cell) 
    browser.initializePageIndex(indexPath.row)
-   presentViewController(browser, animated: true, completion: {})
+   present(browser, animated: true, completion: {})
 }
 ```
 

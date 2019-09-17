@@ -11,11 +11,8 @@ import Photos
 import SKPhotoBrowser
 
 class FromCameraRollViewController: UIViewController, SKPhotoBrowserDelegate, UICollectionViewDataSource, UICollectionViewDelegate {
-
     @IBOutlet weak var collectionView: UICollectionView!
-    
     fileprivate let imageManager = PHCachingImageManager.default()
-    
     fileprivate var assets: [PHAsset] = []
     
     fileprivate lazy var requestOptions: PHImageRequestOptions = {
@@ -89,7 +86,6 @@ class FromCameraRollViewController: UIViewController, SKPhotoBrowserDelegate, UI
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
         guard let cell = collectionView.cellForItem(at: indexPath) as? ExampleCollectionViewCell else {
             return
         }
@@ -100,7 +96,6 @@ class FromCameraRollViewController: UIViewController, SKPhotoBrowserDelegate, UI
         func open(_ images: [UIImage]) {
             let photoImages: [SKPhotoProtocol] = images.map({ return SKPhoto.photoWithImage($0) })
             let browser = SKPhotoBrowser(originImage: cell.exampleImageView.image!, photos: photoImages, animatedFromView: cell)
-            
             browser.initializePageIndex(indexPath.row)
             browser.delegate = self
 //            browser.displayDeleteButton = true
@@ -115,7 +110,7 @@ class FromCameraRollViewController: UIViewController, SKPhotoBrowserDelegate, UI
             
             _ = requestImageForAsset(asset, options: bigRequestOptions, completion: { [weak self] (image, _) -> Void in
                 
-                if let image = image, let index = self?.assets.index(of: asset) {
+                if let image = image, let index = self?.assets.firstIndex(of: asset) {
                     fetchedImages[index] = image
                 }
                 fetched += 1
