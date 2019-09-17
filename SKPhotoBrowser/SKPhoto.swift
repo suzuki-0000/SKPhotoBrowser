@@ -83,7 +83,7 @@ open class SKPhoto: NSObject, SKPhotoProtocol {
                     return
                 }
 
-                if let data = data, let response = response, let image = UIImage(data: data) {
+                if let data = data, let response = response, let image = UIImage.animatedImage(withAnimatedGIFData: data) {
                     if self.shouldCachePhotoURLImage {
                         if SKCache.sharedCache.imageCache is SKRequestResponseCacheable {
                             SKCache.sharedCache.setImageData(data, response: response, request: task?.originalRequest)
