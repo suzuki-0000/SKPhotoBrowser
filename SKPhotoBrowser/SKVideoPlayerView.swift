@@ -36,6 +36,7 @@ class SKVideoPlayerView: UIView, PresentableViewType {
             let playerItem = AVPlayerItem(asset: asset)
             self.playerController.player = AVPlayer(playerItem: playerItem)
             self.setObservation(in: self.playerController.player!)
+            self.playerController.view.frame = self.bounds
             self.playerController.player?.allowsExternalPlayback = true
             self.playerController.showsPlaybackControls = false
         }
