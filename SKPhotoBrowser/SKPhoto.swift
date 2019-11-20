@@ -21,7 +21,7 @@ open class SKPhoto: NSObject, SKPhotoProtocol {
     
     open var isLiked: Bool = false
     
-    open var videoStreamURL: String?
+    open var videoStreamURL: URL?
     
     override init() {
         super.init()

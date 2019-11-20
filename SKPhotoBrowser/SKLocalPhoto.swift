@@ -17,13 +17,11 @@ open class SKLocalPhoto: NSObject, SKPhotoProtocol {
     open var shouldCachePhotoURLImage: Bool = false
     open var caption: String?
     open var index: Int = 0
-    open var type: MediaType {
-        return .image
-    }
+    open var type: MediaType = .image
     
     open var isLiked: Bool = false
     
-    open var videoStreamURL: String?
+    open var videoStreamURL: URL?
     
     override init() {
         super.init()
@@ -47,17 +45,16 @@ open class SKLocalPhoto: NSObject, SKPhotoProtocol {
         if underlyingImage != nil && photoURL == nil {
             loadUnderlyingImageComplete()
         }
-        
-        if photoURL != nil {
-            // Fetch Image
-            if FileManager.default.fileExists(atPath: photoURL) {
-                if let data = FileManager.default.contents(atPath: photoURL) {
-                    self.loadUnderlyingImageComplete()
-                    if let image = UIImage(data: data) {
-                        self.underlyingImage = image
-                        self.loadUnderlyingImageComplete()
-                    }
-                }
+        guard photoURL != nil
+            , FileManager.default.fileExists(atPath: photoURL) else {
+                return
+        }
+        if self.type == .image
+            , let data = FileManager.default.contents(atPath: photoURL) {
+            self.loadUnderlyingImageComplete()
+            if let image = UIImage(data: data) {
+                self.underlyingImage = image
+                self.loadUnderlyingImageComplete()
             }
         }
     }

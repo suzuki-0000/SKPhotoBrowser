@@ -27,14 +27,21 @@ class SKVideoPlayerView: UIView, PresentableViewType {
                 displayImage(complete: false)
             }
             guard let video = self.photo
-                , let videoURL = video.videoStreamURL
-                , let url = URL(string: videoURL) else {
+                , let videoURL = video.videoStreamURL else {
                 return
             }
-            let header = SKPhotoBrowserOptions.sessionConfiguration.httpAdditionalHeaders
-            let asset: AVURLAsset = AVURLAsset.init(url: url, options: ["AVURLAssetHTTPHeaderFieldsKey": header as Any])
-            let playerItem = AVPlayerItem(asset: asset)
-            self.playerController.player = AVPlayer(playerItem: playerItem)
+            let player: AVPlayer
+            if videoURL.isFileURL {
+                player = AVPlayer(url: videoURL)
+            } else {
+                let header = SKPhotoBrowserOptions.sessionConfiguration.httpAdditionalHeaders
+                let asset: AVURLAsset = AVURLAsset.init(url: videoURL, options: ["AVURLAssetHTTPHeaderFieldsKey": header as Any])
+                let playerItem = AVPlayerItem(asset: asset)
+                player = AVPlayer(playerItem: playerItem)
+            }
+
+            self.playerController.player = player
+            
             self.setObservation(in: self.playerController.player!)
             self.playerController.view.frame = self.bounds
             self.playerController.player?.allowsExternalPlayback = true
@@ -189,8 +196,7 @@ class SKVideoPlayerView: UIView, PresentableViewType {
     }
     
     private func playVideo() {
-        guard let playURL = self.photo.videoStreamURL
-            , let url = URL(string: playURL) else {
+        guard let playURL = self.photo.videoStreamURL else {
             return
         }
         
@@ -199,7 +205,7 @@ class SKVideoPlayerView: UIView, PresentableViewType {
             return
         }
         
-        let player = AVPlayer(url: url)
+        let player = AVPlayer(url: playURL)
         self.playerController.player = player
         UIView.performWithoutAnimation {
             self.playerController.player?.play()

@@ -22,7 +22,7 @@ import Foundation
     
     var isLiked: Bool { get set }
     
-    var videoStreamURL: String? { get set }
+    var videoStreamURL: URL? { get set }
     
     func loadUnderlyingImageAndNotify()
     func checkCache()
