@@ -62,8 +62,8 @@ private extension SKCaptionView {
         photoLabel.lineBreakMode = SKCaptionOptions.lineBreakMode
         photoLabel.numberOfLines = SKCaptionOptions.numberOfLine
         photoLabel.font = SKCaptionOptions.font
-        photoLabel.shadowColor = UIColor(white: 0.0, alpha: 0.5)
-        photoLabel.shadowOffset = CGSize(width: 0.0, height: 1.0)
+        photoLabel.shadowColor = SKCaptionOptions.shadowColor
+        photoLabel.shadowOffset = SKCaptionOptions.shadowOffset
         photoLabel.text = photo?.caption
 
         addSubview(photoLabel)

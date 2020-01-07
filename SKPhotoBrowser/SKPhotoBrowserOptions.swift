@@ -67,6 +67,8 @@ public struct SKCaptionOptions {
     public static var font: UIFont = .systemFont(ofSize: 17.0)
     public static var backgroundColor: UIColor = .clear
     public static var captionLocation: CaptionLocation = .basic
+    public static var shadowColor: UIColor = UIColor(white: 0.0, alpha: 0.5)
+    public static var shadowOffset: CGSize = CGSize(width: 0.0, height: 1.0)
 }
 
 public struct SKToolbarOptions {
