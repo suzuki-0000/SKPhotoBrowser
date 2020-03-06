@@ -1,5 +1,8 @@
 # Change Log
 
+## 6.1.1
+- #391 Added explicit UIKit imports
+
 ## 6.1.0
 
 ### Big Changed

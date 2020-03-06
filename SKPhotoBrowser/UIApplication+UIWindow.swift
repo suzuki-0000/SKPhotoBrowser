@@ -6,7 +6,7 @@
 //  Copyright © 2017 suzuki_keishi. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 internal extension UIApplication {
     var preferredApplicationWindow: UIWindow? {
