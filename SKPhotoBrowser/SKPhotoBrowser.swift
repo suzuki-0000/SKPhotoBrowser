@@ -17,6 +17,7 @@ open class SKPhotoBrowser: UIViewController {
     open var initPageIndex: Int = 0
     open var activityItemProvider: UIActivityItemProvider?
     open var photos: [SKPhotoProtocol] = []
+    public var customActionClosure :(() -> Void)?
     
     internal lazy var pagingScrollView: SKPagingScrollView = SKPagingScrollView(frame: self.view.frame, browser: self)
     
@@ -476,6 +477,10 @@ internal extension SKPhotoBrowser {
                 UIView.commitAnimations()
             }
         }
+    }
+    
+    @objc func actionCustomButtonPressed() {
+        customActionClosure?()
     }
    
     @objc func actionButtonPressed(ignoreAndShare: Bool) {

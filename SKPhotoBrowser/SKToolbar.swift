@@ -13,6 +13,7 @@ private let bundle = Bundle(for: SKPhotoBrowser.self)
 
 class SKToolbar: UIToolbar {
     var toolActionButton: UIBarButtonItem!
+    var customActionButton: UIBarButtonItem!
     fileprivate weak var browser: SKPhotoBrowser?
     
     required init?(coder aDecoder: NSCoder) {
@@ -57,6 +58,11 @@ private extension SKToolbar {
         items.append(UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil))
         if SKPhotoBrowserOptions.displayAction {
             items.append(toolActionButton)
+        }
+        if SKPhotoBrowserOptions.displayCustomAction {
+            customActionButton = UIBarButtonItem(image: SKPhotoBrowserOptions.displayCustomImage, style: .plain, target: browser, action: #selector(SKPhotoBrowser.actionCustomButtonPressed))
+            customActionButton.tintColor = UIColor.white
+            items.append(customActionButton)
         }
         setItems(items, animated: false)
     }

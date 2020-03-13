@@ -32,6 +32,10 @@ public struct SKPhotoBrowserOptions {
     public static var indicatorColor: UIColor = .white
     public static var indicatorStyle: UIActivityIndicatorView.Style = .whiteLarge
 
+    
+    public static var displayCustomAction: Bool = false
+    public static var displayCustomImage: UIImage?
+    
     /// By default close button is on left side and delete button is on right.
     ///
     /// Set this property to **true** for swap they.
