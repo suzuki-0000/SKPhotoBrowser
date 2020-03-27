@@ -64,7 +64,7 @@ private extension SKToolbar {
         if SKPhotoBrowserOptions.displayDownloadAction {
             downloadActionButton = UIBarButtonItem(image: SKPhotoBrowserOptions.displayDownloadImage, style: .plain, target: browser, action: #selector(SKPhotoBrowser.actionDownloadButtonPressed))
             downloadActionButton.tintColor = UIColor.white
-            items.append(toolActionButton)
+            items.append(downloadActionButton)
         }
 
         if SKPhotoBrowserOptions.displayCustomAction {
