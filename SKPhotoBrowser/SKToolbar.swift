@@ -13,6 +13,7 @@ private let bundle = Bundle(for: SKPhotoBrowser.self)
 
 class SKToolbar: UIToolbar {
     var toolActionButton: UIBarButtonItem!
+    var downloadActionButton: UIBarButtonItem!
     var customActionButton: UIBarButtonItem!
     fileprivate weak var browser: SKPhotoBrowser?
     
@@ -34,7 +35,7 @@ class SKToolbar: UIToolbar {
     
     override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
         if let view = super.hitTest(point, with: event) {
-            if SKMesurement.screenWidth - point.x < 50 { // FIXME: not good idea
+            if SKMesurement.screenWidth - point.x < SKPhotoBrowserOptions.toolbarTouchMaxValue { // FIXME: not good idea
                 return view
             }
         }
@@ -59,6 +60,13 @@ private extension SKToolbar {
         if SKPhotoBrowserOptions.displayAction {
             items.append(toolActionButton)
         }
+        
+        if SKPhotoBrowserOptions.displayDownloadAction {
+            downloadActionButton = UIBarButtonItem(image: SKPhotoBrowserOptions.displayDownloadImage, style: .plain, target: browser, action: #selector(SKPhotoBrowser.actionDownloadButtonPressed))
+            downloadActionButton.tintColor = UIColor.white
+            items.append(toolActionButton)
+        }
+
         if SKPhotoBrowserOptions.displayCustomAction {
             customActionButton = UIBarButtonItem(image: SKPhotoBrowserOptions.displayCustomImage, style: .plain, target: browser, action: #selector(SKPhotoBrowser.actionCustomButtonPressed))
             customActionButton.tintColor = UIColor.white

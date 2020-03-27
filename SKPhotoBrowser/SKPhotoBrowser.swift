@@ -17,8 +17,8 @@ open class SKPhotoBrowser: UIViewController {
     open var initPageIndex: Int = 0
     open var activityItemProvider: UIActivityItemProvider?
     open var photos: [SKPhotoProtocol] = []
+    public var downloadActionClosure :((_ photo :SKPhoto) -> Void)?
     public var customActionClosure :(() -> Void)?
-    
     internal lazy var pagingScrollView: SKPagingScrollView = SKPagingScrollView(frame: self.view.frame, browser: self)
     
     // appearance
@@ -481,6 +481,11 @@ internal extension SKPhotoBrowser {
     
     @objc func actionCustomButtonPressed() {
         customActionClosure?()
+    }
+    
+    @objc func actionDownloadButtonPressed() {
+        let photo = photos[currentPageIndex]
+        downloadActionClosure?(photo)
     }
    
     @objc func actionButtonPressed(ignoreAndShare: Bool) {

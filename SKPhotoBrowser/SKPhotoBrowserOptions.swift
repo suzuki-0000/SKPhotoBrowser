@@ -33,6 +33,9 @@ public struct SKPhotoBrowserOptions {
     public static var indicatorStyle: UIActivityIndicatorView.Style = .whiteLarge
 
     
+    public static var toolbarTouchMaxValue: CGFloat = 50
+    public static var displayDownloadAction: Bool = false
+    public static var displayDownloadImage: UIImage?
     public static var displayCustomAction: Bool = false
     public static var displayCustomImage: UIImage?
     
