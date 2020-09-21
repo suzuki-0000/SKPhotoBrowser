@@ -34,7 +34,7 @@ Simple PhotoBrowser/Viewer inspired by facebook, twitter photo browsers written 
 | ![sample](Screenshots/example01.gif) | ![sample](Screenshots/example02.gif) |
 
 ## Requirements
-- iOS 8.0+
+- iOS 9.0+
 - Swift 2.0+
 - ARC
 
@@ -66,6 +66,10 @@ To integrate into your Xcode project using Carthage, specify it in your Cartfile
 ```ogdl
 github "suzuki-0000/SKPhotoBrowser"
 ```
+
+#### Swift Package Manager
+Available in Swift Package Manager. Use the repository URL in Xcode
+<em>File -> Swift Packages -> Add Package Dependency...</em>
 
 ## Usage
 See the code snippet below for an example of how to implement, or see the example project.
