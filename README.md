@@ -69,7 +69,7 @@ github "suzuki-0000/SKPhotoBrowser"
 
 #### Swift Package Manager
 Available in Swift Package Manager. Use the repository URL in Xcode
-<em>File -> Swift Packages -> Add Package Dependency...</em>
+*File -> Swift Packages -> Add Package Dependency...*
 
 ## Usage
 See the code snippet below for an example of how to implement, or see the example project.
