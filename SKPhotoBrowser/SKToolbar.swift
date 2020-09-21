@@ -6,7 +6,7 @@
 //  Copyright © 2017年 suzuki_keishi. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 // helpers which often used
 private let bundle = Bundle(for: SKPhotoBrowser.self)
