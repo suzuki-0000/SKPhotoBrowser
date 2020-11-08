@@ -70,7 +70,7 @@ open class SKPhotoBrowser: UIViewController {
         self.init(photos: photos, initialPageIndex: 0)
     }
     
-    @available(*, deprecated)
+//    @available(*, deprecated)
     public convenience init(originImage: UIImage, photos: [SKPhotoProtocol], animatedFromView: UIView) {
         self.init(nibName: nil, bundle: nil)
         self.photos = photos
@@ -90,7 +90,7 @@ open class SKPhotoBrowser: UIViewController {
     }
 
     deinit {
-        NotificationCenter.default.removeObserver(self)
+//        NotificationCenter.default.removeObserver(self)
     }
     
     func setup() {
@@ -551,7 +551,7 @@ private extension SKPhotoBrowser {
     
     func configureToolbar() {
         toolbar = SKToolbar(frame: frameForToolbarAtOrientation(), browser: self)
-        (toolbar.toolActionButton.customView as! UIButton).isEnabled = photos[currentPageIndex].underlyingImage != nil
+        (toolbar.toolActionButton.customView as? UIButton)?.isEnabled = photos[currentPageIndex].underlyingImage != nil
         view.addSubview(toolbar)
     }
 
@@ -591,7 +591,7 @@ extension SKPhotoBrowser: UIScrollViewDelegate {
         currentPageIndex = min(max(Int(floor(visibleBounds.midX / visibleBounds.width)), 0), photos.count - 1)
         
         if currentPageIndex != previousCurrentPage {
-            (toolbar.toolActionButton.customView as! UIButton).isEnabled = photos[currentPageIndex].underlyingImage != nil
+            (toolbar.toolActionButton.customView as? UIButton)?.isEnabled = photos[currentPageIndex].underlyingImage != nil
             delegate?.didShowPhotoAtIndex?(self, index: currentPageIndex)
             paginationView.update(currentPageIndex)
         }

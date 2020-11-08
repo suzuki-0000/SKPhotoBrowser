@@ -50,7 +50,9 @@ class SKPagingScrollView: UIScrollView {
         }
         let pageIndex = (page.tag - pageIndexTagOffset)
         if currentPageIndex == pageIndex {
-            (browser.toolbar.toolActionButton.customView as! UIButton).isEnabled = true
+            if let button = browser.toolbar.toolActionButton.customView as? UIButton {
+                button.isEnabled = true
+            }
             // Previous
             if pageIndex > 0 {
                 let previousPhoto = browser.photos[pageIndex - 1]

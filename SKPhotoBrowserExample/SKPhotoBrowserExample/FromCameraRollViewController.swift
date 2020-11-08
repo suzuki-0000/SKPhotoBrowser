@@ -89,7 +89,7 @@ class FromCameraRollViewController: UIViewController, SKPhotoBrowserDelegate, UI
         guard let cell = collectionView.cellForItem(at: indexPath) as? ExampleCollectionViewCell else {
             return
         }
-        guard let originImage = cell.exampleImageView.image else {
+        guard cell.exampleImageView.image != nil else {
             return
         }
         
