@@ -1,5 +1,10 @@
 # Change Log
 
+## 7.0.0
+#### Updated
+- #371 Update README.md by bcorrea2 
+
+
 ## 6.1.0
 
 ### Big Changed
