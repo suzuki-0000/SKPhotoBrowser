@@ -67,6 +67,14 @@ To integrate into your Xcode project using Carthage, specify it in your Cartfile
 github "suzuki-0000/SKPhotoBrowser"
 ```
 
+#### Info.plist
+If you want to use share image feature, it includes save image into galery, so you should specify a permission into your Info.plist (if you haven't done it yet).
+
+```
+<key>NSPhotoLibraryAddUsageDescription</key>
+<string>Used to save images into your galery</string>
+```
+
 ## Usage
 See the code snippet below for an example of how to implement, or see the example project.
 	
