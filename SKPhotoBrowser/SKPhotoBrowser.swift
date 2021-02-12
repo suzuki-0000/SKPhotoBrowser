@@ -88,10 +88,6 @@ open class SKPhotoBrowser: UIViewController {
         animator.senderOriginImage = photos[currentPageIndex].underlyingImage
         animator.senderViewForAnimation = photos[currentPageIndex] as? UIView
     }
-
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
     
     func setup() {
         modalPresentationCapturesStatusBarAppearance = true
