@@ -1,0 +1,21 @@
+name: Build
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Show Xcode version
+      run: xcodebuild -version
+
+    - name: Build 
+      run: xcodebuild -sdk iphonesimulator -configuration Debug build 
