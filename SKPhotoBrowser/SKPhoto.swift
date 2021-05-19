@@ -73,7 +73,7 @@ open class SKPhoto: NSObject, SKPhotoProtocol {
         let session = URLSession(configuration: SKPhotoBrowserOptions.sessionConfiguration)
             var task: URLSessionTask?
             task = session.dataTask(with: URL, completionHandler: { [weak self] (data, response, error) in
-                guard let `self` = self else { return }
+                guard let self = self else { return }
                 defer { session.finishTasksAndInvalidate() }
 
                 guard error == nil else {
