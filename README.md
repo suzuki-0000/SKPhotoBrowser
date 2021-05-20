@@ -29,9 +29,9 @@ Simple PhotoBrowser/Viewer inspired by facebook, twitter photo browsers written 
         - Landscape handling
         - Delete photo support(by offbye). By set displayDelete=true show a delete icon in statusbar, deleted indexes can be obtain from delegate func didDeleted 
 
-        | Table/CollectionView sample | Button tap sample |
-        | ------------- | --------------- |
-        | ![sample](Screenshots/example01.gif) | ![sample](Screenshots/example02.gif) |
+| Table/CollectionView sample | Button tap sample |
+| ------------- | --------------- |
+| ![sample](Screenshots/example01.gif) | ![sample](Screenshots/example02.gif) |
 
 ## Requirements
         - iOS 9.0+
@@ -42,39 +42,39 @@ Simple PhotoBrowser/Viewer inspired by facebook, twitter photo browsers written 
 
         Below is a table that shows which version of SKPhotoBrowser you should use for your Swift version.
 
-        | Swift version | SKPhotoBrowser version    |
-        | ------------- | --------------- |
-        | 5.0           | >= 6.1.0 |
-        | 4.2           | >= 6.0.0 |
-        | 4.1           | >= 5.0.0 |
-        | 3.2           | >= 4.0.0 |
-        | 2.3           | 2.0.4 - 3.1.4  |
-        | 2.2           | <= 2.0.3        |
+| Swift version | SKPhotoBrowser version    |
+| ------------- | --------------- |
+| 5.0           | >= 6.1.0 |
+| 4.2           | >= 6.0.0 |
+| 4.1           | >= 5.0.0 |
+| 3.2           | >= 4.0.0 |
+| 2.3           | 2.0.4 - 3.1.4  |
+| 2.2           | <= 2.0.3        |
 
 ## Installation
 
 #### CocoaPods
-        available on CocoaPods. Just add the following to your project Podfile:
-        ```
-        pod 'SKPhotoBrowser'
-        use_frameworks!
-        ```
+available on CocoaPods. Just add the following to your project Podfile:
+```
+pod 'SKPhotoBrowser'
+use_frameworks!
+```
 
 #### Carthage
-        To integrate into your Xcode project using Carthage, specify it in your Cartfile:
-
-        ```ogdl
-        github "suzuki-0000/SKPhotoBrowser"
-        ```
+To integrate into your Xcode project using Carthage, specify it in your Cartfile:
+```
+github "suzuki-0000/SKPhotoBrowser"
+```
 
 #### Info.plist
-        If you want to use share image feature, it includes save image into galery, so you should specify a permission into your Info.plist (if you haven't done it yet).
+If you want to use share image feature, it includes save image into galery, so you should specify a permission into your Info.plist (if you haven't done it yet).
+```
+<key>NSPhotoLibraryAddUsageDescription</key>
+<string>Used to save images into your galery</string>
+```
 
-        ```
-        <key>NSPhotoLibraryAddUsageDescription</key>
-        <string>Used to save images into your galery</string>
-        ```
-=======
+---
+
 #### Swift Package Manager
 Available in Swift Package Manager. Use the repository URL in Xcode
 
@@ -173,7 +173,7 @@ SKPhotoBrowserOptions.displayStatusbar = false                             // st
 
 #### Close And Delete Buttons
 That how you can customize close and delete buttons
-```
+```swift
 SKPhotoBrowserOptions.displayDeleteButton = true                           // delete button will be shown
 SKPhotoBrowserOptions.swapCloseAndDeleteButtons = true                     // now close button located on right side of screen and delete button is on left side
 SKPhotoBrowserOptions.closeAndDeleteButtonPadding = 20                     // set offset from top and from nearest screen edge of close button and delete button
@@ -194,7 +194,7 @@ SKCache.sharedCache.imageCache = CustomImageCache()
 
 #### CustomButton Image
 Close, Delete buttons are able to change image and frame.
-``` swift
+```swift
 browser.updateCloseButton(UIImage())
 browser.updateUpdateButton(UIImage())
 ```
