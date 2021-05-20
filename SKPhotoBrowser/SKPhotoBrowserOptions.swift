@@ -47,6 +47,8 @@ public struct SKPhotoBrowserOptions {
 
     /// Provide custom session configuration (eg. for headers, etc.)
     public static var sessionConfiguration: URLSessionConfiguration = .default
+
+    public static var paginationButtonsTintColor: UIColor = .white
 }
 
 public struct SKButtonOptions {
