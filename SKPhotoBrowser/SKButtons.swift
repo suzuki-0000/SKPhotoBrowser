@@ -9,7 +9,13 @@
 import UIKit
 
 // helpers which often used
-private let bundle = Bundle(for: SKPhotoBrowser.self)
+#if SWIFT_PACKAGE
+  private let bundle = Bundle.module
+#else
+  private let bundle = Bundle(for: SKPhotoBrowser.self)
+#endif
+
+private let imagesBundle = Bundle(url: bundle.url(forResource: "SKPhotoBrowser", withExtension: "bundle")!)!
 
 class SKButton: UIButton {
     internal var showFrame: CGRect!
@@ -32,8 +38,8 @@ class SKButton: UIButton {
         imageEdgeInsets = insets
         translatesAutoresizingMaskIntoConstraints = true
         autoresizingMask = [.flexibleBottomMargin, .flexibleLeftMargin, .flexibleRightMargin, .flexibleTopMargin]
-        
-        let image = UIImage(named: "SKPhotoBrowser.bundle/images/\(imageName)", in: bundle, compatibleWith: nil) ?? UIImage()
+
+        let image = UIImage(named: "images/\(imageName)", in: imagesBundle, compatibleWith: nil) ?? UIImage()
         setImage(image, for: .normal)
     }
   
