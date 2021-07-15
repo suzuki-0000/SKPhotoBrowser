@@ -15,6 +15,8 @@ open class SKPhotoBrowser: UIViewController {
     // open function
     open var currentPageIndex: Int = 0
     open var initPageIndex: Int = 0
+    open var preLoadNum: Int = 1
+    open var nextLoadNum: Int = 1
     open var activityItemProvider: UIActivityItemProvider?
     open var photos: [SKPhotoProtocol] = []
 
@@ -181,7 +183,10 @@ open class SKPhotoBrowser: UIViewController {
     }
     
     open func loadAdjacentPhotosIfNecessary(_ photo: SKPhotoProtocol) {
-        pagingScrollView.loadAdjacentPhotosIfNecessary(photo, currentPageIndex: currentPageIndex)
+        pagingScrollView.loadAdjacentPhotosIfNecessary(photo,
+                                                       currentPageIndex: currentPageIndex,
+                                                       preLoadNum: preLoadNum,
+                                                       nextLoadNum: nextLoadNum)
     }
     
     // MARK: - initialize / setup
