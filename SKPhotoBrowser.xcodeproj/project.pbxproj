@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		210E53ED1C986D3A008DD5E3 /* UIView+Radius.swift in Sources */ = {isa = PBXBuildFile; fileRef = 210E53EC1C986D3A008DD5E3 /* UIView+Radius.swift */; };
-		210E53EF1C986D57008DD5E3 /* UIImage+Rotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 210E53EE1C986D57008DD5E3 /* UIImage+Rotation.swift */; };
 		26C97AD51D0EB6870039F6CB /* SKCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26C97AD41D0EB6870039F6CB /* SKCache.swift */; };
 		26C97AD71D0EB6A00039F6CB /* SKCacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26C97AD61D0EB6A00039F6CB /* SKCacheTests.swift */; };
 		26C97AD91D0EB8BB0039F6CB /* SKCacheable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26C97AD81D0EB8BB0039F6CB /* SKCacheable.swift */; };
@@ -31,9 +29,13 @@
 		89D0BA471D5994A8002A811B /* SKAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D0BA461D5994A8002A811B /* SKAnimator.swift */; };
 		89D0BA491D59966B002A811B /* SKMesurement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89D0BA481D59966B002A811B /* SKMesurement.swift */; };
 		8CA6C6521CBE76E80054D3C2 /* SKLocalPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CA6C6511CBE76E80054D3C2 /* SKLocalPhoto.swift */; };
+		9521CC63232F677A00446D11 /* UIApplication+UIWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9521CC60232F677900446D11 /* UIApplication+UIWindow.swift */; };
+		9521CC64232F677A00446D11 /* UIImage+Rotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9521CC61232F677900446D11 /* UIImage+Rotation.swift */; };
+		9521CC65232F677A00446D11 /* UIView+Radius.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9521CC62232F677900446D11 /* UIView+Radius.swift */; };
+		9521CC6B232F693800446D11 /* UIImage+animatedGIF.h in Headers */ = {isa = PBXBuildFile; fileRef = 9521CC69232F693800446D11 /* UIImage+animatedGIF.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		9521CC6C232F693800446D11 /* UIImage+animatedGIF.m in Sources */ = {isa = PBXBuildFile; fileRef = 9521CC6A232F693800446D11 /* UIImage+animatedGIF.m */; };
 		A64B89361CB04222000071B9 /* SKPhotoBrowserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A64B89351CB04222000071B9 /* SKPhotoBrowserTests.swift */; };
 		A64B89381CB04222000071B9 /* SKPhotoBrowser.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8909B5301BC791280060A053 /* SKPhotoBrowser.framework */; };
-		D2265CCF1F799C75009256CC /* UIApplication+UIWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2265CCE1F799C75009256CC /* UIApplication+UIWindow.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,8 +49,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		210E53EC1C986D3A008DD5E3 /* UIView+Radius.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIView+Radius.swift"; path = "extensions/UIView+Radius.swift"; sourceTree = "<group>"; };
-		210E53EE1C986D57008DD5E3 /* UIImage+Rotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIImage+Rotation.swift"; path = "extensions/UIImage+Rotation.swift"; sourceTree = "<group>"; };
 		26C97AD41D0EB6870039F6CB /* SKCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKCache.swift; sourceTree = "<group>"; };
 		26C97AD61D0EB6A00039F6CB /* SKCacheTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKCacheTests.swift; sourceTree = "<group>"; };
 		26C97AD81D0EB8BB0039F6CB /* SKCacheable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKCacheable.swift; sourceTree = "<group>"; };
@@ -73,10 +73,14 @@
 		89D0BA461D5994A8002A811B /* SKAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKAnimator.swift; sourceTree = "<group>"; };
 		89D0BA481D59966B002A811B /* SKMesurement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKMesurement.swift; sourceTree = "<group>"; };
 		8CA6C6511CBE76E80054D3C2 /* SKLocalPhoto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKLocalPhoto.swift; sourceTree = "<group>"; };
+		9521CC60232F677900446D11 /* UIApplication+UIWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIApplication+UIWindow.swift"; sourceTree = "<group>"; };
+		9521CC61232F677900446D11 /* UIImage+Rotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Rotation.swift"; sourceTree = "<group>"; };
+		9521CC62232F677900446D11 /* UIView+Radius.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Radius.swift"; sourceTree = "<group>"; };
+		9521CC69232F693800446D11 /* UIImage+animatedGIF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+animatedGIF.h"; sourceTree = "<group>"; };
+		9521CC6A232F693800446D11 /* UIImage+animatedGIF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+animatedGIF.m"; sourceTree = "<group>"; };
 		A64B89331CB04222000071B9 /* SKPhotoBrowserTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SKPhotoBrowserTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A64B89351CB04222000071B9 /* SKPhotoBrowserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKPhotoBrowserTests.swift; sourceTree = "<group>"; };
 		A64B89371CB04222000071B9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D2265CCE1F799C75009256CC /* UIApplication+UIWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIApplication+UIWindow.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,16 +102,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		210E53EB1C986D1C008DD5E3 /* extensions */ = {
-			isa = PBXGroup;
-			children = (
-				210E53EC1C986D3A008DD5E3 /* UIView+Radius.swift */,
-				210E53EE1C986D57008DD5E3 /* UIImage+Rotation.swift */,
-				D2265CCE1F799C75009256CC /* UIApplication+UIWindow.swift */,
-			);
-			name = extensions;
-			sourceTree = "<group>";
-		};
 		8909B5261BC791280060A053 = {
 			isa = PBXGroup;
 			children = (
@@ -149,11 +143,23 @@
 				8917B1AF1D5A13DE000CE1C4 /* SKPhotoBrowserDelegate.swift */,
 				7643F4B81FEA4FCF00475F6E /* SKToolbar.swift */,
 				8909B5421BC791510060A053 /* SKZoomingScrollView.swift */,
+				9521CC5F232F677900446D11 /* extensions */,
 				8909B5351BC791280060A053 /* Info.plist */,
-				210E53EB1C986D1C008DD5E3 /* extensions */,
 				8909B54C1BC7916E0060A053 /* SKPhotoBrowser.bundle */,
 			);
 			path = SKPhotoBrowser;
+			sourceTree = "<group>";
+		};
+		9521CC5F232F677900446D11 /* extensions */ = {
+			isa = PBXGroup;
+			children = (
+				9521CC69232F693800446D11 /* UIImage+animatedGIF.h */,
+				9521CC6A232F693800446D11 /* UIImage+animatedGIF.m */,
+				9521CC60232F677900446D11 /* UIApplication+UIWindow.swift */,
+				9521CC61232F677900446D11 /* UIImage+Rotation.swift */,
+				9521CC62232F677900446D11 /* UIView+Radius.swift */,
+			);
+			path = extensions;
 			sourceTree = "<group>";
 		};
 		A64B89341CB04222000071B9 /* SKPhotoBrowserTests */ = {
@@ -173,6 +179,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9521CC6B232F693800446D11 /* UIImage+animatedGIF.h in Headers */,
 				8909B5341BC791280060A053 /* SKPhotoBrowser.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -242,6 +249,7 @@
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -297,25 +305,26 @@
 			files = (
 				26C97AD91D0EB8BB0039F6CB /* SKCacheable.swift in Sources */,
 				7643F4B91FEA4FCF00475F6E /* SKToolbar.swift in Sources */,
+				9521CC65232F677A00446D11 /* UIView+Radius.swift in Sources */,
 				89C24A841D657AFE005F09A9 /* SKPagingScrollView.swift in Sources */,
 				8909B5441BC791510060A053 /* SKDetectingImageView.swift in Sources */,
 				8909B54A1BC791510060A053 /* SKZoomingScrollView.swift in Sources */,
+				9521CC64232F677A00446D11 /* UIImage+Rotation.swift in Sources */,
 				8CA6C6521CBE76E80054D3C2 /* SKLocalPhoto.swift in Sources */,
 				89D0BA471D5994A8002A811B /* SKAnimator.swift in Sources */,
-				210E53ED1C986D3A008DD5E3 /* UIView+Radius.swift in Sources */,
 				7643F4B61FE9F42F00475F6E /* SKPaginationView.swift in Sources */,
 				7643F4B41FE8CE7A00475F6E /* SKActionView.swift in Sources */,
 				8917B1B01D5A13DE000CE1C4 /* SKPhotoBrowserDelegate.swift in Sources */,
-				D2265CCF1F799C75009256CC /* UIApplication+UIWindow.swift in Sources */,
+				9521CC6C232F693800446D11 /* UIImage+animatedGIF.m in Sources */,
 				89D0BA491D59966B002A811B /* SKMesurement.swift in Sources */,
 				8909B5471BC791510060A053 /* SKPhoto.swift in Sources */,
 				8909B5461BC791510060A053 /* SKIndicatorView.swift in Sources */,
 				8917B1B41D5A14B0000CE1C4 /* SKButtons.swift in Sources */,
 				89C24A821D657AD1005F09A9 /* SKPhotoBrowserOptions.swift in Sources */,
 				26C97AD51D0EB6870039F6CB /* SKCache.swift in Sources */,
-				210E53EF1C986D57008DD5E3 /* UIImage+Rotation.swift in Sources */,
 				8909B5431BC791510060A053 /* SKCaptionView.swift in Sources */,
 				8909B5491BC791510060A053 /* SKPhotoBrowser.swift in Sources */,
+				9521CC63232F677A00446D11 /* UIApplication+UIWindow.swift in Sources */,
 				8909B5451BC791510060A053 /* SKDetectingView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
