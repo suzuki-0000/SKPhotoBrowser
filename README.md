@@ -8,7 +8,7 @@ Simple PhotoBrowser/Viewer inspired by facebook, twitter photo browsers written 
 
 <p align="center">
 <a href="https://developer.apple.com/swift">
-<img alt="Swift5" src="https://img.shields.io/badge/language-swift5.0-orange.svg?style=flat" />
+<img alt="Swift5" src="https://img.shields.io/badge/language-swift5.4-orange.svg?style=flat" />
 </a>
 <a href="http://cocoadocs.org/docsets/SKPhotoBrowser">
 <img src="https://img.shields.io/cocoapods/v/SKPhotoBrowser.svg?style=flat" />
