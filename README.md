@@ -26,13 +26,13 @@ Simple PhotoBrowser/Viewer inspired by facebook, twitter photo browsers written 
 ## features
 - Display one or more images by providing either `UIImage` objects, or string of URL array.
 - Photos can be zoomed and panned, and optional captions can be displayed
-        - Minimalistic Facebook-like interface, swipe up/down to dismiss
+- Minimalistic Facebook-like interface, swipe up/down to dismiss
 - Ability to custom control. (hide/ show toolbar for controls, / swipe control)
-        - Handling and caching photos from web 
-        - Landscape handling
-        - Delete photo support(by offbye). By set displayDelete=true show a delete icon in statusbar, deleted indexes can be obtain from delegate func didDeleted 
+- Handling and caching photos from web
+- Landscape handling
+- Delete photo support(by offbye). By set displayDelete=true show a delete icon in statusbar, deleted indexes can be obtain from delegate func didDeleted
 
-| Table/CollectionView sample | Button tap sample | gif sample | 
+| Table/CollectionView sample | Button tap sample | gif sample |
 | ------------- | --------------- | --------------|
 | ![sample](Screenshots/example01.gif) | ![sample](Screenshots/example02.gif) | ![sample](Screenshots/example03.gif)
 
@@ -83,15 +83,15 @@ Available in Swift Package Manager. Use the repository URL in Xcode
 
 ## Usage
 See the code snippet below for an example of how to implement, or see the example project.
-	
+
 from UIImages:
 ```swift
 // 1. create SKPhoto Array from UIImage
 var images = [SKPhoto]()
 let photo = SKPhoto.photoWithImage(UIImage())// add some UIImage
-images.append(photo) 
+images.append(photo)
 
-// 2. create PhotoBrowser Instance, and present from your viewController. 
+// 2. create PhotoBrowser Instance, and present from your viewController.
 let browser = SKPhotoBrowser(photos: images)
 browser.initializePageIndex(0)
 present(browser, animated: true, completion: {})
@@ -99,13 +99,13 @@ present(browser, animated: true, completion: {})
 
 from URLs:
 ```swift
-// 1. create URL Array 
+// 1. create URL Array
 var images = [SKPhoto]()
 let photo = SKPhoto.photoWithImageURL("https://placehold.jp/150x150.png")
 photo.shouldCachePhotoURLImage = false // you can use image cache by true(NSCache)
 images.append(photo)
 
-// 2. create PhotoBrowser Instance, and present. 
+// 2. create PhotoBrowser Instance, and present.
 let browser = SKPhotoBrowser(photos: images)
 browser.initializePageIndex(0)
 present(browser, animated: true, completion: {})
@@ -118,7 +118,7 @@ var images = [SKLocalPhoto]()
 let photo = SKLocalPhoto.photoWithImageURL("..some_local_path/150x150.png")
 images.append(photo)
 
-// 2. create PhotoBrowser Instance, and present. 
+// 2. create PhotoBrowser Instance, and present.
 let browser = SKPhotoBrowser(photos: images)
 browser.initializePageIndex(0)
 present(browser, animated: true, completion: {})
@@ -128,10 +128,10 @@ If you want to use zooming effect from an existing view, use another initializer
 ```swift
 // e.g.: some tableView or collectionView.
 func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-   let cell = collectionView.cellForItemAtIndexPath(indexPath) 
-   let originImage = cell.exampleImageView.image // some image for baseImage 
+   let cell = collectionView.cellForItemAtIndexPath(indexPath)
+   let originImage = cell.exampleImageView.image // some image for baseImage
 
-   let browser = SKPhotoBrowser(originImage: originImage ?? UIImage(), photos: images, animatedFromView: cell) 
+   let browser = SKPhotoBrowser(originImage: originImage ?? UIImage(), photos: images, animatedFromView: cell)
    browser.initializePageIndex(indexPath.row)
    present(browser, animated: true, completion: {})
 }
@@ -188,7 +188,7 @@ You can use SKCacheable protocol if others are adaptable. (SKImageCacheable or S
 ```swift
 e.g. SDWebImage
 
-// 1. create custom cache, implement in accordance with the protocol 
+// 1. create custom cache, implement in accordance with the protocol
 class CustomImageCache: SKImageCacheable { var cache: SDImageCache }
 
 // 2. replace SKCache instance with custom cache
@@ -213,16 +213,16 @@ let photo = SKPhoto.photoWithImage(UIImage())
 photo.caption = "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
 ```
 
-#### SwipeGesture 
+#### SwipeGesture
 vertical swipe can enable/disable:
 ``` swift
-SKPhotoBrowserOptions.disableVerticalSwipe = true 
-``` 
+SKPhotoBrowserOptions.disableVerticalSwipe = true
+```
 
 #### Delegate
 There's some trigger point you can handle using delegate. those are optional.
 See [SKPhotoBrowserDelegate](https://github.com/suzuki-0000/SKPhotoBrowser/blob/master/SKPhotoBrowser/SKPhotoBrowserDelegate.swift) for more details.
-- didShowPhotoAtIndex(_ index:Int) 
+- didShowPhotoAtIndex(_ index:Int)
 - willDismissAtPageIndex(_ index:Int)
 - willShowActionSheet(_ photoIndex: Int)
 - didDismissAtPageIndex(_ index:Int)
@@ -261,7 +261,7 @@ See [SKPhotoBrowserOptions](https://github.com/suzuki-0000/SKPhotoBrowser/blob/m
 ``` swift
 SKPhotoBrowserOptions.enableZoomBlackArea    = true  // default true
 SKPhotoBrowserOptions.enableSingleTapDismiss = true  // default false
-``` 
+```
 
 ## Photos from
 - [Unsplash](https://unsplash.com)
@@ -295,4 +295,3 @@ Thanks goes to these wonderful people ([emoji key](https://github.com/kentcdodds
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/kentcdodds/all-contributors) specification. Contributions of any kind welcome!
-
