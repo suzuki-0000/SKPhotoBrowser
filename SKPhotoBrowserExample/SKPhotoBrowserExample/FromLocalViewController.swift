@@ -48,7 +48,6 @@ extension FromLocalViewController {
         }
         
         cell.exampleImageView.image = UIImage(named: "image\((indexPath as NSIndexPath).row % 10).jpg")
-//        cell.exampleImageView.contentMode = .ScaleAspectFill
         return cell
     }
 }
@@ -124,7 +123,8 @@ private extension FromLocalViewController {
     
     func createLocalPhotos() -> [SKPhotoProtocol] {
         return (0..<10).map { (i: Int) -> SKPhotoProtocol in
-            let photo = SKPhoto.photoWithImage(UIImage(named: "image\(i%10).jpg")!)
+//            let photo = SKPhoto.photoWithImage(UIImage(named: "image\(i%10).jpg")!)
+            let photo = SKPhoto.photoWithImage(UIImage(named: "sample_gif.gif")!)
             photo.caption = caption[i%10]
             return photo
         }

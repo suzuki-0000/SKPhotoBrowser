@@ -25,7 +25,7 @@ class SKButton: UIButton {
     fileprivate let size: CGSize = CGSize(width: 44, height: 44)
     fileprivate var marginX: CGFloat = 0
     fileprivate var marginY: CGFloat = 0
-    fileprivate var extraMarginY: CGFloat = SKMesurement.isPhoneX ? 10 : 0
+    fileprivate var extraMarginY: CGFloat = 20 //NOTE: dynamic to static 
     
     func setup(_ imageName: String) {
         backgroundColor = .clear
