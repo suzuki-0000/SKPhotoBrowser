@@ -1,4 +1,7 @@
 <h1 align="center">SKPhotoBrowser</h1>
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
 <H4 align="center">
 Simple PhotoBrowser/Viewer inspired by facebook, twitter photo browsers written by swift
 </H4>
@@ -269,6 +272,19 @@ available under the MIT license. See the LICENSE file for more info.
 ## Contributors
 
 Thanks goes to these wonderful people ([emoji key](https://github.com/kentcdodds/all-contributors#emoji-key)):
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tr>
+    <td align="center"><a href="https://p36348.github.io/"><img src="https://avatars.githubusercontent.com/u/6042275?v=4?s=20" width="20px;" alt=""/><br /><sub><b>Oreo Chen</b></sub></a><br /><a href="https://github.com/suzuki-0000/SKPhotoBrowser/commits?author=p36348" title="Code">💻</a></td>
+  </tr>
+</table>
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore -->
