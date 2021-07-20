@@ -42,14 +42,14 @@ Simple PhotoBrowser/Viewer inspired by facebook, twitter photo browsers written 
 
         Below is a table that shows which version of SKPhotoBrowser you should use for your Swift version.
 
-        | Swift version | SKPhotoBrowser version    |
-        | ------------- | --------------- |
-        | 5.0           | >= 6.1.0 |
-        | 4.2           | >= 6.0.0 |
-        | 4.1           | >= 5.0.0 |
-        | 3.2           | >= 4.0.0 |
-        | 2.3           | 2.0.4 - 3.1.4  |
-        | 2.2           | <= 2.0.3        |
+| Swift version | SKPhotoBrowser version |
+| ------------- | ---------------|
+| 5.0           | >= 6.1.0 |
+| 4.2           | >= 6.0.0 |
+| 4.1           | >= 5.0.0 |
+| 3.2           | >= 4.0.0 |
+| 2.3           | 2.0.4 - 3.1.4 |
+| 2.2           | <= 2.0.3 |
 
 ## Installation
 
@@ -68,14 +68,13 @@ github "suzuki-0000/SKPhotoBrowser"
 ```
 
 #### Info.plist
-        If you want to use share image feature, it includes save image into galery, so you should specify a permission into your Info.plist (if you haven't done it yet).
+If you want to use share image feature, it includes save image into galery, so you should specify a permission into your Info.plist (if you haven't done it yet).
 
 ```
 <key>NSPhotoLibraryAddUsageDescription</key>
 <string>Used to save images into your galery</string>
 ```
 
-=======
 #### Swift Package Manager
 Available in Swift Package Manager. Use the repository URL in Xcode
 
