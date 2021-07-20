@@ -48,7 +48,6 @@ extension FromLocalViewController {
         }
         
         cell.exampleImageView.image = UIImage(named: "image\((indexPath as NSIndexPath).row % 10).jpg")
-//        cell.exampleImageView.contentMode = .ScaleAspectFill
         return cell
     }
 }
