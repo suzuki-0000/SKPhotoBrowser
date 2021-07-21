@@ -13,13 +13,19 @@ let package = Package(
     products: [
         .library(
             name: "SKPhotoBrowser",
-            targets: ["SKPhotoBrowser"])
+            targets: ["UIImageAnimatedGIF", "SKPhotoBrowser"])
     ],
     targets: [
         .target(
+            name: "UIImageAnimatedGIF",
+            path: "SKPhotoBrowser/extensions",
+            exclude: ["UIApplication+UIWindow.swift", "UIImage+Rotation.swift", "UIView+Radius.swift"]
+        ),
+        .target(
             name: "SKPhotoBrowser",
+            dependencies: ["UIImageAnimatedGIF"],
             path: "SKPhotoBrowser",
-            exclude: ["Info.plist"],
+            exclude: ["Info.plist", "extensions/UIImage+animatedGIF.h", "extensions/UIImage+animatedGIF.m"],
             resources: [
                 .copy("SKPhotoBrowser.bundle")
             ]
