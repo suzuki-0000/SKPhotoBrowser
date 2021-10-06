@@ -17,7 +17,9 @@ open class SKPhotoBrowser: UIViewController {
     open var initPageIndex: Int = 0
     open var activityItemProvider: UIActivityItemProvider?
     open var photos: [SKPhotoProtocol] = []
-
+    open var autoHideControllsfadeOutDelay: Double = 0.4
+    open var shouldAutoHideControlls: Bool = true
+    
     public var toolActionButton: UIBarButtonItem {
         return toolbar.toolActionButton
     }
@@ -325,10 +327,12 @@ public extension SKPhotoBrowser {
     }
     
     func hideControlsAfterDelay() {
+        // Hide controlls only if it is configured to hide automatically
+        guard shouldAutoHideControlls else { return }
         // reset
         cancelControlHiding()
         // start
-        controlVisibilityTimer = Timer.scheduledTimer(timeInterval: 4.0, target: self, selector: #selector(SKPhotoBrowser.hideControls(_:)), userInfo: nil, repeats: false)
+        controlVisibilityTimer = Timer.scheduledTimer(timeInterval: autoHideControllsfadeOutDelay, target: self, selector: #selector(SKPhotoBrowser.hideControls(_:)), userInfo: nil, repeats: false)
     }
     
     func hideControls() {
