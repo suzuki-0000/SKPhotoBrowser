@@ -151,7 +151,7 @@ open class SKZoomingScrollView: UIScrollView {
         // on high resolution screens we have double the pixel density, so we will be seeing every pixel if we limit the
         // maximum zoom scale to 0.5
         // After changing this value, we still never use more
-         maxScale = maxScale / scale
+         maxScale /= scale
          if maxScale < minScale {
              maxScale = minScale * 2
          }
