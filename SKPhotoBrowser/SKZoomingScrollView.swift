@@ -143,7 +143,7 @@ open class SKZoomingScrollView: UIScrollView {
             // here if imageView.frame.width == deviceScreenWidth
             maxScale = 2.5
         }
-    
+        
         maximumZoomScale = maxScale
         minimumZoomScale = minScale
         zoomScale = minScale
@@ -151,13 +151,11 @@ open class SKZoomingScrollView: UIScrollView {
         // on high resolution screens we have double the pixel density, so we will be seeing every pixel if we limit the
         // maximum zoom scale to 0.5
         // After changing this value, we still never use more
-        /*
-        maxScale = maxScale / scale 
-        if maxScale < minScale {
-            maxScale = minScale * 2
-        }
-        */
-        
+         maxScale /= scale
+         if maxScale < minScale {
+             maxScale = minScale * 2
+         }
+
         // reset position
         imageView.frame.origin = CGPoint.zero
         setNeedsLayout()
@@ -167,7 +165,7 @@ open class SKZoomingScrollView: UIScrollView {
         photo = nil
         if captionView != nil {
             captionView.removeFromSuperview()
-            captionView = nil 
+            captionView = nil
         }
     }
     
@@ -209,10 +207,10 @@ open class SKZoomingScrollView: UIScrollView {
         
         if let image = photo.underlyingImage, photo != nil {
             displayImage(image)
-		} else {
-			// change contentSize will reset contentOffset, so only set the contentsize zero when the image is nil
-			contentSize = CGSize.zero
-		}
+		    } else {
+			    // change contentSize will reset contentOffset, so only set the contentsize zero when the image is nil
+			    contentSize = CGSize.zero
+		    }
         setNeedsLayout()
     }
     
@@ -232,11 +230,11 @@ open class SKZoomingScrollView: UIScrollView {
         } else {
             // zoom in
             // I think that the result should be the same after double touch or pinch
-           /* var newZoom: CGFloat = zoomScale * 3.13
-            if newZoom >= maximumZoomScale {
-                newZoom = maximumZoomScale
-            }
-            */
+            /* var newZoom: CGFloat = zoomScale * 3.13
+             if newZoom >= maximumZoomScale {
+             newZoom = maximumZoomScale
+             }
+             */
             let zoomRect = zoomRectForScrollViewWith(maximumZoomScale, touchPoint: touchPoint)
             zoom(to: zoomRect, animated: true)
         }

@@ -73,7 +73,7 @@ open class SKPhoto: NSObject, SKPhotoProtocol {
         let session = URLSession(configuration: SKPhotoBrowserOptions.sessionConfiguration)
             var task: URLSessionTask?
             task = session.dataTask(with: URL, completionHandler: { [weak self] (data, response, error) in
-                guard let `self` = self else { return }
+                guard let self = self else { return }
                 defer { session.finishTasksAndInvalidate() }
 
                 guard error == nil else {
@@ -83,7 +83,7 @@ open class SKPhoto: NSObject, SKPhotoProtocol {
                     return
                 }
 
-                if let data = data, let response = response, let image = UIImage(data: data) {
+                if let data = data, let response = response, let image = UIImage.animatedImage(withAnimatedGIFData: data) {
                     if self.shouldCachePhotoURLImage {
                         if SKCache.sharedCache.imageCache is SKRequestResponseCacheable {
                             SKCache.sharedCache.setImageData(data, response: response, request: task?.originalRequest)
