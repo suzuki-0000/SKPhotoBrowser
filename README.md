@@ -51,8 +51,8 @@ Simple PhotoBrowser/Viewer inspired by facebook, twitter photo browsers written 
 | 4.2           | >= 6.0.0 |
 | 4.1           | >= 5.0.0 |
 | 3.2           | >= 4.0.0 |
-| 2.3           | 2.0.4 - 3.1.4 |
-| 2.2           | <= 2.0.3 |
+| 2.3           | 2.0.4 - 3.1.4  |
+| 2.2           | <= 2.0.3        |
 
 ## Installation
 
@@ -65,14 +65,12 @@ use_frameworks!
 
 #### Carthage
 To integrate into your Xcode project using Carthage, specify it in your Cartfile:
-
-```ogdl
+```
 github "suzuki-0000/SKPhotoBrowser"
 ```
 
 #### Info.plist
 If you want to use share image feature, it includes save image into galery, so you should specify a permission into your Info.plist (if you haven't done it yet).
-
 ```
 <key>NSPhotoLibraryAddUsageDescription</key>
 <string>Used to save images into your galery</string>
@@ -176,7 +174,7 @@ SKPhotoBrowserOptions.displayStatusbar = false                             // st
 
 #### Close And Delete Buttons
 That how you can customize close and delete buttons
-```
+```swift
 SKPhotoBrowserOptions.displayDeleteButton = true                           // delete button will be shown
 SKPhotoBrowserOptions.swapCloseAndDeleteButtons = true                     // now close button located on right side of screen and delete button is on left side
 SKPhotoBrowserOptions.closeAndDeleteButtonPadding = 20                     // set offset from top and from nearest screen edge of close button and delete button
@@ -197,7 +195,7 @@ SKCache.sharedCache.imageCache = CustomImageCache()
 
 #### CustomButton Image
 Close, Delete buttons are able to change image and frame.
-``` swift
+```swift
 browser.updateCloseButton(UIImage())
 browser.updateUpdateButton(UIImage())
 ```
