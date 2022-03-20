@@ -88,7 +88,7 @@ open class SKPhotoBrowser: UIViewController {
     public convenience init(photos: [SKPhotoProtocol], initialPageIndex: Int) {
         self.init(nibName: nil, bundle: nil)
         self.photos = photos
-        self.photos.forEach { $0.checkCache() }
+        //self.photos.forEach { $0.checkCache() }
         self.currentPageIndex = min(initialPageIndex, photos.count - 1)
         self.initPageIndex = self.currentPageIndex
         animator.senderOriginImage = photos[currentPageIndex].underlyingImage
