@@ -89,13 +89,14 @@ class FromCameraRollViewController: UIViewController, SKPhotoBrowserDelegate, UI
         guard let cell = collectionView.cellForItem(at: indexPath) as? ExampleCollectionViewCell else {
             return
         }
-        guard let originImage = cell.exampleImageView.image else {
+        guard cell.exampleImageView.image != nil else {
             return
         }
         
         func open(_ images: [UIImage]) {
             let photoImages: [SKPhotoProtocol] = images.map({ return SKPhoto.photoWithImage($0) })
-            let browser = SKPhotoBrowser(originImage: cell.exampleImageView.image!, photos: photoImages, animatedFromView: cell)
+            let browser = SKPhotoBrowser(photos: photoImages)
+//            let browser = SKPhotoBrowser(originImage: cell.exampleImageView.image!, photos: photoImages, animatedFromView: cell)
             browser.initializePageIndex(indexPath.row)
             browser.delegate = self
 //            browser.displayDeleteButton = true
@@ -152,11 +153,20 @@ class FromCameraRollViewController: UIViewController, SKPhotoBrowserDelegate, UI
         
         // Workaround because PHImageManager.requestImageForAsset doesn't work for burst images
         if asset.representsBurst {
-            return imageManager.requestImageData(for: asset, options: options) { data, _, _, dict in
-                let image = data.flatMap { UIImage(data: $0) }
-                let requestId = dict?[PHImageResultRequestIDKey] as? NSNumber
-                completion(image, requestId?.int32Value)
+            if #available(iOS 13, *) {
+                return imageManager.requestImageDataAndOrientation(for: asset, options: options) { data, _, _, dict in
+                    let image = data.flatMap { UIImage(data: $0) }
+                    let requestId = dict?[PHImageResultRequestIDKey] as? NSNumber
+                    completion(image, requestId?.int32Value)
+                }
+            } else {
+                return imageManager.requestImageData(for: asset, options: options) { data, _, _, dict in
+                    let image = data.flatMap { UIImage(data: $0) }
+                    let requestId = dict?[PHImageResultRequestIDKey] as? NSNumber
+                    completion(image, requestId?.int32Value)
+                }
             }
+            
         } else {
             return imageManager.requestImage(for: asset, targetSize: targetSize, contentMode: .aspectFill, options: options) { image, dict in
                 let requestId = dict?[PHImageResultRequestIDKey] as? NSNumber
