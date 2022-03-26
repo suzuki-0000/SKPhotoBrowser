@@ -1,4 +1,4 @@
-// swift-tools-version:5.3
+// swift-tools-version:5.0
 //
 //  Package.swift
 //
@@ -18,9 +18,6 @@ let package = Package(
     targets: [
         .target(
             name: "SKPhotoBrowser",
-            dependencies: [],
-            path: "SKPhotoBrowser",
-            exclude: ["SKPhotoBrowser.bundle","Info.plist"],
-            resources: [.process("SKPhotoBrowser.bundle/images")])
+            path: "SKPhotoBrowser")
     ]
 )
