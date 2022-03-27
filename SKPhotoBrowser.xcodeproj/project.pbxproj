@@ -33,6 +33,7 @@
 		9521CC65232F677A00446D11 /* UIView+Radius.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9521CC62232F677900446D11 /* UIView+Radius.swift */; };
 		A64B89361CB04222000071B9 /* SKPhotoBrowserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A64B89351CB04222000071B9 /* SKPhotoBrowserTests.swift */; };
 		A64B89381CB04222000071B9 /* SKPhotoBrowser.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8909B5301BC791280060A053 /* SKPhotoBrowser.framework */; };
+		C1088AE327F024B800873DD4 /* UIImage+Gif.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1088AE227F024B800873DD4 /* UIImage+Gif.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,6 +76,7 @@
 		A64B89331CB04222000071B9 /* SKPhotoBrowserTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SKPhotoBrowserTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A64B89351CB04222000071B9 /* SKPhotoBrowserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKPhotoBrowserTests.swift; sourceTree = "<group>"; };
 		A64B89371CB04222000071B9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C1088AE227F024B800873DD4 /* UIImage+Gif.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Gif.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -149,6 +151,7 @@
 				9521CC60232F677900446D11 /* UIApplication+UIWindow.swift */,
 				9521CC61232F677900446D11 /* UIImage+Rotation.swift */,
 				9521CC62232F677900446D11 /* UIView+Radius.swift */,
+				C1088AE227F024B800873DD4 /* UIImage+Gif.swift */,
 			);
 			path = extensions;
 			sourceTree = "<group>";
@@ -296,6 +299,7 @@
 				7643F4B91FEA4FCF00475F6E /* SKToolbar.swift in Sources */,
 				9521CC65232F677A00446D11 /* UIView+Radius.swift in Sources */,
 				89C24A841D657AFE005F09A9 /* SKPagingScrollView.swift in Sources */,
+				C1088AE327F024B800873DD4 /* UIImage+Gif.swift in Sources */,
 				8909B5441BC791510060A053 /* SKDetectingImageView.swift in Sources */,
 				8909B54A1BC791510060A053 /* SKZoomingScrollView.swift in Sources */,
 				9521CC64232F677A00446D11 /* UIImage+Rotation.swift in Sources */,
