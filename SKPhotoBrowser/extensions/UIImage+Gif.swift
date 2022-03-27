@@ -4,6 +4,7 @@
 //
 //  Created by rosua le on 2022/3/27.
 //  Copyright © 2022 suzuki_keishi. All rights reserved.
+//  copy from https://github.com/toddheasley/gif
 //
 
 import UIKit
