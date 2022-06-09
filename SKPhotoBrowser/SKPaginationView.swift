@@ -134,6 +134,7 @@ class SKPaginationButton: UIButton {
     let insets: UIEdgeInsets = UIEdgeInsets(top: 13.25, left: 17.25, bottom: 13.25, right: 17.25)
     
     func setup(_ imageName: String) {
+        tintColor = SKPhotoBrowserOptions.paginationButtonsTintColor
         backgroundColor = .clear
         imageEdgeInsets = insets
         translatesAutoresizingMaskIntoConstraints = true
@@ -145,7 +146,7 @@ class SKPaginationButton: UIButton {
         
         let image = UIImage(named: "SKPhotoBrowser.bundle/images/\(imageName)",
             in: bundle, compatibleWith: nil) ?? UIImage()
-        setImage(image, for: .normal)
+        setImage(image.withRenderingMode(.alwaysTemplate), for: .normal)
     }
 }
 
