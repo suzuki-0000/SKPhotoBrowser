@@ -61,7 +61,7 @@ open class SKZoomingScrollView: UIScrollView {
         imageView = SKDetectingImageView(frame: frame)
         imageView.delegate = self
         imageView.contentMode = .bottom
-        imageView.backgroundColor = .clear
+        imageView.backgroundColor = .white
         addSubview(imageView)
         
         // indicator
@@ -69,7 +69,7 @@ open class SKZoomingScrollView: UIScrollView {
         addSubview(indicatorView)
         
         // self
-        backgroundColor = .clear
+        backgroundColor = .white
         delegate = self
         showsHorizontalScrollIndicator = SKPhotoBrowserOptions.displayHorizontalScrollIndicator
         showsVerticalScrollIndicator = SKPhotoBrowserOptions.displayVerticalScrollIndicator
