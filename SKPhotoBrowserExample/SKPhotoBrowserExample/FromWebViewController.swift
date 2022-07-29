@@ -81,22 +81,15 @@ private extension FromWebViewController {
 }
 
 class CustomImageCache: SKImageCacheable {
-    var cache: SDImageCache
+    var cache: SDImageCache?
     
     init() {
-        let cache = SDImageCache(namespace: "com.suzuki.custom.cache")
-        self.cache = cache
+        self.cache = SDImageCache(namespace: "com.suzuki.custom.cache")
     }
 
-    func imageForKey(_ key: String) -> UIImage? {
-        guard let image = cache.imageFromDiskCache(forKey: key) else { return nil }
-        
-        return image
-    }
+    func imageForKey(_ key: String) -> UIImage? { return cache?.imageFromDiskCache(forKey: key) }
 
-    func setImage(_ image: UIImage, forKey key: String) {
-        cache.store(image, forKey: key)
-    }
+    func setImage(_ image: UIImage, forKey key: String) { cache?.store(image, forKey: key) }
 
     func removeImageForKey(_ key: String) {}
     
