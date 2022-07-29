@@ -7,6 +7,9 @@
 //
 
 import UIKit
+#if canImport(SKPhotoBrowserObjC)
+import SKPhotoBrowserObjC
+#endif
 
 @objc public protocol SKPhotoProtocol: NSObjectProtocol {
     var index: Int { get set }

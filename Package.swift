@@ -18,9 +18,22 @@ let package = Package(
     targets: [
         .target(
             name: "SKPhotoBrowser",
-            dependencies: [],
+            dependencies: ["SKPhotoBrowserObjC"],
             path: "SKPhotoBrowser",
-            exclude: ["SKPhotoBrowser.bundle","Info.plist"],
-            resources: [.process("SKPhotoBrowser.bundle/images")])
+            exclude: ["Info.plist",
+                      "extensions/ObjC"],
+            resources: [
+                .copy("SKPhotoBrowser.bundle")
+            ]),
+        .target(
+            name: "SKPhotoBrowserObjC",
+            path: "SKPhotoBrowser/extensions/ObjC",
+            publicHeadersPath: "."),
+        .testTarget(
+            name: "SKPhotoBrowserTests",
+            dependencies: ["SKPhotoBrowser"],
+            path: "SKPhotoBrowserTests",
+            exclude: ["Info.plist"]
+        )
     ]
 )
