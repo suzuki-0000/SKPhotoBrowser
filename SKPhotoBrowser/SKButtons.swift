@@ -8,9 +8,6 @@
 
 import UIKit
 
-// helpers which often used
-private let bundle = Bundle(for: SKPhotoBrowser.self)
-
 class SKButton: UIButton {
     internal var showFrame: CGRect!
     internal var hideFrame: CGRect!
@@ -33,8 +30,7 @@ class SKButton: UIButton {
         translatesAutoresizingMaskIntoConstraints = true
         autoresizingMask = [.flexibleBottomMargin, .flexibleLeftMargin, .flexibleRightMargin, .flexibleTopMargin]
         
-        let image = UIImage(named: "SKPhotoBrowser.bundle/images/\(imageName)", in: bundle, compatibleWith: nil) ?? UIImage()
-        setImage(image, for: .normal)
+        setImage(UIImage.bundledImage(named: imageName), for: .normal)
     }
   
     func setFrameSize(_ size: CGSize? = nil) {

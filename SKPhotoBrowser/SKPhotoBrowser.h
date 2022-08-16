@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+
+#if __has_include("UIImage+animatedGIF.h")
 #import "UIImage+animatedGIF.h"
+#endif
 
 //! Project version number for SKPhotoBrowser.
 FOUNDATION_EXPORT double SKPhotoBrowserVersionNumber;

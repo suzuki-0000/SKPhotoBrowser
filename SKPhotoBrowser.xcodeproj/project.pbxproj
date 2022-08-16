@@ -34,6 +34,7 @@
 		9521CC65232F677A00446D11 /* UIView+Radius.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9521CC62232F677900446D11 /* UIView+Radius.swift */; };
 		9521CC6B232F693800446D11 /* UIImage+animatedGIF.h in Headers */ = {isa = PBXBuildFile; fileRef = 9521CC69232F693800446D11 /* UIImage+animatedGIF.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9521CC6C232F693800446D11 /* UIImage+animatedGIF.m in Sources */ = {isa = PBXBuildFile; fileRef = 9521CC6A232F693800446D11 /* UIImage+animatedGIF.m */; };
+		9CF727E1285208180043487A /* UIImage+BundledImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF727E0285208180043487A /* UIImage+BundledImage.swift */; };
 		A64B89361CB04222000071B9 /* SKPhotoBrowserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A64B89351CB04222000071B9 /* SKPhotoBrowserTests.swift */; };
 		A64B89381CB04222000071B9 /* SKPhotoBrowser.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8909B5301BC791280060A053 /* SKPhotoBrowser.framework */; };
 /* End PBXBuildFile section */
@@ -78,6 +79,7 @@
 		9521CC62232F677900446D11 /* UIView+Radius.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Radius.swift"; sourceTree = "<group>"; };
 		9521CC69232F693800446D11 /* UIImage+animatedGIF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+animatedGIF.h"; sourceTree = "<group>"; };
 		9521CC6A232F693800446D11 /* UIImage+animatedGIF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+animatedGIF.m"; sourceTree = "<group>"; };
+		9CF727E0285208180043487A /* UIImage+BundledImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+BundledImage.swift"; sourceTree = "<group>"; };
 		A64B89331CB04222000071B9 /* SKPhotoBrowserTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SKPhotoBrowserTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A64B89351CB04222000071B9 /* SKPhotoBrowserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKPhotoBrowserTests.swift; sourceTree = "<group>"; };
 		A64B89371CB04222000071B9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -153,13 +155,22 @@
 		9521CC5F232F677900446D11 /* extensions */ = {
 			isa = PBXGroup;
 			children = (
-				9521CC69232F693800446D11 /* UIImage+animatedGIF.h */,
-				9521CC6A232F693800446D11 /* UIImage+animatedGIF.m */,
+				9CF727DF285208020043487A /* ObjC */,
 				9521CC60232F677900446D11 /* UIApplication+UIWindow.swift */,
+				9CF727E0285208180043487A /* UIImage+BundledImage.swift */,
 				9521CC61232F677900446D11 /* UIImage+Rotation.swift */,
 				9521CC62232F677900446D11 /* UIView+Radius.swift */,
 			);
 			path = extensions;
+			sourceTree = "<group>";
+		};
+		9CF727DF285208020043487A /* ObjC */ = {
+			isa = PBXGroup;
+			children = (
+				9521CC69232F693800446D11 /* UIImage+animatedGIF.h */,
+				9521CC6A232F693800446D11 /* UIImage+animatedGIF.m */,
+			);
+			path = ObjC;
 			sourceTree = "<group>";
 		};
 		A64B89341CB04222000071B9 /* SKPhotoBrowserTests */ = {
@@ -321,6 +332,7 @@
 				8909B5461BC791510060A053 /* SKIndicatorView.swift in Sources */,
 				8917B1B41D5A14B0000CE1C4 /* SKButtons.swift in Sources */,
 				89C24A821D657AD1005F09A9 /* SKPhotoBrowserOptions.swift in Sources */,
+				9CF727E1285208180043487A /* UIImage+BundledImage.swift in Sources */,
 				26C97AD51D0EB6870039F6CB /* SKCache.swift in Sources */,
 				8909B5431BC791510060A053 /* SKCaptionView.swift in Sources */,
 				8909B5491BC791510060A053 /* SKPhotoBrowser.swift in Sources */,
