@@ -33,7 +33,7 @@ class SKToolbar: UIToolbar {
     
     override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
         if let view = super.hitTest(point, with: event) {
-            if SKMesurement.screenWidth - point.x < 50 { // FIXME: not good idea
+            if point.x < 50 || SKMesurement.screenWidth - point.x < 50 { // FIXME: not good idea
                 return view
             }
         }
