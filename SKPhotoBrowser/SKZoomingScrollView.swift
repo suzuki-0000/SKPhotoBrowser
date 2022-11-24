@@ -16,6 +16,7 @@ open class SKZoomingScrollView: UIScrollView {
     
     var videoPlayer: AVPlayer?
     var videoPlayerLayer: AVPlayerLayer?
+    var imageViewVideoButton: UIImageView?
     
     private var isSetup = false
     private var isVideoSetup = false
@@ -104,10 +105,21 @@ open class SKZoomingScrollView: UIScrollView {
         }
         
         if let url = photo.videoURL {
+            
+            imageViewVideoButton = UIImageView(frame: CGRect(x: 0, y: 0,
+                                                             width: 50, height: 50))
+            
+            imageViewVideoButton?.image = UIImage(named: "PlayButton.png")
+            
+            addSubview(imageViewVideoButton!)
+            imageViewVideoButton?.center = center
+            
             videoPlayer = AVPlayer(url: url)
             videoPlayerLayer = AVPlayerLayer(player: videoPlayer)
             videoPlayerLayer?.frame = self.bounds
             layer.addSublayer(videoPlayerLayer!)
+            
+            bringSubviewToFront(imageViewVideoButton!)
         }
         
     }
@@ -205,6 +217,7 @@ open class SKZoomingScrollView: UIScrollView {
             layer.removeFromSuperlayer()
         }
         
+        imageViewVideoButton = nil
         videoPlayerLayer = nil
         videoPlayer = nil
         
@@ -316,8 +329,10 @@ extension SKZoomingScrollView: SKDetectingViewDelegate {
             
             if videoPlayer?.rate != 1.0 {
                 videoPlayer?.play()
+                imageViewVideoButton?.isHidden = true
             } else {
                 videoPlayer?.pause()
+                imageViewVideoButton?.isHidden = false
             }
             
             return
