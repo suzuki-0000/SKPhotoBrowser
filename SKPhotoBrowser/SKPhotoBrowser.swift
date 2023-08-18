@@ -553,6 +553,10 @@ private extension SKPhotoBrowser {
     func configurePagingScrollView() {
         pagingScrollView.delegate = self
         view.addSubview(pagingScrollView)
+        
+        if SKPhotoBrowserOptions.protectScreenshot {
+            paginationView.protectScreenshot()
+        }
     }
 
     func configureGestureControl() {

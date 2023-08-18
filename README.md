@@ -178,6 +178,13 @@ SKPhotoBrowserOptions.swapCloseAndDeleteButtons = true                     // no
 SKPhotoBrowserOptions.closeAndDeleteButtonPadding = 20                     // set offset from top and from nearest screen edge of close button and delete button
 ```
 
+#### Screenshot Protection
+You can protect your image from taking screenshot via SKPhotoBrowserOptions
+Only working on the device, not on simulator
+```swift
+SKPhotoBrowserOptions.protectScreenshot = true                             // image will be hidden after taking screenshot
+```
+
 #### Custom Cache From Web URL
 You can use SKCacheable protocol if others are adaptable. (SKImageCacheable or SKRequestResponseCacheable)
 

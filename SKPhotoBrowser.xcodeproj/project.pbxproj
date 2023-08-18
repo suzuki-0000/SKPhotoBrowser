@@ -37,6 +37,7 @@
 		9CF727E1285208180043487A /* UIImage+BundledImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF727E0285208180043487A /* UIImage+BundledImage.swift */; };
 		A64B89361CB04222000071B9 /* SKPhotoBrowserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A64B89351CB04222000071B9 /* SKPhotoBrowserTests.swift */; };
 		A64B89381CB04222000071B9 /* SKPhotoBrowser.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8909B5301BC791280060A053 /* SKPhotoBrowser.framework */; };
+		D6690B1E2A8F580B00AA18EA /* UIView+ScreenshotProtection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6690B1D2A8F580B00AA18EA /* UIView+ScreenshotProtection.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,6 +84,7 @@
 		A64B89331CB04222000071B9 /* SKPhotoBrowserTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SKPhotoBrowserTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A64B89351CB04222000071B9 /* SKPhotoBrowserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKPhotoBrowserTests.swift; sourceTree = "<group>"; };
 		A64B89371CB04222000071B9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D6690B1D2A8F580B00AA18EA /* UIView+ScreenshotProtection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+ScreenshotProtection.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -160,6 +162,7 @@
 				9CF727E0285208180043487A /* UIImage+BundledImage.swift */,
 				9521CC61232F677900446D11 /* UIImage+Rotation.swift */,
 				9521CC62232F677900446D11 /* UIView+Radius.swift */,
+				D6690B1D2A8F580B00AA18EA /* UIView+ScreenshotProtection.swift */,
 			);
 			path = extensions;
 			sourceTree = "<group>";
@@ -333,6 +336,7 @@
 				8917B1B41D5A14B0000CE1C4 /* SKButtons.swift in Sources */,
 				89C24A821D657AD1005F09A9 /* SKPhotoBrowserOptions.swift in Sources */,
 				9CF727E1285208180043487A /* UIImage+BundledImage.swift in Sources */,
+				D6690B1E2A8F580B00AA18EA /* UIView+ScreenshotProtection.swift in Sources */,
 				26C97AD51D0EB6870039F6CB /* SKCache.swift in Sources */,
 				8909B5431BC791510060A053 /* SKCaptionView.swift in Sources */,
 				8909B5491BC791510060A053 /* SKPhotoBrowser.swift in Sources */,
