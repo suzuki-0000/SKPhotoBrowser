@@ -47,6 +47,10 @@ public struct SKPhotoBrowserOptions {
 
     /// Provide custom session configuration (eg. for headers, etc.)
     public static var sessionConfiguration: URLSessionConfiguration = .default
+    
+    /// if this value is true, when you take a screenshot, the image will be hidden
+    /// only working on a device, not on simulator
+    public static var protectScreenshot: Bool = false
 }
 
 public struct SKButtonOptions {
