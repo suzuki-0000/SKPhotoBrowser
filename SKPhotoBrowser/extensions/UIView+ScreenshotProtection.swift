@@ -6,7 +6,7 @@
 //  Copyright © 2023 suzuki_keishi. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 extension UIView {
     func protectScreenshot() {
