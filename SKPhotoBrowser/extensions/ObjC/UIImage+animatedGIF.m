@@ -77,7 +77,8 @@ static NSArray *frameArray(size_t const count, CGImageRef const images[count], i
             frames[f++] = frame;
         }
     }
-    return [NSArray arrayWithObjects:frames count:frameCount];
+    
+    return (frameCount <= 0) ? [NSArray array] : [NSArray arrayWithObjects:frames count:frameCount];
 }
 
 static void releaseImages(size_t const count, CGImageRef const images[count]) {
@@ -93,9 +94,16 @@ static UIImage *animatedImageWithAnimatedGIFImageSource(CGImageSourceRef const s
     createImagesAndDelays(source, count, images, delayCentiseconds);
     int const totalDurationCentiseconds = sum(count, delayCentiseconds);
     NSArray *const frames = frameArray(count, images, delayCentiseconds, totalDurationCentiseconds);
-    UIImage *const animation = [UIImage animatedImageWithImages:frames duration:(NSTimeInterval)totalDurationCentiseconds / 100.0];
-    releaseImages(count, images);
-    return animation;
+    
+    if (frames.count == 0) {
+        NSLog(@"[SKPhotoBrowser] Cannot process GIF image frames)");
+        return nil;
+    } else {
+        UIImage *const animation = [UIImage animatedImageWithImages:frames duration:(NSTimeInterval)totalDurationCentiseconds / 100.0];
+        releaseImages(count, images);
+        return animation;
+    }
+    
 }
 
 static UIImage *animatedImageWithAnimatedGIFReleasingImageSource(CGImageSourceRef CF_RELEASES_ARGUMENT source) {
