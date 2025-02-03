@@ -7,10 +7,13 @@
 //
 
 import UIKit
+import ImageIO
 
 open class SKCache {
     public static let sharedCache = SKCache()
     open var imageCache: SKCacheable
+    
+    private let defaultOrientation = UIImage.Orientation.up
 
     init() {
         self.imageCache = SKDefaultImageCache()
@@ -54,8 +57,13 @@ open class SKCache {
         }
         
         if let response = cache.cachedResponseForRequest(request) {
-            return UIImage(data: response.data)
+            let data = response.data
+            guard let image = UIImage(data: data) else { return nil }
+            
+            let orientation = getOrientation(from: data)
+            return UIImage(cgImage: image.cgImage!, scale: image.scale, orientation: orientation)
         }
+        
         return nil
     }
 
@@ -65,6 +73,48 @@ open class SKCache {
         }
         let cachedResponse = CachedURLResponse(response: response, data: data)
         cache.storeCachedResponse(cachedResponse, forRequest: request)
+    }
+
+    open func getExifData(from imageData: Data) -> [String: Any]? {
+        if let imageSource = CGImageSourceCreateWithData(imageData as CFData, nil) {
+            if let imageProperties = CGImageSourceCopyPropertiesAtIndex(imageSource, 0, nil) as? [String: Any] {
+                if let exifDict = imageProperties["{Exif}"] as? [String: Any] {
+                    // Access EXIF properties here
+                    return exifDict
+                }
+            }
+        }
+        
+        return nil
+    }
+    
+    private func getOrientation(from imageData: Data) -> UIImage.Orientation {
+        let exifData = getExifData(from: imageData)
+        guard let exifData, let orientation = exifData[String(kCGImagePropertyOrientation)] as? Int else { return .up }
+        return convertExifOrientationToIosOrientation(orientation)
+    }
+    
+    private func convertExifOrientationToIosOrientation(_ orientation: Int) -> UIImage.Orientation {
+        switch orientation {
+        case 1:
+            return .up
+        case 2:
+            return .down
+        case 3:
+            return .left
+        case 4:
+            return .right
+        case 5:
+            return .upMirrored
+        case 6:
+            return .downMirrored
+        case 7:
+            return .leftMirrored
+        case 8:
+            return .rightMirrored
+        default:
+            return .up
+        }
     }
 }
 
