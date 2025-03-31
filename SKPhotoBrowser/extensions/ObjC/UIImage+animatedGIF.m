@@ -108,8 +108,19 @@ static UIImage *animatedImageWithAnimatedGIFReleasingImageSource(CGImageSourceRe
     }
 }
 
+static UIImage *animatedImageWithAnimatedGIFDataSource(CGImageSourceRef const source, NSData *data) {
+    size_t const count = CGImageSourceGetCount(source);
+    // If there's only one frame or less, process as a regular image to maintain correct orientation
+    if(count <= 1) {
+        return [UIImage imageWithData:data];
+    }
+    
+    // Continue using existing GIF animation handling logic for multi-frame images
+    return animatedImageWithAnimatedGIFImageSource(source);
+}
+
 + (UIImage *)animatedImageWithAnimatedGIFData:(NSData *)data {
-    return animatedImageWithAnimatedGIFReleasingImageSource(CGImageSourceCreateWithData(toCF data, NULL));
+    return animatedImageWithAnimatedGIFDataSource(CGImageSourceCreateWithData(toCF data, NULL), data);
 }
 
 + (UIImage *)animatedImageWithAnimatedGIFURL:(NSURL *)url {
