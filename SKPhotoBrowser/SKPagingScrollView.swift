@@ -138,13 +138,21 @@ class SKPagingScrollView: UIScrollView {
                 continue
             }
             
-            let page: SKZoomingScrollView = SKZoomingScrollView(frame: frame, browser: browser)
-            page.frame = frameForPageAtIndex(index)
-            page.tag = index + pageIndexTagOffset
             let photo = browser.photos[index]
+            
+            let page = SKZoomingScrollView(frame: frame, browser: browser)
             page.photo = photo
+            
+            if photo.isVideo() {
+                page.setupVideo()
+            } else {
+                page.setupImage()
+            }
+            
+            page.frame = frameForPageAtIndex(photo.index)
+            page.tag = photo.index + pageIndexTagOffset
             if let thumbnail = browser.animator.senderOriginImage,
-                index == browser.initPageIndex,
+               photo.index == browser.initPageIndex,
                 photo.underlyingImage == nil {
                 page.displayImage(thumbnail)
             }
@@ -153,8 +161,8 @@ class SKPagingScrollView: UIScrollView {
             addSubview(page)
             
             // if exists caption, insert
-            if let captionView: SKCaptionView = createCaptionView(index) {
-                captionView.frame = frameForCaptionView(captionView, index: index)
+            if let captionView: SKCaptionView = createCaptionView(photo.index) {
+                captionView.frame = frameForCaptionView(captionView, index: photo.index)
                 captionView.alpha = browser.areControlsHidden() ? 0 : 1
                 addSubview(captionView)
                 // ref val for control

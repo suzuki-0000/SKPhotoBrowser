@@ -15,19 +15,23 @@ import SKPhotoBrowserObjC
     var index: Int { get set }
     var underlyingImage: UIImage! { get }
     var caption: String? { get }
+    var videoURL: URL? { get }
     var contentMode: UIView.ContentMode { get set }
     func loadUnderlyingImageAndNotify()
     func checkCache()
+    func isVideo () -> Bool
 }
 
 // MARK: - SKPhoto
 open class SKPhoto: NSObject, SKPhotoProtocol {
+    
     open var index: Int = 0
     open var underlyingImage: UIImage!
     open var caption: String?
     open var contentMode: UIView.ContentMode = .scaleAspectFill
     open var shouldCachePhotoURLImage: Bool = false
     open var photoURL: String!
+    open var videoURL: URL?
 
     override init() {
         super.init()
@@ -47,6 +51,11 @@ open class SKPhoto: NSObject, SKPhotoProtocol {
         self.init()
         photoURL = url
         underlyingImage = holder
+    }
+    
+    convenience init(videoURL: URL?) {
+        self.init()
+        self.videoURL = videoURL
     }
     
     open func checkCache() {
@@ -129,6 +138,12 @@ open class SKPhoto: NSObject, SKPhotoProtocol {
         NotificationCenter.default.post(name: Notification.Name(rawValue: SKPHOTO_LOADING_DID_END_NOTIFICATION), object: self)
     }
     
+    // Check if we have a video URL
+    // https://github.com/engasix/
+    
+    open func isVideo() -> Bool {
+        return self.videoURL != nil
+    }
 }
 
 // MARK: - Static Function
@@ -144,5 +159,9 @@ extension SKPhoto {
     
     public static func photoWithImageURL(_ url: String, holder: UIImage?) -> SKPhoto {
         return SKPhoto(url: url, holder: holder)
+    }
+    
+    public static func videoWithURL(_ url: URL) -> SKPhoto {
+        return SKPhoto(videoURL: url)
     }
 }
