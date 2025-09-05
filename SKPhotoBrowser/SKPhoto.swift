@@ -28,6 +28,7 @@ open class SKPhoto: NSObject, SKPhotoProtocol {
     open var contentMode: UIView.ContentMode = .scaleAspectFill
     open var shouldCachePhotoURLImage: Bool = false
     open var photoURL: String!
+    var isFetchingImage = false
 
     override init() {
         super.init()
@@ -94,10 +95,17 @@ open class SKPhoto: NSObject, SKPhotoProtocol {
         }
 
         // Fetch Image
+        
+        guard !isFetchingImage else {
+            return
+        }
+        isFetchingImage = true
+        
         let session = URLSession(configuration: SKPhotoBrowserOptions.sessionConfiguration)
             var task: URLSessionTask?
             task = session.dataTask(with: URL, completionHandler: { [weak self] (data, response, error) in
                 guard let self = self else { return }
+                self.isFetchingImage = false
                 defer { session.finishTasksAndInvalidate() }
 
                 guard error == nil else {
