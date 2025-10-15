@@ -20,6 +20,10 @@ Simple PhotoBrowser/Viewer inspired by facebook, twitter photo browsers written 
 <img alt="Contributors" src="https://img.shields.io/badge/all_contributors-66-orange.svg?style=flat-square" /></a>
 </p>
 
+> [!NOTE]
+> Please use `master` branch for now for the latest bugfixes instead of tagged versions.
+> 
+> The repository is currently under refactoring design and implementation on a separate branch, detailed will announce soon in the notes section here.
 
 ## features
 - Display one or more images by providing either `UIImage` objects, or string of URL array.
