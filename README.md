@@ -21,7 +21,7 @@ Simple PhotoBrowser/Viewer inspired by facebook, twitter photo browsers written 
 </p>
 
 > [!NOTE]
-> Please use `master` branch for now for the latest bugfixes instead of tagged versions.
+> For the latest bug fixes, please use the `master` branch instead of tagged versions for now.
 > 
 > The repository is currently under refactoring design and implementation on a separate branch, detailed will announce soon in the notes section here.
 
