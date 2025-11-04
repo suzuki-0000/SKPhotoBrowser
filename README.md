@@ -23,7 +23,7 @@ Simple PhotoBrowser/Viewer inspired by facebook, twitter photo browsers written 
 > [!NOTE]
 > For the latest bug fixes, please use the `master` branch instead of tagged versions for now.
 > 
-> The repository is currently undergoing refactoring and redesign on a separate branch. Details will be announced soon in the [Notes section](#notes) below.
+> The repository is currently undergoing refactoring and redesign on a separate branch. Details will be announced soon.
 
 ## features
 - Display one or more images by providing either `UIImage` objects, or string of URL array.
