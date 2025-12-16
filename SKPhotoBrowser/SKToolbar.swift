@@ -47,6 +47,20 @@ private extension SKToolbar {
         clipsToBounds = true
         isTranslucent = true
         setBackgroundImage(UIImage(), forToolbarPosition: .any, barMetrics: .default)
+    
+        if #available(iOS 13.0, *) {
+            let appearance = UIToolbarAppearance()
+            appearance.configureWithTransparentBackground()
+            standardAppearance = appearance
+            compactAppearance = appearance
+            if #available(iOS 15.0, *) {
+                scrollEdgeAppearance = appearance
+            }
+        } else {
+            isTranslucent = true
+            setBackgroundImage(UIImage(), forToolbarPosition: .any, barMetrics: .default)
+            setShadowImage(UIImage(), forToolbarPosition: .any)
+        }
     }
     
     func setupToolbar() {
