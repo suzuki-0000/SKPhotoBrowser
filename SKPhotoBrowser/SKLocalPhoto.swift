@@ -17,6 +17,7 @@ open class SKLocalPhoto: NSObject, SKPhotoProtocol {
     open var shouldCachePhotoURLImage: Bool = false
     open var caption: String?
     open var index: Int = 0
+    public var videoURL: URL?
     
     override init() {
         super.init()
@@ -57,6 +58,13 @@ open class SKLocalPhoto: NSObject, SKPhotoProtocol {
     
     open func loadUnderlyingImageComplete() {
         NotificationCenter.default.post(name: Notification.Name(rawValue: SKPHOTO_LOADING_DID_END_NOTIFICATION), object: self)
+    }
+    
+    // Check if we have a video URL
+    // https://github.com/engasix/
+    
+    open func isVideo() -> Bool {
+        return self.videoURL != nil
     }
     
     // MARK: - class func
