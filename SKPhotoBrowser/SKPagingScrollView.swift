@@ -44,24 +44,22 @@ class SKPagingScrollView: UIScrollView {
         recycledPages.removeAll()
     }
 
-    func loadAdjacentPhotosIfNecessary(_ photo: SKPhotoProtocol, currentPageIndex: Int) {
+    func loadAdjacentPhotosIfNecessary(_ photo: SKPhotoProtocol, currentPageIndex: Int, preLoadNum: Int = 1, nextLoadNum: Int = 1) {
         guard let browser = browser, let page = pageDisplayingAtPhoto(photo) else {
             return
         }
         let pageIndex = (page.tag - pageIndexTagOffset)
         if currentPageIndex == pageIndex {
-            // Previous
-            if pageIndex > 0 {
-                let previousPhoto = browser.photos[pageIndex - 1]
+            for i in max(pageIndex - preLoadNum, 0)...(pageIndex + nextLoadNum) {
+                guard i < numberOfPhotos else {
+                    break
+                }
+                guard pageIndex != i else {
+                    continue
+                }
+                let previousPhoto = browser.photos[i]
                 if previousPhoto.underlyingImage == nil {
                     previousPhoto.loadUnderlyingImageAndNotify()
-                }
-            }
-            // Next
-            if pageIndex < numberOfPhotos - 1 {
-                let nextPhoto = browser.photos[pageIndex + 1]
-                if nextPhoto.underlyingImage == nil {
-                    nextPhoto.loadUnderlyingImageAndNotify()
                 }
             }
         }
