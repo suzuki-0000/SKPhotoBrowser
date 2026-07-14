@@ -28,6 +28,7 @@ open class SKPhoto: NSObject, SKPhotoProtocol {
     open var contentMode: UIView.ContentMode = .scaleAspectFill
     open var shouldCachePhotoURLImage: Bool = false
     open var photoURL: String!
+    open var cacheKey: String!
 
     override init() {
         super.init()
@@ -38,19 +39,21 @@ open class SKPhoto: NSObject, SKPhotoProtocol {
         underlyingImage = image
     }
     
-    convenience init(url: String) {
+    convenience init(url: String, cacheKey: String?) {
         self.init()
         photoURL = url
+        self.cacheKey = cacheKey ?? url
     }
     
-    convenience init(url: String, holder: UIImage?) {
+    convenience init(url: String, holder: UIImage?, cacheKey: String?) {
         self.init()
         photoURL = url
         underlyingImage = holder
+        self.cacheKey = cacheKey ?? url
     }
     
     open func checkCache() {
-        guard let photoURL = photoURL else {
+        guard let photoURL = photoURL, let cacheKey = self.cacheKey else {
             return
         }
         guard shouldCachePhotoURLImage else {
@@ -63,14 +66,14 @@ open class SKPhoto: NSObject, SKPhotoProtocol {
                 underlyingImage = img
             }
         } else {
-            if let img = SKCache.sharedCache.imageForKey(photoURL) {
+            if let img = SKCache.sharedCache.imageForKey(cacheKey) {
                 underlyingImage = img
             }
         }
     }
     
     open func loadUnderlyingImageAndNotify() {
-        guard photoURL != nil, let URL = URL(string: photoURL) else { return }
+        guard let photoURL = photoURL, let cacheKey = cacheKey, let URL = URL(string: photoURL) else { return }
         
         if self.shouldCachePhotoURLImage {
             if SKCache.sharedCache.imageCache is SKRequestResponseCacheable {
@@ -83,7 +86,7 @@ open class SKPhoto: NSObject, SKPhotoProtocol {
                     return
                 }
             } else {
-                if let img = SKCache.sharedCache.imageForKey(photoURL) {
+                if let img = SKCache.sharedCache.imageForKey(cacheKey) {
                     DispatchQueue.main.async {
                         self.underlyingImage = img
                         self.loadUnderlyingImageComplete()
@@ -112,7 +115,7 @@ open class SKPhoto: NSObject, SKPhotoProtocol {
                         if SKCache.sharedCache.imageCache is SKRequestResponseCacheable {
                             SKCache.sharedCache.setImageData(data, response: response, request: task?.originalRequest)
                         } else {
-                            SKCache.sharedCache.setImage(image, forKey: self.photoURL)
+                            SKCache.sharedCache.setImage(image, forKey: cacheKey)
                         }
                     }
                     DispatchQueue.main.async {
@@ -138,11 +141,11 @@ extension SKPhoto {
         return SKPhoto(image: image)
     }
     
-    public static func photoWithImageURL(_ url: String) -> SKPhoto {
-        return SKPhoto(url: url)
+    public static func photoWithImageURL(_ url: String, cacheKey: String? = nil) -> SKPhoto {
+        return SKPhoto(url: url, cacheKey: cacheKey)
     }
     
-    public static func photoWithImageURL(_ url: String, holder: UIImage?) -> SKPhoto {
-        return SKPhoto(url: url, holder: holder)
+    public static func photoWithImageURL(_ url: String, holder: UIImage?, cacheKey: String? = nil) -> SKPhoto {
+        return SKPhoto(url: url, holder: holder, cacheKey: cacheKey)
     }
 }
