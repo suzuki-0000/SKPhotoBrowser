@@ -23,6 +23,8 @@ class FromWebViewController: UIViewController, SKPhotoBrowserDelegate {
         let browser = SKPhotoBrowser(photos: createWebPhotos())
         browser.initializePageIndex(0)
         browser.delegate = self
+        browser.preLoadNum = 10
+        browser.nextLoadNum = 10
         
         present(browser, animated: true, completion: nil)
     }
