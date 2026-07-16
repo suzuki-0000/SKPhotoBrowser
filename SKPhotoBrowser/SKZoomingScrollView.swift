@@ -34,14 +34,9 @@ open class SKZoomingScrollView: UIScrollView {
         setup()
     }
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setup()
-    }
-    
-    convenience init(frame: CGRect, browser: SKPhotoBrowser) {
-        self.init(frame: frame)
+    init(frame: CGRect, browser: SKPhotoBrowser) {
         self.browser = browser
+        super.init(frame: frame)
         setup()
     }
     
