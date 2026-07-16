@@ -108,12 +108,12 @@ open class SKPhotoBrowser: UIViewController {
     // MARK: - override
     override open func viewDidLoad() {
         super.viewDidLoad()
-        configureAppearance()
-        configurePagingScrollView()
-        configureGestureControl()
-        configureActionView()
-        configurePaginationView()
-        configureToolbar()
+         configureAppearance()
+         configurePagingScrollView()
+         configureGestureControl()
+         configureActionView()
+         configurePaginationView()
+         configureToolbar()
 
         animator.willPresent(self)
     }

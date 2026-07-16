@@ -7,21 +7,19 @@
 //
 
 import UIKit
+import AVFoundation
 
 open class SKZoomingScrollView: UIScrollView {
+    
     var captionView: SKCaptionView!
-    var photo: SKPhotoProtocol! {
-        didSet {
-            imageView.image = nil
-            if photo != nil && photo.underlyingImage != nil {
-                displayImage(complete: true)
-                return
-            }
-            if photo != nil {
-                displayImage(complete: false)
-            }
-        }
-    }
+    var photo: SKPhotoProtocol!
+    
+    var videoPlayer: AVPlayer?
+    var videoPlayerLayer: AVPlayerLayer?
+    var imageViewVideoButton: UIImageView?
+    
+    private var isSetup = false
+    private var isVideoSetup = false
     
     fileprivate weak var browser: SKPhotoBrowser?
     
@@ -31,78 +29,130 @@ open class SKZoomingScrollView: UIScrollView {
     
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        setup()
+        // setup()
     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setup()
+        // setup()
     }
     
     convenience init(frame: CGRect, browser: SKPhotoBrowser) {
         self.init(frame: frame)
         self.browser = browser
-        setup()
+        // setup()
     }
     
     deinit {
         browser = nil
     }
     
-    func setup() {
+    func setupImage () {
+        
+        if !isSetup {
+            // tap
+            tapView = SKDetectingView(frame: bounds)
+            tapView.delegate = self
+            tapView.backgroundColor = .clear
+            tapView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+            addSubview(tapView)
+            
+            // image
+            imageView = SKDetectingImageView(frame: frame)
+            imageView.delegate = self
+            imageView.contentMode = .bottom
+            imageView.backgroundColor = .clear
+            addSubview(imageView)
+            
+            // indicator
+            indicatorView = SKIndicatorView(frame: frame)
+            addSubview(indicatorView)
+            
+            // self
+            // backgroundColor = .clear
+            delegate = self
+            showsHorizontalScrollIndicator = SKPhotoBrowserOptions.displayHorizontalScrollIndicator
+            showsVerticalScrollIndicator = SKPhotoBrowserOptions.displayVerticalScrollIndicator
+            autoresizingMask = [.flexibleWidth, .flexibleTopMargin, .flexibleBottomMargin, .flexibleRightMargin, .flexibleLeftMargin]
+            
+            isSetup = true
+            layoutSubviews()
+        }
+        
+        imageView.image = nil
+        if photo.isVideo() {
+            backgroundColor = .systemPink
+        }
+        if photo != nil && photo.underlyingImage != nil {
+            displayImage(complete: true)
+            return
+        }
+        if photo != nil {
+            displayImage(complete: false)
+        }
+    }
+    
+    func setupVideo () {
+        
         // tap
-        tapView = SKDetectingView(frame: bounds)
-        tapView.delegate = self
-        tapView.backgroundColor = .clear
-        tapView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
-        addSubview(tapView)
+        if !isVideoSetup {
+            isVideoSetup = true
+            tapView = SKDetectingView(frame: bounds)
+            tapView.delegate = self
+            tapView.backgroundColor = .clear
+            tapView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+            addSubview(tapView)
+        }
         
-        // image
-        imageView = SKDetectingImageView(frame: frame)
-        imageView.delegate = self
-        imageView.contentMode = .bottom
-        imageView.backgroundColor = .clear
-        addSubview(imageView)
+        if let url = photo.videoURL {
+            
+            imageViewVideoButton = UIImageView(frame: CGRect(x: 0, y: 0,
+                                                             width: 50, height: 50))
+            
+            imageViewVideoButton?.image = UIImage(named: "PlayButton.png")
+            
+            addSubview(imageViewVideoButton!)
+            imageViewVideoButton?.center = center
+            
+            videoPlayer = AVPlayer(url: url)
+            videoPlayerLayer = AVPlayerLayer(player: videoPlayer)
+            videoPlayerLayer?.frame = self.bounds
+            layer.addSublayer(videoPlayerLayer!)
+            
+            bringSubviewToFront(imageViewVideoButton!)
+        }
         
-        // indicator
-        indicatorView = SKIndicatorView(frame: frame)
-        addSubview(indicatorView)
-        
-        // self
-        backgroundColor = .clear
-        delegate = self
-        showsHorizontalScrollIndicator = SKPhotoBrowserOptions.displayHorizontalScrollIndicator
-        showsVerticalScrollIndicator = SKPhotoBrowserOptions.displayVerticalScrollIndicator
-        autoresizingMask = [.flexibleWidth, .flexibleTopMargin, .flexibleBottomMargin, .flexibleRightMargin, .flexibleLeftMargin]
     }
     
     // MARK: - override
     
     open override func layoutSubviews() {
-        tapView.frame = bounds
-        indicatorView.frame = bounds
-        
-        super.layoutSubviews()
-        
-        let boundsSize = bounds.size
-        var frameToCenter = imageView.frame
-        
-        // horizon
-        if frameToCenter.size.width < boundsSize.width {
-            frameToCenter.origin.x = floor((boundsSize.width - frameToCenter.size.width) / 2)
-        } else {
-            frameToCenter.origin.x = 0
-        }
-        // vertical
-        if frameToCenter.size.height < boundsSize.height {
-            frameToCenter.origin.y = floor((boundsSize.height - frameToCenter.size.height) / 2)
-        } else {
-            frameToCenter.origin.y = 0
-        }
-        
-        // Center
-        if !imageView.frame.equalTo(frameToCenter) {
-            imageView.frame = frameToCenter
+        if isSetup {
+            tapView.frame = bounds
+            indicatorView.frame = bounds
+    
+            super.layoutSubviews()
+    
+            let boundsSize = bounds.size
+            var frameToCenter = imageView.frame
+    
+            // horizon
+            if frameToCenter.size.width < boundsSize.width {
+                frameToCenter.origin.x = floor((boundsSize.width - frameToCenter.size.width) / 2)
+            } else {
+                frameToCenter.origin.x = 0
+            }
+            // vertical
+            if frameToCenter.size.height < boundsSize.height {
+                frameToCenter.origin.y = floor((boundsSize.height - frameToCenter.size.height) / 2)
+            } else {
+                frameToCenter.origin.y = 0
+            }
+    
+            // Center
+            if !imageView.frame.equalTo(frameToCenter) {
+                imageView.frame = frameToCenter
+            }
         }
     }
     
@@ -162,6 +212,15 @@ open class SKZoomingScrollView: UIScrollView {
     }
     
     open func prepareForReuse() {
+        
+        if let layer = videoPlayerLayer {
+            layer.removeFromSuperlayer()
+        }
+        
+        imageViewVideoButton = nil
+        videoPlayerLayer = nil
+        videoPlayer = nil
+        
         photo = nil
         if captionView != nil {
             captionView.removeFromSuperview()
@@ -265,6 +324,20 @@ extension SKZoomingScrollView: UIScrollViewDelegate {
 
 extension SKZoomingScrollView: SKDetectingViewDelegate {
     func handleSingleTap(_ view: UIView, touch: UITouch) {
+        
+        if photo.isVideo() {
+            
+            if videoPlayer?.rate != 1.0 {
+                videoPlayer?.play()
+                imageViewVideoButton?.isHidden = true
+            } else {
+                videoPlayer?.pause()
+                imageViewVideoButton?.isHidden = false
+            }
+            
+            return
+        }
+        
         guard let browser = browser else {
             return
         }
@@ -280,6 +353,11 @@ extension SKZoomingScrollView: SKDetectingViewDelegate {
     }
     
     func handleDoubleTap(_ view: UIView, touch: UITouch) {
+        
+        if photo.isVideo() {
+            return
+        }
+        
         if SKPhotoBrowserOptions.enableZoomBlackArea == true {
             let needPoint = getViewFramePercent(view, touch: touch)
             handleDoubleTap(needPoint)

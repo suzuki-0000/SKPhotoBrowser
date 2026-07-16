@@ -87,7 +87,18 @@ var images = [SKPhoto]()
 let photo = SKPhoto.photoWithImage(UIImage())// add some UIImage
 images.append(photo)
 
-// 2. create PhotoBrowser Instance, and present from your viewController.
+// 2. for adding video
+// Local file
+if let url1 = Bundle.main.url(forResource: "bunny", withExtension: "mp4") {
+    images.append(SKPhoto.videoWithURL(url1))
+}
+
+// From internet
+if let url2 = URL(string: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4") {
+    images.append(SKPhoto.videoWithURL(url2))
+}
+
+// 3. create PhotoBrowser Instance, and present from your viewController.
 let browser = SKPhotoBrowser(photos: images)
 browser.initializePageIndex(0)
 present(browser, animated: true, completion: {})
